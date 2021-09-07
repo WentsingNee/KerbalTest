@@ -189,6 +189,7 @@ endif ()
 enable_testing()
 
 
+add_subdirectory(benchmark)
 add_subdirectory(instantiation)
 add_subdirectory(test)
 
