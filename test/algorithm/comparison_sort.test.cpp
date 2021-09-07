@@ -94,6 +94,7 @@ get_sorting_algos(std::random_access_iterator_tag)
 			&(kerbal::algorithm::intro_sort<Iterator, Compare>),
 			&(kerbal::algorithm::nonrecursive_intro_sort<Iterator, Compare>),
 			&(kerbal::algorithm::merge_sort<Iterator, Compare>),
+//			&(kerbal::algorithm::msvc_like_intro_sort<Iterator, Compare>),
 			&(kerbal::algorithm::inplace_merge_sort<Iterator, Compare>),
 			&(kerbal::algorithm::quick_sort<Iterator, Compare>),
 			&(kerbal::algorithm::nonrecursive_qsort<Iterator, Compare>),
