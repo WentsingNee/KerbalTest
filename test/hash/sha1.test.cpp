@@ -1,0 +1,144 @@
+/**
+ * @file       sha1.test.cpp
+ * @brief      
+ * @date       2019-8-11
+ * @author     Peter
+ * @copyright
+ *      Peter of [ThinkSpirit Laboratory](http://thinkspirit.org/)
+ *   of [Nanjing University of Information Science & Technology](http://www.nuist.edu.cn/)
+ *   all rights reserved
+ */
+
+#ifndef LITTLE_ENDIAN
+#define LITTLE_ENDIAN 4321
+#endif
+
+#ifndef BIG_ENDIAN
+#define BIG_ENDIAN 1234
+#endif
+
+#ifndef BYTE_ORDER
+#define BYTE_ORDER LITTLE_ENDIAN
+#endif
+
+#include <kerbal/hash/sha1.hpp>
+
+#include <kerbal/test/test.hpp>
+#include <kerbal/algorithm/modifier.hpp>
+#include <kerbal/container/nonmember_container_access.hpp>
+
+#include <string>
+
+template <typename Policy>
+KERBAL_TEMPLATE_TEST_CASE(test_sha1, "test sha1")
+{
+	using namespace kerbal::hash;
+
+	const int BUFSIZE = 4096;
+	unsigned char buf[1][BUFSIZE];
+
+	{
+		kerbal::algorithm::iota(kerbal::container::begin(buf[0]), kerbal::container::end(buf[0]), 0);
+	}
+
+	std::string result[] = {
+		"15dd99a1991e0b3826fede3deffc1feba42278e6",
+	};
+
+	for (int i = 0; i < 1; ++i) {
+		unsigned char* first = kerbal::container::begin(buf[i]);
+		unsigned char* last = kerbal::container::end(buf[i]);
+		{
+			SHA1_context<Policy> ctx;
+			for (int j = 0; j < 1000; j++) {
+				ctx.update(first, last);
+			}
+			typename SHA1_context<Policy>::result sha1 = ctx.digest();
+			KERBAL_TEST_CHECK((std::string)(sha1) == result[i]);
+		}
+	}
+}
+
+KERBAL_TEMPLATE_TEST_CASE_INST(test_sha1, "test sha1<fast>", kerbal::hash::SHA1_policy::fast);
+KERBAL_TEMPLATE_TEST_CASE_INST(test_sha1, "test sha1<size>", kerbal::hash::SHA1_policy::size);
+
+
+template <typename Policy>
+KERBAL_TEMPLATE_TEST_CASE(test_sha1_2, "test sha1 2")
+{
+	using namespace kerbal::hash;
+
+	std::basic_string<unsigned char> buf[] = {
+		(const unsigned char*)"abc",
+		std::basic_string<unsigned char>(1000000, 'a'),
+	};
+
+	std::string result[] = {
+		"a9993e364706816aba3e25717850c26c9cd0d89d",
+		"34aa973cd4c4daa4f61eeb2bdbad27316534016f",
+	};
+
+	for (int i = 0; i < 2; ++i) {
+		{
+			const unsigned char* first = (unsigned char*)(buf[i].c_str());
+			const unsigned char* last = (unsigned char*)(buf[i].c_str()) + buf[i].length();
+			SHA1_context<Policy> ctx;
+			ctx.update(first, last);
+			typename SHA1_context<Policy>::result sha1 = ctx.digest();
+			KERBAL_TEST_CHECK((std::string)(sha1) == result[i]);
+		}
+		{
+			std::basic_string<unsigned char>::const_iterator first = buf[i].begin();
+			std::basic_string<unsigned char>::const_iterator last = buf[i].end();
+			SHA1_context<Policy> ctx;
+			ctx.update(first, last);
+			typename SHA1_context<Policy>::result sha1 = ctx.digest();
+			KERBAL_TEST_CHECK((std::string)(sha1) == result[i]);
+		}
+	}
+}
+
+KERBAL_TEMPLATE_TEST_CASE_INST(test_sha1_2, "test sha1<fast> 2", kerbal::hash::SHA1_policy::fast);
+KERBAL_TEMPLATE_TEST_CASE_INST(test_sha1_2, "test sha1<size> 2", kerbal::hash::SHA1_policy::size);
+
+
+
+#if __cplusplus >= 201402L
+
+#include <kerbal/algorithm/modifier.hpp>
+#include <kerbal/container/array.hpp>
+
+KERBAL_TEST_CASE(test_sha1_constexpr, "test sha1 constexpr")
+{
+	using namespace kerbal::hash;
+
+	struct helper
+	{
+		static
+		constexpr auto compute()
+		{
+			constexpr int size = 1024 * 4;
+			kerbal::container::array<unsigned char, size> s = {};
+			kerbal::algorithm::fill(s.begin(), s.end(), 'a');
+
+			SHA1_context<SHA1_policy::fast> ctx;
+			ctx.update(s.cbegin(), s.cend());
+			return ctx.digest();
+		}
+
+	};
+
+	constexpr auto r = helper::compute();
+	constexpr const char s[] = "8c51fb6a0b587ec95ca74acfa43df7539b486297";
+	std::string rs = r;
+	KERBAL_TEST_CHECK_EQUAL(kerbal::algorithm::sequence_equal_to(s, s + 40, rs.begin(), rs.end()), true);
+
+}
+
+#endif
+
+
+int main(int argc, char* args[])
+{
+	kerbal::test::run_all_test_case(argc, args);
+}
