@@ -1,0 +1,79 @@
+language: cpp
+
+git:
+  depth: 5
+
+jobs:
+  include:
+
+    # linux - gcc
+    - name: linux_gcc_cxx98
+      os: linux
+      compiler: gcc
+      env: CXX_STANDARD=98
+
+    - name: linux_gcc-7_cxx14
+      os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-7
+      compiler: gcc-7
+      env:
+        - CXX_STANDARD=14
+        - COMPILER_EVAL="CC=gcc-7 && CXX=g++-7"
+
+    # linux - clang
+    - name: linux_clang_cxx98
+      os: linux
+      compiler: clang
+      env:
+        - CXX_STANDARD=98
+
+    - name: linux_clang_cxx14
+      os: linux
+      compiler: clang
+      env:
+        - CXX_STANDARD=14
+
+    # osx
+    - name: osx_clang_cxx14
+      os: osx
+      compiler: clang
+      env:
+        - CXX_STANDARD=14
+
+    # windows
+    - name: windows_vs2015_cxx14
+      os: windows
+      env:
+        - NATIVE_BUILD_TOOLSET=-G&nbsp"Visual Studio 14 2015 Win64"
+        - CXX_STANDARD=14
+        - NATIVE_BUILD_ARGS=-p:Configuration=Release
+
+#    - name: windows_vs2017_cxx14
+#      os: windows
+#      env:
+#        - NATIVE_BUILD_TOOLSET=-G&nbsp"Visual Studio 15 2017 Win64"
+#        - CXX_STANDARD=14
+#        - NATIVE_BUILD_ARGS=-p:Configuration=Release
+#
+#    - name: windows_vs2019_cxx14
+#      os: windows
+#      env:
+#        - NATIVE_BUILD_TOOLSET=-G&nbsp"Visual Studio 16 2019"
+#        - CXX_STANDARD=14
+#        - NATIVE_BUILD_ARGS=-p:Configuration=Release
+
+script:
+  - git clone --branch win/vs2017 https://github.com/WentsingNee/Kerbal.git
+  - mkdir build
+  - cd build
+  - cmake --version
+  - cmake --help
+  - eval "${COMPILER_EVAL}"
+  - echo $NATIVE_BUILD_TOOLSET
+  - cmake ../ $NATIVE_BUILD_TOOLSET -DCMAKE_CXX_STANDARD=$CXX_STANDARD -DCMAKE_BUILD_TYPE=Release -DKERBAL_INCLUDE_DIRECTORY=$(pwd)/../Kerbal/include
+  - cmake --build ./ -- $IGNORE_ERRORS $NATIVE_BUILD_ARGS
