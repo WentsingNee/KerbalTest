@@ -48,5 +48,6 @@ function(add_kerbal_test_target target target_src_file)
 endfunction()
 
 
+#add_subdirectory(./benchmark)
 add_subdirectory(./instantiation)
 add_subdirectory(./test)

@@ -136,7 +136,7 @@ KERBAL_TEST_CASE(test_kmp_visually, "test kmp visually")
 		const std::string pattern(make_pattern(kerbal::random::uniform_real_distribution<>(5, 10)(eg), eg));
 		const std::string host(make_host(pattern, 15, eg));
 
-//		costream<cout>(GREEN) << pattern << endl;
+		costream<cout>(GREEN) << pattern << endl;
 
 		std::string::const_iterator it_find = host.begin();
 		while (true) {
@@ -156,7 +156,7 @@ KERBAL_TEST_CASE(test_kmp_visually, "test kmp visually")
 					cout << *it;
 				}
 				for (; it != it_find + pattern.length(); ++it) {
-//					costream<cout>(GREEN) << *it;
+					costream<cout>(GREEN) << *it;
 				}
 				for (; it != host.end(); ++it) {
 					cout << *it;
