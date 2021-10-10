@@ -58,15 +58,6 @@ elseif (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
 endif ()
 
 
-function(add_kerbal_inst_target target target_src_file)
-    add_library(${target} OBJECT ${file})
-    set_target_properties(${target} PROPERTIES CMAKE_CURRENT_BINARY_DIR ./targets)
-    if (KERBAL_TEST_USE_LIBCXX)
-        target_compile_options(${target} PUBLIC -stdlib=libc++)
-    endif ()
-endfunction()
-
-
 option(KERBAL_TEST_ENABLE_SANITIZE "enable sanitize" OFF)
 
 if (KERBAL_TEST_ENABLE_SANITIZE)
@@ -78,22 +69,6 @@ if (KERBAL_TEST_ENABLE_SANITIZE)
     find_library(LIB_UBSAN ubsan REQUIRED)
     message(STATUS "Found libubsan: ${LIB_UBSAN}")
 endif ()
-
-function(add_kerbal_test_target target target_src_file)
-    add_executable(${target} ${target_src_file})
-    set_target_properties(${target} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ./targets)
-    if (KERBAL_TEST_USE_LIBCXX)
-        target_compile_options(${target} PUBLIC -stdlib=libc++)
-        target_link_libraries(${target} PUBLIC ${LIB_CPP})
-        target_link_libraries(${target} PUBLIC ${LIB_CPPABI})
-    endif ()
-    if (KERBAL_TEST_ENABLE_SANITIZE)
-        target_compile_options(${target} PUBLIC -fsanitize=address)
-        target_compile_options(${target} PUBLIC -fsanitize=undefined)
-        target_link_libraries(${target} PUBLIC ${LIB_ASAN})
-        target_link_libraries(${target} PUBLIC ${LIB_UBSAN})
-    endif ()
-endfunction()
 
 
 add_subdirectory(instantiation)
