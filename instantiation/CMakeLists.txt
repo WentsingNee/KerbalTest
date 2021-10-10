@@ -1,12 +1,18 @@
-
-set(targets)
-
 include_directories(./)
+
+
+macro(add_kerbal_inst_target target target_src_file)
+    add_library(${target} OBJECT ${file})
+    set_target_properties(${target} PROPERTIES CMAKE_CURRENT_BINARY_DIR ./targets)
+    if (KERBAL_TEST_USE_LIBCXX)
+        target_compile_options(${target} PUBLIC -stdlib=libc++)
+    endif ()
+    set(inst_targets ${inst_targets} ${target})
+endmacro()
 
 
 function(add_kerbal_sub_lib sublib)
     message("add sublib: ${sublib}")
-    set(sublib_targets)
     aux_source_directory(./${sublib} files)
     foreach (file ${files})
         string(REGEX MATCH "./${sublib}/(.+)\\.inst\\.cpp$" _ ${file})
@@ -14,12 +20,11 @@ function(add_kerbal_sub_lib sublib)
             set(target inst.${sublib}.${CMAKE_MATCH_1})
             message("	add: ${target} <= ${file}")
             add_kerbal_inst_target(${target} ${file})
-            set(sublib_targets ${sublib_targets} ${target})
+            set(inst_targets ${inst_targets} PARENT_SCOPE)
         else ()
             message(WARNING "   ${file} has been ignored")
         endif ()
     endforeach ()
-    set(targets ${targets} ${sublib_targets} PARENT_SCOPE)
     message("")
 endfunction()
 
@@ -36,10 +41,10 @@ add_kerbal_sub_lib(utility)
 
 message("\n")
 
-set(targets_count 0)
-foreach (target ${targets})
-    message("inst-target ${targets_count}: ${target}")
-    math(EXPR targets_count "${targets_count} + 1")
+set(inst_targets_count 0)
+foreach (target ${inst_targets})
+    message("inst-target ${inst_targets_count}: ${target}")
+    math(EXPR inst_targets_count "${inst_targets_count} + 1")
 endforeach ()
-
+message("inst targets: ${inst_targets_count}")
 message("\n")
