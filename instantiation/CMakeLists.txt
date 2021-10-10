@@ -3,24 +3,6 @@ set(targets)
 
 include_directories(./)
 
-if (CMAKE_CXX_COMPILER_ID MATCHES "GNU" OR CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID MATCHES "Intel")
-    add_compile_options(-Wall)
-    message(STATUS "CXX flags: -Wall")
-
-    add_compile_options(-Wextra)
-    message(STATUS "CXX flags: -Wextra")
-
-    add_compile_options(-Wno-unused-parameter)
-    message(STATUS "CXX flags: -Wno-unused-parameter")
-
-    if (${CMAKE_CXX_STANDARD} MATCHES 98)
-        add_compile_definitions(LITTLE_ENDIAN=0)
-        add_compile_definitions(BIG_ENDIAN=1)
-        add_compile_definitions(BYTE_ORDER=LITTLE_ENDIAN)
-    endif ()
-
-endif ()
-
 
 function(add_kerbal_sub_lib sublib)
     message("add sublib: ${sublib}")

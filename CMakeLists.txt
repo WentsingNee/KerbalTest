@@ -31,7 +31,22 @@ if (KERBAL_TEST_USE_LIBCXX)
 endif ()
 
 
-if (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
+if (CMAKE_CXX_COMPILER_ID MATCHES "GNU" OR CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID MATCHES "Intel")
+    add_compile_options(-Wall)
+    message(STATUS "CXX flags: -Wall")
+
+    add_compile_options(-Wextra)
+    message(STATUS "CXX flags: -Wextra")
+
+    add_compile_options(-Wno-unused-parameter)
+    message(STATUS "CXX flags: -Wno-unused-parameter")
+
+    if (${CMAKE_CXX_STANDARD} MATCHES 98)
+        add_compile_definitions(LITTLE_ENDIAN=0)
+        add_compile_definitions(BIG_ENDIAN=1)
+        add_compile_definitions(BYTE_ORDER=LITTLE_ENDIAN)
+    endif ()
+elseif (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
     add_compile_options(/Zc:__cplusplus)
     message(STATUS "CXX flags: /Zc:__cplusplus")
 
@@ -81,5 +96,5 @@ function(add_kerbal_test_target target target_src_file)
 endfunction()
 
 
-add_subdirectory(./instantiation)
-add_subdirectory(./test)
+add_subdirectory(instantiation)
+add_subdirectory(test)
