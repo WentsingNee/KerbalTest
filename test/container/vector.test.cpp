@@ -464,6 +464,19 @@ KERBAL_TEST_CASE(test_vector_oc_clear, "test vector<oc>::clear")
 
 }
 
+#if __cplusplus >= 201703L
+
+#	if __has_include(<memory_resource>)
+
+KERBAL_TEST_CASE(test_pmr_vector, "test pmr::vector")
+{
+	kerbal::container::pmr::vector<int> pmrv = {1, 2, 3};
+}
+
+#	endif
+
+#endif
+
 
 int main(int argc, char * argv[])
 {
