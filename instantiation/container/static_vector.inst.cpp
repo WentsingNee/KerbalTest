@@ -24,25 +24,25 @@ kerbal::container::static_vector<int, 64>::static_vector(const_iterator, const_i
 template KERBAL_MSVC_TMPINST_CONSTEXPR14
 kerbal::container::static_vector<int, 64>::static_vector(const_reverse_iterator, const_reverse_iterator, int);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kerbal::container::static_vector<int, 64>::iterator
 kerbal::container::static_vector<int, 64>::insert(const_iterator, const_pointer, const_pointer);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kerbal::container::static_vector<int, 64>::iterator
 kerbal::container::static_vector<int, 64>::insert(const_iterator, const_iterator, const_iterator);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kerbal::container::static_vector<int, 64>::iterator
 kerbal::container::static_vector<int, 64>::insert(const_iterator, const_reverse_iterator, const_reverse_iterator);
 
 #if __cplusplus >= 201103L
-template KERBAL_MSVC_TMPINST_CONSTEXPR14
+template
 kerbal::container::static_vector<int, 64>::iterator
 kerbal::container::static_vector<int, 64>::emplace(const_iterator);
 #endif
 
-template KERBAL_MSVC_TMPINST_CONSTEXPR14
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kerbal::container::static_vector<int, 64>::iterator
 kerbal::container::static_vector<int, 64>::emplace(const_iterator, const_reference);
 
@@ -59,29 +59,29 @@ kerbal::container::static_vector<std::string, 64>::static_vector(const_iterator,
 template KERBAL_MSVC_TMPINST_CONSTEXPR14
 kerbal::container::static_vector<std::string, 64>::static_vector(const_reverse_iterator, const_reverse_iterator, int);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kerbal::container::static_vector<std::string, 64>::iterator
 kerbal::container::static_vector<std::string, 64>::insert(const_iterator, const_pointer, const_pointer);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kerbal::container::static_vector<std::string, 64>::iterator
 kerbal::container::static_vector<std::string, 64>::insert(const_iterator, const_iterator, const_iterator);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kerbal::container::static_vector<std::string, 64>::iterator
 kerbal::container::static_vector<std::string, 64>::insert(const_iterator, const_reverse_iterator, const_reverse_iterator);
 
 #if __cplusplus >= 201103L
-template KERBAL_MSVC_TMPINST_CONSTEXPR14
+template
 kerbal::container::static_vector<std::string, 64>::iterator
 kerbal::container::static_vector<std::string, 64>::emplace(const_iterator);
 #endif
 
-template KERBAL_MSVC_TMPINST_CONSTEXPR14
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kerbal::container::static_vector<std::string, 64>::iterator
 kerbal::container::static_vector<std::string, 64>::emplace(const_iterator, const_reference);
 
-template KERBAL_MSVC_TMPINST_CONSTEXPR14
+template
 kerbal::container::static_vector<std::string, 64>::iterator
 kerbal::container::static_vector<std::string, 64>::emplace(const_iterator, const std::string::size_type &, const std::string::value_type &);
 
@@ -96,23 +96,25 @@ kerbal::container::static_vector<int[8], 64>::static_vector(const_iterator, cons
 template KERBAL_MSVC_TMPINST_CONSTEXPR14
 kerbal::container::static_vector<int[8], 64>::static_vector(const_reverse_iterator, const_reverse_iterator, int);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kerbal::container::static_vector<int[8], 64>::iterator
 kerbal::container::static_vector<int[8], 64>::insert(const_iterator, const_pointer, const_pointer);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kerbal::container::static_vector<int[8], 64>::iterator
 kerbal::container::static_vector<int[8], 64>::insert(const_iterator, const_iterator, const_iterator);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kerbal::container::static_vector<int[8], 64>::iterator
 kerbal::container::static_vector<int[8], 64>::insert(const_iterator, const_reverse_iterator, const_reverse_iterator);
 
 #if __cplusplus >= 201103L
-template kerbal::container::static_vector<int[8], 64>::iterator
+template
+kerbal::container::static_vector<int[8], 64>::iterator
 kerbal::container::static_vector<int[8], 64>::emplace(const_iterator);
 #endif
 
-template kerbal::container::static_vector<int[8], 64>::iterator
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+kerbal::container::static_vector<int[8], 64>::iterator
 kerbal::container::static_vector<int[8], 64>::emplace(const_iterator, const_reference);
 

@@ -34,7 +34,25 @@ struct string_less
 	}
 };
 
+
+#include <kerbal/config/compiler_id.hpp>
+#include <kerbal/config/compiler_private.hpp>
+
+
+#if KERBAL_COMPILER_ID == KERBAL_COMPILER_ID_MSVC
+#	if KERBAL_MSVC_VERSION_MEETS(19, 20, 0) // vs2019
+#		define TEST_CONSTEXPR 1
+#	else
+#		define TEST_CONSTEXPR 0
+#	endif
+#else
+#	define TEST_CONSTEXPR 1
+#endif
+
+
+#if TEST_CONSTEXPR
 KERBAL_CONSTEXPR14
+#endif
 kerbal::container::static_vector<char[6], 10>
 get_ordered()
 {
@@ -58,15 +76,16 @@ get_ordered()
 }
 
 
-#include <kerbal/config/compiler_id.hpp>
-
-
 KERBAL_TEST_CASE(test_static_priority_queue_char_array, "test static_priority_queue<char[]>")
 {
-	KERBAL_CONSTEXPR14 kerbal::container::static_vector<char[6], 10> sv(get_ordered());
+
+#if TEST_CONSTEXPR
+	KERBAL_CONSTEXPR14
+#endif
+	kerbal::container::static_vector<char[6], 10> sv(get_ordered());
 
 
-#if __cplusplus >= 201402L && KERBAL_COMPILER_ID != KERBAL_COMPILER_ID_MSVC
+#if __cplusplus >= 201402L && TEST_CONSTEXPR
 	KERBAL_TEST_CHECK_STATIC(kerbal::algorithm::is_sorted(sv.crbegin(), sv.crend(), string_less()));
 #else
 	KERBAL_TEST_CHECK(kerbal::algorithm::is_sorted(sv.crbegin(), sv.crend(), string_less()));

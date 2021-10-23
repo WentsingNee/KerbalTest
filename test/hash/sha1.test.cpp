@@ -105,6 +105,23 @@ KERBAL_TEMPLATE_TEST_CASE_INST(test_sha1_2, "test sha1<size> 2", kerbal::hash::S
 
 #if __cplusplus >= 201402L
 
+#include <kerbal/config/compiler_id.hpp>
+#include <kerbal/config/compiler_private.hpp>
+
+
+#if KERBAL_COMPILER_ID == KERBAL_COMPILER_ID_MSVC
+#	if KERBAL_MSVC_VERSION_MEETS(19, 20, 0) // vs2019
+#		define TEST_CONSTEXPR 1
+#	else
+#		define TEST_CONSTEXPR 0
+#	endif
+#else
+#	define TEST_CONSTEXPR 1
+#endif
+
+
+#if TEST_CONSTEXPR
+
 #include <kerbal/algorithm/modifier.hpp>
 #include <kerbal/container/array.hpp>
 
@@ -134,6 +151,8 @@ KERBAL_TEST_CASE(test_sha1_constexpr, "test sha1 constexpr")
 	KERBAL_TEST_CHECK_EQUAL(kerbal::algorithm::sequence_equal_to(s, s + 40, rs.begin(), rs.end()), true);
 
 }
+
+#endif
 
 #endif
 

@@ -22,9 +22,11 @@ namespace ko = kerbal::optional;
 
 template class ko::optional<int>;
 
-template ko::optional<int>::optional(const float &);
+template KERBAL_MSVC_TMPINST_CONSTEXPR14
+ko::optional<int>::optional(const float &);
 
-template ko::optional<int>::optional(kerbal::utility::in_place_t, const float &);
+template KERBAL_MSVC_TMPINST_CONSTEXPR14
+ko::optional<int>::optional(kerbal::utility::in_place_t, const float &);
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR14
 ko::optional<int>& ko::optional<int>::operator=(const float &);
@@ -59,7 +61,8 @@ ko::optional<int>& ko::optional<int>::emplace(const_reference);
 
 template class ko::optional<std::string>;
 
-template ko::optional<std::string>::optional(kerbal::utility::in_place_t, const std::string::size_type &, const std::string::value_type &);
+template KERBAL_MSVC_TMPINST_CONSTEXPR14
+ko::optional<std::string>::optional(kerbal::utility::in_place_t, const std::string::size_type &, const std::string::value_type &);
 
 # if __cplusplus < 201103L
 

@@ -291,7 +291,25 @@ KERBAL_TEST_CASE(test_static_vector_str_aa_emplace_back, "test static_vector<str
 	}
 }
 
+
 #if __cplusplus >= 201402L
+
+#include <kerbal/config/compiler_id.hpp>
+#include <kerbal/config/compiler_private.hpp>
+
+
+#if KERBAL_COMPILER_ID == KERBAL_COMPILER_ID_MSVC
+#	if KERBAL_MSVC_VERSION_MEETS(19, 16, 0) // vs2017
+#		define TEST_CONSTEXPR 1
+#	else
+#		define TEST_CONSTEXPR 0
+#	endif
+#else
+#	define TEST_CONSTEXPR 1
+#endif
+
+
+#if TEST_CONSTEXPR
 
 #include <kerbal/utility/integer_sequence.hpp>
 
@@ -312,6 +330,8 @@ KERBAL_TEST_CASE(test_static_vector_with_integer_sequence, "test static_vector w
 			kerbal::algorithm::sequence_equal_to(sv, svr), true);
 
 }
+
+#endif
 
 #endif
 
