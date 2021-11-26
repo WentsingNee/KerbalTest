@@ -146,7 +146,37 @@ KERBAL_TEST_CASE(test_optional_cast_assign, "test optional cast assign")
 KERBAL_TEST_CASE(test_make_optional, "test make_optional")
 {
 	{
+		optns::optional<int> opt = optns::make_optional(3);
+	}
+	{
+		int x = 0;
+		optns::optional<int> opt = optns::make_optional(x);
+	}
+	{
+		const int x = 0;
+		optns::optional<int> opt = optns::make_optional(x);
+	}
+	{
 		optns::optional<std::string> opt = optns::make_optional(std::string("abc"));
+	}
+}
+
+
+KERBAL_TEST_CASE(test_make_optional_r, "test make_optional r")
+{
+	{
+		optns::optional<int> opt = optns::make_optional<int>(3);
+	}
+	{
+		int x = 0;
+		optns::optional<int> opt = optns::make_optional<int>(x);
+	}
+	{
+		const int x = 0;
+		optns::optional<int> opt = optns::make_optional<int>(x);
+	}
+	{
+		optns::optional<int> opt = optns::make_optional<int>(3.5);
 	}
 	{
 		optns::optional<std::string> opt = optns::make_optional<std::string>(3, 'a');

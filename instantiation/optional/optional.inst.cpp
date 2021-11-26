@@ -71,3 +71,11 @@ ko::optional<ko::optional<int> >& ko::optional<ko::optional<int> >::emplace(cons
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR14
 ko::optional<ko::optional<int> >& ko::optional<ko::optional<int> >::operator=(const ko::optional<float> &);
+
+
+
+template
+ko::optional<int> ko::make_optional<int>(const int &);
+
+template
+ko::optional<std::string> ko::make_optional<std::string>(const std::string::size_type &, const std::string::value_type &);
