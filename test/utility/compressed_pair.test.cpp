@@ -18,7 +18,14 @@
 #include <string>
 #include <typeinfo>
 
+#if __cplusplus >= 201103L
+#	include <type_traits>
+#endif
+
+
 using namespace std;
+namespace ku = kerbal::utility;
+
 
 struct Empty1
 {
@@ -43,7 +50,7 @@ struct VirtualEmpty
 };
 
 template <typename Tp, typename Up>
-void print_address_and_assert(const kerbal::utility::compressed_pair<Tp, Up> & pair)
+void print_address_and_assert(const ku::compressed_pair<Tp, Up> & pair)
 {
 	const void *p  = &pair;
 	const void *pf = &(pair.first());
@@ -99,7 +106,7 @@ struct type_size<Tp&> : kerbal::type_traits::integral_constant<size_t, sizeof(vo
 };
 
 template <typename Tp, typename Up>
-void print_pair_info(const kerbal::utility::compressed_pair<Tp, Up> & p)
+void print_pair_info(const ku::compressed_pair<Tp, Up> & p)
 {
 	printf("sizeof(std::pair<%s, %s>): %zu + %zu -> %zu\n",
 		type_name<Tp>()().c_str(), type_name<Up>()().c_str(), type_size<Tp>::value, type_size<Up>::value, sizeof(std::pair<Tp, Up>));
@@ -118,66 +125,66 @@ KERBAL_TEST_CASE(test_compressed_pair, "test compressed_pair")
 	printf("under __cplusplus: %ld\n", __cplusplus);
 
 	{
-		kerbal::utility::compressed_pair<Empty1, Empty1> p;
+		ku::compressed_pair<Empty1, Empty1> p;
 		print_pair_info(p);
 	}
 
 	{
-		kerbal::utility::compressed_pair<Empty1, Empty2> p;
+		ku::compressed_pair<Empty1, Empty2> p;
 		print_pair_info(p);
 	}
 
 	{
-		kerbal::utility::compressed_pair<int, double> p(2, 3.14);
+		ku::compressed_pair<int, double> p(2, 3.14);
 		print_pair_info(p);
 	}
 
 	{
-		kerbal::utility::compressed_pair<Empty1, double> p;
+		ku::compressed_pair<Empty1, double> p;
 		print_pair_info(p);
 	}
 
 	{
-		kerbal::utility::compressed_pair<const double, double> p;
+		ku::compressed_pair<const double, double> p;
 		print_pair_info(p);
 	}
 
 	{
-		kerbal::utility::compressed_pair<const Empty1, NotEmpty> p;
+		ku::compressed_pair<const Empty1, NotEmpty> p;
 		print_pair_info(p);
 	}
 	
 	{
-		kerbal::utility::compressed_pair<const Empty1, Empty1> p;
+		ku::compressed_pair<const Empty1, Empty1> p;
 		print_pair_info(p);
 	}
 
 	{
 		int x = 7;
-		kerbal::utility::compressed_pair<int&, int&> p(x, x);
+		ku::compressed_pair<int&, int&> p(x, x);
 		print_pair_info(p);
 	}
 
 	{
 		int x = 2333;
-		kerbal::utility::compressed_pair<int&, Empty1> p(x, Empty1());
+		ku::compressed_pair<int&, Empty1> p(x, Empty1());
 		print_pair_info(p);
 	}
 
 	{
 		int x = 7;
-		kerbal::utility::compressed_pair<const int&, const int&> p(x, x);
+		ku::compressed_pair<const int&, const int&> p(x, x);
 		print_pair_info(p);
 	}
 
 	{
 		int x = 2333;
-		kerbal::utility::compressed_pair<const int&, Empty1> p(x, Empty1());
+		ku::compressed_pair<const int&, Empty1> p(x, Empty1());
 		print_pair_info(p);
 	}
 
 	{
-		kerbal::utility::compressed_pair<int[2], Empty1> p;
+		ku::compressed_pair<int[2], Empty1> p;
 		print_pair_info(p);
 	}
 
@@ -185,7 +192,7 @@ KERBAL_TEST_CASE(test_compressed_pair, "test compressed_pair")
 
 KERBAL_TEST_CASE(test_compressed_pair_unique_address, "test compressed_pair unique address")
 {
-	kerbal::utility::compressed_pair<Empty1, Empty1> p;
+	ku::compressed_pair<Empty1, Empty1> p;
 	KERBAL_TEST_CHECK(&p.first() != &p.second());
 }
 
@@ -193,11 +200,11 @@ KERBAL_TEST_CASE(test_compressed_pair_compare, "test compressed_pair compare")
 {
 	const char fmts[] = "(%d, %d) %s (%d, %d)  %d\n";
 	std::pair<int, int> s_lhs(0, 0);
-	kerbal::utility::compressed_pair<int, int> k_lhs(0, 0);
+	ku::compressed_pair<int, int> k_lhs(0, 0);
 	for (int i = -1; i <= 1; ++i) {
 		for (int j = -1; j <= 1; ++j) {
 			std::pair<int, int> s_rhs(i, j);
-			kerbal::utility::compressed_pair<int, int> k_rhs(i, j);
+			ku::compressed_pair<int, int> k_rhs(i, j);
 
 			KERBAL_TEST_CHECK_EQUAL(s_lhs == s_rhs, k_lhs == k_rhs);
 			printf(fmts, 0, 0, "==", i, j, s_lhs == s_rhs);
@@ -230,7 +237,7 @@ KERBAL_TEST_CASE(test_compressed_pair_std_get, "test compressed_pair std::get")
 	{
 		constexpr int first = 3;
 		constexpr char second = 'A';
-		constexpr kerbal::utility::compressed_pair<int, char> pair(first, second);
+		constexpr ku::compressed_pair<int, char> pair(first, second);
 		KERBAL_TEST_CHECK_EQUAL_STATIC(std::get<0>(pair), first);
 		KERBAL_TEST_CHECK_EQUAL_STATIC(std::get<1>(pair), second);
 	}
@@ -238,7 +245,7 @@ KERBAL_TEST_CASE(test_compressed_pair_std_get, "test compressed_pair std::get")
 	{
 		int first = 3;
 		constexpr char second = 'A';
-		kerbal::utility::compressed_pair<int&, char> pair(first, second);
+		ku::compressed_pair<int&, char> pair(first, second);
 		KERBAL_TEST_CHECK_EQUAL(&std::get<0>(pair), &first);
 		KERBAL_TEST_CHECK_EQUAL(std::get<1>(pair), second);
 	}
@@ -251,7 +258,7 @@ KERBAL_TEST_CASE(test_compressed_pair_std_get, "test compressed_pair std::get")
 
 KERBAL_TEST_CASE(test_compressed_pair_deduction_guide, "test compressed_pair deduction guide")
 {
-	kerbal::utility::compressed_pair pair(2, 3.0f);
+	ku::compressed_pair pair(2, 3.0f);
 	typedef decltype(pair) pair_t;
 	KERBAL_TEST_CHECK_STATIC((kerbal::type_traits::is_same<pair_t::first_type, int>::value));
 	KERBAL_TEST_CHECK_STATIC((kerbal::type_traits::is_same<pair_t::second_type, float>::value));
@@ -262,7 +269,7 @@ KERBAL_TEST_CASE(test_compressed_pair_structured_binding, "test compressed_pair 
 	{
 		constexpr int first = 3;
 		constexpr char second = 'A';
-		constexpr auto pair = kerbal::utility::make_compressed_pair(first, second);
+		constexpr auto pair = ku::make_compressed_pair(first, second);
 		auto[f, s] = pair;
 
 		KERBAL_TEST_CHECK_EQUAL(f, first);
@@ -272,7 +279,7 @@ KERBAL_TEST_CASE(test_compressed_pair_structured_binding, "test compressed_pair 
 	{
 		int first = 3;
 		char second = 'A';
-		kerbal::utility::compressed_pair<int&, char&> pair(first, second);
+		ku::compressed_pair<int&, char&> pair(first, second);
 		auto & [f, s] = pair;
 
 		KERBAL_TEST_CHECK_EQUAL(f, first);
@@ -289,15 +296,24 @@ KERBAL_TEST_CASE(test_compressed_pair_structured_binding, "test compressed_pair 
 
 #endif
 
-#if __cplusplus >= 201103L
+#if __cplusplus >= 201103L && KERBAL_COMPILER_ID != KERBAL_COMPILER_ID_ICC
 
 #include <type_traits>
+
+template <typename T, typename U, typename ... Args>
+struct test_nothrow_constructible:
+		kerbal::type_traits::conditional<
+				std::is_constructible<ku::compressed_pair<T, U>, Args...>::value,
+				std::is_nothrow_constructible<ku::compressed_pair<T, U>, Args...>,
+				std::true_type
+		>::type
+{};
 
 template <typename T, typename U>
 struct test_trivially_copy_constructible:
 		kerbal::type_traits::conditional<
-				std::is_copy_constructible<kerbal::utility::compressed_pair<T, U> >::value,
-				std::is_trivially_copy_constructible<kerbal::utility::compressed_pair<T, U> >,
+				std::is_copy_constructible<ku::compressed_pair<T, U> >::value,
+				std::is_trivially_copy_constructible<ku::compressed_pair<T, U> >,
 				std::true_type
 		>::type
 {};
@@ -305,8 +321,8 @@ struct test_trivially_copy_constructible:
 template <typename T, typename U>
 struct test_trivially_copy_assignable:
 		kerbal::type_traits::conditional<
-				std::is_copy_assignable<kerbal::utility::compressed_pair<T, U> >::value,
-				std::is_trivially_copy_assignable<kerbal::utility::compressed_pair<T, U> >,
+				std::is_copy_assignable<ku::compressed_pair<T, U> >::value,
+				std::is_trivially_copy_assignable<ku::compressed_pair<T, U> >,
 				std::true_type
 		>::type
 {};
@@ -314,8 +330,8 @@ struct test_trivially_copy_assignable:
 template <typename T, typename U>
 struct test_trivially_move_constructible:
 		kerbal::type_traits::conditional<
-				std::is_move_constructible<kerbal::utility::compressed_pair<T, U> >::value,
-				std::is_trivially_move_constructible<kerbal::utility::compressed_pair<T, U> >,
+				std::is_move_constructible<ku::compressed_pair<T, U> >::value,
+				std::is_trivially_move_constructible<ku::compressed_pair<T, U> >,
 				std::true_type
 		>::type
 {};
@@ -323,8 +339,8 @@ struct test_trivially_move_constructible:
 template <typename T, typename U>
 struct test_trivially_move_assignable:
 		kerbal::type_traits::conditional<
-				std::is_move_assignable<kerbal::utility::compressed_pair<T, U> >::value,
-				std::is_trivially_move_assignable<kerbal::utility::compressed_pair<T, U> >,
+				std::is_move_assignable<ku::compressed_pair<T, U> >::value,
+				std::is_trivially_move_assignable<ku::compressed_pair<T, U> >,
 				std::true_type
 		>::type
 {};
@@ -332,19 +348,23 @@ struct test_trivially_move_assignable:
 template <typename T, typename U>
 struct test_trivially_destructible:
 		kerbal::type_traits::conditional<
-				std::is_destructible<kerbal::utility::compressed_pair<T, U> >::value,
-				std::is_trivially_destructible<kerbal::utility::compressed_pair<T, U> >,
+				std::is_destructible<ku::compressed_pair<T, U> >::value,
+				std::is_trivially_destructible<ku::compressed_pair<T, U> >,
 				std::true_type
 		>::type
 {};
 
 template <typename T, typename U>
 struct test_trivially_copyable:
-		std::is_trivially_copyable<kerbal::utility::compressed_pair<T, U> >
+		std::is_trivially_copyable<ku::compressed_pair<T, U> >
 {};
 
 KERBAL_TEST_CASE(compressed_pair_traits, "compressed_pair traits")
 {
+	KERBAL_TEST_CHECK_STATIC((test_nothrow_constructible<int, int>::value));
+	KERBAL_TEST_CHECK_STATIC((test_nothrow_constructible<int, int, const int &, const int &>::value));
+	KERBAL_TEST_CHECK_STATIC((test_nothrow_constructible<int, int, ku::compressed_pair_default_construct_tag, const int &>::value));
+
 	KERBAL_TEST_CHECK_STATIC((test_trivially_copy_constructible<int, int>::value));
 	KERBAL_TEST_CHECK_STATIC((test_trivially_copy_constructible<int, Empty1>::value));
 	KERBAL_TEST_CHECK_STATIC((test_trivially_copy_constructible<Empty1, int>::value));
