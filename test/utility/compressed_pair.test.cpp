@@ -230,6 +230,36 @@ KERBAL_TEST_CASE(test_compressed_pair_compare, "test compressed_pair compare")
 	}
 }
 
+#if __cplusplus >= 201103L
+
+KERBAL_TEST_CASE(test_compressed_pair_constexpr, "test compressed_pair constexpr")
+{
+	namespace ku = kerbal::utility;
+	{
+		constexpr ku::compressed_pair<int, int> p1(3, 4);
+		constexpr ku::compressed_pair<int, int> p2(3, 5);
+		KERBAL_TEST_CHECK_STATIC(p1 != p2);
+		KERBAL_TEST_CHECK_STATIC(p1.second() < p2.second());
+	}
+}
+
+#endif
+
+#if __cplusplus >= 201402L
+
+KERBAL_TEST_CASE(test_compressed_pair_constexpr14, "test compressed_pair constexpr14")
+{
+	namespace ku = kerbal::utility;
+	{
+		constexpr ku::compressed_pair<int, char> p1 = ku::make_compressed_pair(3, 'A');
+		constexpr ku::compressed_pair<int, char> p2(ku::make_compressed_pair(3, (int)('B')));
+		KERBAL_TEST_CHECK_STATIC(p1 != p2);
+		KERBAL_TEST_CHECK_STATIC(p1.second() < p2.second());
+	}
+}
+
+#endif
+
 #if __cplusplus >= 201402L
 
 KERBAL_TEST_CASE(test_compressed_pair_std_get, "test compressed_pair std::get")
