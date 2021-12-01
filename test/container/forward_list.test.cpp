@@ -15,6 +15,7 @@
 #include <kerbal/algorithm/modifier.hpp>
 #include <kerbal/algorithm/sequence_compare.hpp>
 #include <kerbal/algorithm/sort/sort.hpp>
+#include <kerbal/compare/basic_compare.hpp>
 #include <kerbal/container/list.hpp>
 #include <kerbal/container/nonmember_container_access.hpp>
 #include <kerbal/container/vector.hpp>
@@ -884,8 +885,8 @@ KERBAL_TEST_CASE(test_forward_list_sort, "test forward_list::sort")
 				v.push_back(x);
 			}
 			fl.reverse();
-			fl.sort(std::greater<int>());
-			kerbal::algorithm::sort(v.begin(), v.end(), std::greater<int>());
+			fl.sort(kerbal::compare::greater<>());
+			kerbal::algorithm::sort(v.begin(), v.end(), kerbal::compare::greater<>());
 
 			KERBAL_TEST_CHECK(kerbal::algorithm::sequence_equal_to(
 					fl.cbegin(), fl.cend(),

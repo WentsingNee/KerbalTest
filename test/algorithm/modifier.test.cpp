@@ -15,6 +15,7 @@
 
 #include <kerbal/algorithm/sequence_compare.hpp>
 #include <kerbal/algorithm/sort.hpp>
+#include <kerbal/compare/basic_compare.hpp>
 #include <kerbal/container/forward_list.hpp>
 #include <kerbal/container/list.hpp>
 #include <kerbal/container/nonmember_container_access.hpp>
@@ -235,7 +236,7 @@ KERBAL_TEMPLATE_TEST_CASE(test_inplace_merge, "test inplace_merge")
 		}
 
 		kerbal::container::vector<value_type> v;
-		kerbal::algorithm::merge(first0, mid0, mid0, last0, std::back_inserter(v), std::less<value_type>());
+		kerbal::algorithm::merge(first0, mid0, mid0, last0, std::back_inserter(v), kerbal::compare::less<>());
 
 		kerbal::algorithm::inplace_merge(first0, mid0, last0);
 

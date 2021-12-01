@@ -16,6 +16,7 @@
 #include <kerbal/algorithm/modifier.hpp>
 #include <kerbal/algorithm/sequence_compare.hpp>
 #include <kerbal/algorithm/sort/sort.hpp>
+#include <kerbal/compare/basic_compare.hpp>
 #include <kerbal/container/nonmember_container_access.hpp>
 #include <kerbal/container/vector.hpp>
 #include <kerbal/random/mersenne_twister_engine.hpp>
@@ -1002,8 +1003,8 @@ KERBAL_TEST_CASE(test_list_sort, "test list::sort")
 				l.push_back(x);
 				v.push_back(x);
 			}
-			l.sort(std::greater<int>());
-			kerbal::algorithm::sort(v.begin(), v.end(), std::greater<int>());
+			l.sort(kerbal::compare::greater<>());
+			kerbal::algorithm::sort(v.begin(), v.end(), kerbal::compare::greater<>());
 
 			KERBAL_TEST_CHECK(kerbal::algorithm::sequence_equal_to(
 					l.cbegin(), l.cend(),
@@ -1085,15 +1086,15 @@ KERBAL_TEMPLATE_TEST_CASE(test_list_radix_sort_is_stable, "test list::radix_sort
 
 }
 
-KERBAL_TEMPLATE_TEST_CASE_INST(test_list_radix_sort_is_stable, "test list::radix_sort is stable (short, asc)", short, std::less<short>);
-KERBAL_TEMPLATE_TEST_CASE_INST(test_list_radix_sort_is_stable, "test list::radix_sort is stable (short, desc)", short, std::greater<short>);
-KERBAL_TEMPLATE_TEST_CASE_INST(test_list_radix_sort_is_stable, "test list::radix_sort is stable (ushort, asc)", unsigned short, std::less<short>);
-KERBAL_TEMPLATE_TEST_CASE_INST(test_list_radix_sort_is_stable, "test list::radix_sort is stable (ushort, desc)", unsigned short, std::greater<short>);
+KERBAL_TEMPLATE_TEST_CASE_INST(test_list_radix_sort_is_stable, "test list::radix_sort is stable (short, asc)", short, kerbal::compare::less<>);
+KERBAL_TEMPLATE_TEST_CASE_INST(test_list_radix_sort_is_stable, "test list::radix_sort is stable (short, desc)", short, kerbal::compare::greater<>);
+KERBAL_TEMPLATE_TEST_CASE_INST(test_list_radix_sort_is_stable, "test list::radix_sort is stable (ushort, asc)", unsigned short, kerbal::compare::less<>);
+KERBAL_TEMPLATE_TEST_CASE_INST(test_list_radix_sort_is_stable, "test list::radix_sort is stable (ushort, desc)", unsigned short, kerbal::compare::greater<>);
 
-KERBAL_TEMPLATE_TEST_CASE_INST(test_list_radix_sort_is_stable, "test list::radix_sort is stable (int, asc)", int, std::less<int>);
-KERBAL_TEMPLATE_TEST_CASE_INST(test_list_radix_sort_is_stable, "test list::radix_sort is stable (int, desc)", int, std::greater<int>);
-KERBAL_TEMPLATE_TEST_CASE_INST(test_list_radix_sort_is_stable, "test list::radix_sort is stable (uint, asc)", unsigned int, std::less<int>);
-KERBAL_TEMPLATE_TEST_CASE_INST(test_list_radix_sort_is_stable, "test list::radix_sort is stable (uint, desc)", unsigned int, std::greater<int>);
+KERBAL_TEMPLATE_TEST_CASE_INST(test_list_radix_sort_is_stable, "test list::radix_sort is stable (int, asc)", int, kerbal::compare::less<>);
+KERBAL_TEMPLATE_TEST_CASE_INST(test_list_radix_sort_is_stable, "test list::radix_sort is stable (int, desc)", int, kerbal::compare::greater<>);
+KERBAL_TEMPLATE_TEST_CASE_INST(test_list_radix_sort_is_stable, "test list::radix_sort is stable (uint, asc)", unsigned int, kerbal::compare::less<>);
+KERBAL_TEMPLATE_TEST_CASE_INST(test_list_radix_sort_is_stable, "test list::radix_sort is stable (uint, desc)", unsigned int, kerbal::compare::greater<>);
 
 
 #if __cplusplus >= 201703L

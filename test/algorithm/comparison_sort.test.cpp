@@ -12,6 +12,7 @@
 #include <kerbal/algorithm/sort.hpp>
 
 #include <kerbal/test/test.hpp>
+#include <kerbal/compare/basic_compare.hpp>
 #include <kerbal/container/nonmember_container_access.hpp>
 #include <kerbal/container/list.hpp>
 #include <kerbal/container/forward_list.hpp>
@@ -209,11 +210,11 @@ KERBAL_TEMPLATE_TEST_CASE(test_sort, "test sort")
 
 }
 
-KERBAL_TEMPLATE_TEST_CASE_INST(test_sort, "test sort (random, int)", int, std::less<int>, 30000, get_random<int>);
-KERBAL_TEMPLATE_TEST_CASE_INST(test_sort, "test sort (sorted, int)", int, std::less<int>, 30000, get_sorted<int, std::less<int> >);
-KERBAL_TEMPLATE_TEST_CASE_INST(test_sort, "test sort (reverse, int)", int, std::less<int>, 30000, get_reverse<int, std::less<int> >);
+KERBAL_TEMPLATE_TEST_CASE_INST(test_sort, "test sort (random, int)", int, kerbal::compare::less<>, 30000, get_random<int>);
+KERBAL_TEMPLATE_TEST_CASE_INST(test_sort, "test sort (sorted, int)", int, kerbal::compare::less<>, 30000, get_sorted<int, kerbal::compare::less<> >);
+KERBAL_TEMPLATE_TEST_CASE_INST(test_sort, "test sort (reverse, int)", int, kerbal::compare::less<>, 30000, get_reverse<int, kerbal::compare::less<> >);
 KERBAL_TEMPLATE_TEST_CASE_INST(test_sort, "test sort (customized compare, int)", int, customized_compare, 30000, get_few_unique<int>);
-KERBAL_TEMPLATE_TEST_CASE_INST(test_sort, "test sort (random, string)", std::string, std::less<std::string>, 10000, get_random_string);
+KERBAL_TEMPLATE_TEST_CASE_INST(test_sort, "test sort (random, string)", std::string, kerbal::compare::less<>, 10000, get_random_string);
 
 
 
@@ -241,7 +242,7 @@ KERBAL_TEMPLATE_TEST_CASE_INST(test_sort, "test sort (random, string)", std::str
 //	KERBAL_CONSTEXPR14 container v = get_sorted_array();
 //	KERBAL_CONSTEXPR14 container v2 = v;
 //
-//	typedef std::less<int> Compare;
+//	typedef kerbal::compare::less<> Compare;
 //	KERBAL_TEST_CHECK_EQUAL(test_sort_algo(v.begin(), v.end(), v2.begin(), v2.end(), Compare(), kerbal::algorithm::bubble_sort<typename container::iterator, Compare>), true);
 //}
 //

@@ -15,6 +15,7 @@
 #include <kerbal/algorithm/modifier.hpp>
 #include <kerbal/algorithm/sequence_compare.hpp>
 #include <kerbal/algorithm/sort.hpp>
+#include <kerbal/compare/basic_compare.hpp>
 #include <kerbal/container/nonmember_container_access.hpp>
 #include <kerbal/container/static_vector.hpp>
 
@@ -56,7 +57,7 @@ const Person arr[] = {
 
 KERBAL_TEST_CASE(test_static_ordered_insert, "test static_ordered::insert")
 {
-	static_ordered<Person, 10, std::string, std::greater<std::string>, Extract> o;
+	static_ordered<Person, 10, std::string, kerbal::compare::greater<>, Extract> o;
 
 	for (size_t i = 0; i < kerbal::container::size(arr); ++i) {
 		o.insert(arr[i]);
@@ -73,7 +74,7 @@ KERBAL_TEST_CASE(test_static_ordered_insert, "test static_ordered::insert")
 
 KERBAL_TEST_CASE(test_static_ordered_unique_insert, "test static_ordered::unique_insert")
 {
-	static_ordered<Person, 10, std::string, std::greater<std::string>, Extract> o;
+	static_ordered<Person, 10, std::string, kerbal::compare::greater<>, Extract> o;
 
 	for (size_t i = 0; i < kerbal::container::size(arr); ++i) {
 		o.try_insert(arr[i]);

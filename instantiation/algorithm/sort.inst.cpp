@@ -17,6 +17,7 @@ struct cmp_fnptr
 		typedef bool(*type)(const T&, const T&);
 };
 
+#include <kerbal/compare/basic_compare.hpp>
 #include <kerbal/container/list.hpp>
 #include <kerbal/container/forward_list.hpp>
 #include <kerbal/container/single_list.hpp>
@@ -158,17 +159,17 @@ template void kerbal::algorithm::sort(BdrIter<short>::type, BdrIter<short>::type
 template void kerbal::algorithm::sort(FwlIter<short>::type, FwlIter<short>::type, cmp_fnptr<short>::type);
 template void kerbal::algorithm::sort(FwdIter<short>::type, FwdIter<short>::type, cmp_fnptr<short>::type);
 
-template void kerbal::algorithm::sort(CtgIter<short>::type, CtgIter<short>::type, std::less<short>);
-template void kerbal::algorithm::sort(RasIter<short>::type, RasIter<short>::type, std::less<short>);
-template void kerbal::algorithm::sort(BdrIter<short>::type, BdrIter<short>::type, std::less<short>);
-template void kerbal::algorithm::sort(FwlIter<short>::type, FwlIter<short>::type, std::less<short>);
-template void kerbal::algorithm::sort(FwdIter<short>::type, FwdIter<short>::type, std::less<short>);
+template void kerbal::algorithm::sort(CtgIter<short>::type, CtgIter<short>::type, kerbal::compare::less<>);
+template void kerbal::algorithm::sort(RasIter<short>::type, RasIter<short>::type, kerbal::compare::less<>);
+template void kerbal::algorithm::sort(BdrIter<short>::type, BdrIter<short>::type, kerbal::compare::less<>);
+template void kerbal::algorithm::sort(FwlIter<short>::type, FwlIter<short>::type, kerbal::compare::less<>);
+template void kerbal::algorithm::sort(FwdIter<short>::type, FwdIter<short>::type, kerbal::compare::less<>);
 
-template void kerbal::algorithm::sort(CtgIter<short>::type, CtgIter<short>::type, std::greater<short>);
-template void kerbal::algorithm::sort(RasIter<short>::type, RasIter<short>::type, std::greater<short>);
-template void kerbal::algorithm::sort(BdrIter<short>::type, BdrIter<short>::type, std::greater<short>);
-template void kerbal::algorithm::sort(FwlIter<short>::type, FwlIter<short>::type, std::greater<short>);
-template void kerbal::algorithm::sort(FwdIter<short>::type, FwdIter<short>::type, std::greater<short>);
+template void kerbal::algorithm::sort(CtgIter<short>::type, CtgIter<short>::type, kerbal::compare::greater<>);
+template void kerbal::algorithm::sort(RasIter<short>::type, RasIter<short>::type, kerbal::compare::greater<>);
+template void kerbal::algorithm::sort(BdrIter<short>::type, BdrIter<short>::type, kerbal::compare::greater<>);
+template void kerbal::algorithm::sort(FwlIter<short>::type, FwlIter<short>::type, kerbal::compare::greater<>);
+template void kerbal::algorithm::sort(FwdIter<short>::type, FwdIter<short>::type, kerbal::compare::greater<>);
 
 template void kerbal::algorithm::sort(CtgIter<int>::type, CtgIter<int>::type, cmp_fnptr<int>::type);
 template void kerbal::algorithm::sort(RasIter<int>::type, RasIter<int>::type, cmp_fnptr<int>::type);
@@ -176,17 +177,17 @@ template void kerbal::algorithm::sort(BdrIter<int>::type, BdrIter<int>::type, cm
 template void kerbal::algorithm::sort(FwlIter<int>::type, FwlIter<int>::type, cmp_fnptr<int>::type);
 template void kerbal::algorithm::sort(FwdIter<int>::type, FwdIter<int>::type, cmp_fnptr<int>::type);
 
-template void kerbal::algorithm::sort(CtgIter<int>::type, CtgIter<int>::type, std::less<short>);
-template void kerbal::algorithm::sort(RasIter<int>::type, RasIter<int>::type, std::less<short>);
-template void kerbal::algorithm::sort(BdrIter<int>::type, BdrIter<int>::type, std::less<short>);
-template void kerbal::algorithm::sort(FwlIter<int>::type, FwlIter<int>::type, std::less<short>);
-template void kerbal::algorithm::sort(FwdIter<int>::type, FwdIter<int>::type, std::less<short>);
+template void kerbal::algorithm::sort(CtgIter<int>::type, CtgIter<int>::type, kerbal::compare::less<>);
+template void kerbal::algorithm::sort(RasIter<int>::type, RasIter<int>::type, kerbal::compare::less<>);
+template void kerbal::algorithm::sort(BdrIter<int>::type, BdrIter<int>::type, kerbal::compare::less<>);
+template void kerbal::algorithm::sort(FwlIter<int>::type, FwlIter<int>::type, kerbal::compare::less<>);
+template void kerbal::algorithm::sort(FwdIter<int>::type, FwdIter<int>::type, kerbal::compare::less<>);
 
-template void kerbal::algorithm::sort(CtgIter<int>::type, CtgIter<int>::type, std::greater<short>);
-template void kerbal::algorithm::sort(RasIter<int>::type, RasIter<int>::type, std::greater<short>);
-template void kerbal::algorithm::sort(BdrIter<int>::type, BdrIter<int>::type, std::greater<short>);
-template void kerbal::algorithm::sort(FwlIter<int>::type, FwlIter<int>::type, std::greater<short>);
-template void kerbal::algorithm::sort(FwdIter<int>::type, FwdIter<int>::type, std::greater<short>);
+template void kerbal::algorithm::sort(CtgIter<int>::type, CtgIter<int>::type, kerbal::compare::greater<>);
+template void kerbal::algorithm::sort(RasIter<int>::type, RasIter<int>::type, kerbal::compare::greater<>);
+template void kerbal::algorithm::sort(BdrIter<int>::type, BdrIter<int>::type, kerbal::compare::greater<>);
+template void kerbal::algorithm::sort(FwlIter<int>::type, FwlIter<int>::type, kerbal::compare::greater<>);
+template void kerbal::algorithm::sort(FwdIter<int>::type, FwdIter<int>::type, kerbal::compare::greater<>);
 
 template void kerbal::algorithm::sort(CtgIter<std::string>::type, CtgIter<std::string>::type, cmp_fnptr<std::string>::type);
 template void kerbal::algorithm::sort(RasIter<std::string>::type, RasIter<std::string>::type, cmp_fnptr<std::string>::type);
