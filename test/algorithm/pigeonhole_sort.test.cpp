@@ -13,13 +13,13 @@
 
 #include <kerbal/test/test.hpp>
 #include <kerbal/algorithm/sequence_compare.hpp>
+#include <kerbal/algorithm/sort.hpp>
 #include <kerbal/compare/basic_compare.hpp>
 #include <kerbal/container/nonmember_container_access.hpp>
 #include <kerbal/container/array.hpp>
 #include <kerbal/random/mersenne_twister_engine.hpp>
 #include <kerbal/type_traits/integral_constant.hpp>
 
-#include <algorithm>
 
 kerbal::random::mt19937 eg;
 
@@ -50,7 +50,7 @@ struct test_suite
 			typename container_type::iterator begin2(kerbal::container::begin(v2));
 			typename container_type::iterator end2(kerbal::container::end(v2));
 			typedef typename kerbal::type_traits::conditional<Order::value, kerbal::compare::greater<>, kerbal::compare::less<> >::type compare;
-			std::sort(begin2, end2, compare());
+			kerbal::algorithm::sort(begin2, end2, compare());
 
 			return (kerbal::algorithm::sequence_equal_to(begin, end, begin2, end2));
 		}

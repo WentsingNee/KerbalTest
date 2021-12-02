@@ -963,6 +963,15 @@ KERBAL_TEST_CASE(test_list_merge_exception_occurred, "test list::merge exception
 #endif // __cpp_exceptions
 
 
+struct disable_list_radix_sort_cmp
+{
+		KERBAL_CONSTEXPR
+		bool operator()(int x, int y) const KERBAL_NOEXCEPT
+		{
+			return x < y;
+		}
+};
+
 KERBAL_TEST_CASE(test_list_sort, "test list::sort")
 {
 	kerbal::random::mt19937 eg;
@@ -1005,6 +1014,28 @@ KERBAL_TEST_CASE(test_list_sort, "test list::sort")
 			}
 			l.sort(kerbal::compare::greater<>());
 			kerbal::algorithm::sort(v.begin(), v.end(), kerbal::compare::greater<>());
+
+			KERBAL_TEST_CHECK(kerbal::algorithm::sequence_equal_to(
+					l.cbegin(), l.cend(),
+					v.begin(), v.end()
+			));
+			KERBAL_TEST_CHECK(kerbal::algorithm::sequence_equal_to(
+					l.crbegin(), l.crend(),
+					v.rbegin(), v.rend()
+			)); // r
+		}
+
+		{ // given compare
+			kerbal::container::list<int> l;
+			kerbal::container::vector<int> v;
+
+			for (std::size_t i = 0; i < list_size; ++i) {
+				int x = eg() % 100;
+				l.push_back(x);
+				v.push_back(x);
+			}
+			l.sort(disable_list_radix_sort_cmp());
+			kerbal::algorithm::sort(v.begin(), v.end(), disable_list_radix_sort_cmp());
 
 			KERBAL_TEST_CHECK(kerbal::algorithm::sequence_equal_to(
 					l.cbegin(), l.cend(),

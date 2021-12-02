@@ -12,7 +12,7 @@
 #include <kerbal/container/static_vector.hpp>
 
 #include <kerbal/test/test.hpp>
-#include <kerbal/algorithm/modifier.hpp>
+#include <kerbal/algorithm/sequence_compare.hpp>
 #include <kerbal/container/nonmember_container_access.hpp>
 #include <kerbal/type_traits/integral_constant.hpp>
 
@@ -24,16 +24,16 @@ using namespace kerbal::container;
 struct Int
 {
 	int x;
-	
-	Int() : x(0) {};
-	Int(int x) : x(x) {};
-	~Int() {x = -1;};
-	
-	
-	friend std::ostream& operator<<(std::ostream & out, const Int & val) {
+
+	Int() : x(0) {}
+	Int(int x) : x(x) {}
+	~Int() {x = -1;}
+
+	friend std::ostream& operator<<(std::ostream & out, const Int & val)
+	{
 		return out << val.x;
 	}
-	
+
 };
 
 template <typename Iterator>

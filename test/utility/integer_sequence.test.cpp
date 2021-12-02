@@ -15,36 +15,38 @@
 
 #include <kerbal/utility/integer_sequence.hpp>
 
-#include <kerbal/test/test.hpp>
 #include <kerbal/algorithm/sequence_compare.hpp>
 #include <kerbal/container/nonmember_container_access.hpp>
 
-template <size_t N>
+
+template <std::size_t N>
 struct Array
 {
 		int inner[N];
 		
-		template <size_t ... Ins>
-		Array(const int (&a) [N], kerbal::utility::integer_sequence<size_t, Ins...>)
-				: inner{a[Ins]...}
+		template <std::size_t ... Ins>
+		Array(const int (&a) [N], kerbal::utility::integer_sequence<std::size_t, Ins...>) :
+				inner{a[Ins]...}
 		{
 		}
 
-		Array(const int (&a) [N])
-				: Array(a, kerbal::utility::make_index_sequence<N>())
+		Array(const int (&a) [N]) :
+				Array(a, kerbal::utility::make_index_sequence<N>())
 		{
 		}
 };
+
 
 KERBAL_TEST_CASE(test_integer_sequence, "test integer_sequence")
 {
 	int arr[3] = {4, 9, 7};
 	Array<3> a(arr);
-	
+
 	KERBAL_TEST_CHECK_EQUAL(kerbal::algorithm::sequence_equal_to(arr, a.inner), true);
 }
 
 #endif
+
 
 int main(int argc, char* args[])
 {

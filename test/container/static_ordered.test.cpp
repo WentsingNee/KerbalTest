@@ -12,14 +12,11 @@
 #include <kerbal/container/static_ordered.hpp>
 
 #include <kerbal/test/test.hpp>
-#include <kerbal/algorithm/modifier.hpp>
-#include <kerbal/algorithm/sequence_compare.hpp>
 #include <kerbal/algorithm/sort.hpp>
 #include <kerbal/compare/basic_compare.hpp>
 #include <kerbal/container/nonmember_container_access.hpp>
 #include <kerbal/container/static_vector.hpp>
 
-#include <algorithm>
 #include <string>
 
 using kerbal::container::static_ordered;
@@ -66,7 +63,7 @@ KERBAL_TEST_CASE(test_static_ordered_insert, "test static_ordered::insert")
 	kerbal::container::static_vector<Person, 10> v
 			(kerbal::container::cbegin(arr), kerbal::container::cend(arr));
 
-	std::sort(v.begin(), v.end(), o.value_comp());
+	kerbal::algorithm::sort(v.begin(), v.end(), o.value_comp());
 
 	KERBAL_TEST_CHECK_EQUAL(kerbal::algorithm::is_sorted(v.begin(), v.end(), o.value_comp()), true);
 }
@@ -83,7 +80,7 @@ KERBAL_TEST_CASE(test_static_ordered_unique_insert, "test static_ordered::unique
 	kerbal::container::static_vector<Person, 10> v
 			(kerbal::container::cbegin(arr), kerbal::container::cend(arr));
 
-	std::sort(v.begin(), v.end(), o.value_comp());
+	kerbal::algorithm::sort(v.begin(), v.end(), o.value_comp());
 
 	KERBAL_TEST_CHECK_EQUAL(kerbal::algorithm::is_sorted(v.begin(), v.end(), o.value_comp()), true);
 }
