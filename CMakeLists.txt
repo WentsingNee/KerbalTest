@@ -9,7 +9,12 @@ message(STATUS "CMAKE_HOST_SYSTEM_PROCESSOR: ${CMAKE_HOST_SYSTEM_PROCESSOR}")
 message(STATUS "CMAKE_TARGET_SYSTEM_PROCESSOR: ${CMAKE_TARGET_SYSTEM_PROCESSOR}")
 
 
-include_directories(${KERBAL_INCLUDE_DIRECTORY})
+set(Kerbal_DIR "~/git/Kerbal_install/syslib/lib/cmake/Kerbal") # tmp
+find_package(Kerbal REQUIRED)
+#include_directories(${Kerbal_INCLUDE_DIRS})
+
+#include_directories(${KERBAL_INCLUDE_DIRECTORY})
+
 
 message(STATUS "Finding Boost")
 find_package(Boost)
@@ -98,3 +103,9 @@ endfunction()
 
 add_subdirectory(instantiation)
 add_subdirectory(test)
+
+message(STATUS "Kerbal_FOUND: ${Kerbal_FOUND}")
+#message(STATUS "Kerbal_FIND_VERSION: ${Kerbal_FIND_VERSION}")
+message(STATUS "Kerbal_INCLUDE_DIRS: ${Kerbal_INCLUDE_DIRS}")
+message(STATUS "Kerbal_INTERFACE_INCLUDE_DIRECTORIES: ${Kerbal_INTERFACE_INCLUDE_DIRECTORIES}")
+message(STATUS "Boost_INCLUDE_DIRS: ${Boost_INCLUDE_DIRS}")
