@@ -40,10 +40,10 @@ struct cmp_nothrow
 
 template class kc::detail::list_allocator_unrelated<int>;
 
-template void kc::detail::list_allocator_unrelated<int>::sort(cmp_may_throw<value_type>);
+template void kc::detail::list_allocator_unrelated<int>::sort(cmp_may_throw<value_type>, kerbal::function::identity);
 
 #if __cplusplus >= 201103L
-template void kc::detail::list_allocator_unrelated<int>::sort(cmp_nothrow<value_type>);
+template void kc::detail::list_allocator_unrelated<int>::sort(cmp_nothrow<value_type>, kerbal::function::identity);
 #endif
 
 
@@ -112,10 +112,10 @@ template kc::list<int>::size_type
 kc::list<int>::remove_if(unary_predict<value_type>);
 
 template kc::list<int>::size_type
-kc::list<int>::unique(const_iterator, const_iterator, cmp_may_throw<value_type>);
+kc::list<int>::unique(const_iterator, const_iterator, cmp_may_throw<value_type>, kerbal::function::identity);
 
 template kc::list<int>::size_type
-kc::list<int>::unique(cmp_may_throw<value_type>);
+kc::list<int>::unique(cmp_may_throw<value_type>, kerbal::function::identity);
 
 kc::list<int> operator+(const kc::list<int> &, const kc::list<int> &);
 
@@ -138,10 +138,10 @@ bool operator>=(const kc::list<int> &, const kc::list<int> &);
 
 template class kc::detail::list_allocator_unrelated<std::string>;
 
-template void kc::detail::list_allocator_unrelated<std::string>::sort(cmp_may_throw<value_type>);
+template void kc::detail::list_allocator_unrelated<std::string>::sort(cmp_may_throw<value_type>, kerbal::function::identity);
 
 #if __cplusplus >= 201103L
-template void kc::detail::list_allocator_unrelated<std::string>::sort(cmp_nothrow<value_type>);
+template void kc::detail::list_allocator_unrelated<std::string>::sort(cmp_nothrow<value_type>, kerbal::function::identity);
 #endif
 
 
@@ -218,11 +218,11 @@ kc::list<std::string>::remove_if(unary_predict<value_type>);
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::list<std::string>::size_type
-kc::list<std::string>::unique(const_iterator, const_iterator, cmp_may_throw<value_type>);
+kc::list<std::string>::unique(const_iterator, const_iterator, cmp_may_throw<value_type>, kerbal::function::identity);
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::list<std::string>::size_type
-kc::list<std::string>::unique(cmp_may_throw<value_type>);
+kc::list<std::string>::unique(cmp_may_throw<value_type>, kerbal::function::identity);
 
 kc::list<std::string> operator+(const kc::list<std::string> &, const kc::list<std::string> &);
 
@@ -243,10 +243,10 @@ bool operator>=(const kc::list<std::string> &, const kc::list<std::string> &);
 
 template class kc::detail::list_allocator_unrelated<int[8]>;
 
-template void kc::detail::list_allocator_unrelated<int[8]>::sort(cmp_may_throw<value_type>);
+template void kc::detail::list_allocator_unrelated<int[8]>::sort(cmp_may_throw<value_type>, kerbal::function::identity);
 
 #if __cplusplus >= 201103L
-template void kc::detail::list_allocator_unrelated<int[8]>::sort(cmp_nothrow<value_type>);
+template void kc::detail::list_allocator_unrelated<int[8]>::sort(cmp_nothrow<value_type>, kerbal::function::identity);
 #endif
 
 
@@ -313,10 +313,10 @@ template kc::list<int[8]>::size_type
 kc::list<int[8]>::remove_if(unary_predict<value_type>);
 
 template kc::list<int[8]>::size_type
-kc::list<int[8]>::unique(const_iterator, const_iterator, cmp_may_throw<value_type>);
+kc::list<int[8]>::unique(const_iterator, const_iterator, cmp_may_throw<value_type>, kerbal::function::identity);
 
 template kc::list<int[8]>::size_type
-kc::list<int[8]>::unique(cmp_may_throw<value_type>);
+kc::list<int[8]>::unique(cmp_may_throw<value_type>, kerbal::function::identity);
 
 kc::list<int[8]> operator+(const kc::list<int[8]> &, const kc::list<int[8]> &);
 
@@ -330,10 +330,10 @@ kc::list<int[8]> operator+(kc::list<int[8]> &&, kc::list<int[8]> &&);
 
 template class kc::detail::list_allocator_unrelated<kc::list<int> >;
 
-template void kc::detail::list_allocator_unrelated<kc::list<int> >::sort(cmp_may_throw<value_type>);
+template void kc::detail::list_allocator_unrelated<kc::list<int> >::sort(cmp_may_throw<value_type>, kerbal::function::identity);
 
 #if __cplusplus >= 201103L
-template void kc::detail::list_allocator_unrelated<kc::list<int> >::sort(cmp_nothrow<value_type>);
+template void kc::detail::list_allocator_unrelated<kc::list<int> >::sort(cmp_nothrow<value_type>, kerbal::function::identity);
 #endif
 
 
@@ -402,11 +402,11 @@ kc::list<kc::list<int> >::remove_if(unary_predict<value_type>);
 
 template
 kc::list<kc::list<int> >::size_type
-kc::list<kc::list<int> >::unique(const_iterator, const_iterator, cmp_may_throw<value_type>);
+kc::list<kc::list<int> >::unique(const_iterator, const_iterator, cmp_may_throw<value_type>, kerbal::function::identity);
 
 template
 kc::list<kc::list<int> >::size_type
-kc::list<kc::list<int> >::unique(cmp_may_throw<value_type>);
+kc::list<kc::list<int> >::unique(cmp_may_throw<value_type>, kerbal::function::identity);
 
 kc::list<kc::list<int> >
 operator+(const kc::list<kc::list<int> > &, const kc::list<kc::list<int> > &);
@@ -499,11 +499,11 @@ kc::list<int, palloc<int> >::remove_if(unary_predict<value_type>);
 
 template
 kc::list<int, palloc<int> >::size_type
-kc::list<int, palloc<int> >::unique(const_iterator, const_iterator, cmp_may_throw<value_type>);
+kc::list<int, palloc<int> >::unique(const_iterator, const_iterator, cmp_may_throw<value_type>, kerbal::function::identity);
 
 template
 kc::list<int, palloc<int> >::size_type
-kc::list<int, palloc<int> >::unique(cmp_may_throw<value_type>);
+kc::list<int, palloc<int> >::unique(cmp_may_throw<value_type>, kerbal::function::identity);
 
 kc::list<int, palloc<int> >
 operator+(const kc::list<int, palloc<int> > &, const kc::list<int, palloc<int> > &);
