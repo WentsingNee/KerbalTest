@@ -28,7 +28,7 @@
 #	include <type_traits>
 #endif
 
-# if __cplusplus >= 201103L && __cpp_exceptions && KERBAL_COMPILER_ID != KERBAL_COMPILER_ID_ICC
+# if __cplusplus >= 201103L && __cpp_exceptions
 
 KERBAL_TEST_CASE(test_vector_noexcept, "test vector noexcept")
 {

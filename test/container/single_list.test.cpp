@@ -32,7 +32,7 @@ void print_list(const kerbal::container::single_list<int>& l)
 }
 
 
-# if __cplusplus >= 201103L && __cpp_exceptions && KERBAL_COMPILER_ID != KERBAL_COMPILER_ID_ICC
+# if __cplusplus >= 201103L && __cpp_exceptions
 
 KERBAL_TEST_CASE(test_single_list_noexcept, "test singlie_list noexcept")
 {

@@ -326,7 +326,7 @@ KERBAL_TEST_CASE(test_compressed_pair_structured_binding, "test compressed_pair 
 
 #endif
 
-#if __cplusplus >= 201103L && KERBAL_COMPILER_ID != KERBAL_COMPILER_ID_ICC
+#if __cplusplus >= 201103L
 
 #include <type_traits>
 

@@ -60,7 +60,7 @@ void print_list_reverse(const kerbal::container::list<int, Allocator>& l)
 }
 
 
-# if __cplusplus >= 201103L && __cpp_exceptions && KERBAL_COMPILER_ID != KERBAL_COMPILER_ID_ICC
+# if __cplusplus >= 201103L && __cpp_exceptions
 
 KERBAL_TEST_CASE(test_list_noexcept, "test list noexcept")
 {
