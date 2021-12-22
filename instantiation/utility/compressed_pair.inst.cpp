@@ -20,7 +20,7 @@ template class kerbal::utility::compressed_pair<Empty1, int>;
 template class kerbal::utility::compressed_pair<Empty1, Empty1>;
 template class kerbal::utility::compressed_pair<Empty1, Empty2>;
 
-#if __cplusplus >= 201103L
+#if 0 // member_compress_helper doesn't support arrray perfectly
 template class kerbal::utility::compressed_pair<int[2], int>;
 template class kerbal::utility::compressed_pair<int[2][2], int>;
 #endif
