@@ -128,8 +128,8 @@ template class ko::optional<std::string&>;
 
 // make_optional
 
-template
-ko::optional<int> ko::make_optional<int>(const int &);
+//template
+//ko::optional<int> ko::make_optional<int>(const int &);
 
 template
 ko::optional<std::string> ko::make_optional<std::string>(const int&, const char &);

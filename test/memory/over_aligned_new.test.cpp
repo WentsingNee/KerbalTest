@@ -54,7 +54,7 @@ KERBAL_TEST_CASE(test_over_aligned_new, "test over_aligned_new")
 
 
 template <std::size_t Align>
-struct KERBAL_ALIGNAS(Align) Foo
+struct KERBAL_ALIGNAS(32) Foo
 {
 		std::string s;
 
