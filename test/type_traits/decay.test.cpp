@@ -12,8 +12,8 @@
 #include <kerbal/type_traits/decay.hpp>
 
 #include <kerbal/test/test.hpp>
+#include <kerbal/compatibility/cv_qualified_function.hpp>
 #include <kerbal/type_traits/is_same.hpp>
-
 
 #if __cplusplus >= 201103L
 #	include <type_traits>
@@ -104,9 +104,11 @@ KERBAL_TEST_CASE(test_decay, "test decay")
 	AFTER_DECAY_IS(void(&)(int, double),      void(*)(int, double));
 	AFTER_DECAY_IS(void(&)(int, double, ...), void(*)(int, double, ...));
 
+#if KERBAL_HAS_CV_QUALIFIED_FUNCTION_SUPPORT
 	AFTER_DECAY_IS(void(int) const,                 void(int) const);
 	AFTER_DECAY_IS(void(int) volatile,              void(int) volatile);
 	AFTER_DECAY_IS(void(int) const volatile,        void(int) const volatile);
+#endif
 
 	AFTER_DECAY_IS(int Foo::*,  int Foo::*);
 	AFTER_DECAY_IS(void (Foo::*)(int),  void (Foo::*)(int));

@@ -12,6 +12,7 @@
 #include <kerbal/type_traits/member_pointer_deduction.hpp>
 
 #include <kerbal/test/test.hpp>
+#include <kerbal/compatibility/cv_qualified_function.hpp>
 #include <kerbal/type_traits/is_same.hpp>
 
 #if __cplusplus >= 201103L
@@ -79,27 +80,35 @@ KERBAL_TEST_CASE(test_is_member_pointer, "test is_member_pointer")
 
 	IS_MEMBER_POINTER(int (*)(),                                  false);
 	IS_MEMBER_POINTER(int (Foo::*)(),                             true);
+#if KERBAL_HAS_CV_QUALIFIED_FUNCTION_SUPPORT
 	IS_MEMBER_POINTER(int (Foo::*)() const,                       true);
 	IS_MEMBER_POINTER(int (Foo::*)() volatile,                    true);
 	IS_MEMBER_POINTER(int (Foo::*)() const volatile,              true);
+#endif
 
 	IS_MEMBER_POINTER(int (* const)(),                                  false);
 	IS_MEMBER_POINTER(int (Foo::* const)(),                             true);
+#if KERBAL_HAS_CV_QUALIFIED_FUNCTION_SUPPORT
 	IS_MEMBER_POINTER(int (Foo::* const)() const,                       true);
 	IS_MEMBER_POINTER(int (Foo::* const)() volatile,                    true);
 	IS_MEMBER_POINTER(int (Foo::* const)() const volatile,              true);
+#endif
 
 	IS_MEMBER_POINTER(int (* volatile)(),                                  false);
 	IS_MEMBER_POINTER(int (Foo::* volatile)(),                             true);
+#if KERBAL_HAS_CV_QUALIFIED_FUNCTION_SUPPORT
 	IS_MEMBER_POINTER(int (Foo::* volatile)() const,                       true);
 	IS_MEMBER_POINTER(int (Foo::* volatile)() volatile,                    true);
 	IS_MEMBER_POINTER(int (Foo::* volatile)() const volatile,              true);
+#endif
 
 	IS_MEMBER_POINTER(int (* const volatile)(),                                  false);
 	IS_MEMBER_POINTER(int (Foo::* const volatile)(),                             true);
+#if KERBAL_HAS_CV_QUALIFIED_FUNCTION_SUPPORT
 	IS_MEMBER_POINTER(int (Foo::* const volatile)() const,                       true);
 	IS_MEMBER_POINTER(int (Foo::* const volatile)() volatile,                    true);
 	IS_MEMBER_POINTER(int (Foo::* const volatile)() const volatile,              true);
+#endif
 
 #	if __cplusplus >= 201103L
 	IS_MEMBER_POINTER(int (Foo::*)() &,                             true);
@@ -155,24 +164,32 @@ KERBAL_TEST_CASE(test_class_subordinate_to, "test class_subordinate_to")
 
 
 	CLASS_SUBORDINATE_TO(int (Foo::*)(),                             Foo);
+#if KERBAL_HAS_CV_QUALIFIED_FUNCTION_SUPPORT
 	CLASS_SUBORDINATE_TO(int (Foo::*)() const,                       Foo);
 	CLASS_SUBORDINATE_TO(int (Foo::*)() volatile,                    Foo);
 	CLASS_SUBORDINATE_TO(int (Foo::*)() const volatile,              Foo);
+#endif
 
 	CLASS_SUBORDINATE_TO(int (Foo::* const)(),                             Foo);
+#if KERBAL_HAS_CV_QUALIFIED_FUNCTION_SUPPORT
 	CLASS_SUBORDINATE_TO(int (Foo::* const)() const,                       Foo);
 	CLASS_SUBORDINATE_TO(int (Foo::* const)() volatile,                    Foo);
 	CLASS_SUBORDINATE_TO(int (Foo::* const)() const volatile,              Foo);
+#endif
 
 	CLASS_SUBORDINATE_TO(int (Foo::* volatile)(),                             Foo);
+#if KERBAL_HAS_CV_QUALIFIED_FUNCTION_SUPPORT
 	CLASS_SUBORDINATE_TO(int (Foo::* volatile)() const,                       Foo);
 	CLASS_SUBORDINATE_TO(int (Foo::* volatile)() volatile,                    Foo);
 	CLASS_SUBORDINATE_TO(int (Foo::* volatile)() const volatile,              Foo);
+#endif
 
 	CLASS_SUBORDINATE_TO(int (Foo::* const volatile)(),                             Foo);
+#if KERBAL_HAS_CV_QUALIFIED_FUNCTION_SUPPORT
 	CLASS_SUBORDINATE_TO(int (Foo::* const volatile)() const,                       Foo);
 	CLASS_SUBORDINATE_TO(int (Foo::* const volatile)() volatile,                    Foo);
 	CLASS_SUBORDINATE_TO(int (Foo::* const volatile)() const volatile,              Foo);
+#endif
 
 #	if __cplusplus >= 201103L
 	CLASS_SUBORDINATE_TO(int (Foo::*)() &,                             Foo);

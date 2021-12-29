@@ -12,6 +12,7 @@
 #include <kerbal/type_traits/pointer_deduction.hpp>
 
 #include <kerbal/test/test.hpp>
+#include <kerbal/compatibility/cv_qualified_function.hpp>
 #include <kerbal/type_traits/is_same.hpp>
 
 #if __cplusplus >= 201103L
@@ -291,9 +292,11 @@ KERBAL_TEST_CASE(test_add_pointer, "test add_pointer")
 	AFTER_ADD_POINTER_IS(int(**&)(int) noexcept, int(***)(int) noexcept);
 #endif
 
+#if KERBAL_HAS_CV_QUALIFIED_FUNCTION_SUPPORT
 	AFTER_ADD_POINTER_IS(int(int) const,                int(int) const);
 	AFTER_ADD_POINTER_IS(int(int) volatile,             int(int) volatile);
 	AFTER_ADD_POINTER_IS(int(int) const volatile,       int(int) const volatile);
+#endif
 
 	AFTER_ADD_POINTER_IS(int Foo::*,    int Foo::**);
 	AFTER_ADD_POINTER_IS(int Foo::**,   int Foo::***);

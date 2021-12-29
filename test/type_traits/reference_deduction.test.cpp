@@ -12,6 +12,7 @@
 #include <kerbal/type_traits/reference_deduction.hpp>
 
 #include <kerbal/test/test.hpp>
+#include <kerbal/compatibility/cv_qualified_function.hpp>
 #include <kerbal/type_traits/is_same.hpp>
 
 #if __cplusplus >= 201103L
@@ -47,10 +48,12 @@ KERBAL_TEST_CASE(test_is_referenceable, "test is_referenceable")
 
 	CHECK_IS_REFERENCEABLE(int[],                       true);
 
+#if KERBAL_HAS_CV_QUALIFIED_FUNCTION_SUPPORT
 	CHECK_IS_REFERENCEABLE(void(),                      true);
 	CHECK_IS_REFERENCEABLE(void() const,                false);
 	CHECK_IS_REFERENCEABLE(void() volatile,             false);
 	CHECK_IS_REFERENCEABLE(void() const volatile,       false);
+#endif
 
 	CHECK_IS_REFERENCEABLE(void(*)(),                   true);
 }
@@ -257,12 +260,15 @@ KERBAL_TEST_CASE(test_add_lvalue_reference, "test add_lvalue_reference")
 
 	AFTER_ADD_LVALUE_REFERENCE_IS(int(),                         int(&)());
 	AFTER_ADD_LVALUE_REFERENCE_IS(int(...),                      int(&)(...));
+
+#if KERBAL_HAS_CV_QUALIFIED_FUNCTION_SUPPORT
 	AFTER_ADD_LVALUE_REFERENCE_IS(int() const,                   int() const);
 	AFTER_ADD_LVALUE_REFERENCE_IS(int(...) const,                int(...) const);
 	AFTER_ADD_LVALUE_REFERENCE_IS(int() volatile,                int() volatile);
 	AFTER_ADD_LVALUE_REFERENCE_IS(int(...) volatile,             int(...) volatile);
 	AFTER_ADD_LVALUE_REFERENCE_IS(int() const volatile,          int() const volatile);
 	AFTER_ADD_LVALUE_REFERENCE_IS(int(...) const volatile,       int(...) const volatile);
+#endif
 
 	AFTER_ADD_LVALUE_REFERENCE_IS(int(&)(),                         int(&)());
 	AFTER_ADD_LVALUE_REFERENCE_IS(int(&)(...),                      int(&)(...));
@@ -340,12 +346,14 @@ KERBAL_TEST_CASE(test_add_rvalue_reference, "test add_rvalue_reference")
 
 	AFTER_ADD_RVALUE_REFERENCE_IS(int(),                         int(&&)());
 	AFTER_ADD_RVALUE_REFERENCE_IS(int(...),                      int(&&)(...));
+#if KERBAL_HAS_CV_QUALIFIED_FUNCTION_SUPPORT
 	AFTER_ADD_RVALUE_REFERENCE_IS(int() const,                   int() const);
 	AFTER_ADD_RVALUE_REFERENCE_IS(int(...) const,                int(...) const);
 	AFTER_ADD_RVALUE_REFERENCE_IS(int() volatile,                int() volatile);
 	AFTER_ADD_RVALUE_REFERENCE_IS(int(...) volatile,             int(...) volatile);
 	AFTER_ADD_RVALUE_REFERENCE_IS(int() const volatile,          int() const volatile);
 	AFTER_ADD_RVALUE_REFERENCE_IS(int(...) const volatile,       int(...) const volatile);
+#endif
 
 	AFTER_ADD_RVALUE_REFERENCE_IS(int(&)(),                         int(&)());
 	AFTER_ADD_RVALUE_REFERENCE_IS(int(&)(...),                      int(&)(...));
@@ -436,12 +444,14 @@ KERBAL_TEST_CASE(test_add_const_lvalue_reference, "test add_const_lvalue_referen
 
 	AFTER_ADD_CONST_LVALUE_REFERENCE_IS(int(),                         int(&)());
 	AFTER_ADD_CONST_LVALUE_REFERENCE_IS(int(...),                      int(&)(...));
+#if KERBAL_HAS_CV_QUALIFIED_FUNCTION_SUPPORT
 	AFTER_ADD_CONST_LVALUE_REFERENCE_IS(int() const,                   int() const);
 	AFTER_ADD_CONST_LVALUE_REFERENCE_IS(int(...) const,                int(...) const);
 	AFTER_ADD_CONST_LVALUE_REFERENCE_IS(int() volatile,                int() volatile);
 	AFTER_ADD_CONST_LVALUE_REFERENCE_IS(int(...) volatile,             int(...) volatile);
 	AFTER_ADD_CONST_LVALUE_REFERENCE_IS(int() const volatile,          int() const volatile);
 	AFTER_ADD_CONST_LVALUE_REFERENCE_IS(int(...) const volatile,       int(...) const volatile);
+#endif
 
 	AFTER_ADD_CONST_LVALUE_REFERENCE_IS(int(&)(),                         int(&)());
 	AFTER_ADD_CONST_LVALUE_REFERENCE_IS(int(&)(...),                      int(&)(...));
@@ -519,12 +529,14 @@ KERBAL_TEST_CASE(test_add_const_rvalue_reference, "test add_const_rvalue_referen
 
 	AFTER_ADD_CONST_RVALUE_REFERENCE_IS(int(),                         int(&&)());
 	AFTER_ADD_CONST_RVALUE_REFERENCE_IS(int(...),                      int(&&)(...));
+#if KERBAL_HAS_CV_QUALIFIED_FUNCTION_SUPPORT
 	AFTER_ADD_CONST_RVALUE_REFERENCE_IS(int() const,                   int() const);
 	AFTER_ADD_CONST_RVALUE_REFERENCE_IS(int(...) const,                int(...) const);
 	AFTER_ADD_CONST_RVALUE_REFERENCE_IS(int() volatile,                int() volatile);
 	AFTER_ADD_CONST_RVALUE_REFERENCE_IS(int(...) volatile,             int(...) volatile);
 	AFTER_ADD_CONST_RVALUE_REFERENCE_IS(int() const volatile,          int() const volatile);
 	AFTER_ADD_CONST_RVALUE_REFERENCE_IS(int(...) const volatile,       int(...) const volatile);
+#endif
 
 	AFTER_ADD_CONST_RVALUE_REFERENCE_IS(int(&)(),                         int(&)());
 	AFTER_ADD_CONST_RVALUE_REFERENCE_IS(int(&)(...),                      int(&)(...));

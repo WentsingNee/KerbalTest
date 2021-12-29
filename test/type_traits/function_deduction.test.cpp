@@ -12,6 +12,12 @@
 #include <kerbal/type_traits/function_deduction.hpp>
 
 #include <kerbal/test/test.hpp>
+#include <kerbal/compatibility/cv_qualified_function.hpp>
+
+#if __cplusplus >= 201103L
+#	include <type_traits>
+#endif
+
 
 #define KERBAL_TEST_CHECK_AT_COMPILE_TIME
 
@@ -19,10 +25,6 @@
 #	define CHECK_EQUAL KERBAL_TEST_CHECK_EQUAL_STATIC
 #else
 #	define CHECK_EQUAL KERBAL_TEST_CHECK_EQUAL;
-#endif
-
-#if __cplusplus >= 201103L
-#	include <type_traits>
 #endif
 
 
@@ -38,22 +40,27 @@ KERBAL_TEST_CASE(test_is_function, "test is_function")
 	CHECK_IS_FUNCTION(int(*)(), false);
 
 	CHECK_IS_FUNCTION(int(),                 true);
+	CHECK_IS_FUNCTION(int(...),              true);
+	CHECK_IS_FUNCTION(int(double),           true);
+	CHECK_IS_FUNCTION(int(double, ...),      true);
+
+# if KERBAL_HAS_CV_QUALIFIED_FUNCTION_SUPPORT
+
 	CHECK_IS_FUNCTION(int() const,           true);
 	CHECK_IS_FUNCTION(int() volatile ,       true);
 	CHECK_IS_FUNCTION(int() const volatile , true);
-	CHECK_IS_FUNCTION(int(...),                 true);
 	CHECK_IS_FUNCTION(int(...) const,           true);
 	CHECK_IS_FUNCTION(int(...) volatile ,       true);
 	CHECK_IS_FUNCTION(int(...) const volatile , true);
 
-	CHECK_IS_FUNCTION(int(double),                 true);
 	CHECK_IS_FUNCTION(int(double) const,           true);
 	CHECK_IS_FUNCTION(int(double) volatile ,       true);
 	CHECK_IS_FUNCTION(int(double) const volatile , true);
-	CHECK_IS_FUNCTION(int(double, ...),                 true);
 	CHECK_IS_FUNCTION(int(double, ...) const,           true);
 	CHECK_IS_FUNCTION(int(double, ...) volatile ,       true);
 	CHECK_IS_FUNCTION(int(double, ...) const volatile , true);
+
+# endif // KERBAL_HAS_CV_QUALIFIED_FUNCTION_SUPPORT
 
 # if __cplusplus >= 201103L
 
