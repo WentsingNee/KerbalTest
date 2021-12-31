@@ -28,7 +28,8 @@ template ko::optional<int>::optional(kerbal::utility::in_place_t, const float &)
 template KERBAL_MSVC_TMPINST_CONSTEXPR14
 ko::optional<int>& ko::optional<int>::emplace(const_reference);
 
-//template ko::optional<int>& ko::optional<int>::operator=(const float &);
+template KERBAL_MSVC_TMPINST_CONSTEXPR14
+ko::optional<int>& ko::optional<int>::operator=(const float &);
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR14
 ko::optional<int>& ko::optional<int>::operator=(const ko::optional<float> &);
@@ -67,7 +68,8 @@ template class ko::optional<ko::optional<int> >;
 template KERBAL_MSVC_TMPINST_CONSTEXPR14
 ko::optional<ko::optional<int> >& ko::optional<ko::optional<int> >::emplace(const_reference);
 
-//template ko::optional<ko::optional<int> >& ko::optional<ko::optional<int> >::operator=(const float &);
+template KERBAL_MSVC_TMPINST_CONSTEXPR14
+ko::optional<ko::optional<int> >& ko::optional<ko::optional<int> >::operator=(const float &);
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR14
 ko::optional<ko::optional<int> >& ko::optional<ko::optional<int> >::operator=(const ko::optional<float> &);
@@ -78,4 +80,4 @@ template
 ko::optional<int> ko::make_optional<int>(const int &);
 
 template
-ko::optional<std::string> ko::make_optional<std::string>(const std::string::size_type &, const std::string::value_type &);
+ko::optional<std::string> ko::make_optional<std::string>(const int&, const char &);
