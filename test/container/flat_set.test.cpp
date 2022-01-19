@@ -15,7 +15,7 @@
 #include <kerbal/test/test.hpp>
 #include <kerbal/algorithm/sequence_compare.hpp>
 #include <kerbal/container/nonmember_container_access.hpp>
-#include <kerbal/container/static_vector.hpp>
+#include <kerbal/container/vector.hpp>
 #include <kerbal/random/mersenne_twister_engine.hpp>
 #include <kerbal/type_traits/integral_constant.hpp>
 
@@ -38,23 +38,24 @@ KERBAL_TEST_CASE(test_flat_set_range_constructor, "test flat_set::flat_set(itera
 
 		kerbal::random::mt19937 eg(seeds[j]);
 
-		kerbal::container::static_vector<int, N::value> v; {
+		kerbal::container::vector<int> v; {
+			v.reserve(N::value);
 			for (N::value_type i = 0; i < N::value; ++i) {
 				int r = eg();
 				v.push_back(r);
 			}
 		}
 
-		std::set<int> set(v.begin(), v.end());
-		std::multiset<int> multiset(v.begin(), v.end());
+		std::set<int> set(v.cbegin(), v.cend());
+		std::multiset<int> multiset(v.cbegin(), v.cend());
 
-		kerbal::container::flat_set<int> flatSet(v.begin(), v.end());
-		kerbal::container::static_flat_set<int, N::value> staticFlatSet(v.begin(), v.end());
+		kerbal::container::flat_set<int> flatSet(v.cbegin(), v.cend());
+		kerbal::container::static_flat_set<int, N::value> staticFlatSet(v.cbegin(), v.cend());
 		KERBAL_TEST_CHECK_EQUAL(kerbal::algorithm::sequence_equal_to(set, flatSet), true);
 		KERBAL_TEST_CHECK_EQUAL(kerbal::algorithm::sequence_equal_to(set, staticFlatSet), true);
 
-		kerbal::container::flat_multiset<int> flatMultiset(v.begin(), v.end());
-		kerbal::container::static_flat_multiset<int, N::value> staticFlatMultiset(v.begin(), v.end());
+		kerbal::container::flat_multiset<int> flatMultiset(v.cbegin(), v.cend());
+		kerbal::container::static_flat_multiset<int, N::value> staticFlatMultiset(v.cbegin(), v.cend());
 		KERBAL_TEST_CHECK_EQUAL(kerbal::algorithm::sequence_equal_to(multiset, flatMultiset), true);
 		KERBAL_TEST_CHECK_EQUAL(kerbal::algorithm::sequence_equal_to(multiset, staticFlatMultiset), true);
 	}
@@ -119,16 +120,17 @@ KERBAL_TEST_CASE(test_flat_set_erase, "test flat_set::erase)")
 
 		kerbal::random::mt19937 eg(seeds[j]);
 
-		kerbal::container::static_vector<int, N::value> v; {
+		kerbal::container::vector<int> v; {
+			v.reserve(N::value);
 			for (N::value_type i = 0; i < N::value; ++i) {
 				int r = eg();
 				v.push_back(r);
 			}
 		}
 
-		std::set<int> set(v.begin(), v.end());
-		kerbal::container::flat_set<int> flatSet(v.begin(), v.end());
-		kerbal::container::static_flat_set<int, N::value> staticFlatSet(v.begin(), v.end());
+		std::set<int> set(v.cbegin(), v.cend());
+		kerbal::container::flat_set<int> flatSet(v.cbegin(), v.cend());
+		kerbal::container::static_flat_set<int, N::value> staticFlatSet(v.cbegin(), v.cend());
 
 		while (!set.empty()) {
 			std::set<int>::iterator it = kerbal::iterator::next(set.begin(), eg() % set.size());
@@ -162,16 +164,17 @@ KERBAL_TEST_CASE(test_flat_multiset_erase, "test flat_multiset::erase)")
 
 		kerbal::random::mt19937 eg(seeds[j]);
 
-		kerbal::container::static_vector<int, N::value> v; {
+		kerbal::container::vector<int> v; {
+			v.reserve(N::value);
 			for (N::value_type i = 0; i < N::value; ++i) {
 				int r = eg() % (N::value / 10);
 				v.push_back(r);
 			}
 		}
 
-		std::multiset<int> multiset(v.begin(), v.end());
-		kerbal::container::flat_multiset<int> flatMultiset(v.begin(), v.end());
-		kerbal::container::static_flat_multiset<int, N::value> staticFlatMultiset(v.begin(), v.end());
+		std::multiset<int> multiset(v.cbegin(), v.cend());
+		kerbal::container::flat_multiset<int> flatMultiset(v.cbegin(), v.cend());
+		kerbal::container::static_flat_multiset<int, N::value> staticFlatMultiset(v.cbegin(), v.cend());
 
 		while (!multiset.empty()) {
 			std::multiset<int>::iterator it = kerbal::iterator::next(multiset.begin(), eg() % multiset.size());
