@@ -14,6 +14,7 @@
 #include <kerbal/test/test.hpp>
 #include <kerbal/random/linear_congruential_engine.hpp>
 #include <kerbal/random/mersenne_twister_engine.hpp>
+#include <kerbal/utility/ignore_unused.hpp>
 
 #if __cplusplus >= 201103L
 
@@ -32,6 +33,8 @@ KERBAL_TEMPLATE_TEST_CASE(test_shuffle_order_engine, "test shuffle_order_engine"
 	for (int i = 0; i < 1000; ++i) {
 		auto rker = ker();
 		auto rstd = std();
+
+		kerbal::utility::ignore_unused(rker, rstd);
 //		std::cout << rker << "    " << rstd << std::endl;
 	}
 	auto rker = ker();

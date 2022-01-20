@@ -14,6 +14,7 @@
 #include <kerbal/test/test.hpp>
 #include <kerbal/container/array.hpp>
 #include <kerbal/type_traits/integral_constant.hpp>
+#include <kerbal/utility/ignore_unused.hpp>
 
 
 namespace ku = kerbal::utility;
@@ -22,16 +23,19 @@ KERBAL_TEST_CASE(test_tuple_dft_cnstrct, "test tuple default construct")
 {
 	{
 		ku::tuple<> tup;
+		kerbal::utility::ignore_unused(tup);
 		KERBAL_TEST_CHECK((ku::tuple<>::TUPLE_SIZE::value == 0));
 	}
 
 	{
 		ku::tuple<int> tup;
+		kerbal::utility::ignore_unused(tup);
 		KERBAL_TEST_CHECK((ku::tuple<int>::TUPLE_SIZE::value == 1));
 	}
 
 	{
 		ku::tuple<int, char> tup;
+		kerbal::utility::ignore_unused(tup);
 		KERBAL_TEST_CHECK((ku::tuple<int, char>::TUPLE_SIZE::value == 2));
 	}
 
@@ -120,6 +124,8 @@ KERBAL_TEST_CASE(test_tuple_select, "test tuple::select")
 	{
 		ku::tuple<> tup;
 		ku::tuple<> tups = tup.select<>();
+
+		kerbal::utility::ignore_unused(tups);
 	}
 	{
 		int i = 0;

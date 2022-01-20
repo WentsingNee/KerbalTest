@@ -14,6 +14,7 @@
 #include <kerbal/test/test.hpp>
 #include <kerbal/algorithm/sequence_compare.hpp>
 #include <kerbal/container/nonmember_container_access.hpp>
+#include <kerbal/utility/ignore_unused.hpp>
 
 #include <string>
 
@@ -32,10 +33,12 @@ KERBAL_TEST_CASE(test_array_default_construct, "test array::array()")
 {
 	{
 		kerbal::container::array<int, 5> a;
+		kerbal::utility::ignore_unused(a);
 	}
 
 	{
 		kerbal::container::array<std::string, 5> a;
+		kerbal::utility::ignore_unused(a);
 	}
 
 }
@@ -104,6 +107,7 @@ KERBAL_TEST_CASE(test_array_move_construct, "test array::array(array&&)")
 {
 	kerbal::container::array<Foo, 10> m;
 	kerbal::container::array<Foo, 10> m2 = std::move(m);
+	kerbal::utility::ignore_unused(m2);
 
 	KERBAL_TEST_CHECK_EQUAL(Foo::cpy, 0);
 	KERBAL_TEST_CHECK_EQUAL(Foo::mov, 10);

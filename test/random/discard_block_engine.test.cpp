@@ -16,6 +16,8 @@
 #include <kerbal/random/linear_congruential_engine.hpp>
 #include <kerbal/random/mersenne_twister_engine.hpp>
 #include <kerbal/test/runtime_timer.hpp>
+#include <kerbal/utility/ignore_unused.hpp>
+
 
 #if __cplusplus >= 201103L
 
@@ -34,6 +36,8 @@ KERBAL_TEMPLATE_TEST_CASE(test_discard_block_engine, "test discard_block_engine"
 	for (std::size_t i = 0; i < P * 5; ++i) {
 		auto rker = ker();
 		auto rstd = std();
+
+		kerbal::utility::ignore_unused(rker, rstd);
 //		std::cout << rker << "    " << rstd << std::endl;
 	}
 	auto rker = ker();

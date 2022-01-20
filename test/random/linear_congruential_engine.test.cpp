@@ -13,6 +13,7 @@
 
 #include <kerbal/test/test.hpp>
 #include <kerbal/compatibility/fixed_width_integer.hpp>
+#include <kerbal/utility/ignore_unused.hpp>
 
 
 #if __cplusplus >= 201103L
@@ -29,6 +30,8 @@ KERBAL_TEMPLATE_TEST_CASE(test_linear_congruential_engine, "test linear_congruen
 		for (int j = 0; j < 100; ++j) {
 			UIntType rk = ker();
 			UIntType rs = std();
+
+			kerbal::utility::ignore_unused(rk, rs);
 		}
 
 		UIntType rk = ker();
