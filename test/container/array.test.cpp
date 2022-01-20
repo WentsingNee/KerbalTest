@@ -127,11 +127,11 @@ KERBAL_TEST_CASE(test_array_cpy_assign, "test array::operator=(const array&)")
 	{
 		kerbal::container::array<std::string, 5> a;
 
-		kerbal::container::array<std::string, 5> b; {
-			b[0] = "a";
-			b[1] = std::string(5, 'a');
-			b[3] = std::string(10000, 'b');
-		}
+		kerbal::container::array<std::string, 5> b = KERBAL_ILIST(
+			std::string("a"),
+			std::string(5, 'a'),
+			std::string(10000, 'b')
+		);
 
 		a = b;
 
