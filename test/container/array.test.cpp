@@ -145,11 +145,15 @@ KERBAL_TEST_CASE(test_array_c_arr, "test array::c_arr")
 	{
 		kerbal::container::array<int, 5> a;
 		int (&aref) [5] = a.c_arr();
+		aref[2] = 2333;
+		KERBAL_TEST_CHECK(a[2] == 2333);
 	}
 
 	{
 		kerbal::container::array<std::string, 5> a;
 		std::string (&aref) [5] = a.c_arr();
+		aref[2] = std::string(100, 'a');
+		KERBAL_TEST_CHECK(a[2] == std::string(100, 'a'));
 	}
 
 }

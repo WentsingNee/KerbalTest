@@ -147,39 +147,57 @@ KERBAL_TEST_CASE(test_make_optional, "test make_optional")
 {
 	{
 		ko::optional<int> opt = ko::make_optional(3);
+		KERBAL_TEST_CHECK(opt.has_value());
+		KERBAL_TEST_CHECK(opt.value() == 3);
 	}
 	{
 		int x = 0;
 		ko::optional<int> opt = ko::make_optional(x);
+		KERBAL_TEST_CHECK(opt.has_value());
+		KERBAL_TEST_CHECK(opt.value() == x);
 	}
 	{
 		const int x = 0;
 		ko::optional<int> opt = ko::make_optional(x);
+		KERBAL_TEST_CHECK(opt.has_value());
+		KERBAL_TEST_CHECK(opt.value() == x);
 	}
 	{
-		ko::optional<std::string> opt = ko::make_optional(std::string("abc"));
+		ko::optional<std::string> opt = ko::make_optional(std::string(100, 'a'));
+		KERBAL_TEST_CHECK(opt.has_value());
+		KERBAL_TEST_CHECK(opt.value() == std::string(100, 'a'));
 	}
 }
 
 
-KERBAL_TEST_CASE(test_make_optional_r, "test make_optional r")
+KERBAL_TEST_CASE(test_make_optional_with_specified, "test make_optional (with specified)")
 {
 	{
 		ko::optional<int> opt = ko::make_optional<int>(3);
+		KERBAL_TEST_CHECK(opt.has_value());
+		KERBAL_TEST_CHECK(opt.value() == 3);
 	}
 	{
 		int x = 0;
 		ko::optional<int> opt = ko::make_optional<int>(x);
+		KERBAL_TEST_CHECK(opt.has_value());
+		KERBAL_TEST_CHECK(opt.value() == x);
 	}
 	{
 		const int x = 0;
 		ko::optional<int> opt = ko::make_optional<int>(x);
+		KERBAL_TEST_CHECK(opt.has_value());
+		KERBAL_TEST_CHECK(opt.value() == x);
 	}
 	{
 		ko::optional<int> opt = ko::make_optional<int>(3.5);
+		KERBAL_TEST_CHECK(opt.has_value());
+		KERBAL_TEST_CHECK(opt.value() == 3);
 	}
 	{
-		ko::optional<std::string> opt = ko::make_optional<std::string>(3, 'a');
+		ko::optional<std::string> opt = ko::make_optional<std::string>(100, 'a');
+		KERBAL_TEST_CHECK(opt.has_value());
+		KERBAL_TEST_CHECK(opt.value() == std::string(100, 'a'));
 	}
 }
 
