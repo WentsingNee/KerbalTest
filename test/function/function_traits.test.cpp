@@ -26,10 +26,10 @@ KERBAL_TEST_CASE(test_function_traits_arguments_num, "test function_traits::argu
 {
 	using namespace kerbal::function;
 
-	KERBAL_TEST_CHECK_EQUAL(function_traits<int()>::args_num::value,                 0);
-	KERBAL_TEST_CHECK_EQUAL(function_traits<int(...)>::args_num::value,                 0);
-	KERBAL_TEST_CHECK_EQUAL(function_traits<int(int)>::args_num::value,              1);
-	KERBAL_TEST_CHECK_EQUAL(function_traits<int(int, ...)>::args_num::value,         1);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(function_traits<int()>::args_num::value,                 0u);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(function_traits<int(...)>::args_num::value,              0u);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(function_traits<int(int)>::args_num::value,              1u);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(function_traits<int(int, ...)>::args_num::value,         1u);
 }
 
 
