@@ -115,6 +115,14 @@ ko::optional<ko::optional<int> >& ko::optional<ko::optional<int> >::operator=(co
 
 
 
+// optional<T&>
+
+template class ko::optional<int&>;
+
+template class ko::optional<std::string&>;
+
+
+
 // make_optional
 
 template
