@@ -27,6 +27,21 @@ using namespace std;
 namespace ku = kerbal::utility;
 
 
+KERBAL_TEST_CASE(test_compressed_pair_construct_from_std_pair, "test compressed_pair::compressed_pair(std::pair)")
+{
+	{
+		ku::compressed_pair<char, char> cp(std::make_pair('a', 'b'));
+		KERBAL_TEST_CHECK(cp.first() == 'a');
+		KERBAL_TEST_CHECK(cp.second() == 'b');
+	}
+	{
+		ku::compressed_pair<char, int> cp(std::make_pair('a', 'b'));
+		KERBAL_TEST_CHECK(cp.first() == 'a');
+		KERBAL_TEST_CHECK(cp.second() == static_cast<int>('b'));
+	}
+}
+
+
 struct Empty1
 {
 };
@@ -339,6 +354,17 @@ struct test_nothrow_constructible:
 		>::type
 {};
 
+
+KERBAL_TEST_CASE(test_compressed_pair_is_nothrow, "test compressed_pair is nothrow")
+{
+	KERBAL_TEST_CHECK_STATIC((test_nothrow_constructible<int, int>::value));
+	KERBAL_TEST_CHECK_STATIC((test_nothrow_constructible<int, int, const int &, const int &>::value));
+	KERBAL_TEST_CHECK_STATIC((test_nothrow_constructible<int, int, ku::compressed_pair_default_construct_tag, const int &>::value));
+
+}
+
+
+
 template <typename T, typename U>
 struct test_trivially_copy_constructible:
 		kerbal::type_traits::conditional<
@@ -389,12 +415,9 @@ struct test_trivially_copyable:
 		std::is_trivially_copyable<ku::compressed_pair<T, U> >
 {};
 
-KERBAL_TEST_CASE(compressed_pair_traits, "compressed_pair traits")
-{
-	KERBAL_TEST_CHECK_STATIC((test_nothrow_constructible<int, int>::value));
-	KERBAL_TEST_CHECK_STATIC((test_nothrow_constructible<int, int, const int &, const int &>::value));
-	KERBAL_TEST_CHECK_STATIC((test_nothrow_constructible<int, int, ku::compressed_pair_default_construct_tag, const int &>::value));
 
+KERBAL_TEST_CASE(test_compressed_pair_is_trivial, "test compressed_pair is trivial")
+{
 	KERBAL_TEST_CHECK_STATIC((test_trivially_copy_constructible<int, int>::value));
 	KERBAL_TEST_CHECK_STATIC((test_trivially_copy_constructible<int, Empty1>::value));
 	KERBAL_TEST_CHECK_STATIC((test_trivially_copy_constructible<Empty1, int>::value));
