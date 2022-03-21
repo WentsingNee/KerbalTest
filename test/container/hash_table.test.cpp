@@ -9,13 +9,13 @@
  *   all rights reserved
  */
 
-# if __cplusplus >= 201103L
-#include <kerbal/container/hash_table.hpp>
-# endif
+#if __cplusplus >= 201103L
+#	include <kerbal/container/hash_table.hpp>
+#endif
 
 #include <kerbal/test/test.hpp>
 
-# if __cplusplus >= 201103L
+#if __cplusplus >= 201103L
 
 KERBAL_TEST_CASE(test_hash_table, "test hash_table")
 {
@@ -36,7 +36,7 @@ KERBAL_TEST_CASE(test_hash_table, "test hash_table")
 	std::cout << std::endl;
 }
 
-# endif
+#endif
 
 int main(int argc, char * argv[])
 {
