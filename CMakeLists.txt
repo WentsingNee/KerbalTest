@@ -24,8 +24,7 @@ if (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /D_CRT_SECURE_NO_WARNINGS") # Disable warning C4996: 'scanf': This function or variable may be unsafe.
     message(STATUS "CXX flags: /D_CRT_SECURE_NO_WARNINGS")
 elseif (CMAKE_CXX_COMPILER_ID MATCHES "Intel")
-    add_compile_definitions(__GNUC__=10)
-    add_compile_options(-isystem /usr/include/c++/10/)
+    add_compile_definitions(__extension__=)
 endif ()
 
 function(add_kerbal_inst_target target target_src_file)
