@@ -11,6 +11,26 @@
 
 #include <kerbal/container/linked_queue.hpp>
 
-template class kerbal::container::linked_queue<int>;
-template class kerbal::container::linked_queue<int[8]>;
-//template class kerbal::container::linked_queue<int[8][8]>;
+namespace kc = kerbal::container;
+
+
+template class kc::linked_queue<int>;
+template class kc::linked_queue<int[8]>;
+//template class kc::linked_queue<int[8][8]>;
+
+
+
+struct Recursive
+{
+		kc::linked_queue<Recursive> data;
+
+		bool operator==(const Recursive & with) const;
+		bool operator!=(const Recursive & with) const;
+		bool operator<(const Recursive & with) const;
+		bool operator>(const Recursive & with) const;
+		bool operator<=(const Recursive & with) const;
+		bool operator>=(const Recursive & with) const;
+};
+
+template class
+kc::linked_queue<Recursive>;

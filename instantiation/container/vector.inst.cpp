@@ -212,3 +212,19 @@ bool operator>=(const kc::vector<int, palloc<int> > &, const kc::vector<int, pal
 #	endif
 
 #endif
+
+
+
+struct Recursive
+{
+		kc::vector<Recursive> data;
+		kc::vector<Recursive>::iterator it;
+		kc::vector<Recursive>::const_iterator kit;
+		kc::vector<Recursive>::reverse_iterator rit;
+		kc::vector<Recursive>::const_reverse_iterator krit;
+
+		Recursive();
+};
+
+template class
+kc::vector<Recursive>;

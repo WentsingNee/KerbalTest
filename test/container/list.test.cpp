@@ -1229,7 +1229,7 @@ KERBAL_TEST_CASE(test_pmr_list, "test pmr::list")
 {
 	using kerbal::container::pmr::list;
 
-	std::byte stack_buff[4 * list<int>::NODE_SIZE::value];
+	std::byte stack_buff[4 * kerbal::container::list_node_size<int>::value];
 	kerbal::algorithm::fill(kerbal::container::begin(stack_buff), kerbal::container::end(stack_buff), std::byte(0));
 	std::pmr::monotonic_buffer_resource resource(stack_buff, sizeof stack_buff);
 

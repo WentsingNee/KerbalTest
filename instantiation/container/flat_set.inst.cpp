@@ -11,21 +11,43 @@
 
 #include <kerbal/container/flat_set.hpp>
 
+namespace kc = kerbal::container;
+
+
 template <typename T>
 struct cmp_fnptr
 {
 		typedef bool(*type)(const T&, const T&);
 };
 
-template class kerbal::container::flat_set<int, cmp_fnptr<int>::type>;
-template class kerbal::container::flat_multiset<int, cmp_fnptr<int>::type>;
-template kerbal::container::flat_set<int, cmp_fnptr<int>::type>::flat_set(const_pointer, const_pointer, int);
-template kerbal::container::flat_multiset<int, cmp_fnptr<int>::type>::flat_multiset(const_pointer, const_pointer, int);
+template class kc::flat_set<int, cmp_fnptr<int>::type>;
+template class kc::flat_multiset<int, cmp_fnptr<int>::type>;
+template kc::flat_set<int, cmp_fnptr<int>::type>::flat_set(const_pointer, const_pointer, int);
+template kc::flat_multiset<int, cmp_fnptr<int>::type>::flat_multiset(const_pointer, const_pointer, int);
 
 
 #include <string>
 
-template class kerbal::container::flat_set<std::string, cmp_fnptr<std::string>::type>;
-template class kerbal::container::flat_multiset<std::string, cmp_fnptr<std::string>::type>;
-template kerbal::container::flat_set<std::string, cmp_fnptr<std::string>::type>::flat_set(const_pointer, const_pointer, int);
-template kerbal::container::flat_multiset<std::string, cmp_fnptr<std::string>::type>::flat_multiset(const_pointer, const_pointer, int);
+template class kc::flat_set<std::string, cmp_fnptr<std::string>::type>;
+template class kc::flat_multiset<std::string, cmp_fnptr<std::string>::type>;
+template kc::flat_set<std::string, cmp_fnptr<std::string>::type>::flat_set(const_pointer, const_pointer, int);
+template kc::flat_multiset<std::string, cmp_fnptr<std::string>::type>::flat_multiset(const_pointer, const_pointer, int);
+
+
+
+struct Recursive
+{
+		kc::flat_set<Recursive> data;
+		kc::flat_set<Recursive>::const_iterator kit;
+		kc::flat_set<Recursive>::const_reverse_iterator krit;
+
+		Recursive();
+		Recursive(const Recursive &);
+		Recursive& operator=(const Recursive &);
+
+		bool operator==(const Recursive & with) const KERBAL_NOEXCEPT;
+		bool operator<(const Recursive & with) const KERBAL_NOEXCEPT;
+};
+
+template class
+kc::flat_set<Recursive>;

@@ -11,11 +11,33 @@
 
 #include <kerbal/container/flat_ordered.hpp>
 
+namespace kc = kerbal::container;
+
+
 template <typename T>
 struct cmp_fnptr
 {
 		typedef bool(*type)(const T&, const T&);
 };
 
-template class kerbal::container::flat_ordered<int, int, cmp_fnptr<int>::type>;
-template kerbal::container::flat_ordered<int, int, cmp_fnptr<int>::type>::flat_ordered(const_pointer, const_pointer, int);
+template class kc::flat_ordered<int, int, cmp_fnptr<int>::type>;
+template kc::flat_ordered<int, int, cmp_fnptr<int>::type>::flat_ordered(const_pointer, const_pointer, int);
+
+
+
+struct Recursive
+{
+		kc::flat_ordered<Recursive> data;
+		kc::flat_ordered<Recursive>::const_iterator kit;
+		kc::flat_ordered<Recursive>::const_reverse_iterator krit;
+
+		Recursive();
+		Recursive(const Recursive &);
+		Recursive& operator=(const Recursive &);
+
+		bool operator==(const Recursive & with) const KERBAL_NOEXCEPT;
+		bool operator<(const Recursive & with) const KERBAL_NOEXCEPT;
+};
+
+template class
+kc::flat_ordered<Recursive>;

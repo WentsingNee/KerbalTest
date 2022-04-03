@@ -11,5 +11,25 @@
 
 #include <kerbal/container/linked_stack.hpp>
 
-template class kerbal::container::linked_stack<int>;
-template class kerbal::container::linked_stack<int[8]>;
+namespace kc = kerbal::container;
+
+
+template class kc::linked_stack<int>;
+template class kc::linked_stack<int[8]>;
+
+
+
+struct Recursive
+{
+		kc::linked_stack<Recursive> data;
+
+		bool operator==(const Recursive & with) const;
+		bool operator!=(const Recursive & with) const;
+		bool operator<(const Recursive & with) const;
+		bool operator>(const Recursive & with) const;
+		bool operator<=(const Recursive & with) const;
+		bool operator>=(const Recursive & with) const;
+};
+
+template class
+kc::linked_stack<Recursive>;

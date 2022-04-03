@@ -534,3 +534,22 @@ bool operator>=(const kc::list<int, std::allocator<int> > &, const kc::list<int,
 #	endif
 
 #endif
+
+
+
+struct Recursive
+{
+		kc::list<Recursive> data;
+		kc::list<Recursive>::iterator it;
+		kc::list<Recursive>::const_iterator kit;
+		kc::list<Recursive>::reverse_iterator rit;
+		kc::list<Recursive>::const_reverse_iterator krit;
+
+		Recursive();
+
+		bool operator==(const Recursive & with) const KERBAL_NOEXCEPT;
+		bool operator<(const Recursive & with) const KERBAL_NOEXCEPT;
+};
+
+template class
+kc::list<Recursive>;
