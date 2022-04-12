@@ -75,16 +75,16 @@ struct KERBAL_ALIGNAS(Align) Foo
 KERBAL_TEST_CASE(test_over_aligned_new2, "test over_aligned_new 2")
 {
 	Foo<32> * p5 = new Foo<32>();
-	KERBAL_TEST_CHECK_EQUAL(reinterpret_cast<std::size_t>(p5) % 32, 0u);
+	KERBAL_TEST_CHECK_EQUAL(reinterpret_cast<std::size_t>(p5) % KERBAL_ALIGNOF(Foo<32>), 0u);
 
 	Foo<64> * p6 = new Foo<64>();
-	KERBAL_TEST_CHECK_EQUAL(reinterpret_cast<std::size_t>(p6) % 64, 0u);
+	KERBAL_TEST_CHECK_EQUAL(reinterpret_cast<std::size_t>(p6) % KERBAL_ALIGNOF(Foo<64>), 0u);
 
 	Foo<128> * p7 = new Foo<128>();
-	KERBAL_TEST_CHECK_EQUAL(reinterpret_cast<std::size_t>(p7) % 128, 0u);
+	KERBAL_TEST_CHECK_EQUAL(reinterpret_cast<std::size_t>(p7) % KERBAL_ALIGNOF(Foo<128>), 0u);
 
 	Foo<256> * p8 = new Foo<256>();
-	KERBAL_TEST_CHECK_EQUAL(reinterpret_cast<std::size_t>(p8) % 256, 0u);
+	KERBAL_TEST_CHECK_EQUAL(reinterpret_cast<std::size_t>(p8) % KERBAL_ALIGNOF(Foo<256>), 0u);
 
 	delete p5;
 	delete p6;
