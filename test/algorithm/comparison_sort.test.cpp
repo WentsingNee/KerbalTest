@@ -61,7 +61,7 @@ get_sorting_algos(std::bidirectional_iterator_tag)
 			kerbal::algorithm::quick_sort<Iterator, Compare>,
 			kerbal::algorithm::nonrecursive_qsort<Iterator, Compare>,
 			kerbal::algorithm::selection_sort<Iterator, Compare>,
-			//	kerbal::algorithm::shell_sort<Iterator, Compare>,
+			kerbal::algorithm::shell_sort<Iterator, Compare>,
 			kerbal::algorithm::stable_sort<Iterator, Compare>,
 			kerbal::algorithm::sort<Iterator, Compare>,
 	};
@@ -87,7 +87,7 @@ get_sorting_algos(std::random_access_iterator_tag)
 			kerbal::algorithm::quick_sort<Iterator, Compare>,
 			kerbal::algorithm::nonrecursive_qsort<Iterator, Compare>,
 			kerbal::algorithm::selection_sort<Iterator, Compare>,
-//			kerbal::algorithm::shell_sort<Iterator, Compare>, // bug!!!
+			kerbal::algorithm::shell_sort<Iterator, Compare>,
 			kerbal::algorithm::stable_sort<Iterator, Compare>,
 	};
 
@@ -201,7 +201,7 @@ KERBAL_TEMPLATE_TEST_CASE(test_sort, "test sort")
 	std::sort(v.begin(), v.end(), cmp);
 
 	test_s(kerbal::container::vector<T>);
-# if KERBAL_COMPILER_ID != KERBAL_COMPILER_ID_ICC // CE
+# if KERBAL_COMPILER_ID != KERBAL_COMPILER_ID_ICC || __cplusplus < 201402L // CE
 	test_s(std::deque<T>);
 # endif
 	test_s(kerbal::container::list<T>);
@@ -210,6 +210,9 @@ KERBAL_TEMPLATE_TEST_CASE(test_sort, "test sort")
 
 }
 
+KERBAL_TEMPLATE_TEST_CASE_INST(test_sort, "test sort (random, int)", int, kerbal::compare::less<>, 0, get_random<int>);
+KERBAL_TEMPLATE_TEST_CASE_INST(test_sort, "test sort (random, int)", int, kerbal::compare::less<>, 1, get_random<int>);
+KERBAL_TEMPLATE_TEST_CASE_INST(test_sort, "test sort (random, int)", int, kerbal::compare::less<>, 3, get_random<int>);
 KERBAL_TEMPLATE_TEST_CASE_INST(test_sort, "test sort (random, int)", int, kerbal::compare::less<>, 30000, get_random<int>);
 KERBAL_TEMPLATE_TEST_CASE_INST(test_sort, "test sort (sorted, int)", int, kerbal::compare::less<>, 30000, get_sorted<int, kerbal::compare::less<> >);
 KERBAL_TEMPLATE_TEST_CASE_INST(test_sort, "test sort (reverse, int)", int, kerbal::compare::less<>, 30000, get_reverse<int, kerbal::compare::less<> >);
