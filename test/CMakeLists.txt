@@ -42,6 +42,7 @@ add_subdirectory(./ompalgo/)
 
 add_kerbal_sub_lib(optional)
 add_kerbal_sub_lib(random)
+add_kerbal_sub_lib(stacktrace)
 add_kerbal_sub_lib(test)
 add_kerbal_sub_lib(type_traits)
 add_kerbal_sub_lib(utility)
