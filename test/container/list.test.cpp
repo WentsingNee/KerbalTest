@@ -15,6 +15,7 @@
 #include <kerbal/test/test.hpp>
 #include <kerbal/algorithm/modifier.hpp>
 #include <kerbal/algorithm/sequence_compare.hpp>
+#include <kerbal/algorithm/sort/merge_sort.hpp>
 #include <kerbal/algorithm/sort/sort.hpp>
 #include <kerbal/compare/basic_compare.hpp>
 #include <kerbal/container/nonmember_container_access.hpp>
@@ -23,7 +24,6 @@
 #include <kerbal/test/object_count.hpp>
 
 #include <list>
-#include <map>
 
 #if __cplusplus >= 201103L
 #	include <type_traits>
@@ -840,6 +840,25 @@ KERBAL_TEMPLATE_TEST_CASE_INST(test_list_merge, "test list::merge(may_throw)", t
 KERBAL_TEMPLATE_TEST_CASE_INST(test_list_merge, "test list::merge(nothrow)", test_list_merge_nothrow_cmp);
 
 
+
+template <typename T, typename BinaryPredict>
+struct test_list_merge_is_stable_sort_helper
+{
+		BinaryPredict cmp;
+
+		KERBAL_CONSTEXPR
+		test_list_merge_is_stable_sort_helper(const BinaryPredict & cmp) KERBAL_NOEXCEPT :
+				cmp(cmp)
+		{
+		}
+
+		KERBAL_CONSTEXPR
+		bool operator()(const T * a, const T * b) const KERBAL_NOEXCEPT
+		{
+			return cmp(*a, *b);
+		}
+};
+
 KERBAL_TEST_CASE(test_list_merge_is_stable, "test list::merge is_stable")
 {
 	kerbal::random::mt19937 eg;
@@ -884,26 +903,45 @@ KERBAL_TEST_CASE(test_list_merge_is_stable, "test list::merge is_stable")
 
 		typedef kerbal::container::list<int>::const_iterator l_kiter;
 
-		std::map<int, kerbal::container::vector<const int*> > m;
+		kerbal::container::vector<const int*> vp;
 		{
+			vp.reserve(into_init_len + other_init_len);
 			for (l_kiter it = l_into.cbegin(); it != l_into.cend(); ++it) {
-				m[*it].push_back(&*it);
+				vp.push_back(&*it);
 			}
 			for (l_kiter it = l_other.cbegin(); it != l_other.cend(); ++it) {
-				m[*it].push_back(&*it);
+				vp.push_back(&*it);
 			}
 		}
 
-		l_into.merge(l_other);
+		typedef kerbal::compare::less<int> Compare;
+		Compare cmp;
+		kerbal::algorithm::merge_sort(vp.begin(), vp.end(), test_list_merge_is_stable_sort_helper<int, Compare>(cmp));
 
-		std::map<int, kerbal::container::vector<const int*> > m2;
+		l_into.merge(l_other, cmp);
+
+
 		{
-			for (l_kiter it = l_into.cbegin(); it != l_into.cend(); ++it) {
-				m2[*it].push_back(&*it);
-			}
-		}
+			typedef kerbal::container::vector<const int*>::const_iterator vec_kiter;
+			vec_kiter vit = vp.cbegin();
+			vec_kiter vend = vp.cend();
+			l_kiter lit = l_into.cbegin();
+			l_kiter lend = l_into.cend();
 
-		KERBAL_TEST_CHECK(m == m2);
+			bool check = true;
+			while (vit != vend && lit != lend) {
+				if (*vit != &*lit) {
+					check = false;
+					break;
+				}
+				++vit;
+				++lit;
+			}
+			if (vit != vend || lit != lend) {
+				check = false;
+			}
+			KERBAL_TEST_CHECK(check);
+		}
 
 	}
 
@@ -1075,6 +1113,24 @@ KERBAL_TEST_CASE(test_list_sort, "test list::sort")
 }
 
 
+template <typename T, typename BinaryPredict>
+struct list_radix_sort_is_stable_sort_helper
+{
+		BinaryPredict cmp;
+
+		KERBAL_CONSTEXPR
+		list_radix_sort_is_stable_sort_helper(const BinaryPredict & cmp) KERBAL_NOEXCEPT :
+				cmp(cmp)
+		{
+		}
+
+		KERBAL_CONSTEXPR
+		bool operator()(const T * a, const T * b) const KERBAL_NOEXCEPT
+		{
+			return cmp(*a, *b);
+		}
+};
+
 template <typename T, typename Order>
 KERBAL_TEMPLATE_TEST_CASE(test_list_radix_sort_is_stable, "test list::radix_sort is stable")
 {
@@ -1089,28 +1145,40 @@ KERBAL_TEMPLATE_TEST_CASE(test_list_radix_sort_is_stable, "test list::radix_sort
 			kerbal::container::list<T> l;
 			typedef typename kerbal::container::list<T>::const_iterator const_iterator;
 
-			for (int j = 0; j < 3; ++j) {
-				for (std::size_t i = 0; i < list_size; ++i) {
-					T x = eg();
-					l.push_back(x);
-				}
+			kerbal::container::vector<const T*> vp;
+			vp.resize(list_size);
+			for (std::size_t i = 0; i < list_size; ++i) {
+				T x = eg();
+				vp[i] = &l.emplace_back(x);
 			}
 
-			std::map<int, kerbal::container::vector<const void*> > m; {
-				for (const_iterator it = l.cbegin(); it != l.cend(); ++it) {
-					m[*it].push_back(&*it);
+			kerbal::algorithm::merge_sort(vp.begin(), vp.end(), list_radix_sort_is_stable_sort_helper<T, Order>(Order()));
+
+			l.sort(Order());
+
+
+			{
+				typedef typename kerbal::container::vector<const T*>::const_iterator vec_kiter;
+				vec_kiter vit = vp.cbegin();
+				vec_kiter vend = vp.cend();
+				const_iterator lit = l.cbegin();
+				const_iterator lend = l.cend();
+
+				bool check = true;
+				while (vit != vend && lit != lend) {
+					if (*vit != &*lit) {
+						check = false;
+						break;
+					}
+					++vit;
+					++lit;
 				}
+				if (vit != vend || lit != lend) {
+					check = false;
+				}
+				KERBAL_TEST_CHECK(check);
 			}
 
-			l.sort();
-
-			std::map<int, kerbal::container::vector<const void*> > m2; {
-				for (const_iterator it = l.cbegin(); it != l.cend(); ++it) {
-					m2[*it].push_back(&*it);
-				}
-			}
-
-			KERBAL_TEST_CHECK(m == m2);
 		}
 
 	} // test loop
@@ -1192,9 +1260,9 @@ int t(int n)
 		l.push_back(i);
 	}
 
-//	for (int i = 0; i < n; ++i) {
-//		l.push_front(i);
-//	}
+	for (int i = 0; i < n; ++i) {
+		l.push_front(i);
+	}
 
 	l.reverse();
 	l.sort();

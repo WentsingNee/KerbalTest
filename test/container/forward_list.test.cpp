@@ -14,6 +14,7 @@
 #include <kerbal/test/test.hpp>
 #include <kerbal/algorithm/modifier.hpp>
 #include <kerbal/algorithm/sequence_compare.hpp>
+#include <kerbal/algorithm/sort/merge_sort.hpp>
 #include <kerbal/algorithm/sort/sort.hpp>
 #include <kerbal/compare/basic_compare.hpp>
 #include <kerbal/container/list.hpp>
@@ -22,7 +23,6 @@
 #include <kerbal/random/mersenne_twister_engine.hpp>
 
 #include <list>
-#include <map>
 
 #if __cplusplus >= 201103L
 #	include <forward_list>
@@ -777,6 +777,25 @@ KERBAL_TEST_CASE(test_forward_list_merge, "test forward::merge")
 }
 
 
+template <typename T, typename BinaryPredict>
+struct test_forward_list_merge_is_stable_sort_helper
+{
+		BinaryPredict cmp;
+
+		KERBAL_CONSTEXPR
+		test_forward_list_merge_is_stable_sort_helper(const BinaryPredict & cmp) KERBAL_NOEXCEPT :
+				cmp(cmp)
+		{
+		}
+
+		KERBAL_CONSTEXPR
+		bool operator()(const T * a, const T * b) const KERBAL_NOEXCEPT
+		{
+			return cmp(*a, *b);
+		}
+};
+
+
 KERBAL_TEST_CASE(test_forward_list_merge_is_stable, "test forward_list::merge is_stable")
 {
 	kerbal::random::mt19937 eg;
@@ -821,26 +840,44 @@ KERBAL_TEST_CASE(test_forward_list_merge_is_stable, "test forward_list::merge is
 
 		typedef kerbal::container::forward_list<int>::const_iterator fl_kiter;
 
-		std::map<int, kerbal::container::vector<const int*> > m;
+		kerbal::container::vector<const int*> vp;
 		{
+			vp.reserve(into_init_len + other_init_len);
 			for (fl_kiter it = fl_into.cbegin(); it != fl_into.cend(); ++it) {
-				m[*it].push_back(&*it);
+				vp.push_back(&*it);
 			}
 			for (fl_kiter it = fl_other.cbegin(); it != fl_other.cend(); ++it) {
-				m[*it].push_back(&*it);
+				vp.push_back(&*it);
 			}
 		}
 
-		fl_into.merge(fl_other);
+		typedef kerbal::compare::less<int> Compare;
+		Compare cmp;
+		kerbal::algorithm::merge_sort(vp.begin(), vp.end(), test_forward_list_merge_is_stable_sort_helper<int, Compare>(cmp));
 
-		std::map<int, kerbal::container::vector<const int*> > m2;
+		fl_into.merge(fl_other, cmp);
+
 		{
-			for (fl_kiter it = fl_into.cbegin(); it != fl_into.cend(); ++it) {
-				m2[*it].push_back(&*it);
-			}
-		}
+			typedef kerbal::container::vector<const int*>::const_iterator vec_kiter;
+			vec_kiter vit = vp.cbegin();
+			vec_kiter vend = vp.cend();
+			fl_kiter lit = fl_into.cbegin();
+			fl_kiter lend = fl_into.cend();
 
-		KERBAL_TEST_CHECK(m == m2);
+			bool check = true;
+			while (vit != vend && lit != lend) {
+				if (*vit != &*lit) {
+					check = false;
+					break;
+				}
+				++vit;
+				++lit;
+			}
+			if (vit != vend || lit != lend) {
+				check = false;
+			}
+			KERBAL_TEST_CHECK(check);
+		}
 
 	}
 
