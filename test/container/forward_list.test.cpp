@@ -938,6 +938,90 @@ KERBAL_TEST_CASE(test_forward_list_sort, "test forward_list::sort")
 }
 
 
+template <typename T, typename BinaryPredict>
+struct forward_list_radix_sort_is_stable_sort_helper
+{
+		BinaryPredict cmp;
+
+		KERBAL_CONSTEXPR
+		forward_list_radix_sort_is_stable_sort_helper(const BinaryPredict & cmp) KERBAL_NOEXCEPT :
+			cmp(cmp)
+		{
+		}
+
+		KERBAL_CONSTEXPR
+		bool operator()(const T * a, const T * b) const KERBAL_NOEXCEPT
+		{
+			return cmp(*a, *b);
+		}
+};
+
+template <typename T, typename Order>
+KERBAL_TEMPLATE_TEST_CASE(test_forward_list_radix_sort_is_stable, "test forward_list::radix_sort is stable")
+{
+	kerbal::random::mt19937 eg;
+
+	const std::size_t size_group[] = {0, 1, 2, 4, 5, 6, 8, 9, 100, 1024, 60000};
+
+	for (std::size_t tcase = 0; tcase < kerbal::container::size(size_group); ++tcase) {
+		std::size_t list_size = size_group[tcase];
+
+		{
+			kerbal::container::forward_list<T> l;
+			typedef typename kerbal::container::forward_list<T>::const_iterator const_iterator;
+
+			kerbal::container::vector<const T*> vp;
+			vp.resize(list_size);
+			for (std::size_t i = 0; i < list_size; ++i) {
+				T x = eg();
+				vp[list_size - 1 - i] = &l.emplace_front(x);
+			}
+
+			kerbal::algorithm::merge_sort(vp.begin(), vp.end(), forward_list_radix_sort_is_stable_sort_helper<T, Order>(Order()));
+
+			l.sort(Order());
+
+
+			{
+				typedef typename kerbal::container::vector<const T*>::const_iterator vec_kiter;
+				vec_kiter vit = vp.cbegin();
+				vec_kiter vend = vp.cend();
+				const_iterator lit = l.cbegin();
+				const_iterator lend = l.cend();
+
+				bool check = true;
+				while (vit != vend && lit != lend) {
+					if (*vit != &*lit) {
+						check = false;
+						break;
+					}
+					++vit;
+					++lit;
+				}
+				if (vit != vend || lit != lend) {
+					check = false;
+				}
+				KERBAL_TEST_CHECK(check);
+			}
+
+		}
+
+	} // test loop
+
+}
+
+KERBAL_TEMPLATE_TEST_CASE_INST(test_forward_list_radix_sort_is_stable, "test forward_list::radix_sort is stable (short, asc)", short, kerbal::compare::less<>);
+KERBAL_TEMPLATE_TEST_CASE_INST(test_forward_list_radix_sort_is_stable, "test forward_list::radix_sort is stable (short, desc)", short, kerbal::compare::greater<>);
+KERBAL_TEMPLATE_TEST_CASE_INST(test_forward_list_radix_sort_is_stable, "test forward_list::radix_sort is stable (ushort, asc)", unsigned short, kerbal::compare::less<>);
+KERBAL_TEMPLATE_TEST_CASE_INST(test_forward_list_radix_sort_is_stable, "test forward_list::radix_sort is stable (ushort, desc)", unsigned short, kerbal::compare::greater<>);
+
+KERBAL_TEMPLATE_TEST_CASE_INST(test_forward_list_radix_sort_is_stable, "test forward_list::radix_sort is stable (int, asc)", int, kerbal::compare::less<>);
+KERBAL_TEMPLATE_TEST_CASE_INST(test_forward_list_radix_sort_is_stable, "test forward_list::radix_sort is stable (int, desc)", int, kerbal::compare::greater<>);
+KERBAL_TEMPLATE_TEST_CASE_INST(test_forward_list_radix_sort_is_stable, "test forward_list::radix_sort is stable (uint, asc)", unsigned int, kerbal::compare::less<>);
+KERBAL_TEMPLATE_TEST_CASE_INST(test_forward_list_radix_sort_is_stable, "test forward_list::radix_sort is stable (uint, desc)", unsigned int, kerbal::compare::greater<>);
+
+
+
 int main(int argc, char * argv[])
 {
 	kerbal::test::run_all_test_case(argc, argv);
