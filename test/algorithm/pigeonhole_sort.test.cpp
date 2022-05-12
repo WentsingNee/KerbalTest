@@ -12,9 +12,9 @@
 #include <kerbal/algorithm/sort.hpp>
 
 #include <kerbal/test/test.hpp>
-#include <kerbal/algorithm/sequence_compare.hpp>
 #include <kerbal/algorithm/sort.hpp>
 #include <kerbal/compare/basic_compare.hpp>
+#include <kerbal/compare/sequence_compare.hpp>
 #include <kerbal/container/nonmember_container_access.hpp>
 #include <kerbal/container/array.hpp>
 #include <kerbal/random/mersenne_twister_engine.hpp>
@@ -52,7 +52,7 @@ struct test_suite
 			typedef typename kerbal::type_traits::conditional<Order::value, kerbal::compare::greater<>, kerbal::compare::less<> >::type compare;
 			kerbal::algorithm::sort(begin2, end2, compare());
 
-			return (kerbal::algorithm::sequence_equal_to(begin, end, begin2, end2));
+			return (kerbal::compare::sequence_equal_to(begin, end, begin2, end2));
 		}
 };
 

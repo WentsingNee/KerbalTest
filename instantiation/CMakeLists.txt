@@ -43,6 +43,7 @@ endfunction()
 
 add_kerbal_sub_lib(algorithm)
 add_kerbal_sub_lib(bitset)
+add_kerbal_sub_lib(compare)
 add_kerbal_sub_lib(container)
 add_kerbal_sub_lib(hash)
 add_kerbal_sub_lib(memory)

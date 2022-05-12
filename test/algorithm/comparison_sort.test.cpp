@@ -182,7 +182,7 @@ kerbal::container::vector<T> get_few_unique(size_t N, kerbal::random::mt19937 & 
 		std::cout << "testing: " << i << " / " << algos_num << std::flush; \
 		container c(v.begin(), v.end()); \
 		algos[i](c.begin(), c.end(), cmp); \
-		KERBAL_TEST_CHECK(kerbal::algorithm::sequence_equal_to(v.begin(), v.end(), c.begin(), c.end())); \
+		KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(v.begin(), v.end(), c.begin(), c.end())); \
 		std::cout << "    --- pass" << std::endl; \
 	} \
 } while (false)

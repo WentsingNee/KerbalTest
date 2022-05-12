@@ -12,7 +12,7 @@
 #include <kerbal/container/static_vector.hpp>
 
 #include <kerbal/test/test.hpp>
-#include <kerbal/algorithm/sequence_compare.hpp>
+#include <kerbal/compare/sequence_compare.hpp>
 #include <kerbal/container/nonmember_container_access.hpp>
 #include <kerbal/container/vector.hpp>
 #include <kerbal/random/mersenne_twister_engine.hpp>
@@ -65,13 +65,13 @@ KERBAL_TEST_CASE(test_static_vector_copy_construct, "test static_vector::static_
 		kc::static_vector<int, 20> sv;
 		kc::static_vector<int, 20> sv2(sv);
 		KERBAL_TEST_CHECK(sv.size() == sv2.size());
-		KERBAL_TEST_CHECK(kerbal::algorithm::sequence_equal_to(sv, sv2));
+		KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(sv, sv2));
 	}
 	{
 		kc::static_vector<int, 20> sv = KERBAL_ILIST(1, 2, 3, 4, 5);
 		kc::static_vector<int, 20> sv2(sv);
 		KERBAL_TEST_CHECK(sv.size() == sv2.size());
-		KERBAL_TEST_CHECK(kerbal::algorithm::sequence_equal_to(sv, sv2));
+		KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(sv, sv2));
 	}
 
 	{
@@ -327,7 +327,7 @@ KERBAL_TEST_CASE(test_static_vector_with_integer_sequence, "test static_vector w
 	KERBAL_CONSTEXPR14 kc::static_vector<int, 10> svr = {0, 1, 2, 3, 4};
 
 	KERBAL_TEST_CHECK_EQUAL_STATIC(
-			kerbal::algorithm::sequence_equal_to(sv, svr), true);
+			kerbal::compare::sequence_equal_to(sv, svr), true);
 
 }
 

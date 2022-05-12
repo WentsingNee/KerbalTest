@@ -12,7 +12,7 @@
 #include <kerbal/bitset/static_bitset.hpp>
 
 #include <kerbal/test/test.hpp>
-#include <kerbal/algorithm/sequence_compare.hpp>
+#include <kerbal/compare/sequence_compare.hpp>
 #include <kerbal/random/mersenne_twister_engine.hpp>
 
 
@@ -85,7 +85,7 @@ KERBAL_TEMPLATE_TEST_CASE(test_static_bitset_set, "test static_bitset::set")
 		for (size_t i = 0; i < bs.size(); ++i) {
 			bs.set(i);
 			ba[i] = true;
-			KERBAL_TEST_CHECK(kerbal::algorithm::sequence_equal_to(bs.bitarray(), ba));
+			KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(bs.bitarray(), ba));
 		}
 	}
 
@@ -98,7 +98,7 @@ KERBAL_TEMPLATE_TEST_CASE(test_static_bitset_set, "test static_bitset::set")
 		for (size_t i = 0; i < bs.size(); ++i) {
 			bs.set(i, false);
 			ba[i] = false;
-			KERBAL_TEST_CHECK(kerbal::algorithm::sequence_equal_to(bs.bitarray(), ba));
+			KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(bs.bitarray(), ba));
 		}
 	}
 
@@ -132,7 +132,7 @@ KERBAL_TEMPLATE_TEST_CASE(test_static_bitset_reset, "test static_bitset::reset")
 	for (size_t i = 0; i < bs.size(); ++i) {
 		bs.reset(i);
 		ba[i] = false;
-		KERBAL_TEST_CHECK(kerbal::algorithm::sequence_equal_to(bs.bitarray(), ba));
+		KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(bs.bitarray(), ba));
 	}
 }
 
@@ -164,7 +164,7 @@ KERBAL_TEMPLATE_TEST_CASE(test_static_bitset_flip, "test static_bitset::flip")
 	for (size_t i = 0; i < bs.size(); ++i) {
 		bs.flip(i);
 		ba[i] = !ba[i];
-		KERBAL_TEST_CHECK(kerbal::algorithm::sequence_equal_to(bs.bitarray(), ba));
+		KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(bs.bitarray(), ba));
 	}
 
 }
@@ -216,7 +216,7 @@ KERBAL_TEST_CASE(test_static_bitset_for_each, "test static_bitset::for_each")
 	bool bout[N::value];
 	bs.for_each(fs_for_each_test_f(bout));
 
-	KERBAL_TEST_CHECK(kerbal::algorithm::sequence_equal_to(
+	KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(
 			ba.cbegin(), ba.cend(),
 			bout, bout + N::value
 	));

@@ -13,7 +13,7 @@
 
 #include <kerbal/test/test.hpp>
 
-#include <kerbal/algorithm/sequence_compare.hpp>
+#include <kerbal/compare/sequence_compare.hpp>
 #include <kerbal/container/nonmember_container_access.hpp>
 #include <kerbal/container/static_vector.hpp>
 
@@ -54,7 +54,7 @@ KERBAL_TEST_CASE(test_kmp_longest_matched_suffix, "test kmp longest_matched_suff
 		kerbal::algorithm::longest_matched_suffix_prefix(s[i], s[i] + strlen(s[i]), next);
 
 		KERBAL_TEST_CHECK(
-				kerbal::algorithm::sequence_equal_to(
+				kerbal::compare::sequence_equal_to(
 						kerbal::container::begin(next), kerbal::container::begin(next) + next_ans[i].size(),
 						kerbal::container::begin(next_ans[i]), kerbal::container::end(next_ans[i]))
 		);
@@ -146,7 +146,7 @@ KERBAL_TEST_CASE(test_kmp_visually, "test kmp visually")
 				break;
 			}
 
-			KERBAL_TEST_CHECK(kerbal::algorithm::sequence_equal_to(
+			KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(
 					it_find, it_find + pattern.length(),
 					pattern.begin(), pattern.end()));
 

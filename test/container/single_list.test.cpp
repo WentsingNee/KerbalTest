@@ -13,7 +13,7 @@
 
 #include <kerbal/test/test.hpp>
 #include <kerbal/algorithm/modifier.hpp>
-#include <kerbal/algorithm/sequence_compare.hpp>
+#include <kerbal/compare/sequence_compare.hpp>
 #include <kerbal/container/list.hpp>
 #include <kerbal/container/nonmember_container_access.hpp>
 #include <kerbal/type_traits/integral_constant.hpp>
@@ -134,7 +134,7 @@ KERBAL_TEST_CASE(test_single_list_range_copy_construct, "test single_list::singl
 
 	{
 		kerbal::container::single_list<int> l(kerbal::container::begin(arr), kerbal::container::end(arr));
-		KERBAL_TEST_CHECK(kerbal::algorithm::sequence_equal_to(
+		KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(
 				l.cbegin(), l.cend(),
 				kerbal::container::cbegin(arr), kerbal::container::cend(arr)));
 	}
@@ -151,7 +151,7 @@ KERBAL_TEST_CASE(single_list_initializer_list_construct, "test single_list::sing
 	{
 		kerbal::container::single_list<int> l = KERBAL_ILIST(1, 2, 3, 4);
 		int a[] =            {1, 2, 3, 4};
-		KERBAL_TEST_CHECK(kerbal::algorithm::sequence_equal_to(
+		KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(
 				l.cbegin(), l.cend(),
 				kerbal::container::cbegin(a), kerbal::container::cend(a)));
 	}
@@ -185,12 +185,12 @@ KERBAL_TEST_CASE(single_list_move_construct, "test single_list::single_list(sing
 
 		{
 			int a[] =            {1, 2, 3, 4};
-			KERBAL_TEST_CHECK(kerbal::algorithm::sequence_equal_to(
+			KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(
 					m.cbegin(), m.cend(),
 					kerbal::container::cbegin(a), kerbal::container::cend(a)));
 		}
 
-		KERBAL_TEST_CHECK(kerbal::algorithm::sequence_equal_to(
+		KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(
 				lp.cbegin(), lp.cend(),
 				mp.cbegin(), mp.cend()));
 	}
@@ -210,38 +210,38 @@ KERBAL_TEST_CASE(single_list_emplace, "single_list::emplace")
 				l.emplace_back(i);
 				m.push_back(i);
 			}
-			KERBAL_TEST_CHECK(kerbal::algorithm::sequence_equal_to(l.cbegin(), l.cend(), m.cbegin(), m.cend()));
+			KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(l.cbegin(), l.cend(), m.cbegin(), m.cend()));
 		}
 		{
 			l.emplace(l.cbegin(), -1);
 			m.insert(m.begin(), -1);
-			KERBAL_TEST_CHECK(kerbal::algorithm::sequence_equal_to(l.cbegin(), l.cend(), m.cbegin(), m.cend()));
+			KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(l.cbegin(), l.cend(), m.cbegin(), m.cend()));
 		}
 		{
 			l.emplace(l.cend(), -2);
 			m.insert(m.end(), -2);
-			KERBAL_TEST_CHECK(kerbal::algorithm::sequence_equal_to(l.cbegin(), l.cend(), m.cbegin(), m.cend()));
+			KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(l.cbegin(), l.cend(), m.cbegin(), m.cend()));
 		}
 		{
 			l.emplace(l.nth(2), -3);
 			m.insert(kerbal::iterator::next(m.begin(), 2), -3);
-			KERBAL_TEST_CHECK(kerbal::algorithm::sequence_equal_to(l.cbegin(), l.cend(), m.cbegin(), m.cend()));
+			KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(l.cbegin(), l.cend(), m.cbegin(), m.cend()));
 		}
 		{
 			l.emplace(l.cbegin(), -4);
 			m.insert(m.begin(), -4);
-			KERBAL_TEST_CHECK(kerbal::algorithm::sequence_equal_to(l.cbegin(), l.cend(), m.cbegin(), m.cend()));
+			KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(l.cbegin(), l.cend(), m.cbegin(), m.cend()));
 		}
 		{
 			l.emplace(l.cend(), -5);
 			m.insert(m.end(), -5);
-			KERBAL_TEST_CHECK(kerbal::algorithm::sequence_equal_to(l.cbegin(), l.cend(), m.cbegin(), m.cend()));
+			KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(l.cbegin(), l.cend(), m.cbegin(), m.cend()));
 		}
 
 		{
 			*l.emplace(l.nth(5), 6) = -6;
 			*m.insert(kerbal::iterator::next(m.begin(), 5), 6) = -6;
-			KERBAL_TEST_CHECK(kerbal::algorithm::sequence_equal_to(l.cbegin(), l.cend(), m.cbegin(), m.cend()));
+			KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(l.cbegin(), l.cend(), m.cbegin(), m.cend()));
 		}
 	}
 }
@@ -262,7 +262,7 @@ KERBAL_TEST_CASE(single_list_erase, "single_list::erase")
 
 		int a[] = {0, 1, 5, 6, 7, 9};
 
-		KERBAL_TEST_CHECK(kerbal::algorithm::sequence_equal_to(
+		KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(
 				l.cbegin(), l.cend(),
 				kerbal::container::cbegin(a), kerbal::container::cend(a)));
 
@@ -304,10 +304,10 @@ KERBAL_TEST_CASE(single_list_swap, "single_list::swap")
 
 		l.swap(m);
 
-		KERBAL_TEST_CHECK(kerbal::algorithm::sequence_equal_to(
+		KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(
 				l.cbegin(), l.cend(),
 				kerbal::container::cbegin(b), kerbal::container::cend(b)));
-		KERBAL_TEST_CHECK(kerbal::algorithm::sequence_equal_to(
+		KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(
 				m.cbegin(), m.cend(),
 				kerbal::container::cbegin(a), kerbal::container::cend(a)));
 	}
@@ -324,7 +324,7 @@ KERBAL_TEST_CASE(single_list_swap, "single_list::swap")
 		l.swap(m);
 
 		KERBAL_TEST_CHECK(l.empty());
-		KERBAL_TEST_CHECK(kerbal::algorithm::sequence_equal_to(
+		KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(
 				m.cbegin(), m.cend(),
 				kerbal::container::begin(a), kerbal::container::end(a)));
 	}
@@ -340,7 +340,7 @@ KERBAL_TEST_CASE(single_list_swap, "single_list::swap")
 
 		l.swap(m);
 
-		KERBAL_TEST_CHECK(kerbal::algorithm::sequence_equal_to(
+		KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(
 				l.cbegin(), l.cend(),
 				kerbal::container::begin(a), kerbal::container::end(a)));
 		KERBAL_TEST_CHECK(m.empty());
@@ -367,7 +367,7 @@ KERBAL_TEST_CASE(test_single_list_push_back, "test single_list::push_back")
 	for (int i = 0; i < 10; ++i) {
 		l.push_back(i);
 		m.push_back(i);
-		KERBAL_TEST_CHECK(kerbal::algorithm::sequence_equal_to(l.cbegin(), l.cend(), m.cbegin(), m.cend()));
+		KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(l.cbegin(), l.cend(), m.cbegin(), m.cend()));
 	}
 }
 
@@ -380,7 +380,7 @@ KERBAL_TEST_CASE(test_single_list_push_front, "test single_list::push_front")
 	for (int i = 1; i < 10; ++i) {
 		l.push_front(i);
 		m.push_front(i);
-		KERBAL_TEST_CHECK(kerbal::algorithm::sequence_equal_to(l.cbegin(), l.cend(), m.cbegin(), m.cend()));
+		KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(l.cbegin(), l.cend(), m.cbegin(), m.cend()));
 	}
 
 }
@@ -391,13 +391,13 @@ KERBAL_TEST_CASE(test_single_list_pop_front, "test single_list::pop_front")
 	kerbal::container::single_list<int> l = KERBAL_ILIST(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
 	kerbal::container::list<int> m = KERBAL_ILIST(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
 
-	KERBAL_TEST_CHECK(kerbal::algorithm::sequence_equal_to(l.cbegin(), l.cend(), m.cbegin(), m.cend()));
+	KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(l.cbegin(), l.cend(), m.cbegin(), m.cend()));
 
 	while (!l.empty()) {
 		l.pop_front();
 		m.pop_front();
 
-		KERBAL_TEST_CHECK(kerbal::algorithm::sequence_equal_to(l.cbegin(), l.cend(), m.cbegin(), m.cend()));
+		KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(l.cbegin(), l.cend(), m.cbegin(), m.cend()));
 	}
 
 }
@@ -425,7 +425,7 @@ KERBAL_TEST_CASE(test_single_list_iter_swap, "test single_list::iter_swap")
 		l.iter_swap(l.nth(r[i].first), l.nth(r[i].second));
 		kerbal::algorithm::iter_swap(kerbal::iterator::next(ls.begin(), r[i].first), kerbal::iterator::next(ls.begin(), r[i].second));
 
-		KERBAL_TEST_CHECK(kerbal::algorithm::sequence_equal_to(
+		KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(
 				l.cbegin(), l.cend(),
 				ls.cbegin(), ls.cend()));
 	}
@@ -446,7 +446,7 @@ KERBAL_TEST_CASE(test_single_list_reverse, "test single_list::reverse")
 
 		l.reverse();
 
-		KERBAL_TEST_CHECK(kerbal::algorithm::sequence_equal_to(
+		KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(
 				l.cbegin(), l.cend(),
 				kerbal::container::cbegin(r), kerbal::container::cend(r)
 		));
@@ -483,7 +483,7 @@ KERBAL_TEST_CASE(test_single_list_reverse, "test single_list::reverse")
 		l.reverse(l.nth(b), l.nth(e));
 		kerbal::algorithm::reverse(kerbal::iterator::next(ls.begin(), b), kerbal::iterator::next(ls.begin(), e));
 
-		KERBAL_TEST_CHECK(kerbal::algorithm::sequence_equal_to(
+		KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(
 				l.cbegin(), l.cend(),
 				ls.begin(), ls.end()));
 	}
@@ -495,7 +495,7 @@ KERBAL_TEST_CASE(test_single_list_reverse, "test single_list::reverse")
 		l.reverse();
 		ls.reverse();
 
-		KERBAL_TEST_CHECK(kerbal::algorithm::sequence_equal_to(
+		KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(
 				l.cbegin(), l.cend(),
 				ls.begin(), ls.end()));
 	}
@@ -542,8 +542,8 @@ KERBAL_TEST_CASE(test_single_list_splice_one_node, "test single_list::splice one
 			sl0.splice(sl0.nth(pos), sl1, sl1.nth(opos));
 			l0.splice(kerbal::iterator::next(l0.begin(), pos), l1, kerbal::iterator::next(l1.begin(), opos));
 
-			KERBAL_TEST_CHECK(kerbal::algorithm::sequence_equal_to(sl0.cbegin(), sl0.cend(), l0.begin(), l0.end()));
-			KERBAL_TEST_CHECK(kerbal::algorithm::sequence_equal_to(sl1.cbegin(), sl1.cend(), l1.begin(), l1.end()));
+			KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(sl0.cbegin(), sl0.cend(), l0.begin(), l0.end()));
+			KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(sl1.cbegin(), sl1.cend(), l1.begin(), l1.end()));
 		}
 	}
 }
@@ -568,8 +568,8 @@ KERBAL_TEST_CASE(test_single_list_splice_range, "test single_list::splice(iterat
 						kerbal::iterator::next(l1.begin(), first),
 						kerbal::iterator::next(l1.begin(), last));
 
-				KERBAL_TEST_CHECK(kerbal::algorithm::sequence_equal_to(sl0.cbegin(), sl0.cend(), l0.begin(), l0.end()));
-				KERBAL_TEST_CHECK(kerbal::algorithm::sequence_equal_to(sl1.cbegin(), sl1.cend(), l1.begin(), l1.end()));
+				KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(sl0.cbegin(), sl0.cend(), l0.begin(), l0.end()));
+				KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(sl1.cbegin(), sl1.cend(), l1.begin(), l1.end()));
 			}
 		}
 	}
@@ -591,8 +591,8 @@ KERBAL_TEST_CASE(test_single_list_splice_all, "test single_list::splice(single_l
 		sl0.splice(sl0.nth(pos), sl1);
 		l0.splice(kerbal::iterator::next(l0.begin(), pos), l1);
 
-		KERBAL_TEST_CHECK(kerbal::algorithm::sequence_equal_to(sl0.cbegin(), sl0.cend(), l0.begin(), l0.end()));
-		KERBAL_TEST_CHECK(kerbal::algorithm::sequence_equal_to(sl1.cbegin(), sl1.cend(), l1.begin(), l1.end()));
+		KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(sl0.cbegin(), sl0.cend(), l0.begin(), l0.end()));
+		KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(sl1.cbegin(), sl1.cend(), l1.begin(), l1.end()));
 	}
 
 }

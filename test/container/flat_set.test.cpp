@@ -13,7 +13,7 @@
 #include <kerbal/container/static_flat_set.hpp>
 
 #include <kerbal/test/test.hpp>
-#include <kerbal/algorithm/sequence_compare.hpp>
+#include <kerbal/compare/sequence_compare.hpp>
 #include <kerbal/container/nonmember_container_access.hpp>
 #include <kerbal/container/vector.hpp>
 #include <kerbal/random/mersenne_twister_engine.hpp>
@@ -51,13 +51,13 @@ KERBAL_TEST_CASE(test_flat_set_range_constructor, "test flat_set::flat_set(itera
 
 		kerbal::container::flat_set<int> flatSet(v.cbegin(), v.cend());
 		kerbal::container::static_flat_set<int, N::value> staticFlatSet(v.cbegin(), v.cend());
-		KERBAL_TEST_CHECK_EQUAL(kerbal::algorithm::sequence_equal_to(set, flatSet), true);
-		KERBAL_TEST_CHECK_EQUAL(kerbal::algorithm::sequence_equal_to(set, staticFlatSet), true);
+		KERBAL_TEST_CHECK_EQUAL(kerbal::compare::sequence_equal_to(set, flatSet), true);
+		KERBAL_TEST_CHECK_EQUAL(kerbal::compare::sequence_equal_to(set, staticFlatSet), true);
 
 		kerbal::container::flat_multiset<int> flatMultiset(v.cbegin(), v.cend());
 		kerbal::container::static_flat_multiset<int, N::value> staticFlatMultiset(v.cbegin(), v.cend());
-		KERBAL_TEST_CHECK_EQUAL(kerbal::algorithm::sequence_equal_to(multiset, flatMultiset), true);
-		KERBAL_TEST_CHECK_EQUAL(kerbal::algorithm::sequence_equal_to(multiset, staticFlatMultiset), true);
+		KERBAL_TEST_CHECK_EQUAL(kerbal::compare::sequence_equal_to(multiset, flatMultiset), true);
+		KERBAL_TEST_CHECK_EQUAL(kerbal::compare::sequence_equal_to(multiset, staticFlatMultiset), true);
 	}
 
 }
@@ -92,14 +92,14 @@ KERBAL_TEST_CASE(test_flat_set_insert, "test flat_set::insert)")
 			set.insert(rand_num);
 			flatSet.insert(rand_num);
 			staticFlatSet.insert(rand_num);
-			KERBAL_TEST_CHECK_EQUAL(kerbal::algorithm::sequence_equal_to(set, flatSet), true);
-			KERBAL_TEST_CHECK_EQUAL(kerbal::algorithm::sequence_equal_to(set, staticFlatSet), true);
+			KERBAL_TEST_CHECK_EQUAL(kerbal::compare::sequence_equal_to(set, flatSet), true);
+			KERBAL_TEST_CHECK_EQUAL(kerbal::compare::sequence_equal_to(set, staticFlatSet), true);
 
 			multiset.insert(rand_num);
 			flatMultiset.insert(rand_num);
 			staticFlatMultiset.insert(rand_num);
-			KERBAL_TEST_CHECK_EQUAL(kerbal::algorithm::sequence_equal_to(multiset, flatMultiset), true);
-			KERBAL_TEST_CHECK_EQUAL(kerbal::algorithm::sequence_equal_to(multiset, staticFlatMultiset), true);
+			KERBAL_TEST_CHECK_EQUAL(kerbal::compare::sequence_equal_to(multiset, flatMultiset), true);
+			KERBAL_TEST_CHECK_EQUAL(kerbal::compare::sequence_equal_to(multiset, staticFlatMultiset), true);
 		}
 	}
 }
@@ -141,8 +141,8 @@ KERBAL_TEST_CASE(test_flat_set_erase, "test flat_set::erase)")
 				flatSet.erase(erase_ele);
 				staticFlatSet.erase(erase_ele);
 
-				KERBAL_TEST_CHECK_EQUAL(kerbal::algorithm::sequence_equal_to(set, flatSet), true);
-				KERBAL_TEST_CHECK_EQUAL(kerbal::algorithm::sequence_equal_to(set, staticFlatSet), true);
+				KERBAL_TEST_CHECK_EQUAL(kerbal::compare::sequence_equal_to(set, flatSet), true);
+				KERBAL_TEST_CHECK_EQUAL(kerbal::compare::sequence_equal_to(set, staticFlatSet), true);
 			}
 		}
 	}
@@ -188,8 +188,8 @@ KERBAL_TEST_CASE(test_flat_multiset_erase, "test flat_multiset::erase)")
 				KERBAL_TEST_CHECK_EQUAL(eraseNumberOfMultiset, eraseNumberOfFlatMultiset);
 				KERBAL_TEST_CHECK_EQUAL(eraseNumberOfMultiset, eraseNumberOfStaticFlatMultiset);
 
-				KERBAL_TEST_CHECK_EQUAL(kerbal::algorithm::sequence_equal_to(multiset, flatMultiset), true);
-				KERBAL_TEST_CHECK_EQUAL(kerbal::algorithm::sequence_equal_to(multiset, staticFlatMultiset), true);
+				KERBAL_TEST_CHECK_EQUAL(kerbal::compare::sequence_equal_to(multiset, flatMultiset), true);
+				KERBAL_TEST_CHECK_EQUAL(kerbal::compare::sequence_equal_to(multiset, staticFlatMultiset), true);
 			}
 		}
 	}

@@ -13,7 +13,7 @@
 
 #include <kerbal/test/test.hpp>
 #include <kerbal/algorithm/sort.hpp>
-#include <kerbal/algorithm/sequence_compare.hpp>
+#include <kerbal/compare/sequence_compare.hpp>
 #include <kerbal/container/single_list.hpp>
 #include <kerbal/container/vector.hpp>
 
@@ -70,7 +70,7 @@ KERBAL_TEST_CASE(test_sort_list, "test sort list")
 
 	kerbal::container::vector<reference_wrapper<const int> > rv(l.cbegin(), l.cend());
 
-	KERBAL_TEST_CHECK(kerbal::algorithm::sequence_equal_to(
+	KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(
 			l.cbegin(), l.cend(),
 			rv.begin(), rv.end()));
 

@@ -13,9 +13,9 @@
 
 #include <kerbal/test/test.hpp>
 
-#include <kerbal/algorithm/sequence_compare.hpp>
 #include <kerbal/algorithm/sort.hpp>
 #include <kerbal/compare/basic_compare.hpp>
+#include <kerbal/compare/sequence_compare.hpp>
 #include <kerbal/container/forward_list.hpp>
 #include <kerbal/container/list.hpp>
 #include <kerbal/container/nonmember_container_access.hpp>
@@ -45,7 +45,7 @@ KERBAL_TEMPLATE_TEST_CASE(test_copy, "test copy")
 	kerbal::algorithm::copy(c.begin(), c.end(), a);
 
 	KERBAL_TEST_CHECK(
-			kerbal::algorithm::sequence_equal_to(
+			kerbal::compare::sequence_equal_to(
 					c.begin(), c.end(),
 					kerbal::container::cbegin(a), kerbal::container::cend(a)
 	));
@@ -81,7 +81,7 @@ KERBAL_TEMPLATE_TEST_CASE(test_reverse_copy, "test reverse_copy")
 	kerbal::algorithm::reverse_copy(c.begin(), c.end(), a);
 
 	KERBAL_TEST_CHECK(
-			kerbal::algorithm::sequence_equal_to(
+			kerbal::compare::sequence_equal_to(
 					c.rbegin(), c.rend(),
 					kerbal::container::cbegin(a), kerbal::container::cend(a)
 			));
@@ -115,7 +115,7 @@ KERBAL_TEMPLATE_TEST_CASE(test_reverse, "test reverse")
 	kerbal::algorithm::reverse(c.begin(), c.end());
 
 	KERBAL_TEST_CHECK(
-			kerbal::algorithm::sequence_equal_to(
+			kerbal::compare::sequence_equal_to(
 					c.rbegin(), c.rend(),
 					kerbal::container::cbegin(a), kerbal::container::cend(a)
 	));
@@ -184,7 +184,7 @@ KERBAL_TEMPLATE_TEST_CASE(test_rotate, "test rotate")
 			));
 
 			KERBAL_TEST_CHECK(
-					kerbal::algorithm::sequence_equal_to(cresult, c)
+					kerbal::compare::sequence_equal_to(cresult, c)
 			);
 			KERBAL_TEST_CHECK(
 				(std::size_t)(kerbal::container::index_of(c, ret)) == len2
@@ -241,7 +241,7 @@ KERBAL_TEMPLATE_TEST_CASE(test_inplace_merge, "test inplace_merge")
 		kerbal::algorithm::inplace_merge(first0, mid0, last0);
 
 		KERBAL_TEST_CHECK(
-			kerbal::algorithm::sequence_equal_to(
+			kerbal::compare::sequence_equal_to(
 				first0, last0,
 				kerbal::container::cbegin(v), kerbal::container::cend(v)
 			)
@@ -306,7 +306,7 @@ KERBAL_TEMPLATE_TEST_CASE(test_inplace_merge_is_stable, "test inplace_merge is s
 		kerbal::algorithm::inplace_merge(first0, mid0, last0, test_inplace_merge_is_stable_cmp());
 
 		KERBAL_TEST_CHECK(
-			kerbal::algorithm::sequence_equal_to(
+			kerbal::compare::sequence_equal_to(
 				first0, last0,
 				kerbal::container::cbegin(v), kerbal::container::cend(v)
 			)
@@ -333,7 +333,7 @@ KERBAL_TEMPLATE_TEST_CASE(test_unique, "test unique")
 		iterator e(kerbal::algorithm::unique(kerbal::container::begin(a), kerbal::container::end(a)));
 
 		KERBAL_TEST_CHECK(
-			kerbal::algorithm::sequence_equal_to(
+			kerbal::compare::sequence_equal_to(
 				kerbal::container::begin(a), e,
 				kerbal::container::cbegin(a), kerbal::container::cend(a)
 			)
@@ -356,7 +356,7 @@ KERBAL_TEMPLATE_TEST_CASE(test_unique, "test unique")
 		iterator e(kerbal::algorithm::unique(kerbal::container::begin(a[tcase]), kerbal::container::end(a[tcase])));
 
 		KERBAL_TEST_CHECK(
-			kerbal::algorithm::sequence_equal_to(
+			kerbal::compare::sequence_equal_to(
 				kerbal::container::begin(a[tcase]), e,
 				kerbal::container::cbegin(r[tcase]), kerbal::container::cend(r[tcase])
 			)
@@ -388,7 +388,7 @@ KERBAL_TEST_CASE(test_unique_with_predict, "test unique with predict")
 	iterator e(kerbal::algorithm::unique(kerbal::container::begin(a), kerbal::container::end(a), abs_equal));
 
 	KERBAL_TEST_CHECK(
-		kerbal::algorithm::sequence_equal_to(
+		kerbal::compare::sequence_equal_to(
 			kerbal::container::begin(a), e,
 			kerbal::container::cbegin(r), kerbal::container::cend(r),
 			abs_equal

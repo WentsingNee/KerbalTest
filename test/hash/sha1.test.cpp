@@ -148,7 +148,7 @@ KERBAL_TEST_CASE(test_sha1_constexpr, "test sha1 constexpr")
 	constexpr auto r = helper::compute();
 	constexpr const char s[] = "8c51fb6a0b587ec95ca74acfa43df7539b486297";
 	std::string rs = r;
-	KERBAL_TEST_CHECK_EQUAL(kerbal::algorithm::sequence_equal_to(s, s + 40, rs.begin(), rs.end()), true);
+	KERBAL_TEST_CHECK_EQUAL(kerbal::compare::sequence_equal_to(s, s + 40, rs.begin(), rs.end()), true);
 
 }
 

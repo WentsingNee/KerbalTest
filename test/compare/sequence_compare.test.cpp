@@ -9,7 +9,7 @@
  *   all rights reserved
  */
 
-#include <kerbal/algorithm/sequence_compare.hpp>
+#include <kerbal/compare/sequence_compare.hpp>
 
 #include <kerbal/test/test.hpp>
 #include <kerbal/container/nonmember_container_access.hpp>
@@ -17,7 +17,7 @@
 
 KERBAL_TEST_CASE(test_cast1, "1")
 {
-	using namespace kerbal::algorithm;
+	using namespace kerbal::compare;
 	using namespace kerbal::container;
 
 	int arr[] = {0, 1, 1, 3, 4};
@@ -33,7 +33,7 @@ KERBAL_TEST_CASE(test_cast1, "1")
 
 KERBAL_TEST_CASE(test_cast2, "2")
 {
-	using namespace kerbal::algorithm;
+	using namespace kerbal::compare;
 	using namespace kerbal::container;
 
 	int arr[] = {0, 1, 21, 3, 4};
@@ -49,7 +49,7 @@ KERBAL_TEST_CASE(test_cast2, "2")
 
 KERBAL_TEST_CASE(test_cast3, "3")
 {
-	using namespace kerbal::algorithm;
+	using namespace kerbal::compare;
 	using namespace kerbal::container;
 
 	int arr[] = {0, 1, 2, 3, 4};
@@ -65,7 +65,7 @@ KERBAL_TEST_CASE(test_cast3, "3")
 
 KERBAL_TEST_CASE(test_cast4, "4")
 {
-	using namespace kerbal::algorithm;
+	using namespace kerbal::compare;
 	using namespace kerbal::container;
 
 	int arr[] = {0, 1, 2, 3};
@@ -81,7 +81,7 @@ KERBAL_TEST_CASE(test_cast4, "4")
 
 KERBAL_TEST_CASE(test_cast5, "5")
 {
-	using namespace kerbal::algorithm;
+	using namespace kerbal::compare;
 	using namespace kerbal::container;
 
 	int arr[] = {0, 1, 2, 3, 4};

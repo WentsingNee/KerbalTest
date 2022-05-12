@@ -12,7 +12,7 @@
 #include <kerbal/container/array.hpp>
 
 #include <kerbal/test/test.hpp>
-#include <kerbal/algorithm/sequence_compare.hpp>
+#include <kerbal/compare/sequence_compare.hpp>
 #include <kerbal/container/nonmember_container_access.hpp>
 #include <kerbal/utility/ignore_unused.hpp>
 
@@ -51,7 +51,7 @@ KERBAL_TEST_CASE(test_array_copy_construct, "test array::array(const array&)")
 
 		kerbal::container::array<int, 5> b = a;
 
-		KERBAL_TEST_CHECK(kerbal::algorithm::sequence_equal_to(a, b));
+		KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(a, b));
 	}
 
 	{
@@ -63,7 +63,7 @@ KERBAL_TEST_CASE(test_array_copy_construct, "test array::array(const array&)")
 
 		kerbal::container::array<std::string, 5> b = a;
 
-		KERBAL_TEST_CHECK(kerbal::algorithm::sequence_equal_to(a, b));
+		KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(a, b));
 	}
 
 }
@@ -73,7 +73,7 @@ KERBAL_TEST_CASE(test_array_initializer_list_construct, "test array::array(initi
 	int a[] = {0, 9, 8, 7, 3};
 	kerbal::container::array<int, 5> arr = KERBAL_ILIST(0, 9, 8, 7, 3);
 
-	KERBAL_TEST_CHECK(kerbal::algorithm::sequence_equal_to(
+	KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(
 		kerbal::container::cbegin(a), kerbal::container::cend(a),
 		kerbal::container::begin(arr), kerbal::container::end(arr)));
 }
@@ -125,7 +125,7 @@ KERBAL_TEST_CASE(test_array_cpy_assign, "test array::operator=(const array&)")
 
 		a = b;
 
-		KERBAL_TEST_CHECK(kerbal::algorithm::sequence_equal_to(a, b));
+		KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(a, b));
 	}
 
 	{
@@ -139,7 +139,7 @@ KERBAL_TEST_CASE(test_array_cpy_assign, "test array::operator=(const array&)")
 
 		a = b;
 
-		KERBAL_TEST_CHECK(kerbal::algorithm::sequence_equal_to(a, b));
+		KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(a, b));
 	}
 
 }

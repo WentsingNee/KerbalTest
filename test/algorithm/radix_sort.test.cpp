@@ -47,7 +47,7 @@ KERBAL_TEMPLATE_TEST_CASE(test_radix_sort, "test radix_sort")
 		std::cout << t.count() << std::endl;
 	}
 
-	KERBAL_TEST_CHECK(kerbal::algorithm::sequence_equal_to(v, v0));
+	KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(v, v0));
 }
 
 KERBAL_TEMPLATE_TEST_CASE_INST(test_radix_sort, "test radix_sort", signed short);
