@@ -52,6 +52,18 @@ function(add_kerbal_inst_target target target_src_file)
 endfunction()
 
 
+option(KERBAL_TEST_ENABLE_SANITIZE "enable sanitize" OFF)
+
+if (KERBAL_TEST_ENABLE_SANITIZE)
+    message(STATUS "Finding libasan")
+    find_library(LIB_ASAN asan REQUIRED)
+    message(STATUS "Found libasan: ${LIB_ASAN}")
+
+    message(STATUS "Finding libubsan")
+    find_library(LIB_UBSAN ubsan REQUIRED)
+    message(STATUS "Found libubsan: ${LIB_UBSAN}")
+endif ()
+
 function(add_kerbal_test_target target target_src_file)
     add_executable(${target} ${target_src_file})
     set_target_properties(${target} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ./targets)
@@ -59,6 +71,12 @@ function(add_kerbal_test_target target target_src_file)
         target_compile_options(${target} PUBLIC -stdlib=libc++)
         target_link_libraries(${target} PUBLIC ${LIB_CPP})
         target_link_libraries(${target} PUBLIC ${LIB_CPPABI})
+    endif ()
+    if (KERBAL_TEST_ENABLE_SANITIZE)
+        target_compile_options(${target} PUBLIC -fsanitize=address)
+        target_compile_options(${target} PUBLIC -fsanitize=undefined)
+        target_link_libraries(${target} PUBLIC ${LIB_ASAN})
+        target_link_libraries(${target} PUBLIC ${LIB_UBSAN})
     endif ()
 endfunction()
 
