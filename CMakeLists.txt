@@ -71,5 +71,10 @@ if (KERBAL_TEST_ENABLE_SANITIZE)
 endif ()
 
 
+# gcov
+
+option(KERBAL_TEST_GCOV "enable gcov" OFF)
+
+
 add_subdirectory(instantiation)
 add_subdirectory(test)
