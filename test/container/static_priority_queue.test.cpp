@@ -40,7 +40,7 @@ struct string_less
 
 
 #if KERBAL_COMPILER_ID == KERBAL_COMPILER_ID_MSVC
-#	if KERBAL_MSVC_VERSION_MEETS(19, 16, 0) // vs2017
+#	if KERBAL_MSVC_VERSION_MEETS(19, 20, 0) // vs2017
 #		define TEST_CONSTEXPR 1
 #	else
 #		define TEST_CONSTEXPR 0
@@ -91,6 +91,41 @@ KERBAL_TEST_CASE(test_static_priority_queue_char_array, "test static_priority_qu
 	KERBAL_TEST_CHECK(kerbal::algorithm::is_sorted(sv.crbegin(), sv.crend(), string_less()));
 #endif
 
+}
+
+
+template <std::size_t N>
+KERBAL_CONSTEXPR14
+kerbal::container::static_vector<int, N>
+f(int n)
+{
+	kerbal::container::static_priority_queue<int, N> pq;
+	
+	for (int i = 0; i < 10; ++i) {
+		pq.push_unsafe(i);
+	}
+	
+	kerbal::container::static_vector<int, N> sv;
+	while (!pq.empty()) {
+		sv.push_back_unsafe(pq.top());
+		pq.pop_unsafe();
+	}
+	
+	int sum = 0;
+	auto rit = sv.crbegin();
+	while (rit != sv.crend()) {
+		sum += *rit;
+		++rit;
+	}
+	return sv;
+}
+
+KERBAL_TEST_CASE(test_con, "")
+{
+	KERBAL_CONSTEXPR14
+	kerbal::container::static_vector<int, 10> sv = f<10>(4);
+	
+	//KERBAL_TEST_CHECK_STATIC(kerbal::algorithm::is_sorted(sv.crbegin(), sv.crend(), kerbal::compare::greater<>()));
 }
 
 
