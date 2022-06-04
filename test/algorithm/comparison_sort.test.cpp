@@ -201,7 +201,7 @@ KERBAL_TEMPLATE_TEST_CASE(test_sort, "test sort")
 	std::sort(v.begin(), v.end(), cmp);
 
 	test_s(kerbal::container::vector<T>);
-# if KERBAL_COMPILER_ID != KERBAL_COMPILER_ID_ICC || __cplusplus < 201402L // CE
+# if (KERBAL_COMPILER_ID != KERBAL_COMPILER_ID_ICC && KERBAL_COMPILER_ID != KERBAL_COMPILER_ID_MSVC) || __cplusplus < 201402L // CE
 	test_s(std::deque<T>);
 # endif
 	test_s(kerbal::container::list<T>);
