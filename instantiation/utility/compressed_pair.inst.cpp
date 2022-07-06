@@ -14,13 +14,19 @@
 struct Empty1 {};
 struct Empty2 {};
 
-template class kerbal::utility::compressed_pair<int, int>;
-template class kerbal::utility::compressed_pair<int, Empty1>;
-template class kerbal::utility::compressed_pair<Empty1, int>;
-template class kerbal::utility::compressed_pair<Empty1, Empty1>;
-template class kerbal::utility::compressed_pair<Empty1, Empty2>;
+namespace ku = kerbal::utility;
 
-#if 0 // member_compress_helper doesn't support arrray perfectly
-template class kerbal::utility::compressed_pair<int[2], int>;
-template class kerbal::utility::compressed_pair<int[2][2], int>;
-#endif
+template class ku::compressed_pair<int, int>;
+template ku::compressed_pair<int, int>::compressed_pair(const int &, const float &);
+template ku::compressed_pair<int, int>::compressed_pair(const ku::compressed_pair<int &, const int &> &);
+
+template class ku::compressed_pair<int, Empty1>;
+template class ku::compressed_pair<Empty1, int>;
+template class ku::compressed_pair<Empty1, Empty1>;
+template class ku::compressed_pair<Empty1, Empty2>;
+
+template class ku::compressed_pair<int[2], int>;
+template ku::compressed_pair<int[2], int>::compressed_pair(const short (&) [2], const float &);
+
+template class ku::compressed_pair<int[2][2], int>;
+template class ku::compressed_pair<int[2][2], int[2][2]>;
