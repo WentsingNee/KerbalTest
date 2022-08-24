@@ -12,6 +12,7 @@
 #include <kerbal/algorithm/modifier.hpp>
 
 #include <kerbal/test/test.hpp>
+#include "helper/random_vector.hpp"
 
 #include <kerbal/algorithm/sort.hpp>
 #include <kerbal/compare/basic_compare.hpp>
@@ -222,9 +223,8 @@ KERBAL_TEMPLATE_TEST_CASE(test_inplace_merge, "test inplace_merge")
 		Container c0;
 		{
 			kerbal::random::mt19937 eg;
-			for (std::size_t i = 0; i < (M + N); ++i) {
-				c0.push_back(eg());
-			}
+			kerbal::container::vector<int> v = ktn::get_random_vec_i(M + N, eg);
+			c0.assign(v.cbegin(), v.cend());
 		}
 
 		iterator first0(kerbal::container::begin(c0));

@@ -106,23 +106,20 @@ get_sorting_algos()
 template <typename T>
 kerbal::container::vector<T> get_random(size_t N, kerbal::random::mt19937 & eg)
 {
-	kerbal::container::vector<T> v; {
-		for (size_t i = 0; i < N; ++i) {
-			v.push_back(eg());
-		}
-	}
+	kerbal::container::vector<T> v(N);
+	eg.generate(v.begin(), v.end());
 	return v;
 }
 
 kerbal::container::vector<std::string> get_random_string(size_t N, kerbal::random::mt19937 & eg)
 {
-	kerbal::container::vector<std::string> v; {
+	kerbal::container::vector<std::string> v(N); {
 		for (size_t i = 0; i < N; ++i) {
-			std::string s;
+			std::string s(100, ' ');
 			for (int j = 0; j < 100; ++j) {
-				s.push_back('A' + (eg() % 26));
+				s[j] = 'A' + (eg() % 26);
 			}
-			v.push_back(s);
+			v[i] = kerbal::compatibility::to_xvalue(s);
 		}
 	}
 	return v;
@@ -163,9 +160,9 @@ struct customized_compare
 template <typename T>
 kerbal::container::vector<T> get_few_unique(size_t N, kerbal::random::mt19937 & eg)
 {
-	kerbal::container::vector<T> v;
+	kerbal::container::vector<T> v(N);
 	for (size_t i = 0; i < N; ++i) {
-		v.push_back(eg() % 100);
+		v[i] = eg() % 100;
 	}
 	return v;
 }
@@ -180,9 +177,9 @@ kerbal::container::vector<T> get_few_unique(size_t N, kerbal::random::mt19937 & 
 	size_t algos_num = algos.size(); \
 	for (size_t i = 0; i < algos_num; ++i) { \
 		std::cout << "testing: " << i << " / " << algos_num << std::flush; \
-		container c(v.begin(), v.end()); \
+		container c(v.cbegin(), v.cend()); \
 		algos[i](c.begin(), c.end(), cmp); \
-		KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(v.begin(), v.end(), c.begin(), c.end())); \
+		KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(v.cbegin(), v.cend(), c.begin(), c.end())); \
 		std::cout << "    --- pass" << std::endl; \
 	} \
 } while (false)

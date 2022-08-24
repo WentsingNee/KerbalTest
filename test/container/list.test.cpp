@@ -9,10 +9,11 @@
  *   all rights reserved
  */
 
-#include <iostream>
 #include <kerbal/container/list.hpp>
 
 #include <kerbal/test/test.hpp>
+#include "helper/random_vector.hpp"
+
 #include <kerbal/algorithm/modifier.hpp>
 #include <kerbal/algorithm/sort/merge_sort.hpp>
 #include <kerbal/algorithm/sort/sort.hpp>
@@ -23,6 +24,7 @@
 #include <kerbal/random/mersenne_twister_engine.hpp>
 #include <kerbal/test/object_count.hpp>
 
+#include <iostream>
 #include <list>
 
 #if __cplusplus >= 201103L
@@ -276,7 +278,7 @@ KERBAL_TEST_CASE(test_list_range_copy_construct, "test list::list(first, last)")
 
 #if __cplusplus >= 201103L
 
-KERBAL_TEST_CASE(test_list_move, "test list::list(list &&)")
+KERBAL_TEST_CASE(test_list_move_construct, "test list::list(list &&)")
 {
 	{
 		kerbal::container::list<int> l;
@@ -789,29 +791,19 @@ KERBAL_TEMPLATE_TEST_CASE(test_list_merge, "test list::merge")
 		std::list<int> stdl_into;
 		kerbal::container::list<int> l_into;
 		{
-			kerbal::container::vector<int> v_into;
-			v_into.reserve(into_init_len);
-			for (std::size_t i = 0; i < into_init_len; ++i) {
-				int t = eg() % 1024;
-				v_into.push_back(t);
-			}
+			kerbal::container::vector<int> v_into = ktn::get_random_vec_i_mod(into_init_len, eg, 1024);
 			kerbal::algorithm::sort(v_into.begin(), v_into.end());
-			stdl_into.assign(v_into.begin(), v_into.end());
-			l_into.assign(v_into.begin(), v_into.end());
+			stdl_into.assign(v_into.cbegin(), v_into.cend());
+			l_into.assign(v_into.cbegin(), v_into.cend());
 		}
 
 		std::list<int> stdl_other;
 		kerbal::container::list<int> l_other;
 		{
-			kerbal::container::vector<int> v_other;
-			v_other.reserve(other_init_len);
-			for (std::size_t i = 0; i < other_init_len; ++i) {
-				int t = eg() % 1024;
-				v_other.push_back(t);
-			}
+			kerbal::container::vector<int> v_other = ktn::get_random_vec_i_mod(other_init_len, eg, 1024);
 			kerbal::algorithm::sort(v_other.begin(), v_other.end());
-			stdl_other.assign(v_other.begin(), v_other.end());
-			l_other.assign(v_other.begin(), v_other.end());
+			stdl_other.assign(v_other.cbegin(), v_other.cend());
+			l_other.assign(v_other.cbegin(), v_other.cend());
 		}
 
 		stdl_into.merge(stdl_other, Comp());
@@ -859,6 +851,7 @@ struct test_list_merge_is_stable_sort_helper
 		}
 };
 
+
 KERBAL_TEST_CASE(test_list_merge_is_stable, "test list::merge is_stable")
 {
 	kerbal::random::mt19937 eg;
@@ -872,45 +865,40 @@ KERBAL_TEST_CASE(test_list_merge_is_stable, "test list::merge is_stable")
 			std::pair<std::size_t, std::size_t>(1000, 0),
 	};
 
-	for (std::size_t j = 0; j < kerbal::container::size(size); ++j) {
+	for (std::size_t tcase = 0; tcase < kerbal::container::size(size); ++tcase) {
 
-		std::size_t into_init_len = size[j].first;
-		std::size_t other_init_len = size[j].second;
+		std::size_t into_init_len = size[tcase].first;
+		std::size_t other_init_len = size[tcase].second;
 
 		kerbal::container::list<int> l_into;
 		{
-			kerbal::container::vector<int> v_into;
-			v_into.reserve(into_init_len);
-			for (std::size_t i = 0; i < into_init_len; ++i) {
-				int t = eg() % 1024;
-				v_into.push_back(t);
-			}
+			kerbal::container::vector<int> v_into = ktn::get_random_vec_i_mod(into_init_len, eg, 1024);
 			kerbal::algorithm::sort(v_into.begin(), v_into.end());
-			l_into.assign(v_into.begin(), v_into.end());
+			l_into.assign(v_into.cbegin(), v_into.cend());
 		}
 
 		kerbal::container::list<int> l_other;
 		{
-			kerbal::container::vector<int> v_other;
-			v_other.reserve(other_init_len);
-			for (std::size_t i = 0; i < other_init_len; ++i) {
-				int t = eg() % 1024;
-				v_other.push_back(t);
-			}
+			kerbal::container::vector<int> v_other = ktn::get_random_vec_i_mod(other_init_len, eg, 1024);
 			kerbal::algorithm::sort(v_other.begin(), v_other.end());
-			l_other.assign(v_other.begin(), v_other.end());
+			l_other.assign(v_other.cbegin(), v_other.cend());
 		}
 
 		typedef kerbal::container::list<int>::const_iterator l_kiter;
 
-		kerbal::container::vector<const int*> vp;
+		kerbal::container::vector<const int*> vp(into_init_len + other_init_len);
 		{
-			vp.reserve(into_init_len + other_init_len);
-			for (l_kiter it = l_into.cbegin(); it != l_into.cend(); ++it) {
-				vp.push_back(&*it);
+			std::size_t i = 0;
+			l_kiter it = l_into.cbegin();
+			for (; i < into_init_len; ++i) {
+				vp[i] = &*it;
+				++it;
 			}
-			for (l_kiter it = l_other.cbegin(); it != l_other.cend(); ++it) {
-				vp.push_back(&*it);
+
+			it = l_other.cbegin();
+			for (; i < into_init_len + other_init_len; ++i) {
+				vp[i] = &*it;
+				++it;
 			}
 		}
 
@@ -919,7 +907,6 @@ KERBAL_TEST_CASE(test_list_merge_is_stable, "test list::merge is_stable")
 		kerbal::algorithm::merge_sort(vp.begin(), vp.end(), test_list_merge_is_stable_sort_helper<int, Compare>(cmp));
 
 		l_into.merge(l_other, cmp);
-
 
 		{
 			typedef kerbal::container::vector<const int*>::const_iterator vec_kiter;
@@ -1020,87 +1007,67 @@ KERBAL_TEST_CASE(test_list_sort, "test list::sort")
 		std::size_t list_size = size_group[tcase];
 
 		{ // default compare
-			kerbal::container::list<int> l;
-			kerbal::container::vector<int> v;
+			kerbal::container::vector<int> v = ktn::get_random_vec_i_mod(list_size, eg, 100);
+			kerbal::container::list<int> l(v.cbegin(), v.cend());
 
-			for (std::size_t i = 0; i < list_size; ++i) {
-				int x = eg() % 100;
-				l.push_back(x);
-				v.push_back(x);
-			}
-			l.sort();
 			kerbal::algorithm::sort(v.begin(), v.end());
+			l.sort();
 
 			KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(
-					l.cbegin(), l.cend(),
-					v.begin(), v.end()
+					v.cbegin(), v.cend(),
+					l.cbegin(), l.cend()
 			));
 			KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(
-					l.crbegin(), l.crend(),
-					v.rbegin(), v.rend()
+					v.crbegin(), v.crend(),
+					l.crbegin(), l.crend()
 			)); // r
 		}
 
 		{ // given compare
-			kerbal::container::list<int> l;
-			kerbal::container::vector<int> v;
+			kerbal::container::vector<int> v = ktn::get_random_vec_i_mod(list_size, eg, 100);
+			kerbal::container::list<int> l(v.cbegin(), v.cend());
 
-			for (std::size_t i = 0; i < list_size; ++i) {
-				int x = eg() % 100;
-				l.push_back(x);
-				v.push_back(x);
-			}
-			l.sort(kerbal::compare::greater<>());
 			kerbal::algorithm::sort(v.begin(), v.end(), kerbal::compare::greater<>());
+			l.sort(kerbal::compare::greater<>());
 
 			KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(
-					l.cbegin(), l.cend(),
-					v.begin(), v.end()
+					v.cbegin(), v.cend(),
+					l.cbegin(), l.cend()
 			));
 			KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(
-					l.crbegin(), l.crend(),
-					v.rbegin(), v.rend()
+					v.crbegin(), v.crend(),
+					l.crbegin(), l.crend()
 			)); // r
 		}
 
 		{ // given compare
-			kerbal::container::list<int> l;
-			kerbal::container::vector<int> v;
+			kerbal::container::vector<int> v = ktn::get_random_vec_i_mod(list_size, eg, 100);
+			kerbal::container::list<int> l(v.cbegin(), v.cend());
 
-			for (std::size_t i = 0; i < list_size; ++i) {
-				int x = eg() % 100;
-				l.push_back(x);
-				v.push_back(x);
-			}
-			l.sort(disable_list_radix_sort_cmp());
 			kerbal::algorithm::sort(v.begin(), v.end(), disable_list_radix_sort_cmp());
+			l.sort(disable_list_radix_sort_cmp());
 
 			KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(
-					l.cbegin(), l.cend(),
-					v.begin(), v.end()
+					v.cbegin(), v.cend(),
+					l.cbegin(), l.cend()
 			));
 			KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(
-					l.crbegin(), l.crend(),
-					v.rbegin(), v.rend()
+					v.crbegin(), v.crend(),
+					l.crbegin(), l.crend()
 			)); // r
 		}
 
 		{ // sort partial range
-			kerbal::container::list<int> l;
-			kerbal::container::vector<int> v;
+			kerbal::container::vector<int> v = ktn::get_random_vec_i_mod(1000, eg, 100);
+			kerbal::container::list<int> l(v.cbegin(), v.cend());
 
-			for (int i = 0; i < 1000; ++i) {
-				int x = eg() % 100;
-				l.push_back(x);
-				v.push_back(x);
-			}
-			l.sort(l.begin(), l.nth(500));
 			kerbal::container::vector<int>::iterator nth_500(kerbal::container::nth(v, 500));
 			kerbal::algorithm::sort(v.begin(), nth_500);
+			l.sort(l.begin(), l.nth(500));
 
 			KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(
-					l.begin(), l.nth(500),
-					v.begin(), nth_500
+					v.begin(), nth_500,
+					l.begin(), l.nth(500)
 			));
 			namespace ki = kerbal::iterator;
 			KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(
@@ -1145,8 +1112,7 @@ KERBAL_TEMPLATE_TEST_CASE(test_list_radix_sort_is_stable, "test list::radix_sort
 			kerbal::container::list<T> l;
 			typedef typename kerbal::container::list<T>::const_iterator const_iterator;
 
-			kerbal::container::vector<const T*> vp;
-			vp.resize(list_size);
+			kerbal::container::vector<const T*> vp(list_size);
 			for (std::size_t i = 0; i < list_size; ++i) {
 				T x = eg();
 				vp[i] = &l.emplace_back(x);

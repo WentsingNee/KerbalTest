@@ -72,11 +72,11 @@ KERBAL_TEST_CASE(test_sort_list, "test sort list")
 
 	KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(
 			l.cbegin(), l.cend(),
-			rv.begin(), rv.end()));
+			rv.cbegin(), rv.cend()));
 
 	kerbal::algorithm::intro_sort(rv.begin(), rv.end());
 
-	KERBAL_TEST_CHECK(kerbal::algorithm::is_sorted(rv.begin(), rv.end()));
+	KERBAL_TEST_CHECK(kerbal::algorithm::is_sorted(rv.cbegin(), rv.cend()));
 
 }
 

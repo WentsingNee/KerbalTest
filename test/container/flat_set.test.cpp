@@ -13,6 +13,8 @@
 #include <kerbal/container/static_flat_set.hpp>
 
 #include <kerbal/test/test.hpp>
+#include "helper/random_vector.hpp"
+
 #include <kerbal/compare/sequence_compare.hpp>
 #include <kerbal/container/nonmember_container_access.hpp>
 #include <kerbal/container/vector.hpp>
@@ -37,14 +39,7 @@ KERBAL_TEST_CASE(test_flat_set_range_constructor, "test flat_set::flat_set(itera
 		printf("seeds: %d\n", seeds[j]);
 
 		kerbal::random::mt19937 eg(seeds[j]);
-
-		kerbal::container::vector<int> v; {
-			v.reserve(N::value);
-			for (N::value_type i = 0; i < N::value; ++i) {
-				int r = eg();
-				v.push_back(r);
-			}
-		}
+		kerbal::container::vector<int> v = ktn::get_random_vec_i(N::value, eg);
 
 		std::set<int> set(v.cbegin(), v.cend());
 		std::multiset<int> multiset(v.cbegin(), v.cend());
@@ -120,13 +115,8 @@ KERBAL_TEST_CASE(test_flat_set_erase, "test flat_set::erase)")
 
 		kerbal::random::mt19937 eg(seeds[j]);
 
-		kerbal::container::vector<int> v; {
-			v.reserve(N::value);
-			for (N::value_type i = 0; i < N::value; ++i) {
-				int r = eg();
-				v.push_back(r);
-			}
-		}
+		kerbal::container::vector<int> v(N::value);
+		eg.generate(v.begin(), v.end());
 
 		std::set<int> set(v.cbegin(), v.cend());
 		kerbal::container::flat_set<int> flatSet(v.cbegin(), v.cend());
@@ -164,13 +154,7 @@ KERBAL_TEST_CASE(test_flat_multiset_erase, "test flat_multiset::erase)")
 
 		kerbal::random::mt19937 eg(seeds[j]);
 
-		kerbal::container::vector<int> v; {
-			v.reserve(N::value);
-			for (N::value_type i = 0; i < N::value; ++i) {
-				int r = eg() % (N::value / 10);
-				v.push_back(r);
-			}
-		}
+		kerbal::container::vector<int> v = ktn::get_random_vec_i_mod(N::value, eg, N::value / 10);
 
 		std::multiset<int> multiset(v.cbegin(), v.cend());
 		kerbal::container::flat_multiset<int> flatMultiset(v.cbegin(), v.cend());
