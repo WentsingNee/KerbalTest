@@ -1,0 +1,148 @@
+name: Kerbal Build Test
+
+on: push
+
+env:
+  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
+  BUILD_TYPE: Release
+  KERBAL_BRANCH: main
+
+jobs:
+  build:
+    # The CMake configure and build commands are platform agnostic and should work equally well on Windows or Mac.
+    # You can convert this to a matrix build if you need cross-platform coverage.
+    # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            compiler: g++
+            cxx_standard: 98
+          - os: ubuntu-latest
+            compiler: g++
+            cxx_standard: 11
+          - os: ubuntu-latest
+            compiler: g++
+            cxx_standard: 14
+          - os: ubuntu-latest
+            compiler: g++
+            cxx_standard: 17
+          - os: ubuntu-latest
+            compiler: g++
+            cxx_standard: 20
+
+          - os: ubuntu-latest
+            compiler: clang++
+            cxx_standard: 98
+          - os: ubuntu-latest
+            compiler: clang++
+            cxx_standard: 11
+          - os: ubuntu-latest
+            compiler: clang++
+            cxx_standard: 14
+          - os: ubuntu-latest
+            compiler: clang++
+            cxx_standard: 17
+          - os: ubuntu-latest
+            compiler: clang++
+            cxx_standard: 20
+
+          - os: windows-latest
+            compiler: msvc
+            cxx_standard: 14
+          - os: windows-latest
+            compiler: msvc
+            cxx_standard: 17
+          - os: windows-latest
+            compiler: msvc
+            cxx_standard: 20
+
+          - os: macos-latest
+            compiler: clang++
+            cxx_standard: 98
+          - os: macos-latest
+            compiler: clang++
+            cxx_standard: 11
+          - os: macos-latest
+            compiler: clang++
+            cxx_standard: 14
+          - os: macos-latest
+            compiler: clang++
+            cxx_standard: 17
+          - os: macos-latest
+            compiler: clang++
+            cxx_standard: 20
+
+    runs-on: ${{matrix.os}}
+    continue-on-error: true
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Clone Kerbal
+        run: git clone --depth=1 --branch=${{env.KERBAL_BRANCH}} https://github.com/WentsingNee/Kerbal.git
+
+      - name: Show Generator Support
+        run: cmake --help
+
+      - name: Configure CMake
+        if: matrix.compiler != 'msvc'
+        # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
+        # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
+        run: |
+          cmake -B ${{github.workspace}}/build \
+            -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} \
+            -DCMAKE_CXX_COMPILER=${{matrix.compiler}} \
+            -DCMAKE_CXX_STANDARD=${{matrix.cxx_standard}} \
+            -DKERBAL_TEST_USE_LIBCXX=${{matrix.stdlib}} \
+            -DKERBAL_INCLUDE_DIRECTORY=${{github.workspace}}/Kerbal/include/
+
+      - name: Configure CMake (MSVC)
+        if: matrix.compiler == 'msvc'
+        run: cmake -B ${{github.workspace}}/build -G "Visual Studio 17 2022" -DCMAKE_CXX_STANDARD=${{matrix.cxx_standard}} -DKERBAL_INCLUDE_DIRECTORY=${{github.workspace}}/Kerbal/include/
+
+      - name: Show Environment Kerbal Detect
+        if: matrix.os != 'windows-latest'
+        run: |
+          cmake --build ${{github.workspace}}/build --target \
+              test.config.architecture \
+              test.config.compiler_id \
+              test.config.compiler_version \
+              test.config.cxx_stdlib \
+              test.config.language_standard \
+              test.config.system
+          ${{github.workspace}}/build/targets/test.config.architecture
+          ${{github.workspace}}/build/targets/test.config.compiler_id
+          ${{github.workspace}}/build/targets/test.config.compiler_version
+          ${{github.workspace}}/build/targets/test.config.cxx_stdlib
+          ${{github.workspace}}/build/targets/test.config.language_standard
+          ${{github.workspace}}/build/targets/test.config.system
+
+      - name: Show Environment Kerbal Detect (Windows)
+        if: matrix.os == 'windows-latest'
+        run: |
+          cmake --build ${{github.workspace}}\build --config ${{env.BUILD_TYPE}} --target test.config.architecture
+          cmake --build ${{github.workspace}}\build --config ${{env.BUILD_TYPE}} --target test.config.compiler_id
+          cmake --build ${{github.workspace}}\build --config ${{env.BUILD_TYPE}} --target test.config.compiler_version
+          cmake --build ${{github.workspace}}\build --config ${{env.BUILD_TYPE}} --target test.config.cxx_stdlib
+          cmake --build ${{github.workspace}}\build --config ${{env.BUILD_TYPE}} --target test.config.language_standard
+          cmake --build ${{github.workspace}}\build --config ${{env.BUILD_TYPE}} --target test.config.system
+          ${{github.workspace}}\build\targets\${{env.BUILD_TYPE}}\test.config.architecture.exe
+          ${{github.workspace}}\build\targets\${{env.BUILD_TYPE}}\test.config.compiler_id.exe
+          ${{github.workspace}}\build\targets\${{env.BUILD_TYPE}}\test.config.compiler_version.exe
+          ${{github.workspace}}\build\targets\${{env.BUILD_TYPE}}\test.config.cxx_stdlib.exe
+          ${{github.workspace}}\build\targets\${{env.BUILD_TYPE}}\test.config.language_standard.exe
+          ${{github.workspace}}\build\targets\${{env.BUILD_TYPE}}\test.config.system.exe
+
+      - name: Build
+        run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+
+      - name: Run Unit Test
+        if: matrix.os != 'windows-latest'
+        run: |
+          cmake --build ${{github.workspace}}/build --target run_test_targets
+
+      - name: Run Unit Test (Windows)
+        if: matrix.os == 'windows-latest'
+        run: |
+          cmake --build ${{github.workspace}}\build --config ${{env.BUILD_TYPE}} --target run_test_targets
