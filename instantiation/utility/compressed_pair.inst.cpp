@@ -20,10 +20,10 @@ namespace ku = kerbal::utility;
 template class ku::compressed_pair<int, int>;
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR
-ku::compressed_pair<int, int>::compressed_pair(const int &, const float &) KERBAL_NOEXCEPT;
+ku::compressed_pair<int, int>::compressed_pair(const int &, const float &) KERBAL_CONDITIONAL_NOEXCEPT(__cplusplus >= 201103L);
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR
-ku::compressed_pair<int, int>::compressed_pair(const ku::compressed_pair<int &, const int &> &) KERBAL_NOEXCEPT;
+ku::compressed_pair<int, int>::compressed_pair(const ku::compressed_pair<int &, const int &> &) KERBAL_CONDITIONAL_NOEXCEPT(__cplusplus >= 201103L);
 
 
 
@@ -35,7 +35,7 @@ template class ku::compressed_pair<Empty1, Empty2>;
 template class ku::compressed_pair<int[2], int>;
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR
-ku::compressed_pair<int[2], int>::compressed_pair(const short (&) [2], const float &) KERBAL_NOEXCEPT;
+ku::compressed_pair<int[2], int>::compressed_pair(const short (&) [2], const float &) KERBAL_CONDITIONAL_NOEXCEPT(__cplusplus >= 201103L);
 
 
 
