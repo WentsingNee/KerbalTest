@@ -9,7 +9,10 @@
  *   all rights reserved
  */
 
-#include <kerbal/type_traits/const_deduction.hpp>
+#include <kerbal/type_traits/add_const.hpp>
+#include <kerbal/type_traits/copy_const.hpp>
+#include <kerbal/type_traits/is_const.hpp>
+#include <kerbal/type_traits/remove_const.hpp>
 
 #include <kerbal/test/test.hpp>
 #include <kerbal/type_traits/is_same.hpp>
