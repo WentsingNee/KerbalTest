@@ -9,11 +9,21 @@
  *   all rights reserved
  */
 
-#include <kerbal/type_traits/reference_deduction.hpp>
+#include <kerbal/type_traits/is_referencable.hpp>
+#include <kerbal/type_traits/is_lvalue_reference.hpp>
+#include <kerbal/type_traits/add_lvalue_reference.hpp>
+#include <kerbal/type_traits/add_const_lvalue_reference.hpp>
+#include <kerbal/type_traits/copy_lvalue_reference.hpp>
 
 #include <kerbal/test/test.hpp>
 #include <kerbal/compatibility/cv_qualified_function.hpp>
 #include <kerbal/type_traits/is_same.hpp>
+
+#if __cplusplus >= 201103L
+#	include <kerbal/type_traits/is_rvalue_reference.hpp>
+#	include <kerbal/type_traits/add_rvalue_reference.hpp>
+#	include <kerbal/type_traits/add_const_rvalue_reference.hpp>
+#endif
 
 #if __cplusplus >= 201103L
 #	include <type_traits>
@@ -29,33 +39,33 @@
 #endif
 
 
-KERBAL_TEST_CASE(test_is_referenceable, "test is_referenceable")
+KERBAL_TEST_CASE(test_is_referencable, "test is_referencable")
 {
 	using namespace kerbal::type_traits;
 
-#define CHECK_IS_REFERENCEABLE(Type, res) CHECK_EQUAL(is_referenceable<Type>::value, res)
+#define CHECK_IS_REFERENCABLE(Type, res) CHECK_EQUAL(is_referencable<Type>::value, res)
 
-	CHECK_IS_REFERENCEABLE(void,                        false);
-	CHECK_IS_REFERENCEABLE(int,                         true);
-	CHECK_IS_REFERENCEABLE(const int,                   true);
-	CHECK_IS_REFERENCEABLE(volatile int,                true);
-	CHECK_IS_REFERENCEABLE(const volatile int,          true);
+	CHECK_IS_REFERENCABLE(void,                        false);
+	CHECK_IS_REFERENCABLE(int,                         true);
+	CHECK_IS_REFERENCABLE(const int,                   true);
+	CHECK_IS_REFERENCABLE(volatile int,                true);
+	CHECK_IS_REFERENCABLE(const volatile int,          true);
 
-	CHECK_IS_REFERENCEABLE(void*,                       true);
-	CHECK_IS_REFERENCEABLE(int*,                        true);
-	CHECK_IS_REFERENCEABLE(int**,                       true);
-	CHECK_IS_REFERENCEABLE(int&,                        true);
+	CHECK_IS_REFERENCABLE(void*,                       true);
+	CHECK_IS_REFERENCABLE(int*,                        true);
+	CHECK_IS_REFERENCABLE(int**,                       true);
+	CHECK_IS_REFERENCABLE(int&,                        true);
 
-	CHECK_IS_REFERENCEABLE(int[],                       true);
+	CHECK_IS_REFERENCABLE(int[],                       true);
 
 #if KERBAL_HAS_CV_QUALIFIED_FUNCTION_SUPPORT
-	CHECK_IS_REFERENCEABLE(void(),                      true);
-	CHECK_IS_REFERENCEABLE(void() const,                false);
-	CHECK_IS_REFERENCEABLE(void() volatile,             false);
-	CHECK_IS_REFERENCEABLE(void() const volatile,       false);
+	CHECK_IS_REFERENCABLE(void(),                      true);
+	CHECK_IS_REFERENCABLE(void() const,                false);
+	CHECK_IS_REFERENCABLE(void() volatile,             false);
+	CHECK_IS_REFERENCABLE(void() const volatile,       false);
 #endif
 
-	CHECK_IS_REFERENCEABLE(void(*)(),                   true);
+	CHECK_IS_REFERENCABLE(void(*)(),                   true);
 }
 
 
