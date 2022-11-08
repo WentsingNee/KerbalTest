@@ -73,11 +73,15 @@ KERBAL_TEMPLATE_TEST_CASE(test_batch_generate, "test batch generate")
 				}
 
 				KERBAL_TEST_CHECK(v1 == v2);
+				KERBAL_TEST_CHECK(eg1 == eg2);
 			}
 		}
 	}
 
 }
+
+KERBAL_TEMPLATE_TEST_CASE_INST(test_batch_generate, "test batch generate", kerbal::random::mt19937);
+KERBAL_TEMPLATE_TEST_CASE_INST(test_batch_generate, "test batch generate (u64)", kerbal::random::mt19937_64);
 
 
 template <typename MTEngine>
