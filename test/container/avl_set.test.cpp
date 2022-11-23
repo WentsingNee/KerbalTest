@@ -357,6 +357,28 @@ KERBAL_TEMPLATE_TEST_CASE_INST(test_avl_set_emplace, "test avl_set::emplace", ke
 KERBAL_TEMPLATE_TEST_CASE_INST(test_avl_set_emplace, "test avl_set::emplace", kerbal::memory::monotonic_allocator<int>);
 
 
+KERBAL_TEST_CASE(test_avl_set_find_hint, "test avl_set::find_hint")
+{
+	int N = (1 << 10) - 1;
+
+	kc::avl_set<int> s;
+	for (int i = 0; i < N; ++i) {
+		s.emplace(2 * i + 1);
+	}
+	// s = {1, 3, 5, 7, ..., 2 * N - 1};
+//	print_avl(s);
+
+	for (kc::avl_set<int>::const_iterator hint = s.cbegin(); hint != s.cend(); ++hint) {
+		for (int val = 0; val <= 2 * N; ++val) {
+			kc::avl_set<int>::const_iterator pos_by_find = s.find(val);
+			kc::avl_set<int>::const_iterator pos_by_find_hint = s.find_hint(hint, val);
+			KERBAL_TEST_CHECK(pos_by_find == pos_by_find_hint);
+		}
+	}
+
+}
+
+
 template <typename Allocator>
 KERBAL_TEMPLATE_TEST_CASE(test_avl_set_erase, "test avl_set::erase")
 {
@@ -492,6 +514,37 @@ KERBAL_TEST_CASE(test_avl_set_merge, "test avl_set::merge")
 	}
 	{
 		kc::detail::avl_normal_result_t avl_normal_result = s2.avl_normal();
+		KERBAL_TEST_CHECK(avl_normal_result == kerbal::container::detail::AVL_NORMAL_RESULT_CORRECT);
+		print_avl_normal_result_if_wrong(avl_normal_result);
+	}
+
+}
+
+
+KERBAL_TEST_CASE(test_avl_set_set_union, "test avl_set::set_union")
+{
+	kc::avl_set<int> s1 = KERBAL_ILIST(1, 2, 3,    5,    7);
+	kc::avl_set<int> s2 = KERBAL_ILIST(   2,    4,    6, 7, 8);
+
+	kc::avl_set<int> sto;
+	kc::avl_set<int>::set_union(s1, s2, sto);
+
+	print_avl(s1);
+	print_avl(s2);
+	print_avl(sto);
+
+	{
+		kc::detail::avl_normal_result_t avl_normal_result = s1.avl_normal();
+		KERBAL_TEST_CHECK(avl_normal_result == kerbal::container::detail::AVL_NORMAL_RESULT_CORRECT);
+		print_avl_normal_result_if_wrong(avl_normal_result);
+	}
+	{
+		kc::detail::avl_normal_result_t avl_normal_result = s2.avl_normal();
+		KERBAL_TEST_CHECK(avl_normal_result == kerbal::container::detail::AVL_NORMAL_RESULT_CORRECT);
+		print_avl_normal_result_if_wrong(avl_normal_result);
+	}
+	{
+		kc::detail::avl_normal_result_t avl_normal_result = sto.avl_normal();
 		KERBAL_TEST_CHECK(avl_normal_result == kerbal::container::detail::AVL_NORMAL_RESULT_CORRECT);
 		print_avl_normal_result_if_wrong(avl_normal_result);
 	}
