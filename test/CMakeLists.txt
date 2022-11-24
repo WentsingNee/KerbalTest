@@ -20,6 +20,10 @@ macro(add_kerbal_test_target target target_src_file)
         target_compile_options(${target} PUBLIC --coverage)
         target_link_options(${target} PUBLIC --coverage)
     endif ()
+    add_test(
+            NAME ${target}
+            COMMAND ${target}
+    )
     set(test_targets ${test_targets} ${target})
 endmacro()
 
@@ -71,6 +75,10 @@ foreach (target ${test_targets})
 endforeach ()
 message("test targets: ${test_targets_count}")
 message("\n")
+
+
+# ctest
+enable_testing()
 
 
 add_custom_target(run_test_targets
