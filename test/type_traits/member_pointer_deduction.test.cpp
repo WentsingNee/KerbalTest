@@ -9,7 +9,9 @@
  *   all rights reserved
  */
 
-#include <kerbal/type_traits/member_pointer_deduction.hpp>
+#include <kerbal/type_traits/is_member_pointer.hpp>
+#include <kerbal/type_traits/is_member_function_pointer.hpp>
+#include <kerbal/type_traits/is_member_object_pointer.hpp>
 
 #include <kerbal/test/test.hpp>
 #include <kerbal/compatibility/cv_qualified_function.hpp>
