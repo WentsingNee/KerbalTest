@@ -9,7 +9,11 @@
  *   all rights reserved
  */
 
-#include <kerbal/type_traits/pointer_deduction.hpp>
+#include <kerbal/type_traits/is_pointer.hpp>
+#include <kerbal/type_traits/add_pointer.hpp>
+#include <kerbal/type_traits/remove_pointer.hpp>
+#include <kerbal/type_traits/remove_all_pointers.hpp>
+#include <kerbal/type_traits/pointer_rank.hpp>
 
 #include <kerbal/test/test.hpp>
 #include <kerbal/compatibility/cv_qualified_function.hpp>
