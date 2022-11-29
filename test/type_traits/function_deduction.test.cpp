@@ -9,7 +9,7 @@
  *   all rights reserved
  */
 
-#include <kerbal/type_traits/function_deduction.hpp>
+#include <kerbal/type_traits/is_function.hpp>
 
 #include <kerbal/test/test.hpp>
 #include <kerbal/compatibility/cv_qualified_function.hpp>
