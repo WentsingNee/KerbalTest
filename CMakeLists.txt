@@ -41,6 +41,15 @@ elseif (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
 endif ()
 
 
+# instruction extensions
+
+option(KERBAL_TEST_ENABLE_IE "enable instruction extensions" ON)
+
+if (KERBAL_TEST_ENABLE_IE)
+    include(cmake/instruction_extensions.cmake)
+endif ()
+
+
 # libc++
 
 option(KERBAL_TEST_USE_LIBCXX "use libc++" OFF)
