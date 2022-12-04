@@ -69,9 +69,18 @@ INST(0 * CHAR_BIT * sizeof(unsigned short) + 7, unsigned short);
 INST(4 * CHAR_BIT * sizeof(unsigned short) + 0, unsigned short);
 INST(0 * CHAR_BIT * sizeof(unsigned int) + 7, unsigned int);
 INST(4 * CHAR_BIT * sizeof(unsigned int) + 0, unsigned int);
+INST(80 * CHAR_BIT * sizeof(unsigned int) + 0, unsigned int);
+INST(80 * CHAR_BIT * sizeof(unsigned int) + 7, unsigned int);
+INST(85 * CHAR_BIT * sizeof(unsigned int) + 0, unsigned int);
+INST(85 * CHAR_BIT * sizeof(unsigned int) + 7, unsigned int);
 INST(0 * CHAR_BIT * sizeof(unsigned long long) + 7, unsigned long long);
 INST(4 * CHAR_BIT * sizeof(unsigned long long) + 0, unsigned long long);
 INST(4 * CHAR_BIT * sizeof(unsigned long long) + 7, unsigned long long);
+INST(80 * CHAR_BIT * sizeof(unsigned long long) + 0, unsigned long long);
+INST(80 * CHAR_BIT * sizeof(unsigned long long) + 7, unsigned long long);
+INST(85 * CHAR_BIT * sizeof(unsigned long long) + 0, unsigned long long);
+INST(85 * CHAR_BIT * sizeof(unsigned long long) + 7, unsigned long long);
+
 
 #undef INST
 
@@ -116,9 +125,18 @@ INST(0 * CHAR_BIT * sizeof(unsigned short) + 7, unsigned short);
 INST(4 * CHAR_BIT * sizeof(unsigned short) + 0, unsigned short);
 INST(0 * CHAR_BIT * sizeof(unsigned int) + 7, unsigned int);
 INST(4 * CHAR_BIT * sizeof(unsigned int) + 0, unsigned int);
+INST(80 * CHAR_BIT * sizeof(unsigned int) + 0, unsigned int);
+INST(80 * CHAR_BIT * sizeof(unsigned int) + 7, unsigned int);
+INST(85 * CHAR_BIT * sizeof(unsigned int) + 0, unsigned int);
+INST(85 * CHAR_BIT * sizeof(unsigned int) + 7, unsigned int);
 INST(0 * CHAR_BIT * sizeof(unsigned long long) + 7, unsigned long long);
 INST(4 * CHAR_BIT * sizeof(unsigned long long) + 0, unsigned long long);
 INST(4 * CHAR_BIT * sizeof(unsigned long long) + 7, unsigned long long);
+INST(80 * CHAR_BIT * sizeof(unsigned long long) + 0, unsigned long long);
+INST(80 * CHAR_BIT * sizeof(unsigned long long) + 7, unsigned long long);
+INST(85 * CHAR_BIT * sizeof(unsigned long long) + 0, unsigned long long);
+INST(85 * CHAR_BIT * sizeof(unsigned long long) + 7, unsigned long long);
+
 
 #undef INST
 
@@ -148,9 +166,18 @@ INST(0 * CHAR_BIT * sizeof(unsigned short) + 7, unsigned short);
 INST(4 * CHAR_BIT * sizeof(unsigned short) + 0, unsigned short);
 INST(0 * CHAR_BIT * sizeof(unsigned int) + 7, unsigned int);
 INST(4 * CHAR_BIT * sizeof(unsigned int) + 0, unsigned int);
+INST(80 * CHAR_BIT * sizeof(unsigned int) + 0, unsigned int);
+INST(80 * CHAR_BIT * sizeof(unsigned int) + 7, unsigned int);
+INST(85 * CHAR_BIT * sizeof(unsigned int) + 0, unsigned int);
+INST(85 * CHAR_BIT * sizeof(unsigned int) + 7, unsigned int);
 INST(0 * CHAR_BIT * sizeof(unsigned long long) + 7, unsigned long long);
 INST(4 * CHAR_BIT * sizeof(unsigned long long) + 0, unsigned long long);
 INST(4 * CHAR_BIT * sizeof(unsigned long long) + 7, unsigned long long);
+INST(80 * CHAR_BIT * sizeof(unsigned long long) + 0, unsigned long long);
+INST(80 * CHAR_BIT * sizeof(unsigned long long) + 7, unsigned long long);
+INST(85 * CHAR_BIT * sizeof(unsigned long long) + 0, unsigned long long);
+INST(85 * CHAR_BIT * sizeof(unsigned long long) + 7, unsigned long long);
+
 
 #undef INST
 
@@ -181,9 +208,18 @@ INST(0 * CHAR_BIT * sizeof(unsigned short) + 7, unsigned short);
 INST(4 * CHAR_BIT * sizeof(unsigned short) + 0, unsigned short);
 INST(0 * CHAR_BIT * sizeof(unsigned int) + 7, unsigned int);
 INST(4 * CHAR_BIT * sizeof(unsigned int) + 0, unsigned int);
+INST(80 * CHAR_BIT * sizeof(unsigned int) + 0, unsigned int);
+INST(80 * CHAR_BIT * sizeof(unsigned int) + 7, unsigned int);
+INST(85 * CHAR_BIT * sizeof(unsigned int) + 0, unsigned int);
+INST(85 * CHAR_BIT * sizeof(unsigned int) + 7, unsigned int);
 INST(0 * CHAR_BIT * sizeof(unsigned long long) + 7, unsigned long long);
 INST(4 * CHAR_BIT * sizeof(unsigned long long) + 0, unsigned long long);
 INST(4 * CHAR_BIT * sizeof(unsigned long long) + 7, unsigned long long);
+INST(80 * CHAR_BIT * sizeof(unsigned long long) + 0, unsigned long long);
+INST(80 * CHAR_BIT * sizeof(unsigned long long) + 7, unsigned long long);
+INST(85 * CHAR_BIT * sizeof(unsigned long long) + 0, unsigned long long);
+INST(85 * CHAR_BIT * sizeof(unsigned long long) + 7, unsigned long long);
+
 
 #undef INST
 
@@ -272,7 +308,17 @@ KERBAL_TEMPLATE_TEST_CASE(test_static_bitset_all, "test static_bitset::all")
 	{
 		for (size_t loop = 0; loop < N; ++loop) {
 			bs.reset(eg() % N);
-			KERBAL_TEST_CHECK_EQUAL(static_bitset_all_impl_in_fool_way(bs), bs.all());
+			KERBAL_TEST_CHECK_EQUAL(false, bs.all());
+		}
+	}
+
+	bs.set();
+
+	{
+		for (size_t loop = 0; loop < N; ++loop) {
+			bs.reset(loop);
+			KERBAL_TEST_CHECK_EQUAL(false, bs.all());
+			bs.set(loop);
 		}
 	}
 
@@ -286,9 +332,18 @@ INST(0 * CHAR_BIT * sizeof(unsigned short) + 7, unsigned short);
 INST(4 * CHAR_BIT * sizeof(unsigned short) + 0, unsigned short);
 INST(0 * CHAR_BIT * sizeof(unsigned int) + 7, unsigned int);
 INST(4 * CHAR_BIT * sizeof(unsigned int) + 0, unsigned int);
+INST(80 * CHAR_BIT * sizeof(unsigned int) + 0, unsigned int);
+INST(80 * CHAR_BIT * sizeof(unsigned int) + 7, unsigned int);
+INST(85 * CHAR_BIT * sizeof(unsigned int) + 0, unsigned int);
+INST(85 * CHAR_BIT * sizeof(unsigned int) + 7, unsigned int);
 INST(0 * CHAR_BIT * sizeof(unsigned long long) + 7, unsigned long long);
 INST(4 * CHAR_BIT * sizeof(unsigned long long) + 0, unsigned long long);
 INST(4 * CHAR_BIT * sizeof(unsigned long long) + 7, unsigned long long);
+INST(80 * CHAR_BIT * sizeof(unsigned long long) + 0, unsigned long long);
+INST(80 * CHAR_BIT * sizeof(unsigned long long) + 7, unsigned long long);
+INST(85 * CHAR_BIT * sizeof(unsigned long long) + 0, unsigned long long);
+INST(85 * CHAR_BIT * sizeof(unsigned long long) + 7, unsigned long long);
+
 
 #undef INST
 
@@ -321,13 +376,23 @@ KERBAL_TEMPLATE_TEST_CASE(test_static_bitset_any, "test static_bitset::any")
 		}
 	}
 
-	bs.set();
+	bs.reset();
 	KERBAL_TEST_CHECK_EQUAL(static_bitset_any_impl_in_fool_way(bs), bs.any());
 
 	{
 		for (size_t loop = 0; loop < N; ++loop) {
-			bs.reset(eg() % N);
-			KERBAL_TEST_CHECK_EQUAL(static_bitset_any_impl_in_fool_way(bs), bs.any());
+			bs.set(eg() % N);
+			KERBAL_TEST_CHECK_EQUAL(true, bs.any());
+		}
+	}
+
+	bs.reset();
+
+	{
+		for (size_t loop = 0; loop < N; ++loop) {
+			bs.set(loop);
+			KERBAL_TEST_CHECK_EQUAL(true, bs.any());
+			bs.reset(loop);
 		}
 	}
 
@@ -341,9 +406,18 @@ INST(0 * CHAR_BIT * sizeof(unsigned short) + 7, unsigned short);
 INST(4 * CHAR_BIT * sizeof(unsigned short) + 0, unsigned short);
 INST(0 * CHAR_BIT * sizeof(unsigned int) + 7, unsigned int);
 INST(4 * CHAR_BIT * sizeof(unsigned int) + 0, unsigned int);
+INST(80 * CHAR_BIT * sizeof(unsigned int) + 0, unsigned int);
+INST(80 * CHAR_BIT * sizeof(unsigned int) + 7, unsigned int);
+INST(85 * CHAR_BIT * sizeof(unsigned int) + 0, unsigned int);
+INST(85 * CHAR_BIT * sizeof(unsigned int) + 7, unsigned int);
 INST(0 * CHAR_BIT * sizeof(unsigned long long) + 7, unsigned long long);
 INST(4 * CHAR_BIT * sizeof(unsigned long long) + 0, unsigned long long);
 INST(4 * CHAR_BIT * sizeof(unsigned long long) + 7, unsigned long long);
+INST(80 * CHAR_BIT * sizeof(unsigned long long) + 0, unsigned long long);
+INST(80 * CHAR_BIT * sizeof(unsigned long long) + 7, unsigned long long);
+INST(85 * CHAR_BIT * sizeof(unsigned long long) + 0, unsigned long long);
+INST(85 * CHAR_BIT * sizeof(unsigned long long) + 7, unsigned long long);
+
 
 #undef INST
 
@@ -373,9 +447,18 @@ INST(0 * CHAR_BIT * sizeof(unsigned short) + 7, unsigned short);
 INST(4 * CHAR_BIT * sizeof(unsigned short) + 0, unsigned short);
 INST(0 * CHAR_BIT * sizeof(unsigned int) + 7, unsigned int);
 INST(4 * CHAR_BIT * sizeof(unsigned int) + 0, unsigned int);
+INST(80 * CHAR_BIT * sizeof(unsigned int) + 0, unsigned int);
+INST(80 * CHAR_BIT * sizeof(unsigned int) + 7, unsigned int);
+INST(85 * CHAR_BIT * sizeof(unsigned int) + 0, unsigned int);
+INST(85 * CHAR_BIT * sizeof(unsigned int) + 7, unsigned int);
 INST(0 * CHAR_BIT * sizeof(unsigned long long) + 7, unsigned long long);
 INST(4 * CHAR_BIT * sizeof(unsigned long long) + 0, unsigned long long);
 INST(4 * CHAR_BIT * sizeof(unsigned long long) + 7, unsigned long long);
+INST(80 * CHAR_BIT * sizeof(unsigned long long) + 0, unsigned long long);
+INST(80 * CHAR_BIT * sizeof(unsigned long long) + 7, unsigned long long);
+INST(85 * CHAR_BIT * sizeof(unsigned long long) + 0, unsigned long long);
+INST(85 * CHAR_BIT * sizeof(unsigned long long) + 7, unsigned long long);
+
 
 #undef INST
 
@@ -525,9 +608,18 @@ INST(0 * CHAR_BIT * sizeof(unsigned short) + 7, unsigned short);
 INST(4 * CHAR_BIT * sizeof(unsigned short) + 0, unsigned short);
 INST(0 * CHAR_BIT * sizeof(unsigned int) + 7, unsigned int);
 INST(4 * CHAR_BIT * sizeof(unsigned int) + 0, unsigned int);
+INST(80 * CHAR_BIT * sizeof(unsigned int) + 0, unsigned int);
+INST(80 * CHAR_BIT * sizeof(unsigned int) + 7, unsigned int);
+INST(85 * CHAR_BIT * sizeof(unsigned int) + 0, unsigned int);
+INST(85 * CHAR_BIT * sizeof(unsigned int) + 7, unsigned int);
 INST(0 * CHAR_BIT * sizeof(unsigned long long) + 7, unsigned long long);
 INST(4 * CHAR_BIT * sizeof(unsigned long long) + 0, unsigned long long);
 INST(4 * CHAR_BIT * sizeof(unsigned long long) + 7, unsigned long long);
+INST(80 * CHAR_BIT * sizeof(unsigned long long) + 0, unsigned long long);
+INST(80 * CHAR_BIT * sizeof(unsigned long long) + 7, unsigned long long);
+INST(85 * CHAR_BIT * sizeof(unsigned long long) + 0, unsigned long long);
+INST(85 * CHAR_BIT * sizeof(unsigned long long) + 7, unsigned long long);
+
 
 #undef INST
 
@@ -592,9 +684,18 @@ INST(0 * CHAR_BIT * sizeof(unsigned short) + 7, unsigned short);
 INST(4 * CHAR_BIT * sizeof(unsigned short) + 0, unsigned short);
 INST(0 * CHAR_BIT * sizeof(unsigned int) + 7, unsigned int);
 INST(4 * CHAR_BIT * sizeof(unsigned int) + 0, unsigned int);
+INST(80 * CHAR_BIT * sizeof(unsigned int) + 0, unsigned int);
+INST(80 * CHAR_BIT * sizeof(unsigned int) + 7, unsigned int);
+INST(85 * CHAR_BIT * sizeof(unsigned int) + 0, unsigned int);
+INST(85 * CHAR_BIT * sizeof(unsigned int) + 7, unsigned int);
 INST(0 * CHAR_BIT * sizeof(unsigned long long) + 7, unsigned long long);
 INST(4 * CHAR_BIT * sizeof(unsigned long long) + 0, unsigned long long);
 INST(4 * CHAR_BIT * sizeof(unsigned long long) + 7, unsigned long long);
+INST(80 * CHAR_BIT * sizeof(unsigned long long) + 0, unsigned long long);
+INST(80 * CHAR_BIT * sizeof(unsigned long long) + 7, unsigned long long);
+INST(85 * CHAR_BIT * sizeof(unsigned long long) + 0, unsigned long long);
+INST(85 * CHAR_BIT * sizeof(unsigned long long) + 7, unsigned long long);
+
 
 #undef INST
 
