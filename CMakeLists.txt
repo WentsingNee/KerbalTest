@@ -33,6 +33,11 @@ if (KTEST_ENABLE_IE)
 endif ()
 
 
+# coroutine
+
+option(KTEST_ENABLE_COROUTINE "enable coroutine" ON)
+
+
 # libc++
 
 option(KTEST_USE_LIBCXX "use libc++" OFF)
