@@ -33,6 +33,15 @@ if (KTEST_ENABLE_IE)
 endif ()
 
 
+# coroutine
+
+option(KERBAL_TEST_ENABLE_COROUTINE "enable coroutine" ON)
+
+if (KERBAL_TEST_ENABLE_COROUTINE)
+    include(cmake/coroutine.cmake)
+endif ()
+
+
 # libc++
 
 option(KTEST_USE_LIBCXX "use libc++" OFF)
