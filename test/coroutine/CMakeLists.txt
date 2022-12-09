@@ -21,4 +21,6 @@ endfunction()
 
 if (KTEST_ENABLE_COROUTINE)
     ktest_add_coroutine_target(utest.coroutine.generator    ./generator.test.noauto.cpp)
+    ktest_add_coroutine_target(utest.coroutine.lazy         ./lazy.test.noauto.cpp)
+    ktest_add_coroutine_target(utest.coroutine.task         ./task.test.noauto.cpp)
 endif ()
