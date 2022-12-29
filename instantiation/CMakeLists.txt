@@ -30,6 +30,7 @@ endfunction()
 
 add_kerbal_sub_lib(algorithm)
 add_kerbal_sub_lib(any)
+add_kerbal_sub_lib(autonm)
 add_kerbal_sub_lib(bitset)
 add_kerbal_sub_lib(compare)
 add_kerbal_sub_lib(container)
