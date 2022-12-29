@@ -1,74 +1,92 @@
 set(EXECUTABLE_OUTPUT_PATH ./benchmark)
 
-include_directories(../)
-set(targets)
 
-if (CMAKE_CXX_COMPILER_ID MATCHES "GNU" OR CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID MATCHES "Intel")
-    add_compile_options(-Wall)
-    message(STATUS "CXX flags: -Wall")
 
-    add_compile_options(-Wextra)
-    message(STATUS "CXX flags: -Wextra")
-
-    add_compile_options(-Wno-unused-parameter)
-    message(STATUS "CXX flags: -Wno-unused-parameter")
-
-    if (${CMAKE_CXX_STANDARD} MATCHES 98)
-        add_compile_definitions(LITTLE_ENDIAN=0)
-        add_compile_definitions(BIG_ENDIAN=1)
-        add_compile_definitions(BYTE_ORDER=LITTLE_ENDIAN)
+macro(add_kerbal_bench_target target target_src_file)
+    add_executable(${target} ${target_src_file})
+    set_target_properties(${target} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/targets)
+    target_include_directories(${target} PUBLIC ./)
+    if (KERBAL_TEST_USE_LIBCXX)
+        target_compile_options(${target} PUBLIC -stdlib=libc++)
+        target_link_libraries(${target} PUBLIC ${LIB_CPP})
+        target_link_libraries(${target} PUBLIC ${LIB_CPPABI})
     endif ()
+    add_test(
+            NAME ${target}
+            COMMAND ${target}
+    )
+    set(bench_targets ${bench_targets} ${target})
+endmacro()
 
-endif ()
+
+macro(add_kerbal_bench_target_wih_ie target target_src_file ie)
+    if (${KERBAL_TEST_SUPPORT_${ie}})
+        set(target_name_with_ie ${target}.${ie})
+        add_kerbal_bench_target(${target_name_with_ie} ${target_src_file})
+        target_compile_options(${target_name_with_ie} PUBLIC ${KERBAL_TEST_FLAGS_${ie}})
+    else ()
+        message(WARNING "Compiler doesn't support ${ie}")
+    endif ()
+endmacro()
 
 
-set(instructs sse avx avx2 avx512f)
+set(instructs sse sse2 avx avx2 avx512f neon sve)
 
 
 foreach (instruct ${instructs})
+    if (${KERBAL_TEST_SUPPORT_${instruct}})
+    else()
+        continue()
+    endif ()
+
+
     set(target_prefix bench.algorithm.find)
     set(src_file algorithm/find.bench.cpp)
 
+    set(target ${target_prefix}.k)
+    add_kerbal_bench_target_wih_ie(${target} ${src_file} ${instruct})
     set(target ${target_prefix}.k.${instruct})
-    add_executable(${target} ${src_file})
     target_compile_definitions(${target} PUBLIC TEST=0)
-    target_compile_options(${target} PUBLIC -m${instruct})
     set_target_properties(${target} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ./find)
 
+    set(target ${target_prefix}.s)
+    add_kerbal_bench_target_wih_ie(${target} ${src_file} ${instruct})
     set(target ${target_prefix}.s.${instruct})
-    add_executable(${target} ${src_file})
     target_compile_definitions(${target} PUBLIC TEST=1)
-    target_compile_options(${target} PUBLIC -m${instruct})
     set_target_properties(${target} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ./find)
-endforeach ()
 
 
-foreach (instruct ${instructs})
+
     set(target_prefix bench.algorithm.reverse)
     set(src_file algorithm/reverse.bench.cpp)
 
+    set(target ${target_prefix}.k)
+    add_kerbal_bench_target_wih_ie(${target} ${src_file} ${instruct})
     set(target ${target_prefix}.k.${instruct})
-    add_executable(${target} ${src_file})
     target_compile_definitions(${target} PUBLIC TEST=0)
-    target_compile_options(${target} PUBLIC -m${instruct})
     set_target_properties(${target} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ./reverse)
 
+    set(target ${target_prefix}.s)
+    add_kerbal_bench_target_wih_ie(${target} ${src_file} ${instruct})
     set(target ${target_prefix}.s.${instruct})
-    add_executable(${target} ${src_file})
     target_compile_definitions(${target} PUBLIC TEST=1)
-    target_compile_options(${target} PUBLIC -m${instruct})
     set_target_properties(${target} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ./reverse)
 endforeach ()
 
 
-message("\n")
+add_kerbal_bench_target(bench.bitset.static_bitset             bitset/static_bitset.bench.cpp)
+add_kerbal_bench_target(bench.container.vector             container/vector.bench.cpp)
 
-foreach (target ${targets})
-    message("target: " ${target})
+
+
+set(bench_targets_count 0)
+foreach (target ${bench_targets})
+    message(VERBOSE "test-target ${bench_targets_count}: ${target}")
+    math(EXPR bench_targets_count "${bench_targets_count} + 1")
 endforeach ()
-
+message("test targets: ${bench_targets_count}")
 message("\n")
 
 
-add_kerbal_test_target(bench.bitset.static_bitset             bitset/static_bitset.bench.cpp)
-add_kerbal_test_target(bench.container.vector             container/vector.bench.cpp)
+# ctest
+enable_testing()

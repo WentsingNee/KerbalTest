@@ -21,6 +21,7 @@
 #include <iostream>
 #include <vector>
 
+
 int main()
 {
 	typedef kerbal::type_traits::integral_constant<size_t, 1024 * 1024> N;
@@ -28,12 +29,8 @@ int main()
 	typedef unsigned int T;
 	kerbal::random::mt19937 eg;
 
-	std::vector<T> v; {
-		v.reserve(N::value);
-		for (size_t i = 0; i < N::value; ++i) {
-			T t = eg();
-			v.push_back(t);
-		}
+	std::vector<T> v(N::value); {
+		eg.generate_n(v.data(), N::value);
 	}
 
 
@@ -56,7 +53,5 @@ int main()
 		}
 		std::cout << t.count() << std::endl;
 	}
-
-
 
 }
