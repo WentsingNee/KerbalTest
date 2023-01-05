@@ -40,6 +40,8 @@ elseif (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
     message(STATUS "CXX flags: /D_CRT_SECURE_NO_WARNINGS")
 endif ()
 
+add_compile_definitions(KERBAL_TYPE_TRAITS_DEBUG_WARNING=1)
+
 
 # instruction extensions
 
