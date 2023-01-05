@@ -16,6 +16,12 @@ add_kerbal_test_target(test.type_traits.is_destructible.void_type is_destructibl
 target_compile_definitions(test.type_traits.is_destructible.void_type PRIVATE KERBAL_TRY_TEST_IS_DESTRUCTIBLE_POLICY=KERBAL_TRY_TEST_IS_DESTRUCTIBLE_POLICY_VOID_TYPE)
 
 
+
+add_kerbal_test_target(test.type_traits.is_nothrow_destructible.no_intrinsic is_nothrow_destructible.test.cpp)
+target_compile_definitions(test.type_traits.is_nothrow_destructible.no_intrinsic PRIVATE KERBAL_HAS_IS_DESTRUCTIBLE_SUPPORT=0
+                                                                                         KERBAL_HAS_IS_NOTHROW_DESTRUCTIBLE_SUPPORT=0)
+
+
 add_kerbal_test_target(test.type_traits.is_trivially_copy_assignable.no_intrinsic is_trivially_copy_assignable.test.cpp)
 target_compile_definitions(test.type_traits.is_trivially_copy_assignable.no_intrinsic PRIVATE KERBAL_HAS_IS_TRIVIALLY_ASSIGNABLE_SUPPORT=0
                                                                                               KERBAL_HAS_IS_TRIVIALLY_COPY_ASSIGNABLE_SUPPORT=0)
