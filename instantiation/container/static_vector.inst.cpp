@@ -43,7 +43,7 @@ template
 kc::static_vector<int, 64>::iterator
 kc::static_vector<int, 64>::emplace(const_iterator);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::static_vector<int, 64>::iterator
 kc::static_vector<int, 64>::emplace(const_iterator, rvalue_reference);
 #endif
@@ -82,7 +82,7 @@ template
 kc::static_vector<std::string, 64>::iterator
 kc::static_vector<std::string, 64>::emplace(const_iterator);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::static_vector<std::string, 64>::iterator
 kc::static_vector<std::string, 64>::emplace(const_iterator, rvalue_reference);
 #endif
@@ -123,7 +123,7 @@ template
 kc::static_vector<int[8], 64>::iterator
 kc::static_vector<int[8], 64>::emplace(const_iterator);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::static_vector<int[8], 64>::iterator
 kc::static_vector<int[8], 64>::emplace(const_iterator, rvalue_reference);
 #endif
@@ -160,7 +160,7 @@ template
 kc::static_vector<std::string[8], 4>::iterator
 kc::static_vector<std::string[8], 4>::emplace(const_iterator);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::static_vector<std::string[8], 4>::iterator
 kc::static_vector<std::string[8], 4>::emplace(const_iterator, rvalue_reference);
 #endif
