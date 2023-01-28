@@ -67,6 +67,11 @@ kc::list<int>::list(const_iterator, const_iterator, const allocator_type&, int);
 template
 kc::list<int>::list(const_reverse_iterator, const_reverse_iterator, const allocator_type&, int);
 
+#if __cplusplus < 201103L
+template
+kc::list<int>::list(const kerbal::assign::assign_list<int> &);
+#endif
+
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
 void kc::list<int>::assign(const_pointer, const_pointer);
 
@@ -164,6 +169,11 @@ kc::list<std::string>::list(const_iterator, const_iterator, const allocator_type
 
 template
 kc::list<std::string>::list(const_reverse_iterator, const_reverse_iterator, const allocator_type&, int);
+
+#if __cplusplus < 201103L
+template
+kc::list<std::string>::list(const kerbal::assign::assign_list<std::string> &);
+#endif
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
 void kc::list<std::string>::assign(const_pointer, const_pointer);

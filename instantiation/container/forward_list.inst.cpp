@@ -63,6 +63,11 @@ kc::forward_list<int>::forward_list(const_pointer, const_pointer, const allocato
 template
 kc::forward_list<int>::forward_list(const_iterator, const_iterator, const allocator_type&, int);
 
+#if __cplusplus < 201103L
+template
+kc::forward_list<int>::forward_list(const kerbal::assign::assign_list<int> &);
+#endif
+
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
 void kc::forward_list<int>::assign(const_pointer, const_pointer);
 
@@ -148,6 +153,11 @@ kc::forward_list<std::string>::forward_list(const_pointer, const_pointer, const 
 
 template
 kc::forward_list<std::string>::forward_list(const_iterator, const_iterator, const allocator_type&, int);
+
+#if __cplusplus < 201103L
+template
+kc::forward_list<std::string>::forward_list(const kerbal::assign::assign_list<std::string> &);
+#endif
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
 void kc::forward_list<std::string>::assign(const_pointer, const_pointer);

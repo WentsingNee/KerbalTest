@@ -35,6 +35,11 @@ kc::vector<int>::vector(const_reverse_iterator, const_reverse_iterator, int);
 template
 kc::vector<int>::vector(input_iterator<int>::type, input_iterator<int>::type, int);
 
+#if __cplusplus < 201103L
+template
+kc::vector<int>::vector(const kerbal::assign::assign_list<int> &);
+#endif
+
 template
 void kc::vector<int>::assign(const_iterator, const_iterator);
 
@@ -80,6 +85,11 @@ template class kc::vector<std::string>;
 template kc::vector<std::string>::vector(const_iterator, const_iterator, int);
 template kc::vector<std::string>::vector(const_reverse_iterator, const_reverse_iterator, int);
 template kc::vector<std::string>::vector(input_iterator<std::string>::type, input_iterator<std::string>::type, int);
+
+#if __cplusplus < 201103L
+template
+kc::vector<std::string>::vector(const kerbal::assign::assign_list<std::string> &);
+#endif
 
 template void kc::vector<std::string>::assign(const_iterator, const_iterator);
 template void kc::vector<std::string>::assign(const_reverse_iterator, const_reverse_iterator);

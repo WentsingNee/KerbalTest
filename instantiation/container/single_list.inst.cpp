@@ -46,6 +46,11 @@ template kc::single_list<int>::single_list(const_iterator, const_iterator, int);
 template kc::single_list<int>::single_list(pointer, pointer, const allocator_type&, int);
 template kc::single_list<int>::single_list(const_iterator, const_iterator, const allocator_type&, int);
 
+#if __cplusplus < 201103L
+template
+kc::single_list<int>::single_list(const kerbal::assign::assign_list<int> &);
+#endif
+
 template
 void kc::single_list<int>::assign(pointer, pointer);
 
@@ -100,6 +105,11 @@ template kc::single_list<std::string>::single_list(pointer, pointer, int);
 template kc::single_list<std::string>::single_list(const_iterator, const_iterator, int);
 template kc::single_list<std::string>::single_list(pointer, pointer, const allocator_type&, int);
 template kc::single_list<std::string>::single_list(const_iterator, const_iterator, const allocator_type&, int);
+
+#if __cplusplus < 201103L
+template
+kc::single_list<std::string>::single_list(const kerbal::assign::assign_list<std::string> &);
+#endif
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
 void kc::single_list<std::string>::assign(pointer, pointer);
