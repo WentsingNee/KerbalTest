@@ -29,7 +29,7 @@ KERBAL_TEST_CASE(test_autonm_forward_list_insert, "test autonm::forward_list::in
 	autonm_list l;
 
 	for (N::value_type i = 0; i < N::value; ++i) {
-		node[i].value = r[i] = i;
+		node[i].member() = r[i] = i;
 		l.push_front(node[i]);
 	}
 
@@ -53,7 +53,7 @@ KERBAL_TEST_CASE(test_autonm_forward_list_batch_insert, "test autonm::forward_li
 	autonm_list l;
 
 	for (N::value_type i = 0; i < N::value; ++i) {
-		node[i].value = r[i] = i;
+		node[i].member() = r[i] = i;
 	}
 
 	autonm_list::iterator ret = l.insert_after(l.cbefore_begin(), node, node + N::value);

@@ -28,7 +28,7 @@ KERBAL_TEST_CASE(test_autonm_list_push_back, "test autonm_list::push_back")
 		autonm_list l;
 
 		for (int i = 0; i < 10; ++i) {
-			node[i].value = i;
+			node[i].member() = i;
 		}
 
 		for (int i = 0; i < 10; ++i) {
@@ -49,7 +49,7 @@ KERBAL_TEST_CASE(test_autonm_list_push_back, "test autonm_list::push_back")
 
 		for (int i = 0; i < 10; ++i) {
 			autonm_list::auto_node * p = new autonm_list::auto_node();
-			p->value = i;
+			p->member() = i;
 			l.push_back(*p);
 		}
 
@@ -75,7 +75,7 @@ KERBAL_TEST_CASE(test_autonm_list_range_insert, "test autonm_list::range_insert"
 	autonm_list l;
 
 	for (N::value_type i = 0; i < N::value; ++i) {
-		node[i].value = r[i] = i;
+		node[i].member() = r[i] = i;
 	}
 
 	autonm_list::iterator ret = l.insert(l.cbegin(), node, node + N::value);
