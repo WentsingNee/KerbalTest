@@ -1,9 +1,10 @@
-set(EXECUTABLE_OUTPUT_PATH ./test_suites)
 
 
 macro(add_kerbal_test_target target target_src_file)
     add_executable(${target} ${target_src_file})
-    set_target_properties(${target} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/targets)
+    set_target_properties(${target}
+            PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/targets
+    )
     target_include_directories(${target} PUBLIC ./)
     if (KERBAL_TEST_USE_LIBCXX)
         target_compile_options(${target} PUBLIC -stdlib=libc++)
@@ -39,46 +40,30 @@ macro(add_kerbal_test_target_wih_ie target target_src_file ie)
 endmacro()
 
 
-function(add_kerbal_sub_lib sublib)
-    message("add sublib: ${sublib}")
-    aux_source_directory(./${sublib} files)
-    foreach (file ${files})
-        string(REGEX MATCH "./${sublib}/(.+)\\.test\\.cpp$" _ ${file})
-        if (CMAKE_MATCH_1)
-            set(target test.${sublib}.${CMAKE_MATCH_1})
-            message("	add: ${target}  <=  ${file}")
-            add_kerbal_test_target(${target} ${file})
-            set(test_targets ${test_targets} PARENT_SCOPE)
-        else ()
-            message(WARNING "   ${file} has been ignored")
-        endif ()
-    endforeach ()
-    message("")
-endfunction()
-
-
-add_kerbal_sub_lib(algorithm)
-add_subdirectory(./algorithm)
-add_kerbal_sub_lib(any)
-add_kerbal_sub_lib(autonm)
-add_kerbal_sub_lib(bitset)
-add_kerbal_sub_lib(compare)
-add_kerbal_sub_lib(compatibility)
-add_kerbal_sub_lib(config)
-add_kerbal_sub_lib(container)
-add_kerbal_sub_lib(function)
-add_kerbal_sub_lib(hash)
-add_kerbal_sub_lib(iterator)
-add_kerbal_sub_lib(memory)
-add_kerbal_sub_lib(numeric)
-add_kerbal_sub_lib(optional)
-add_kerbal_sub_lib(random)
-add_subdirectory(./random)
-add_kerbal_sub_lib(test)
-add_kerbal_sub_lib(type_traits)
-add_kerbal_sub_lib(utility)
+file(GLOB_RECURSE test_src_files RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "*")
+foreach (file ${test_src_files})
+    string(REGEX MATCH "(.+)\\.test\\.cpp$" _ ${file})
+    if (CMAKE_MATCH_1)
+        string(REPLACE "/" "." target ${CMAKE_MATCH_1})
+        string(PREPEND target "test.")
+        message("	add: ${target}  <=  ${CMAKE_CURRENT_SOURCE_DIR}/${file}")
+        add_kerbal_test_target(${target} ${CMAKE_CURRENT_SOURCE_DIR}/${file})
+        set(test_targets ${test_targets} PARENT_SCOPE)
+    else ()
+        message(WARNING "   ${file} has been ignored")
+    endif ()
+endforeach ()
 
 message("\n")
+
+
+file(GLOB children RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "*")
+foreach (child ${children})
+    if (IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/${child}" AND EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${child}/CMakeLists.txt")
+        message("child  ${child}")
+        add_subdirectory(${child})
+    endif ()
+endforeach()
 
 
 set(test_targets_count 0)
@@ -94,11 +79,36 @@ message("\n")
 enable_testing()
 
 
+foreach (target ${test_targets})
+    set(run_target_name "run_${target}")
+    get_target_property(path ${target} RUNTIME_OUTPUT_DIRECTORY)
+    if (${CMAKE_GENERATOR} MATCHES "Visual Studio")
+        file(RELATIVE_PATH path ${PROJECT_BINARY_DIR} ${path}/$<CONFIG>/${target})
+    else()
+        file(RELATIVE_PATH path ${PROJECT_BINARY_DIR} ${path}/${target})
+    endif ()
+    if (${CMAKE_CXX_PLATFORM_ID} MATCHES "Windows")
+        add_custom_target(${run_target_name}
+                COMMAND if not exist test_output mkdir test_output
+                COMMAND ./${path}.exe > test_output/${target}.out.txt
+                COMMAND cat test_output/${target}.out.txt
+                WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
+                COMMENT "Running test target ${target}"
+        )
+    else ()
+        add_custom_target(${run_target_name}
+                COMMAND
+                    mkdir -p test_output\;
+                    ./${path} > test_output/${target}.out.txt\;
+                    cat test_output/${target}.out.txt
+                WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
+                COMMENT "Running test target ${target}"
+        )
+    endif ()
+    list(APPEND run_test_targets_list ${run_target_name})
+endforeach ()
+
+
 add_custom_target(run_test_targets
-        COMMAND
-        echo ${PROJECT_BINARY_DIR}/targets\;
-        for e in $$\(ls ${PROJECT_BINARY_DIR}/targets/*\)\;
-        do
-            $$e\;
-        done\;
+        DEPENDS ${run_test_targets_list}
 )
