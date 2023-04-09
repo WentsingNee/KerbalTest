@@ -17,6 +17,7 @@ set(
         sse2
         sve
         neon
+        wasm_simd128
 )
 
 foreach (ie ${kerbal_random_mt_supported_IEs})
