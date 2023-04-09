@@ -101,8 +101,7 @@ foreach (target ${test_targets})
         add_custom_target(${run_target_name}
                 COMMAND
                     mkdir -p test_output\;
-                    ./${path} > test_output/${target}.out.txt\;
-                    cat test_output/${target}.out.txt
+                    ./${path} | tee test_output/${target}.out.txt\;
                 WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
                 COMMENT "Running test target ${target}"
         )
