@@ -23,6 +23,13 @@ macro(add_kerbal_test_target target target_src_file)
         target_compile_options(${target} PUBLIC --coverage)
         target_link_options(${target} PUBLIC --coverage)
     endif ()
+    if (KERBAL_WASM)
+        target_compile_options(${target} PUBLIC -fexceptions)
+        target_link_options(${target} PUBLIC -fexceptions)
+        set_target_properties(${target}
+                PROPERTIES RUNTIME_OUTPUT_NAME ${target}.html
+        )
+    endif ()
     add_test(
             NAME ${target}
             COMMAND ${target}
@@ -89,7 +96,15 @@ foreach (target ${test_targets})
     else()
         file(RELATIVE_PATH path ${PROJECT_BINARY_DIR} ${path}/${target})
     endif ()
-    if (${CMAKE_CXX_PLATFORM_ID} MATCHES "Windows")
+    if (${KERBAL_WASM})
+        add_custom_target(${run_target_name}
+                COMMAND
+                    mkdir -p test_output\;
+                    node ./${path} | tee test_output/${target}.out.txt\;
+                WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
+                COMMENT "Running test target ${target}"
+        )
+    elseif (${CMAKE_CXX_PLATFORM_ID} MATCHES "Windows")
         add_custom_target(${run_target_name}
                 COMMAND if not exist test_output mkdir test_output
                 COMMAND ./${path}.exe > test_output/${target}.out.txt

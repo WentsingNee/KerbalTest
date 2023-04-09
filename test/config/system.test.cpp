@@ -32,6 +32,8 @@ static const char * system_id()
 	return "Apple";
 #elif KERBAL_SYSTEM == KERBAL_SYSTEM_ANDROID
 	return "Android";
+#elif KERBAL_SYSTEM == KERBAL_SYSTEM_WASM
+	return "Wasm";
 #else
 	return "else";
 #endif
