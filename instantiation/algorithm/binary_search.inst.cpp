@@ -17,64 +17,66 @@ struct cmp_fnptr
 		typedef bool(*type)(const T&, const T&);
 };
 
-#include <deque>
 #include <kerbal/container/list.hpp>
 #include <kerbal/container/forward_list.hpp>
 #include <kerbal/container/single_list.hpp>
 
-typedef int* CtgIter;
-typedef std::deque<int>::iterator RasIter;
-typedef kerbal::container::list<int>::iterator BdrIter;
-typedef kerbal::container::forward_list<int>::iterator FwlIter;
-typedef kerbal::container::single_list<int>::iterator FwdIter;
+#include <deque>
 
 
-template CtgIter kerbal::algorithm::lower_bound(CtgIter, CtgIter, const int&, cmp_fnptr<int>::type);
-template RasIter kerbal::algorithm::lower_bound(RasIter, RasIter, const int&, cmp_fnptr<int>::type);
-template BdrIter kerbal::algorithm::lower_bound(BdrIter, BdrIter, const int&, cmp_fnptr<int>::type);
-template FwlIter kerbal::algorithm::lower_bound(FwlIter, FwlIter, const int&, cmp_fnptr<int>::type);
-template FwdIter kerbal::algorithm::lower_bound(FwdIter, FwdIter, const int&, cmp_fnptr<int>::type);
+template <typename T> struct CtgIter { typedef T* type; };
+template <typename T> struct RasIter { typedef typename std::deque<T>::iterator type; };
+template <typename T> struct BdrIter { typedef typename kerbal::container::list<T>::iterator type; };
+template <typename T> struct FwlIter { typedef typename kerbal::container::forward_list<T>::iterator type; };
+template <typename T> struct FwdIter { typedef typename kerbal::container::single_list<T>::iterator type; };
 
-template CtgIter kerbal::algorithm::lower_bound_backward(CtgIter, CtgIter, const int&, cmp_fnptr<int>::type);
-template RasIter kerbal::algorithm::lower_bound_backward(RasIter, RasIter, const int&, cmp_fnptr<int>::type);
-template BdrIter kerbal::algorithm::lower_bound_backward(BdrIter, BdrIter, const int&, cmp_fnptr<int>::type);
 
-template CtgIter kerbal::algorithm::upper_bound(CtgIter, CtgIter, const int&, cmp_fnptr<int>::type);
-template RasIter kerbal::algorithm::upper_bound(RasIter, RasIter, const int&, cmp_fnptr<int>::type);
-template BdrIter kerbal::algorithm::upper_bound(BdrIter, BdrIter, const int&, cmp_fnptr<int>::type);
-template FwlIter kerbal::algorithm::upper_bound(FwlIter, FwlIter, const int&, cmp_fnptr<int>::type);
-template FwdIter kerbal::algorithm::upper_bound(FwdIter, FwdIter, const int&, cmp_fnptr<int>::type);
+template CtgIter<int>::type kerbal::algorithm::lower_bound(CtgIter<int>::type, CtgIter<int>::type, const int&, cmp_fnptr<int>::type);
+template RasIter<int>::type kerbal::algorithm::lower_bound(RasIter<int>::type, RasIter<int>::type, const int&, cmp_fnptr<int>::type);
+template BdrIter<int>::type kerbal::algorithm::lower_bound(BdrIter<int>::type, BdrIter<int>::type, const int&, cmp_fnptr<int>::type);
+template FwlIter<int>::type kerbal::algorithm::lower_bound(FwlIter<int>::type, FwlIter<int>::type, const int&, cmp_fnptr<int>::type);
+template FwdIter<int>::type kerbal::algorithm::lower_bound(FwdIter<int>::type, FwdIter<int>::type, const int&, cmp_fnptr<int>::type);
 
-template CtgIter kerbal::algorithm::upper_bound_backward(CtgIter, CtgIter, const int&, cmp_fnptr<int>::type);
-template RasIter kerbal::algorithm::upper_bound_backward(RasIter, RasIter, const int&, cmp_fnptr<int>::type);
-template BdrIter kerbal::algorithm::upper_bound_backward(BdrIter, BdrIter, const int&, cmp_fnptr<int>::type);
+template CtgIter<int>::type kerbal::algorithm::lower_bound_backward(CtgIter<int>::type, CtgIter<int>::type, const int&, cmp_fnptr<int>::type);
+template RasIter<int>::type kerbal::algorithm::lower_bound_backward(RasIter<int>::type, RasIter<int>::type, const int&, cmp_fnptr<int>::type);
+template BdrIter<int>::type kerbal::algorithm::lower_bound_backward(BdrIter<int>::type, BdrIter<int>::type, const int&, cmp_fnptr<int>::type);
 
-template std::pair<CtgIter, CtgIter> kerbal::algorithm::equal_range(CtgIter, CtgIter, int const&, cmp_fnptr<int>::type);
-template std::pair<RasIter, RasIter> kerbal::algorithm::equal_range(RasIter, RasIter, int const&, cmp_fnptr<int>::type);
-template std::pair<BdrIter, BdrIter> kerbal::algorithm::equal_range(BdrIter, BdrIter, int const&, cmp_fnptr<int>::type);
-template std::pair<FwlIter, FwlIter> kerbal::algorithm::equal_range(FwlIter, FwlIter, int const&, cmp_fnptr<int>::type);
-template std::pair<FwdIter, FwdIter> kerbal::algorithm::equal_range(FwdIter, FwdIter, int const&, cmp_fnptr<int>::type);
+template CtgIter<int>::type kerbal::algorithm::upper_bound(CtgIter<int>::type, CtgIter<int>::type, const int&, cmp_fnptr<int>::type);
+template RasIter<int>::type kerbal::algorithm::upper_bound(RasIter<int>::type, RasIter<int>::type, const int&, cmp_fnptr<int>::type);
+template BdrIter<int>::type kerbal::algorithm::upper_bound(BdrIter<int>::type, BdrIter<int>::type, const int&, cmp_fnptr<int>::type);
+template FwlIter<int>::type kerbal::algorithm::upper_bound(FwlIter<int>::type, FwlIter<int>::type, const int&, cmp_fnptr<int>::type);
+template FwdIter<int>::type kerbal::algorithm::upper_bound(FwdIter<int>::type, FwdIter<int>::type, const int&, cmp_fnptr<int>::type);
 
-template CtgIter kerbal::algorithm::lower_bound_hint(CtgIter, CtgIter, const int&, CtgIter, cmp_fnptr<int>::type);
-template RasIter kerbal::algorithm::lower_bound_hint(RasIter, RasIter, const int&, RasIter, cmp_fnptr<int>::type);
-template BdrIter kerbal::algorithm::lower_bound_hint(BdrIter, BdrIter, const int&, BdrIter, cmp_fnptr<int>::type);
-template FwlIter kerbal::algorithm::lower_bound_hint(FwlIter, FwlIter, const int&, FwlIter, cmp_fnptr<int>::type);
-template FwdIter kerbal::algorithm::lower_bound_hint(FwdIter, FwdIter, const int&, FwdIter, cmp_fnptr<int>::type);
+template CtgIter<int>::type kerbal::algorithm::upper_bound_backward(CtgIter<int>::type, CtgIter<int>::type, const int&, cmp_fnptr<int>::type);
+template RasIter<int>::type kerbal::algorithm::upper_bound_backward(RasIter<int>::type, RasIter<int>::type, const int&, cmp_fnptr<int>::type);
+template BdrIter<int>::type kerbal::algorithm::upper_bound_backward(BdrIter<int>::type, BdrIter<int>::type, const int&, cmp_fnptr<int>::type);
 
-template CtgIter kerbal::algorithm::upper_bound_hint(CtgIter, CtgIter, const int&, CtgIter, cmp_fnptr<int>::type);
-template RasIter kerbal::algorithm::upper_bound_hint(RasIter, RasIter, const int&, RasIter, cmp_fnptr<int>::type);
-template BdrIter kerbal::algorithm::upper_bound_hint(BdrIter, BdrIter, const int&, BdrIter, cmp_fnptr<int>::type);
-template FwlIter kerbal::algorithm::upper_bound_hint(FwlIter, FwlIter, const int&, FwlIter, cmp_fnptr<int>::type);
-template FwdIter kerbal::algorithm::upper_bound_hint(FwdIter, FwdIter, const int&, FwdIter, cmp_fnptr<int>::type);
+template std::pair<CtgIter<int>::type, CtgIter<int>::type> kerbal::algorithm::equal_range(CtgIter<int>::type, CtgIter<int>::type, int const&, cmp_fnptr<int>::type);
+template std::pair<RasIter<int>::type, RasIter<int>::type> kerbal::algorithm::equal_range(RasIter<int>::type, RasIter<int>::type, int const&, cmp_fnptr<int>::type);
+template std::pair<BdrIter<int>::type, BdrIter<int>::type> kerbal::algorithm::equal_range(BdrIter<int>::type, BdrIter<int>::type, int const&, cmp_fnptr<int>::type);
+template std::pair<FwlIter<int>::type, FwlIter<int>::type> kerbal::algorithm::equal_range(FwlIter<int>::type, FwlIter<int>::type, int const&, cmp_fnptr<int>::type);
+template std::pair<FwdIter<int>::type, FwdIter<int>::type> kerbal::algorithm::equal_range(FwdIter<int>::type, FwdIter<int>::type, int const&, cmp_fnptr<int>::type);
 
-template bool kerbal::algorithm::binary_search(CtgIter, CtgIter, const int&, cmp_fnptr<int>::type);
-template bool kerbal::algorithm::binary_search(RasIter, RasIter, const int&, cmp_fnptr<int>::type);
-template bool kerbal::algorithm::binary_search(BdrIter, BdrIter, const int&, cmp_fnptr<int>::type);
-template bool kerbal::algorithm::binary_search(FwlIter, FwlIter, const int&, cmp_fnptr<int>::type);
-template bool kerbal::algorithm::binary_search(FwdIter, FwdIter, const int&, cmp_fnptr<int>::type);
+template CtgIter<int>::type kerbal::algorithm::lower_bound_hint(CtgIter<int>::type, CtgIter<int>::type, const int&, CtgIter<int>::type, cmp_fnptr<int>::type);
+template RasIter<int>::type kerbal::algorithm::lower_bound_hint(RasIter<int>::type, RasIter<int>::type, const int&, RasIter<int>::type, cmp_fnptr<int>::type);
+template BdrIter<int>::type kerbal::algorithm::lower_bound_hint(BdrIter<int>::type, BdrIter<int>::type, const int&, BdrIter<int>::type, cmp_fnptr<int>::type);
+template FwlIter<int>::type kerbal::algorithm::lower_bound_hint(FwlIter<int>::type, FwlIter<int>::type, const int&, FwlIter<int>::type, cmp_fnptr<int>::type);
+template FwdIter<int>::type kerbal::algorithm::lower_bound_hint(FwdIter<int>::type, FwdIter<int>::type, const int&, FwdIter<int>::type, cmp_fnptr<int>::type);
 
-template bool kerbal::algorithm::binary_search_hint(CtgIter, CtgIter, const int&, CtgIter, cmp_fnptr<int>::type);
-template bool kerbal::algorithm::binary_search_hint(RasIter, RasIter, const int&, RasIter, cmp_fnptr<int>::type);
-template bool kerbal::algorithm::binary_search_hint(BdrIter, BdrIter, const int&, BdrIter, cmp_fnptr<int>::type);
-template bool kerbal::algorithm::binary_search_hint(FwlIter, FwlIter, const int&, FwlIter, cmp_fnptr<int>::type);
-template bool kerbal::algorithm::binary_search_hint(FwdIter, FwdIter, const int&, FwdIter, cmp_fnptr<int>::type);
+template CtgIter<int>::type kerbal::algorithm::upper_bound_hint(CtgIter<int>::type, CtgIter<int>::type, const int&, CtgIter<int>::type, cmp_fnptr<int>::type);
+template RasIter<int>::type kerbal::algorithm::upper_bound_hint(RasIter<int>::type, RasIter<int>::type, const int&, RasIter<int>::type, cmp_fnptr<int>::type);
+template BdrIter<int>::type kerbal::algorithm::upper_bound_hint(BdrIter<int>::type, BdrIter<int>::type, const int&, BdrIter<int>::type, cmp_fnptr<int>::type);
+template FwlIter<int>::type kerbal::algorithm::upper_bound_hint(FwlIter<int>::type, FwlIter<int>::type, const int&, FwlIter<int>::type, cmp_fnptr<int>::type);
+template FwdIter<int>::type kerbal::algorithm::upper_bound_hint(FwdIter<int>::type, FwdIter<int>::type, const int&, FwdIter<int>::type, cmp_fnptr<int>::type);
+
+template bool kerbal::algorithm::binary_search(CtgIter<int>::type, CtgIter<int>::type, const int&, cmp_fnptr<int>::type);
+template bool kerbal::algorithm::binary_search(RasIter<int>::type, RasIter<int>::type, const int&, cmp_fnptr<int>::type);
+template bool kerbal::algorithm::binary_search(BdrIter<int>::type, BdrIter<int>::type, const int&, cmp_fnptr<int>::type);
+template bool kerbal::algorithm::binary_search(FwlIter<int>::type, FwlIter<int>::type, const int&, cmp_fnptr<int>::type);
+template bool kerbal::algorithm::binary_search(FwdIter<int>::type, FwdIter<int>::type, const int&, cmp_fnptr<int>::type);
+
+template bool kerbal::algorithm::binary_search_hint(CtgIter<int>::type, CtgIter<int>::type, const int&, CtgIter<int>::type, cmp_fnptr<int>::type);
+template bool kerbal::algorithm::binary_search_hint(RasIter<int>::type, RasIter<int>::type, const int&, RasIter<int>::type, cmp_fnptr<int>::type);
+template bool kerbal::algorithm::binary_search_hint(BdrIter<int>::type, BdrIter<int>::type, const int&, BdrIter<int>::type, cmp_fnptr<int>::type);
+template bool kerbal::algorithm::binary_search_hint(FwlIter<int>::type, FwlIter<int>::type, const int&, FwlIter<int>::type, cmp_fnptr<int>::type);
+template bool kerbal::algorithm::binary_search_hint(FwdIter<int>::type, FwdIter<int>::type, const int&, FwdIter<int>::type, cmp_fnptr<int>::type);
