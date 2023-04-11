@@ -25,6 +25,9 @@
 #include <kerbal/config/architecture.hpp>
 #include <kerbal/container/nonmember_container_access.hpp>
 #include <kerbal/container/vector.hpp>
+#include <kerbal/memory/allocator/fixed_size_node_allocator.hpp>
+#include <kerbal/memory/allocator/monotonic_allocator.hpp>
+#include <kerbal/memory/allocator_traits.hpp>
 #include <kerbal/random/mersenne_twister_engine.hpp>
 #include <kerbal/test/object_count.hpp>
 
@@ -159,30 +162,40 @@ KERBAL_TEST_CASE(test_list_noexcept, "test list noexcept")
 # endif
 
 
-KERBAL_TEST_CASE(test_list_default_construct, "test list::list()")
+template <typename Allocator>
+KERBAL_TEMPLATE_TEST_CASE(test_list_default_construct, "test list::list()")
 {
-	kerbal::container::list<int> l;
+	kerbal::container::list<int, Allocator> l;
 	KERBAL_TEST_CHECK(l.empty());
 	KERBAL_TEST_CHECK(kerbal::iterator::distance(l.cbegin(), l.cend()) == 0);
 	KERBAL_TEST_CHECK(kerbal::iterator::distance(l.crbegin(), l.crend()) == 0); // r
 }
 
+KERBAL_TEMPLATE_TEST_CASE_INST(test_list_default_construct, "test list::list() default allocator", std::allocator<int> );
+KERBAL_TEMPLATE_TEST_CASE_INST(test_list_default_construct, "test list::list() fsn allocator", kerbal::memory::fixed_size_node_allocator<int> );
+KERBAL_TEMPLATE_TEST_CASE_INST(test_list_default_construct, "test list::list() mono allocator", kerbal::memory::monotonic_allocator<int> );
 
-KERBAL_TEST_CASE(test_list_n_construct, "test list::list(n)")
+
+template <typename Allocator>
+KERBAL_TEMPLATE_TEST_CASE(test_list_n_construct, "test list::list(n)")
 {
 	{
-		kerbal::container::list<int> l(0);
+		kerbal::container::list<int, Allocator> l(0);
 		KERBAL_TEST_CHECK(l.empty());
 		KERBAL_TEST_CHECK(kerbal::iterator::distance(l.cbegin(), l.cend()) == 0);
 		KERBAL_TEST_CHECK(kerbal::iterator::distance(l.crbegin(), l.crend()) == 0); // r
 	}
 	{
-		kerbal::container::list<int> l(1);
+		kerbal::container::list<int, Allocator> l(1);
 		KERBAL_TEST_CHECK(l.size() == 1);
 		KERBAL_TEST_CHECK(kerbal::iterator::distance(l.cbegin(), l.cend()) == 1);
 		KERBAL_TEST_CHECK(kerbal::iterator::distance(l.crbegin(), l.crend()) == 1); // r
 	}
 }
+
+KERBAL_TEMPLATE_TEST_CASE_INST(test_list_n_construct, "test list::list(n) default allocator", std::allocator<int> );
+KERBAL_TEMPLATE_TEST_CASE_INST(test_list_n_construct, "test list::list(n) fsn allocator", kerbal::memory::fixed_size_node_allocator<int> );
+KERBAL_TEMPLATE_TEST_CASE_INST(test_list_n_construct, "test list::list(n) mono allocator", kerbal::memory::monotonic_allocator<int> );
 
 
 #if __cpp_exceptions
@@ -217,83 +230,178 @@ struct list_n_value_construct_except_helper:
 		}
 };
 
-KERBAL_TEST_CASE(test_list_n_value_construct_exception, "test list::list(n, val) exception occurred")
+template <typename Allocator>
+KERBAL_TEMPLATE_TEST_CASE(test_list_n_value_construct_exception, "test list::list(n, val) exception occurred")
 {
 
 	try {
 		list_n_value_construct_except_helper val;
-		kerbal::container::list<list_n_value_construct_except_helper> l(10, val);
+		kerbal::container::list<list_n_value_construct_except_helper, Allocator> l(10, val);
 	} catch (...) {
 	}
 
 	KERBAL_TEST_CHECK_EQUAL(list_n_value_construct_except_helper::get_count(), 0);
 }
 
+KERBAL_TEMPLATE_TEST_CASE_INST(test_list_n_value_construct_exception, "test list::list(n, val) exception occurred default allocator", std::allocator<int> );
+KERBAL_TEMPLATE_TEST_CASE_INST(test_list_n_value_construct_exception, "test list::list(n, val) exception occurred fsn allocator", kerbal::memory::fixed_size_node_allocator<int> );
+KERBAL_TEMPLATE_TEST_CASE_INST(test_list_n_value_construct_exception, "test list::list(n, val) exception occurred mono allocator", kerbal::memory::monotonic_allocator<int> );
+
 #endif
 
 
-KERBAL_TEST_CASE(test_list_range_copy_construct, "test list::list(first, last)")
+template <typename Allocator>
+KERBAL_TEMPLATE_TEST_CASE(test_list_range_copy_construct, "test list::list(first, last)")
 {
-	int arr[10]; {
+	typedef kerbal::type_traits::integral_constant<std::size_t, 64> N;
+	int arr[N::value]; {
 		kerbal::algorithm::iota(
 				kerbal::container::begin(arr), kerbal::container::end(arr), 0);
 	}
 
-	{
-		kerbal::container::list<int> l(kerbal::container::begin(arr), kerbal::container::end(arr));
-		KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(
-					l.cbegin(), l.cend(),
-					kerbal::container::cbegin(arr), kerbal::container::cend(arr)
-		));
-		KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(
-					l.crbegin(), l.crend(),
-					kerbal::container::crbegin(arr), kerbal::container::crend(arr)
-		)); // r
-	}
-
-	{
-		kerbal::container::list<int> l(kerbal::container::begin(arr), kerbal::container::begin(arr));
-		KERBAL_TEST_CHECK(l.empty());
-	}
-
-#	if TEST_PMR_LIST
-
-	{
-		kerbal::container::pmr::list<int> l(kerbal::container::begin(arr), kerbal::container::end(arr));
+	for (std::size_t tcase = 0; tcase <= N::value; ++tcase) {
+		kerbal::container::list<int, Allocator> l(kerbal::container::cbegin(arr), kerbal::container::cbegin(arr) + tcase);
 		KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(
 				l.cbegin(), l.cend(),
-				kerbal::container::cbegin(arr), kerbal::container::cend(arr)
+				kerbal::container::cbegin(arr), kerbal::container::cbegin(arr) + tcase
 		));
 		KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(
 				l.crbegin(), l.crend(),
-				kerbal::container::crbegin(arr), kerbal::container::crend(arr)
+				kerbal::container::crend(arr) - tcase, kerbal::container::crend(arr)
 		)); // r
+		KERBAL_TEST_CHECK(l.size() == tcase);
 	}
-
-	{
-		kerbal::container::pmr::list<int> l(kerbal::container::begin(arr), kerbal::container::begin(arr));
-		KERBAL_TEST_CHECK(l.empty());
-	}
-
-#	endif
-
 }
+
+KERBAL_TEMPLATE_TEST_CASE_INST(test_list_range_copy_construct, "test list::list(first, last) default allocator", std::allocator<int> );
+KERBAL_TEMPLATE_TEST_CASE_INST(test_list_range_copy_construct, "test list::list(first, last) fsn allocator", kerbal::memory::fixed_size_node_allocator<int> );
+KERBAL_TEMPLATE_TEST_CASE_INST(test_list_range_copy_construct, "test list::list(first, last) mono allocator", kerbal::memory::monotonic_allocator<int> );
+#	if TEST_PMR_LIST
+KERBAL_TEMPLATE_TEST_CASE_INST(test_list_range_copy_construct, "test list::list(first, last) std::pmr::allocator", std::pmr::polymorphic_allocator<int> );
+#	endif
 
 
 #if __cplusplus >= 201103L
 
-KERBAL_TEST_CASE(test_list_move_construct, "test list::list(list &&)")
+template <typename Allocator>
+KERBAL_TEMPLATE_TEST_CASE(test_list_move_construct, "test list::list(list &&)")
 {
-	{
-		kerbal::container::list<int> l;
-		kerbal::container::list<int> l2(kerbal::compatibility::move(l));
+	typedef kerbal::type_traits::integral_constant<std::size_t, 64> N;
+	int arr[N::value]; {
+		kerbal::algorithm::iota(
+				kerbal::container::begin(arr), kerbal::container::end(arr), 0);
 	}
 
-	{
-		kerbal::container::list<int> l(5);
-		kerbal::container::list<int> l2(kerbal::compatibility::move(l));
+	for (std::size_t tcase = 0; tcase <= N::value; ++tcase) {
+		kerbal::container::list<int, Allocator> l(kerbal::container::cbegin(arr), kerbal::container::cbegin(arr) + tcase);
+
+		int * ori_front_ptr = NULL;
+		if (tcase != 0) {
+			ori_front_ptr = &l.front();
+		}
+
+		kerbal::container::list<int, Allocator> l2(kerbal::compatibility::move(l));
+		l.clear();
+
+		KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(
+				l2.cbegin(), l2.cend(),
+				kerbal::container::cbegin(arr), kerbal::container::cbegin(arr) + tcase
+		));
+		KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(
+				l2.crbegin(), l2.crend(),
+				kerbal::container::crend(arr) - tcase, kerbal::container::crend(arr)
+		)); // r
+		KERBAL_TEST_CHECK(l2.size() == tcase);
+
+		if (tcase != 0) {
+//			bool steal = &l2.front() == ori_front_ptr;
+//			std::cout << (steal ? "steal" : "no steal") << std::endl;
+		}
 	}
 }
+
+KERBAL_TEMPLATE_TEST_CASE_INST(test_list_move_construct, "test list::list(list &&) default allocator", std::allocator<int> );
+KERBAL_TEMPLATE_TEST_CASE_INST(test_list_move_construct, "test list::list(list &&) fsn allocator", kerbal::memory::fixed_size_node_allocator<int> );
+KERBAL_TEMPLATE_TEST_CASE_INST(test_list_move_construct, "test list::list(list &&) mono allocator", kerbal::memory::monotonic_allocator<int> );
+
+#endif
+
+
+template <typename Allocator>
+KERBAL_TEMPLATE_TEST_CASE(test_list_copy_assignment, "test list::operator=(const list &)")
+{
+	typedef kerbal::type_traits::integral_constant<std::size_t, 64> N;
+	int arr[N::value]; {
+		kerbal::algorithm::iota(
+				kerbal::container::begin(arr), kerbal::container::end(arr), 0);
+	}
+
+	for (std::size_t tcase = 0; tcase <= N::value; ++tcase) {
+		kerbal::container::list<int, Allocator> l(kerbal::container::cbegin(arr), kerbal::container::cbegin(arr) + tcase);
+
+		kerbal::container::list<int, Allocator> l2;
+		l2 = l;
+
+		KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(
+				l2.cbegin(), l2.cend(),
+				kerbal::container::cbegin(arr), kerbal::container::cbegin(arr) + tcase
+		));
+		KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(
+				l2.crbegin(), l2.crend(),
+				kerbal::container::crend(arr) - tcase, kerbal::container::crend(arr)
+		)); // r
+		KERBAL_TEST_CHECK(l2.size() == tcase);
+	}
+}
+
+KERBAL_TEMPLATE_TEST_CASE_INST(test_list_copy_assignment, "test list::operator=(const list &) default allocator", std::allocator<int> );
+KERBAL_TEMPLATE_TEST_CASE_INST(test_list_copy_assignment, "test list::operator=(const list &) fsn allocator", kerbal::memory::fixed_size_node_allocator<int> );
+KERBAL_TEMPLATE_TEST_CASE_INST(test_list_copy_assignment, "test list::operator=(const list &) mono allocator", kerbal::memory::monotonic_allocator<int> );
+
+
+#if __cplusplus >= 201103L
+
+template <typename Allocator>
+KERBAL_TEMPLATE_TEST_CASE(test_list_move_assignment, "test list::operator=(list &&)")
+{
+	typedef kerbal::type_traits::integral_constant<std::size_t, 64> N;
+	int arr[N::value]; {
+		kerbal::algorithm::iota(
+				kerbal::container::begin(arr), kerbal::container::end(arr), 0);
+	}
+
+	for (std::size_t tcase = 0; tcase <= N::value; ++tcase) {
+		kerbal::container::list<int, Allocator> l(kerbal::container::cbegin(arr), kerbal::container::cbegin(arr) + tcase);
+
+		int * ori_front_ptr = NULL;
+		if (tcase != 0) {
+			ori_front_ptr = &l.front();
+		}
+
+		kerbal::container::list<int, Allocator> l2;
+		l2 = kerbal::compatibility::move(l);
+		l.clear();
+
+		KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(
+				l2.cbegin(), l2.cend(),
+				kerbal::container::cbegin(arr), kerbal::container::cbegin(arr) + tcase
+		));
+		KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(
+				l2.crbegin(), l2.crend(),
+				kerbal::container::crend(arr) - tcase, kerbal::container::crend(arr)
+		)); // r
+		KERBAL_TEST_CHECK(l2.size() == tcase);
+
+		if (tcase != 0) {
+			bool steal = &l2.front() == ori_front_ptr;
+			std::cout << (steal ? "steal" : "no steal") << std::endl;
+		}
+	}
+}
+
+KERBAL_TEMPLATE_TEST_CASE_INST(test_list_move_assignment, "test list::operator=(list &&) default allocator", std::allocator<int> );
+KERBAL_TEMPLATE_TEST_CASE_INST(test_list_move_assignment, "test list::operator=(list &&) fsn allocator", kerbal::memory::fixed_size_node_allocator<int> );
+KERBAL_TEMPLATE_TEST_CASE_INST(test_list_move_assignment, "test list::operator=(list &&) mono allocator", kerbal::memory::monotonic_allocator<int> );
 
 #endif
 
@@ -424,7 +532,8 @@ KERBAL_TEST_CASE(test_list_insert, "test list::insert")
 }
 
 
-KERBAL_TEST_CASE(test_list_iter_swap, "test list::iter_swap")
+template <typename Allocator>
+KERBAL_TEMPLATE_TEST_CASE(test_list_iter_swap, "test list::iter_swap")
 {
 	const int a[] = {0, 1, 2, 3, 4};
 
@@ -438,7 +547,7 @@ KERBAL_TEST_CASE(test_list_iter_swap, "test list::iter_swap")
 	};
 
 	for (std::size_t i = 0; i < kerbal::container::size(c); ++i) {
-		kerbal::container::list<int> l(kerbal::container::cbegin(a), kerbal::container::cend(a));
+		kerbal::container::list<int, Allocator> l(kerbal::container::cbegin(a), kerbal::container::cend(a));
 		std::list<int> ls(kerbal::container::cbegin(a), kerbal::container::cend(a));
 
 		l.iter_swap(l.nth(c[i].first), l.nth(c[i].second));
@@ -454,6 +563,10 @@ KERBAL_TEST_CASE(test_list_iter_swap, "test list::iter_swap")
 		)); // r
 	}
 }
+
+KERBAL_TEMPLATE_TEST_CASE_INST(test_list_iter_swap, "test list::iter_swap default allocator", std::allocator<int> );
+KERBAL_TEMPLATE_TEST_CASE_INST(test_list_iter_swap, "test list::iter_swap fsn allocator", kerbal::memory::fixed_size_node_allocator<int> );
+KERBAL_TEMPLATE_TEST_CASE_INST(test_list_iter_swap, "test list::iter_swap mono allocator", kerbal::memory::monotonic_allocator<int> );
 
 
 KERBAL_TEST_CASE(test_list_reverse, "test list::reverse")
@@ -1001,7 +1114,8 @@ struct disable_list_radix_sort_cmp
 		}
 };
 
-KERBAL_TEST_CASE(test_list_sort, "test list::sort")
+template <typename Allocator>
+KERBAL_TEMPLATE_TEST_CASE(test_list_sort, "test list::sort")
 {
 	kerbal::random::mt19937 eg;
 
@@ -1012,7 +1126,7 @@ KERBAL_TEST_CASE(test_list_sort, "test list::sort")
 
 		{ // default compare
 			kerbal::container::vector<int> v = ktn::get_random_vec_i_mod(list_size, eg, 100);
-			kerbal::container::list<int> l(v.cbegin(), v.cend());
+			kerbal::container::list<int, Allocator> l(v.cbegin(), v.cend());
 
 			kerbal::algorithm::sort(v.begin(), v.end());
 			l.sort();
@@ -1029,7 +1143,7 @@ KERBAL_TEST_CASE(test_list_sort, "test list::sort")
 
 		{ // given compare
 			kerbal::container::vector<int> v = ktn::get_random_vec_i_mod(list_size, eg, 100);
-			kerbal::container::list<int> l(v.cbegin(), v.cend());
+			kerbal::container::list<int, Allocator> l(v.cbegin(), v.cend());
 
 			kerbal::algorithm::sort(v.begin(), v.end(), kerbal::compare::greater<>());
 			l.sort(kerbal::compare::greater<>());
@@ -1046,7 +1160,7 @@ KERBAL_TEST_CASE(test_list_sort, "test list::sort")
 
 		{ // given compare
 			kerbal::container::vector<int> v = ktn::get_random_vec_i_mod(list_size, eg, 100);
-			kerbal::container::list<int> l(v.cbegin(), v.cend());
+			kerbal::container::list<int, Allocator> l(v.cbegin(), v.cend());
 
 			kerbal::algorithm::sort(v.begin(), v.end(), disable_list_radix_sort_cmp());
 			l.sort(disable_list_radix_sort_cmp());
@@ -1063,7 +1177,7 @@ KERBAL_TEST_CASE(test_list_sort, "test list::sort")
 
 		{ // sort partial range
 			kerbal::container::vector<int> v = ktn::get_random_vec_i_mod(1000, eg, 100);
-			kerbal::container::list<int> l(v.cbegin(), v.cend());
+			kerbal::container::list<int, Allocator> l(v.cbegin(), v.cend());
 
 			kerbal::container::vector<int>::iterator nth_500(kerbal::container::nth(v, 500));
 			kerbal::algorithm::sort(v.begin(), nth_500);
@@ -1082,6 +1196,10 @@ KERBAL_TEST_CASE(test_list_sort, "test list::sort")
 
 	} // test loop
 }
+
+KERBAL_TEMPLATE_TEST_CASE_INST(test_list_sort, "test list::sort default allocator", std::allocator<int> );
+KERBAL_TEMPLATE_TEST_CASE_INST(test_list_sort, "test list::sort fsn allocator", kerbal::memory::fixed_size_node_allocator<int> );
+KERBAL_TEMPLATE_TEST_CASE_INST(test_list_sort, "test list::sort mono allocator", kerbal::memory::monotonic_allocator<int> );
 
 
 template <typename T, typename BinaryPredict>
