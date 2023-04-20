@@ -1,7 +1,9 @@
 
+include(${CMAKE_SOURCE_DIR}/cmake/add_kerbal_parent_target.cmake)
 
 macro(add_kerbal_inst_target target target_src_file)
     add_library(${target} OBJECT ${file})
+    add_kerbal_parent_target(${target})
     target_include_directories(${target} PUBLIC "./")
     if (KERBAL_TEST_USE_LIBCXX)
         target_compile_options(${target} PUBLIC -stdlib=libc++)
