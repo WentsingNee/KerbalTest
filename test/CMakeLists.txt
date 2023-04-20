@@ -1,7 +1,9 @@
 
+include(${CMAKE_SOURCE_DIR}/cmake/add_kerbal_parent_target.cmake)
 
 macro(add_kerbal_test_target target target_src_file)
     add_executable(${target} ${target_src_file})
+    add_kerbal_parent_target(${target})
     set_target_properties(${target}
             PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/targets
     )
@@ -31,7 +33,7 @@ endmacro()
 
 macro(add_kerbal_test_target_wih_ie target target_src_file ie)
     if (${KERBAL_TEST_SUPPORT_${ie}})
-        set(target_name_with_ie ${target}.${ie})
+        set(target_name_with_ie ${target}_${ie})
         add_kerbal_test_target(${target_name_with_ie} ${target_src_file})
         target_compile_options(${target_name_with_ie} PUBLIC ${KERBAL_TEST_FLAG_${ie}})
     else ()
