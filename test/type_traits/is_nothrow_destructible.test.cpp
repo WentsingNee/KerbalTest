@@ -98,7 +98,9 @@ do { \
 	TEST_CHECK(ThrowDestructible[], false);
 	TEST_CHECK(ThrowDestructible[2], false);
 
+#if KERBAL_COMPILER_ID != KERBAL_COMPILER_ID_CLANG || __cplusplus >= 201103 // old version clang cannot detect this case
 	TEST_CHECK(PrivateDestructible, false);
+#endif
 #if __cplusplus >= 201103L
 	TEST_CHECK(DeleteDestructible, false);
 #endif
@@ -136,7 +138,9 @@ KERBAL_TEST_CASE(test_try_test_is_nothrow_destructible, "test try_test_is_nothro
 	TRY_TEST_CHECK_WEAK_(tribool_false, ThrowDestructible[]);
 	TRY_TEST_CHECK_WEAK_(tribool_false, ThrowDestructible[2]);
 
+#if KERBAL_COMPILER_ID != KERBAL_COMPILER_ID_CLANG || __cplusplus >= 201103 // old version clang cannot detect this case
 	TRY_TEST_CHECK_WEAK_(tribool_false, PrivateDestructible);
+#endif
 #if __cplusplus >= 201103L
 	TRY_TEST_CHECK_WEAK_(tribool_false, DeleteDestructible);
 #endif
