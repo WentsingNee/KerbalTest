@@ -90,52 +90,56 @@ do { \
 #endif
 
 
-/*
+#include "detail/try_test_check.hpp"
+
 KERBAL_TEST_CASE(test_try_test_is_assignable, "test try_test_is_assignable")
 {
 	using namespace kerbal::type_traits;
 
-#define TRY_TEST_CHECK_STRONG(Type, Ans) \
-do { \
-	KERBAL_TEST_CHECK_EQUAL_STATIC(kerbal::type_traits::try_test_is_assignable<Type>::value, Ans::value); \
-} while(0)
+#define TRY_TEST_CHECK_STRONG_(Ans, Left, Right) TRY_TEST_CHECK_STRONG(Ans, kerbal::type_traits::try_test_is_assignable, Left, Right)
+#define TRY_TEST_CHECK_WEAK_(Ans, Left, Right) TRY_TEST_CHECK_WEAK(Ans, kerbal::type_traits::try_test_is_assignable, Left, Right)
 
-#define TRY_TEST_CHECK_WEAK(Type, Ans) \
-do { \
-	KERBAL_TEST_CHECK_STATIC( \
-		kerbal::type_traits::try_test_is_assignable<Type>::value == Ans::value || \
-		kerbal::type_traits::try_test_is_assignable<Type>::value == tribool_unspecified::value \
-	); \
-} while(0)
-
-	TRY_TEST_CHECK_STRONG(void, tribool_false);
-	TRY_TEST_CHECK_STRONG(int, tribool_true);
-	TRY_TEST_CHECK_STRONG(const int, tribool_false);
-	TRY_TEST_CHECK_STRONG(int&, tribool_true);
-	TRY_TEST_CHECK_STRONG(const int&, tribool_false);
-	TRY_TEST_CHECK_STRONG(int[], tribool_false);
-	TRY_TEST_CHECK_STRONG(int[2], tribool_false);
-	TRY_TEST_CHECK_STRONG(int(), tribool_false);
-	TRY_TEST_CHECK_STRONG(int(*)(), tribool_true);
-
-	TRY_TEST_CHECK_WEAK(TriviallyCopyAssignable, tribool_true);
-	TRY_TEST_CHECK_WEAK(TriviallyCopyAssignable[], tribool_false);
-	TRY_TEST_CHECK_WEAK(TriviallyCopyAssignable[2], tribool_false);
-
-	TRY_TEST_CHECK_WEAK(NonTriviallyCopyAssignable, tribool_false);
-	TRY_TEST_CHECK_WEAK(NonTriviallyCopyAssignable[], tribool_false);
-	TRY_TEST_CHECK_WEAK(NonTriviallyCopyAssignable[2], tribool_false);
-
-	TRY_TEST_CHECK_WEAK(PrivateCopyAssignable, tribool_false);
+	TRY_TEST_CHECK_WEAK_(tribool_false, void, void);
+	TRY_TEST_CHECK_WEAK_(tribool_false, int, int);
+	TRY_TEST_CHECK_WEAK_(tribool_false, const int, int);
+	TRY_TEST_CHECK_WEAK_(tribool_true, int&, int);
+	TRY_TEST_CHECK_WEAK_(tribool_true, int&, int&);
 #if __cplusplus >= 201103L
-	TRY_TEST_CHECK_WEAK(DeleteCopyAssignable, tribool_false);
+	TRY_TEST_CHECK_WEAK_(tribool_true, int&, int&&);
+#endif
+	TRY_TEST_CHECK_WEAK_(tribool_false, const int&, int);
+	TRY_TEST_CHECK_WEAK_(tribool_false, const int&, int&);
+#if __cplusplus >= 201103L
+	TRY_TEST_CHECK_WEAK_(tribool_false, const int&, int&&);
+#endif
+#if __cplusplus >= 201103L
+	TRY_TEST_CHECK_WEAK_(tribool_false, int&&, int);
+	TRY_TEST_CHECK_WEAK_(tribool_false, int&&, int&);
+	TRY_TEST_CHECK_WEAK_(tribool_false, int&&, int&&);
+	TRY_TEST_CHECK_WEAK_(tribool_true, Foo&&, Foo);
+	TRY_TEST_CHECK_WEAK_(tribool_true, Foo&&, Foo&);
+	TRY_TEST_CHECK_WEAK_(tribool_true, Foo&&, Foo&&);
+#endif
+	TRY_TEST_CHECK_WEAK_(tribool_false, int[], int*);
+	TRY_TEST_CHECK_WEAK_(tribool_false, int(&)[], int*);
+	TRY_TEST_CHECK_WEAK_(tribool_false, int[2], int*);
+	TRY_TEST_CHECK_WEAK_(tribool_false, int(&)[2], int(&)[2]);
+	TRY_TEST_CHECK_WEAK_(tribool_true, int*&, int(&)[]);
+	TRY_TEST_CHECK_WEAK_(tribool_true, int*&, int(&)[2]);
+	TRY_TEST_CHECK_WEAK_(tribool_false, int(), int());
+	TRY_TEST_CHECK_WEAK_(tribool_false, int(*)(), int());
+	TRY_TEST_CHECK_WEAK_(tribool_true, int(*&)(), int());
+
+#if __cplusplus >= 201103L
+	TRY_TEST_CHECK_WEAK_(tribool_false, PrivateCopyAssignable&, const PrivateCopyAssignable&);
+	TRY_TEST_CHECK_WEAK_(tribool_false, DeleteCopyAssignable&, const DeleteCopyAssignable&);
 #endif
 
-#undef TRY_TEST_CHECK_STRONG
-#undef TRY_TEST_CHECK_WEAK
+#undef TRY_TEST_CHECK_STRONG_
+#undef TRY_TEST_CHECK_WEAK_
 
 }
-*/
+
 
 
 int main(int argc, char * argv[])

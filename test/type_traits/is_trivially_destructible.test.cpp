@@ -83,47 +83,39 @@ do { \
 
 
 
+#include "detail/try_test_check.hpp"
+
 KERBAL_TEST_CASE(test_try_test_is_trivially_destructible, "test try_test_is_trivially_destructible")
 {
 	using namespace kerbal::type_traits;
 
-#define TRY_TEST_CHECK_STRONG(Type, Ans) \
-do { \
-	KERBAL_TEST_CHECK_EQUAL_STATIC(kerbal::type_traits::try_test_is_trivially_destructible<Type>::value, Ans::value); \
-} while(0)
+#define TRY_TEST_CHECK_STRONG_(Ans, Type) TRY_TEST_CHECK_STRONG(Ans, kerbal::type_traits::try_test_is_trivially_destructible, Type)
+#define TRY_TEST_CHECK_WEAK_(Ans, Type) TRY_TEST_CHECK_WEAK(Ans, kerbal::type_traits::try_test_is_trivially_destructible, Type)
 
-#define TRY_TEST_CHECK_WEAK(Type, Ans) \
-do { \
-	KERBAL_TEST_CHECK_STATIC( \
-		kerbal::type_traits::try_test_is_trivially_destructible<Type>::value == Ans::value || \
-		kerbal::type_traits::try_test_is_trivially_destructible<Type>::value == tribool_unspecified::value \
-	); \
-} while(0)
+	TRY_TEST_CHECK_STRONG_(tribool_false, void);
+	TRY_TEST_CHECK_STRONG_(tribool_true, int);
+	TRY_TEST_CHECK_STRONG_(tribool_true, const int);
+	TRY_TEST_CHECK_STRONG_(tribool_true, int&);
+	TRY_TEST_CHECK_STRONG_(tribool_false, int[]);
+	TRY_TEST_CHECK_STRONG_(tribool_true, int[2]);
+	TRY_TEST_CHECK_STRONG_(tribool_false, int());
+	TRY_TEST_CHECK_STRONG_(tribool_true, int(*)());
 
-	TRY_TEST_CHECK_STRONG(void, tribool_false);
-	TRY_TEST_CHECK_STRONG(int, tribool_true);
-	TRY_TEST_CHECK_STRONG(const int, tribool_true);
-	TRY_TEST_CHECK_STRONG(int&, tribool_true);
-	TRY_TEST_CHECK_STRONG(int[], tribool_false);
-	TRY_TEST_CHECK_STRONG(int[2], tribool_true);
-	TRY_TEST_CHECK_STRONG(int(), tribool_false);
-	TRY_TEST_CHECK_STRONG(int(*)(), tribool_true);
+	TRY_TEST_CHECK_WEAK_(tribool_true, TriviallyDestructible);
+	TRY_TEST_CHECK_WEAK_(tribool_false, TriviallyDestructible[]);
+	TRY_TEST_CHECK_WEAK_(tribool_true, TriviallyDestructible[2]);
 
-	TRY_TEST_CHECK_WEAK(TriviallyDestructible, tribool_true);
-	TRY_TEST_CHECK_WEAK(TriviallyDestructible[], tribool_false);
-	TRY_TEST_CHECK_WEAK(TriviallyDestructible[2], tribool_true);
+	TRY_TEST_CHECK_WEAK_(tribool_false, NonTriviallyDestructible);
+	TRY_TEST_CHECK_WEAK_(tribool_false, NonTriviallyDestructible[]);
+	TRY_TEST_CHECK_WEAK_(tribool_false, NonTriviallyDestructible[2]);
 
-	TRY_TEST_CHECK_WEAK(NonTriviallyDestructible, tribool_false);
-	TRY_TEST_CHECK_WEAK(NonTriviallyDestructible[], tribool_false);
-	TRY_TEST_CHECK_WEAK(NonTriviallyDestructible[2], tribool_false);
-
+	TRY_TEST_CHECK_WEAK_(tribool_false, PrivateDestructible);
 #if __cplusplus >= 201103L
-	TRY_TEST_CHECK_WEAK(PrivateDestructible, tribool_false);
-	TRY_TEST_CHECK_WEAK(DeleteDestructible, tribool_false);
+	TRY_TEST_CHECK_WEAK_(tribool_false, DeleteDestructible);
 #endif
 
-#undef TRY_TEST_CHECK_STRONG
-#undef TRY_TEST_CHECK_WEAK
+#undef TRY_TEST_CHECK_STRONG_
+#undef TRY_TEST_CHECK_WEAK_
 
 }
 

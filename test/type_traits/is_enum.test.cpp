@@ -22,14 +22,6 @@
 #endif
 
 
-#if !KERBAL_HAS_IS_ENUM_SUPPORT
-#	if KERBAL_COMPILER_ID == KERBAL_COMPILER_ID_MSVC
-#		pragma message ("Kerbal Warning: " "kerbal::type_traits::is_enum is not supported!")
-#	else
-#		warning "Kerbal Warning: " "kerbal::type_traits::is_enum is not supported!"
-#	endif
-#endif
-
 
 KERBAL_TEST_CASE(test_has_is_enum_support, "test has is_enum support")
 {
@@ -72,55 +64,60 @@ KERBAL_TEST_CASE(test_is_enum, "test is_enum")
 	CHECK_IS_ENUM(const volatile E, true);
 	CHECK_IS_ENUM(E&, false);
 
-}
-
-
 #if  __cplusplus >= 201103L
-
-KERBAL_TEST_CASE(test_is_enum_on_scoped_enum, "test is_enum on scoped enum")
-{
 	CHECK_IS_ENUM(SE, true);
 	CHECK_IS_ENUM(const SE, true);
 	CHECK_IS_ENUM(const volatile SE, true);
 	CHECK_IS_ENUM(SE&, false);
-}
-
 #endif // __cplusplus >= 201103L
 
-#endif // KERBAL_HAS_IS_SCALAR_SUPPORT
+}
+
+#endif // KERBAL_HAS_IS_ENUM_SUPPORT
 
 
-
-#define CHECK_TRY_TEST_IS_ENUM(Tp, Result) CHECK_EQUAL((kerbal::type_traits::try_test_is_enum<Tp>::value), Result)
+#include "detail/try_test_check.hpp"
 
 KERBAL_TEST_CASE(test_try_test_is_enum, "test try_test_is_enum")
 {
+	using namespace kerbal::type_traits;
 
-	CHECK_IS_ENUM(int, false);
-	CHECK_IS_ENUM(const int, false);
+#define TRY_TEST_CHECK_STRONG_(Ans, Type) TRY_TEST_CHECK_STRONG(Ans, kerbal::type_traits::try_test_is_enum, Type)
+#define TRY_TEST_CHECK_WEAK_(Ans, Type) TRY_TEST_CHECK_WEAK(Ans, kerbal::type_traits::try_test_is_enum, Type)
 
-	std::cout << kerbal::type_traits::try_test_is_enum<E>::value << std::endl;
-	std::cout << kerbal::type_traits::try_test_is_enum<const E>::value << std::endl;
-	std::cout << kerbal::type_traits::try_test_is_enum<const volatile E>::value << std::endl;
-	CHECK_IS_ENUM(E &, false);
+	TRY_TEST_CHECK_STRONG_(tribool_false, void);
+	TRY_TEST_CHECK_STRONG_(tribool_false, int);
+	TRY_TEST_CHECK_STRONG_(tribool_false, const int);
 
-}
+	TRY_TEST_CHECK_STRONG_(tribool_false, int);
+	TRY_TEST_CHECK_STRONG_(tribool_false, const int);
+	TRY_TEST_CHECK_WEAK_(tribool_true, E);
+	TRY_TEST_CHECK_WEAK_(tribool_true, const E);
+	TRY_TEST_CHECK_WEAK_(tribool_true, const volatile E);
+	TRY_TEST_CHECK_STRONG_(tribool_false, E &);
+	TRY_TEST_CHECK_STRONG_(tribool_false, const E &);
+	TRY_TEST_CHECK_STRONG_(tribool_false, E[]);
+	TRY_TEST_CHECK_STRONG_(tribool_false, const E[]);
+	TRY_TEST_CHECK_STRONG_(tribool_false, E[1]);
+	TRY_TEST_CHECK_STRONG_(tribool_false, const E[1]);
 
 
-
-#if  __cplusplus >= 201103L
-
-KERBAL_TEST_CASE(test_try_test_is_enum_on_scoped_enum, "test try_test_is_enum on scoped enum")
-{
-
-	std::cout << kerbal::type_traits::try_test_is_enum<SE>::value << std::endl;
-	std::cout << kerbal::type_traits::try_test_is_enum<const SE>::value << std::endl;
-	std::cout << kerbal::type_traits::try_test_is_enum<const volatile SE>::value << std::endl;
-	CHECK_IS_ENUM(SE &, false);
-
-}
-
+#if __cplusplus >= 201103L
+	TRY_TEST_CHECK_WEAK_(tribool_true, SE);
+	TRY_TEST_CHECK_WEAK_(tribool_true, const SE);
+	TRY_TEST_CHECK_WEAK_(tribool_true, const volatile SE);
+	TRY_TEST_CHECK_STRONG_(tribool_false, SE &);
+	TRY_TEST_CHECK_STRONG_(tribool_false, const SE &);
+	TRY_TEST_CHECK_STRONG_(tribool_false, SE[]);
+	TRY_TEST_CHECK_STRONG_(tribool_false, const SE[]);
+	TRY_TEST_CHECK_STRONG_(tribool_false, SE[1]);
+	TRY_TEST_CHECK_STRONG_(tribool_false, const SE[1]);
 #endif // __cplusplus >= 201103L
+
+#undef TRY_TEST_CHECK_STRONG_
+#undef TRY_TEST_CHECK_WEAK_
+
+}
 
 
 int main(int argc, char* args[])
