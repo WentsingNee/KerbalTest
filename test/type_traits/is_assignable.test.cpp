@@ -14,6 +14,19 @@
 #include <kerbal/test/test.hpp>
 
 
+KERBAL_TEST_CASE(test_has_is_assignable_support, "test has is_assignable support")
+{
+
+#if KERBAL_HAS_IS_ENUM_SUPPORT
+	std::cout << "kerbal::type_traits::is_assignable is supported!" << std::endl;
+#else
+	std::cout << "kerbal::type_traits::is_assignable is not supported!" << std::endl;
+#endif
+
+}
+
+
+
 struct Foo
 {
 };

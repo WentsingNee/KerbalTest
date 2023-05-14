@@ -22,19 +22,23 @@
 #	include <kerbal/type_traits/detail/is_nothrow_destructible/is_nothrow_destructible.isdes.part.hpp>
 #endif
 
-#ifndef KERBAL_HAS_IS_NOTHROW_DESTRUCTIBLE_SUPPORT
-#	define KERBAL_HAS_IS_NOTHROW_DESTRUCTIBLE_SUPPORT 0
-#	if KERBAL_COMPILER_ID != KERBAL_COMPILER_ID_MSVC
-#		warning "will not test kerbal::type_traits::is_nothrow_destructible"
-#	else
-#		message ("will not test kerbal::type_traits::is_nothrow_destructible")
-#	endif
-#endif
-
 
 #include <kerbal/type_traits/is_nothrow_destructible.hpp>
 
 #include <kerbal/test/test.hpp>
+
+
+
+KERBAL_TEST_CASE(test_has_is_nothrow_destructible_support, "test has is_nothrow_destructible support")
+{
+
+#if KERBAL_HAS_IS_ENUM_SUPPORT
+	std::cout << "kerbal::type_traits::is_nothrow_destructible is supported!" << std::endl;
+#else
+	std::cout << "kerbal::type_traits::is_nothrow_destructible is not supported!" << std::endl;
+#endif
+
+}
 
 
 struct NothrowDestructible
