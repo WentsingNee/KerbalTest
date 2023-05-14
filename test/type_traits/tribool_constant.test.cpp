@@ -53,6 +53,10 @@ KERBAL_TEST_CASE(test_tribool_conjunction, "test tribool_conjunction")
 		typedef tribool_conjunction<U, T>::result E;
 		TRY_TEST_LOGICAL_TEST(E, U);
 	}
+	{
+		typedef tribool_conjunction<U, F>::result E;
+		TRY_TEST_LOGICAL_TEST(E, F);
+	}
 
 
 	{
@@ -71,7 +75,7 @@ KERBAL_TEST_CASE(test_tribool_conjunction, "test tribool_conjunction")
 
 	{
 		typedef tribool_conjunction<F, U>::result E;
-		TRY_TEST_LOGICAL_TEST(E, U);
+		TRY_TEST_LOGICAL_TEST(E, F);
 	}
 	{
 		typedef tribool_conjunction<F, F>::result E;
@@ -93,7 +97,7 @@ KERBAL_TEST_CASE(test_tribool_conjunction, "test tribool_conjunction")
 	}
 	{
 		typedef tribool_conjunction<T, T, T, F, U>::result E;
-		TRY_TEST_LOGICAL_TEST(E, U);
+		TRY_TEST_LOGICAL_TEST(E, F);
 	}
 	{
 		typedef tribool_conjunction<T, T, T, T, F>::result E;
@@ -173,6 +177,14 @@ KERBAL_TEST_CASE(test_tribool_disjunction, "test tribool_disjunction")
 	{
 		typedef tribool_disjunction<F, F, F, T>::result E;
 		TRY_TEST_LOGICAL_TEST(E, T);
+	}
+	{
+		typedef tribool_disjunction<F, F, F, T, U>::result E;
+		TRY_TEST_LOGICAL_TEST(E, T);
+	}
+	{
+		typedef tribool_disjunction<F, F, F, U>::result E;
+		TRY_TEST_LOGICAL_TEST(E, U);
 	}
 	{
 		typedef tribool_disjunction<F, F, F, F>::result E;
