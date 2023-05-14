@@ -63,25 +63,25 @@ do { \
 	TEST_CHECK(void, void, false);
 	TEST_CHECK(int, int, false);
 	TEST_CHECK(const int, int, false);
-	TEST_CHECK(int&, int, true);
-	TEST_CHECK(int&, int&, true);
+	TEST_CHECK(int &, int, true);
+	TEST_CHECK(int &, int &, true);
 #if __cplusplus >= 201103L
-	TEST_CHECK(int&, int&&, true);
+	TEST_CHECK(int &, int &&, true);
 #endif
 	TEST_CHECK(const int&, int, false);
-	TEST_CHECK(const int&, int&, false);
+	TEST_CHECK(const int&, int &, false);
 #if __cplusplus >= 201103L
-	TEST_CHECK(const int&, int&&, false);
+	TEST_CHECK(const int&, int &&, false);
 #endif
 #if __cplusplus >= 201103L
-	TEST_CHECK(int&&, int, false);
-	TEST_CHECK(int&&, int&, false);
-	TEST_CHECK(int&&, int&&, false);
-	TEST_CHECK(Foo&&, Foo, true);
-	TEST_CHECK(Foo&&, Foo&, true);
-	TEST_CHECK(Foo&&, Foo&&, true);
+	TEST_CHECK(int &&, int, false);
+	TEST_CHECK(int &&, int &, false);
+	TEST_CHECK(int &&, int &&, false);
+	TEST_CHECK(Foo &&, Foo, true);
+	TEST_CHECK(Foo &&, Foo &, true);
+	TEST_CHECK(Foo &&, Foo &&, true);
 #endif
-	TEST_CHECK(int[], int*, false);
+	TEST_CHECK(int [], int*, false);
 	TEST_CHECK(int(&)[], int*, false);
 	TEST_CHECK(int[2], int*, false);
 	TEST_CHECK(int(&)[2], int(&)[2], false);
@@ -92,8 +92,8 @@ do { \
 	TEST_CHECK(int(*&)(), int(), true);
 
 #if __cplusplus >= 201103L
-	TEST_CHECK(PrivateCopyAssignable&, const PrivateCopyAssignable&, false);
-	TEST_CHECK(DeleteCopyAssignable&, const DeleteCopyAssignable&, false);
+	TEST_CHECK(PrivateCopyAssignable &, const PrivateCopyAssignable &, false);
+	TEST_CHECK(DeleteCopyAssignable &, const DeleteCopyAssignable &, false);
 #endif
 
 #undef TEST_CHECK

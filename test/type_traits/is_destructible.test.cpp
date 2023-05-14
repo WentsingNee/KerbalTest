@@ -73,8 +73,14 @@ do { \
 	TEST_CHECK(int, true);
 	TEST_CHECK(const int, true);
 	TEST_CHECK(int&, true);
+#if __cplusplus >= 201103L
+	TEST_CHECK(int&&, true);
+#endif
+	TEST_CHECK(int*, true);
 	TEST_CHECK(int[], false);
 	TEST_CHECK(int[2], true);
+	TEST_CHECK(int[][2], false);
+	TEST_CHECK(int[2][2], true);
 	TEST_CHECK(int(), false);
 	TEST_CHECK(int(*)(), true);
 
@@ -105,8 +111,14 @@ KERBAL_TEST_CASE(test_try_test_is_destructible, "test try_test_is_destructible")
 	TRY_TEST_CHECK_STRONG_(tribool_true, int);
 	TRY_TEST_CHECK_STRONG_(tribool_true, const int);
 	TRY_TEST_CHECK_STRONG_(tribool_true, int&);
+#if __cplusplus >= 201103L
+	TRY_TEST_CHECK_STRONG_(tribool_true, int&&);
+#endif
+	TRY_TEST_CHECK_STRONG_(tribool_true, int*);
 	TRY_TEST_CHECK_STRONG_(tribool_false, int[]);
 	TRY_TEST_CHECK_STRONG_(tribool_true, int[2]);
+	TRY_TEST_CHECK_STRONG_(tribool_false, int[][2]);
+	TRY_TEST_CHECK_STRONG_(tribool_true, int[2][2]);
 	TRY_TEST_CHECK_STRONG_(tribool_false, int());
 	TRY_TEST_CHECK_STRONG_(tribool_true, int(*)());
 
