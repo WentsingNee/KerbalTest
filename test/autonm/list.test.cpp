@@ -46,8 +46,7 @@ KERBAL_TEST_CASE(test_autonm_list_push_back, "test autonm_list::push_back")
 		autonm_list l;
 
 		for (int i = 0; i < 10; ++i) {
-			autonm_list::auto_node * p = new autonm_list::auto_node();
-			p->member() = i;
+			autonm_list::auto_node * p = new autonm_list::auto_node(kerbal::utility::in_place_t(), i);
 			l.push_back(*p);
 		}
 
