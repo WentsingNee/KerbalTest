@@ -16,8 +16,6 @@
 #include <kerbal/test/test.hpp>
 #include <kerbal/random/mersenne_twister_engine.hpp>
 
-#include <map>
-
 #if __cplusplus >= 201103L
 #	include <random>
 #endif
@@ -29,7 +27,7 @@ KERBAL_TEST_CASE(test_exponential_distribution, "test exponential_distribution")
 	kerbal::random::exponential_distribution<double> dis(0.05);
 
 	int n = 10000000;
-	std::map<int, int> hist;
+	ktest::HistMap::type hist;
 	for (int i = 0; i < n; ++i) {
 		++hist[static_cast<int>(dis(eg))];
 	}
@@ -46,15 +44,16 @@ KERBAL_TEST_CASE(cmp_with_std_exponential_distribution_bar, "compare with std::e
 	std::exponential_distribution<double> std_dis(0.05);
 
 	int n = 10000000;
-	std::map<int, std::pair<int, int> > hist;
+	ktest::HistMap2::type hist;
 	for (int i = 0; i < n; ++i) {
-		++hist[static_cast<int>(ker_dis(eg[0]))].first;
-		++hist[static_cast<int>(std_dis(eg[1]))].second;
+		++hist[static_cast<int>(ker_dis(eg[0]))].first();
+		++hist[static_cast<int>(std_dis(eg[1]))].second();
 	}
-	ktest::print_bar(n, hist);
+	ktest::print_bar2(n, hist);
 }
 
 #endif
+
 
 int main(int argc, char * argv[])
 {

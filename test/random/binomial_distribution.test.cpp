@@ -16,8 +16,6 @@
 #include <kerbal/test/test.hpp>
 #include <kerbal/random/mersenne_twister_engine.hpp>
 
-#include <map>
-
 #if __cplusplus >= 201103L
 #	include <random>
 #endif
@@ -29,7 +27,7 @@ KERBAL_TEST_CASE(test_binomial_distribution, "test binomial_distribution")
 	kerbal::random::binomial_distribution<int> dis(30, 0.3);
 
 	int n = 10000000;
-	std::map<int, int> hist;
+	ktest::HistMap::type hist;
 	for (int i = 0; i < n; ++i) {
 		++hist[dis(eg)];
 	}
@@ -46,15 +44,16 @@ KERBAL_TEST_CASE(cmp_with_std_binomial_distribution_bar, "compare with std::bino
 	std::binomial_distribution<int> std_dis(30, 0.3);
 
 	int n = 10000000;
-	std::map<int, std::pair<int, int> > hist;
+	ktest::HistMap2::type hist;
 	for (int i = 0; i < n; ++i) {
-		++hist[ker_dis(eg[0])].first;
-		++hist[std_dis(eg[1])].second;
+		++hist[ker_dis(eg[0])].first();
+		++hist[std_dis(eg[1])].second();
 	}
-	ktest::print_bar(n, hist);
+	ktest::print_bar2(n, hist);
 }
 
 #endif
+
 
 int main(int argc, char * argv[])
 {

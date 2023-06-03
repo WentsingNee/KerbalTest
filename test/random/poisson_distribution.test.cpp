@@ -18,8 +18,6 @@
 #include <kerbal/random/linear_congruential_engine.hpp>
 #include <kerbal/random/mersenne_twister_engine.hpp>
 
-#include <map>
-
 #if __cplusplus >= 201103L
 #	include <random>
 #endif
@@ -43,7 +41,7 @@ KERBAL_TEMPLATE_TEST_CASE(test_poisson_distribution, "test poisson_distribution"
 		kerbal::random::poisson_distribution<int> dis(mean);
 
 		int n = 10000000;
-		std::map<int, int> hist;
+		ktest::HistMap::type hist;
 		for (int i = 0; i < n; ++i) {
 			++hist[dis(eg)];
 		}
@@ -78,18 +76,19 @@ KERBAL_TEST_CASE(cmp_with_std_poisson_distribution_bar, "compare with std::poiss
 		std::poisson_distribution<int> std_dis(mean);
 
 		int n = 10000000;
-		std::map<int, std::pair<int, int> > hist;
+		ktest::HistMap2::type hist;
 		for (int i = 0; i < n; ++i) {
-			++hist[ker_dis(eg[0])].first;
-			++hist[std_dis(eg[1])].second;
+			++hist[ker_dis(eg[0])].first();
+			++hist[std_dis(eg[1])].second();
 		}
-		ktest::print_bar(n, hist);
+		ktest::print_bar2(n, hist);
 
 		std::cout << "\n\n\n" << std::endl;
 	}
 }
 
 #endif
+
 
 int main(int argc, char * argv[])
 {

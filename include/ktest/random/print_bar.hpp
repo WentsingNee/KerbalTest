@@ -13,8 +13,10 @@
 #define KTEST_RANDOM_PRINT_BAR_HPP
 
 #include <kerbal/compare/minmax.hpp>
+#include <kerbal/container/avl_map.hpp>
+#include <kerbal/memory/allocator/monotonic_allocator.hpp>
+#include <kerbal/utility/compressed_pair.hpp>
 
-#include <map>
 #include <string>
 
 #include <cstdio>
@@ -23,67 +25,84 @@
 namespace ktest
 {
 
-	inline
-	int max_count(const std::map<int, int> & m)
+	struct HistMap
+	{
+		typedef kerbal::container::avl_map<int, int,
+				kerbal::compare::binary_type_less<int, int>,
+				kerbal::memory::monotonic_allocator<int>
+		> type;
+	};
+
+	struct HistMap2
+	{
+		typedef kerbal::container::avl_map<int, kerbal::utility::compressed_pair<int, int>,
+				kerbal::compare::binary_type_less<int, int>,
+				kerbal::memory::monotonic_allocator<int>
+		> type;
+	};
+
+
+	template <typename Map>
+	int max_count(const Map & m)
 	{
 		int mc = 0;
-		std::map<int, int>::const_iterator it = m.begin();
-		std::map<int, int>::const_iterator end = m.end();
+		typename Map::const_iterator it = m.cbegin();
+		typename Map::const_iterator end = m.cend();
 		while (it != end) {
-			if (it->second > mc) {
-				mc = it->second;
+			if (it->value() > mc) {
+				mc = it->value();
 			}
 			++it;
 		}
 		return mc;
 	}
 
-	inline
-	void print_bar(int n, const std::map<int, int> & hist)
+	template <typename Map>
+	void print_bar(int n, const Map & hist)
 	{
 		const int star_width = 100;
 		printf("%4s  %10s  %8s\n", "val", "cnt", "per%");
 		double mc = max_count(hist);
-		for (std::map<int, int>::const_iterator it = hist.begin(); it != hist.end(); ++it) {
-			int bar_len = static_cast<int>(it->second / mc * star_width);
-			printf("%4d  %10d  %10.6lf  %s\n", it->first, it->second, it->second / double(n) * 100.0, std::string(bar_len, '*').c_str());
+		for (typename Map::const_iterator it = hist.cbegin(); it != hist.cend(); ++it) {
+			int bar_len = static_cast<int>(it->value() / mc * star_width);
+			printf("%4d  %10d  %10.6lf  %s\n", it->key(), it->value(), it->value() / double(n) * 100.0, std::string(bar_len, '*').c_str());
 		}
 	}
 
 
-	inline
-	int max_count(const std::map<int, std::pair<int, int> > & m)
+	template <typename Map>
+	int max_count2(const Map & m)
 	{
 		int mc = 0;
-		std::map<int, std::pair<int, int> >::const_iterator it = m.begin();
-		std::map<int, std::pair<int, int> >::const_iterator end = m.end();
+		typename Map::const_iterator it = m.cbegin();
+		typename Map::const_iterator end = m.cend();
 		while (it != end) {
-			if (it->second.first > mc) {
-				mc = it->second.first;
+			if (it->value().first() > mc) {
+				mc = it->value().first();
 			}
-			if (it->second.second > mc) {
-				mc = it->second.second;
+			if (it->value().second() > mc) {
+				mc = it->value().second();
 			}
 			++it;
 		}
 		return mc;
 	}
 
-	inline
-	void print_bar(int n, const std::map<int, std::pair<int, int> > & hist)
+	template <typename Map>
+	void print_bar2(int n, const Map & hist)
 	{
-		double mc = max_count(hist);
+		double mc = max_count2(hist);
 
 		printf("%4s  %8s  %8s  %8s  %8s\n", "val", "ker_cnt", "std_cnt", "dis (k-s)", "per%");
-		std::map<int, std::pair<int, int> >::const_iterator it = hist.begin();
-		std::map<int, std::pair<int, int> >::const_iterator end = hist.end();
+		typename Map::const_iterator it = hist.cbegin();
+		typename Map::const_iterator end = hist.cend();
 
 		const int star_width = 90;
 
 		while (it != end) {
-			const std::pair<int, std::pair<int, int> > & e = *it;
-			int ker_cnt = e.second.first;
-			int std_cnt = e.second.second;
+			typename Map::const_reference e = *it;
+			int ker_cnt = e.value().first();
+			int std_cnt = e.value().second();
 			int dis = ker_cnt - std_cnt;
 			double per = dis / double(std_cnt) * 100.0;
 			int ker_bar_len = static_cast<int>(ker_cnt / mc * star_width);
@@ -94,7 +113,7 @@ namespace ktest
 			} else {
 				bar += std::string(ker_bar_len - std_bar_len, '+');
 			}
-			printf("%4d  %8d  %8d  %8d  %8.2lf%%  %s\n", e.first, ker_cnt, std_cnt, dis, per, bar.c_str());
+			printf("%4d  %8d  %8d  %8d  %8.2lf%%  %s\n", e.key(), ker_cnt, std_cnt, dis, per, bar.c_str());
 			++it;
 		}
 	}

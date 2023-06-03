@@ -19,8 +19,6 @@
 #include <kerbal/random/mersenne_twister_engine.hpp>
 #include <kerbal/utility/compressed_pair.hpp>
 
-#include <map>
-
 #if __cplusplus >= 201103L
 #	include <random>
 #endif
@@ -53,7 +51,7 @@ KERBAL_TEMPLATE_TEST_CASE(test_normal_distribution, "test normal_distribution")
 		kerbal::random::normal_distribution<double> dis(mean, stddev);
 
 		int n = 10000000;
-		std::map<int, int> hist;
+		ktest::HistMap::type hist;
 		for (int i = 0; i < n; ++i) {
 			++hist[static_cast<int>(my_round(dis(eg)))];
 		}
@@ -91,18 +89,19 @@ KERBAL_TEST_CASE(cmp_with_std_normal_distribution_bar, "compare with std::normal
 		std::normal_distribution<double> std_dis(mean, stddev);
 
 		int n = 10000000;
-		std::map<int, std::pair<int, int> > hist;
+		ktest::HistMap2::type hist;
 		for (int i = 0; i < n; ++i) {
-			++hist[static_cast<int>(my_round(ker_dis(eg[0])))].first;
-			++hist[static_cast<int>(my_round(std_dis(eg[1])))].second;
+			++hist[static_cast<int>(my_round(ker_dis(eg[0])))].first();
+			++hist[static_cast<int>(my_round(std_dis(eg[1])))].second();
 		}
-		ktest::print_bar(n, hist);
+		ktest::print_bar2(n, hist);
 
 		std::cout << "\n\n\n" << std::endl;
 	}
 }
 
 #endif
+
 
 int main(int argc, char * argv[])
 {
