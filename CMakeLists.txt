@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.12)
+cmake_minimum_required(VERSION 3.10)
 project(KerbalTest CXX)
 
 message(STATUS "Compiler: ${CMAKE_CXX_COMPILER_ID}")
