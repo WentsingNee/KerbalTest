@@ -41,11 +41,11 @@ struct cmp_nothrow
 template class kc::detail::fl_allocator_unrelated<int>;
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR14
-void kc::detail::fl_allocator_unrelated<int>::_K_sort(cmp_may_throw<value_type>);
+void kc::detail::fl_allocator_unrelated<int>::k_sort(cmp_may_throw<value_type>);
 
 #if __cplusplus >= 201103L
 template KERBAL_MSVC_TMPINST_CONSTEXPR14
-void kc::detail::fl_allocator_unrelated<int>::_K_sort(cmp_nothrow<value_type>);
+void kc::detail::fl_allocator_unrelated<int>::k_sort(cmp_nothrow<value_type>);
 #endif
 
 
@@ -133,11 +133,11 @@ bool operator>=(const kc::forward_list<int> &, const kc::forward_list<int> &);
 template class kc::detail::fl_allocator_unrelated<std::string>;
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR14
-void kc::detail::fl_allocator_unrelated<std::string>::_K_sort(cmp_may_throw<value_type>);
+void kc::detail::fl_allocator_unrelated<std::string>::k_sort(cmp_may_throw<value_type>);
 
 #if __cplusplus >= 201103L
 template KERBAL_MSVC_TMPINST_CONSTEXPR14
-void kc::detail::fl_allocator_unrelated<std::string>::_K_sort(cmp_nothrow<value_type>);
+void kc::detail::fl_allocator_unrelated<std::string>::k_sort(cmp_nothrow<value_type>);
 #endif
 
 
@@ -230,11 +230,11 @@ bool operator>=(const kc::forward_list<std::string> &, const kc::forward_list<st
 template class kc::detail::fl_allocator_unrelated<int[8]>;
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR14
-void kc::detail::fl_allocator_unrelated<int[8]>::_K_sort(cmp_may_throw<value_type>);
+void kc::detail::fl_allocator_unrelated<int[8]>::k_sort(cmp_may_throw<value_type>);
 
 #if __cplusplus >= 201103L
 template KERBAL_MSVC_TMPINST_CONSTEXPR14
-void kc::detail::fl_allocator_unrelated<int[8]>::_K_sort(cmp_nothrow<value_type>);
+void kc::detail::fl_allocator_unrelated<int[8]>::k_sort(cmp_nothrow<value_type>);
 #endif
 
 
@@ -313,11 +313,11 @@ kc::forward_list<int[8]> operator+(kc::forward_list<int[8]> &&, kc::forward_list
 template class kc::detail::fl_allocator_unrelated<kc::forward_list<int> >;
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR14
-void kc::detail::fl_allocator_unrelated<kc::forward_list<int> >::_K_sort(cmp_may_throw<value_type>);
+void kc::detail::fl_allocator_unrelated<kc::forward_list<int> >::k_sort(cmp_may_throw<value_type>);
 
 #if __cplusplus >= 201103L
 template KERBAL_MSVC_TMPINST_CONSTEXPR14
-void kc::detail::fl_allocator_unrelated<kc::forward_list<int> >::_K_sort(cmp_nothrow<value_type>);
+void kc::detail::fl_allocator_unrelated<kc::forward_list<int> >::k_sort(cmp_nothrow<value_type>);
 #endif
 
 
