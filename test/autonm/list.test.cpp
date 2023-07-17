@@ -31,9 +31,7 @@ KERBAL_TEST_CASE(test_autonm_list_push_back, "test autonm_list::push_back")
 			node[i].member() = i;
 		}
 
-		for (int i = 0; i < 10; ++i) {
-			l.push_back(node[i]);
-		}
+		l.insert(l.cbegin(), node, node + 10);
 
 		int r[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 		KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(
@@ -87,6 +85,81 @@ KERBAL_TEST_CASE(test_autonm_list_range_insert, "test autonm_list::range_insert"
 	));
 
 }
+
+
+#if __cplusplus >= 201103L
+
+KERBAL_TEST_CASE(test_autonm_list_move_construct, "test autonm_list::autonm_list(autonm_list &&)")
+{
+	using namespace kerbal::autonm;
+
+	{
+		typedef list<int, discard_deallocate_semi_allocator<int> > autonm_list;
+
+		autonm_list::auto_node node[10];
+		autonm_list l;
+
+		for (int i = 0; i < 10; ++i) {
+			node[i].member() = i;
+		}
+
+		l.insert(l.cbegin(), node, node + 10);
+
+		autonm_list l2(kerbal::compatibility::move(l));
+
+		int r[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+		KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(
+				l2.cbegin(), l2.cend(),
+				kerbal::container::cbegin(r), kerbal::container::cend(r)
+		));
+
+		KERBAL_TEST_CHECK(l.empty());
+	}
+
+}
+
+
+KERBAL_TEST_CASE(test_autonm_list_move_assign, "test autonm_list::operator=(autonm_list &&)")
+{
+	using namespace kerbal::autonm;
+
+	{
+		typedef list<int, discard_deallocate_semi_allocator<int> > autonm_list;
+
+		autonm_list::auto_node node[10];
+		autonm_list l;
+
+		for (int i = 0; i < 10; ++i) {
+			node[i].member() = i;
+		}
+
+		l.insert(l.cbegin(), node, node + 10);
+
+		autonm_list::auto_node node2[10];
+		autonm_list l2;
+
+		for (int i = 0; i < 10; ++i) {
+			node2[i].member() = i;
+		}
+
+		l2.insert(l2.cbegin(), node2, node2 + 10);
+
+		l2 = kerbal::compatibility::move(l);
+
+
+		int r[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+		KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(
+				l2.cbegin(), l2.cend(),
+				kerbal::container::cbegin(r), kerbal::container::cend(r)
+		));
+
+		KERBAL_TEST_CHECK(l.empty());
+	}
+
+}
+
+#endif
+
 
 int main(int argc, char* argv[])
 {
