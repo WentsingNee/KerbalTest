@@ -30,16 +30,16 @@ KERBAL_TEMPLATE_TEST_CASE(test_set_union, "test set_union")
 
 	test_data_t test_cases[] = {
 			test_data_t(
-					sequence_t(),
-					sequence_t()
+					KERBAL_ILIST(),
+					KERBAL_ILIST()
 			),
 			test_data_t(
-					sequence_t(),
+					KERBAL_ILIST(),
 					KERBAL_ILIST(1, 2, 3)
 			),
 			test_data_t(
 					KERBAL_ILIST(1, 2, 3),
-					sequence_t()
+					KERBAL_ILIST()
 			),
 			test_data_t(
 					KERBAL_ILIST(1, 2, 3),

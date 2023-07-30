@@ -193,12 +193,10 @@ KERBAL_TEST_CASE(test_forward_list_initializer_list_construct, "test forward_lis
 		));
 	}
 
-#if __cplusplus >= 201103L
 	{
-		kerbal::container::forward_list<int> l = {};
+		kerbal::container::forward_list<int> l = KERBAL_ILIST();
 		KERBAL_TEST_CHECK(l.empty());
 	}
-#endif
 
 }
 
