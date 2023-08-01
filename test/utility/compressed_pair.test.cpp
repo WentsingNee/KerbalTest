@@ -361,16 +361,18 @@ KERBAL_TEST_CASE(test_compressed_pair_is_nothrow, "test compressed_pair is nothr
 
 }
 
-#endif
+#endif // if __cplusplus >= 201103L
 
 
 #include <kerbal/type_traits/is_trivially_copy_constructible.hpp>
 #include <kerbal/type_traits/is_trivially_copy_assignable.hpp>
-#include <kerbal/type_traits/is_trivially_move_constructible.hpp>
-#include <kerbal/type_traits/is_trivially_move_assignable.hpp>
 #include <kerbal/type_traits/is_trivially_destructible.hpp>
 #include <kerbal/type_traits/is_trivially_copyable.hpp>
 
+#if __cplusplus >= 201103L
+#	include <kerbal/type_traits/is_trivially_move_constructible.hpp>
+#	include <kerbal/type_traits/is_trivially_move_assignable.hpp>
+#endif
 
 template <typename T, typename U>
 struct test_trivially_copy_constructible:
