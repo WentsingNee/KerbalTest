@@ -131,6 +131,8 @@ void print_pair_info(const ku::compressed_pair<Tp, Up> & p)
 	printf("\n");
 }
 
+
+
 KERBAL_TEST_CASE(test_compressed_pair, "test compressed_pair")
 {
 	std::cout << std::boolalpha;
@@ -243,6 +245,7 @@ KERBAL_TEST_CASE(test_compressed_pair_compare, "test compressed_pair compare")
 	}
 }
 
+
 #if __cplusplus >= 201103L
 
 KERBAL_TEST_CASE(test_compressed_pair_constexpr, "test compressed_pair constexpr")
@@ -256,7 +259,8 @@ KERBAL_TEST_CASE(test_compressed_pair_constexpr, "test compressed_pair constexpr
 	}
 }
 
-#endif
+#endif // if __cplusplus >= 201103L
+
 
 #if __cplusplus >= 201402L
 
@@ -271,7 +275,8 @@ KERBAL_TEST_CASE(test_compressed_pair_constexpr14, "test compressed_pair constex
 	}
 }
 
-#endif
+#endif // if __cplusplus >= 201402L
+
 
 #if __cplusplus >= 201402L
 
@@ -295,7 +300,8 @@ KERBAL_TEST_CASE(test_compressed_pair_std_get, "test compressed_pair std::get")
 
 }
 
-#endif
+#endif // if __cplusplus >= 201402L
+
 
 #if __cplusplus >= 201703L
 
@@ -337,10 +343,10 @@ KERBAL_TEST_CASE(test_compressed_pair_structured_binding, "test compressed_pair 
 
 }
 
-#endif
+#endif // if __cplusplus >= 201703L
+
 
 #if __cplusplus >= 201103L
-
 
 #include <kerbal/type_traits/is_nothrow_constructible.hpp>
 
@@ -361,16 +367,18 @@ KERBAL_TEST_CASE(test_compressed_pair_is_nothrow, "test compressed_pair is nothr
 
 }
 
-#endif
+#endif // if __cplusplus >= 201103L
 
 
 #include <kerbal/type_traits/is_trivially_copy_constructible.hpp>
 #include <kerbal/type_traits/is_trivially_copy_assignable.hpp>
-#include <kerbal/type_traits/is_trivially_move_constructible.hpp>
-#include <kerbal/type_traits/is_trivially_move_assignable.hpp>
 #include <kerbal/type_traits/is_trivially_destructible.hpp>
 #include <kerbal/type_traits/is_trivially_copyable.hpp>
 
+#if __cplusplus >= 201103L
+#	include <kerbal/type_traits/is_trivially_move_constructible.hpp>
+#	include <kerbal/type_traits/is_trivially_move_assignable.hpp>
+#endif
 
 template <typename T, typename U>
 struct test_trivially_copy_constructible:
