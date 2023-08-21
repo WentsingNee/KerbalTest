@@ -119,7 +119,9 @@ function(ktest_basic_configuration target)
 
     target_compile_definitions(${target} PUBLIC KERBAL_TYPE_TRAITS_DEBUG_WARNING=1)
 
-    target_link_libraries(${target} PUBLIC Kerbal::kerbal)
+    if (NOT ktest_category STREQUAL "header")
+        target_link_libraries(${target} PUBLIC Kerbal::kerbal)
+    endif ()
 
     # test/include
     if (
@@ -195,6 +197,19 @@ if (KTEST_ENABLE_PRECOMPILE_HEADER)
     ktest_basic_configuration(ktest_precompile_header)
     target_precompile_headers(ktest_precompile_header PUBLIC "${Kerbal_PUBLIC_HEADERS_kerbal}")
 endif ()
+
+
+# header_include_check
+
+include(cmake/header_include_check.cmake)
+
+foreach (header IN LISTS Kerbal_PUBLIC_HEADERS_RELATIVE_kerbal)
+    string(REPLACE "/" "." target ${header})
+    string(PREPEND target "header.")
+    message(VERBOSE "	add: ${target}  <=  ${Kerbal_INCLUDE_DIRS}/${header}")
+    add_kerbal_header_check_target("${target}" "${Kerbal_INCLUDE_DIRS}/${header}")
+endforeach ()
+
 
 
 # ctest
