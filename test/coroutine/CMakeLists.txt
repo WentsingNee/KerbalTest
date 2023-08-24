@@ -9,15 +9,15 @@
 #   all rights reserved
 #
 
-macro(add_kerbal_test_target_wih_coroutine target target_src_file)
+macro(target_wih_coroutine target target_src_file)
     if (${KERBAL_TEST_SUPPORT_COROUTINE})
-        add_kerbal_test_target(${target} ${target_src_file})
-        target_compile_options(${target} PUBLIC ${KERBAL_TEST_COROUTINE_FLAGS})
+        target_compile_options(${target} PUBLIC ${KERBAL_TEST_FLAG_COROUTINE})
+        message(STATUS "target ${target} with coroutine flag: ${KERBAL_TEST_FLAG_COROUTINE}")
     else()
         message(WARNING "${target} has been ignored because compiler doesn't support coroutine")
     endif()
 endmacro()
 
-add_kerbal_test_target_wih_coroutine(test.coroutine.generator ./generator.test.cpp)
-add_kerbal_test_target_wih_coroutine(test.coroutine.lazy ./lazy.test.cpp)
-add_kerbal_test_target_wih_coroutine(test.coroutine.task ./task.test.cpp)
+target_wih_coroutine(test.coroutine.generator ./generator.test.cpp)
+target_wih_coroutine(test.coroutine.lazy ./lazy.test.cpp)
+target_wih_coroutine(test.coroutine.task ./task.test.cpp)

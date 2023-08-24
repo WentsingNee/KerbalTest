@@ -22,13 +22,14 @@ macro(check_compiler_support_coroutine_flag)
     message(STATUS "Checking compiler support coroutine flag: ${flag} - Done")
     message(STATUS "set KERBAL_TEST_SUPPORT_COROUTINE = ${KERBAL_TEST_SUPPORT_COROUTINE}")
     if (${KERBAL_TEST_SUPPORT_COROUTINE})
-        set(KERBAL_TEST_FLAG_COROUTINE ${flag})
+        set(KERBAL_TEST_FLAG_COROUTINE ${flag} PARENT_SCOPE)
         message(STATUS "set KERBAL_TEST_COROUTINE_FLAGS = ${flag}")
     endif ()
     message("")
 endmacro()
 
-macro(try_test_compiler_coroutine_support)
+
+function(try_test_compiler_coroutine_support)
     check_compiler_support_coroutine_flag(-fcoroutines)
     if (KERBAL_TEST_SUPPORT_COROUTINE)
         return()
@@ -37,9 +38,10 @@ macro(try_test_compiler_coroutine_support)
     message(STATUS "-fcoroutines doesn't support, try: -fcoroutines-ts")
     unset(KERBAL_TEST_SUPPORT_COROUTINE CACHE)
     check_compiler_support_coroutine_flag(-fcoroutines-ts)
+    message("\n")
 
-endmacro()
+endfunction()
 
 try_test_compiler_coroutine_support()
 
-message("\n")
+
