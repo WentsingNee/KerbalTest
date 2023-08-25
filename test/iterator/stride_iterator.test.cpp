@@ -13,7 +13,8 @@
 #include <kerbal/iterator/stride_iterator.hpp>
 
 #include <kerbal/test/test.hpp>
-#include <kerbal/algorithm/modifier.hpp>
+#include <kerbal/algorithm/modifier/iota.hpp>
+#include <kerbal/algorithm/querier/all_of.hpp>
 #include <kerbal/container/nonmember_container_access.hpp>
 #include <kerbal/type_traits/integral_constant.hpp>
 

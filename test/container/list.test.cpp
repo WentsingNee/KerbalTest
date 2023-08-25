@@ -14,7 +14,10 @@
 #include <kerbal/test/test.hpp>
 #include "helper/random_vector.hpp"
 
-#include <kerbal/algorithm/modifier.hpp>
+#include <kerbal/algorithm/modifier/fill.hpp>
+#include <kerbal/algorithm/modifier/iota.hpp>
+#include <kerbal/algorithm/modifier/reverse.hpp>
+#include <kerbal/algorithm/modifier/rotate.hpp>
 #include <kerbal/algorithm/sort/merge_sort.hpp>
 #include <kerbal/algorithm/sort/sort.hpp>
 #include <kerbal/compare/basic_compare.hpp>

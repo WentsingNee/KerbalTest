@@ -24,7 +24,7 @@
 #include <kerbal/hash/sha1.hpp>
 
 #include <kerbal/test/test.hpp>
-#include <kerbal/algorithm/modifier.hpp>
+#include <kerbal/algorithm/modifier/iota.hpp>
 #include <kerbal/container/nonmember_container_access.hpp>
 
 #include <string>
@@ -123,7 +123,7 @@ KERBAL_TEMPLATE_TEST_CASE_INST(test_sha1_2, "test sha1<size> 2", kerbal::hash::S
 
 #if TEST_CONSTEXPR
 
-#include <kerbal/algorithm/modifier.hpp>
+#include <kerbal/algorithm/modifier/fill.hpp>
 #include <kerbal/compatibility/fixed_width_integer.hpp>
 
 

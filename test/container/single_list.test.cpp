@@ -12,7 +12,9 @@
 #include <kerbal/container/single_list.hpp>
 
 #include <kerbal/test/test.hpp>
-#include <kerbal/algorithm/modifier.hpp>
+#include <kerbal/algorithm/modifier/fill.hpp>
+#include <kerbal/algorithm/modifier/iota.hpp>
+#include <kerbal/algorithm/modifier/reverse.hpp>
 #include <kerbal/compare/sequence_compare.hpp>
 #include <kerbal/container/list.hpp>
 #include <kerbal/container/nonmember_container_access.hpp>

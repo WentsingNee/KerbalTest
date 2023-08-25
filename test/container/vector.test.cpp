@@ -15,7 +15,7 @@
 #include <kerbal/test/test.hpp>
 #include <kerbal/test/object_count.hpp>
 
-#include <kerbal/algorithm/modifier.hpp>
+#include <kerbal/algorithm/modifier/iota.hpp>
 #include <kerbal/compare/sequence_compare.hpp>
 #include <kerbal/random/mersenne_twister_engine.hpp>
 #include <kerbal/type_traits/integral_constant.hpp>

@@ -12,6 +12,7 @@
 #include <kerbal/numeric/bit.hpp>
 
 #include <kerbal/test/test.hpp>
+#include <kerbal/algorithm/modifier/rotate.hpp>
 #include <kerbal/container/nonmember_container_access.hpp>
 #include <kerbal/random/mersenne_twister_engine.hpp>
 
