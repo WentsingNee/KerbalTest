@@ -11,6 +11,9 @@ message(STATUS "CMAKE_TARGET_SYSTEM_PROCESSOR: ${CMAKE_TARGET_SYSTEM_PROCESSOR}"
 
 include_directories(${KERBAL_INCLUDE_DIRECTORY})
 
+include(cmake/get_kerbal_public_headers.cmake)
+get_kerbal_public_headers("${KERBAL_INCLUDE_DIRECTORY}" kerbal_public_headers)
+
 
 # compiler global configuration
 
@@ -87,6 +90,32 @@ endif ()
 # gcov
 
 option(KERBAL_TEST_ENABLE_GCOV "enable gcov" OFF)
+
+
+# precompile header
+
+option(KERBAL_TEST_ENABLE_PRECOMPILE_HEADER "enable precompile header" OFF)
+
+if (${KERBAL_TEST_ENABLE_PRECOMPILE_HEADER})
+
+    list(LENGTH kerbal_public_headers kerbal_public_headers_len)
+
+    if (kerbal_public_headers_len EQUAL 0)
+        message(WARNING "you should provide variable KERBAL_INCLUDE_DIRECTORY correctly to support precompile header")
+        set(KERBAL_TEST_ENABLE_PRECOMPILE_HEADER OFF)
+    endif ()
+
+    file(WRITE "${CMAKE_BINARY_DIR}/kerbal_test_pch.cpp" "")
+    add_library(kerbal_test_precompile_header OBJECT kerbal_test_pch.cpp)
+    if (KERBAL_TEST_USE_LIBCXX)
+        target_compile_options(kerbal_test_precompile_header PUBLIC -stdlib=libc++)
+        target_link_libraries(kerbal_test_precompile_header PUBLIC ${LIB_CPP})
+        target_link_libraries(kerbal_test_precompile_header PUBLIC ${LIB_CPPABI})
+    endif ()
+    foreach (header ${kerbal_public_headers})
+        target_precompile_headers(kerbal_test_precompile_header PUBLIC "${KERBAL_INCLUDE_DIRECTORY}${header}")
+    endforeach ()
+endif ()
 
 
 add_subdirectory(instantiation)
