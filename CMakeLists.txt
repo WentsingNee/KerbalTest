@@ -86,7 +86,7 @@ endif ()
 
 # gcov
 
-option(KERBAL_TEST_GCOV "enable gcov" OFF)
+option(KERBAL_TEST_ENABLE_GCOV "enable gcov" OFF)
 
 
 add_subdirectory(instantiation)
