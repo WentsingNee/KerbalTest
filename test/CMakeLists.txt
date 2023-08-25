@@ -1,7 +1,7 @@
 
 include(${CMAKE_SOURCE_DIR}/cmake/add_kerbal_parent_target.cmake)
 
-macro(add_kerbal_test_target target target_src_file)
+macro(add_kerbal_utest_target target target_src_file)
     add_executable(${target} ${target_src_file})
     add_kerbal_parent_target(${target})
     set_target_properties(${target}
@@ -34,14 +34,14 @@ macro(add_kerbal_test_target target target_src_file)
             NAME ${target}
             COMMAND ${target}
     )
-    set(test_targets ${test_targets} ${target})
+    list(APPEND utest_targets ${target})
 endmacro()
 
 
-macro(add_kerbal_test_target_wih_ie target target_src_file ie)
+macro(add_kerbal_utest_target_wih_ie target target_src_file ie)
     if (${KERBAL_TEST_SUPPORT_${ie}})
         set(target_name_with_ie ${target}_${ie})
-        add_kerbal_test_target(${target_name_with_ie} ${target_src_file})
+        add_kerbal_utest_target(${target_name_with_ie} ${target_src_file})
         target_compile_options(${target_name_with_ie} PUBLIC ${KERBAL_TEST_FLAG_${ie}})
     else ()
         message(WARNING "Compiler doesn't support ${ie}")
@@ -54,10 +54,10 @@ foreach (file ${test_src_files})
     string(REGEX MATCH "(.+)\\.test\\.cpp$" _ ${file})
     if (CMAKE_MATCH_1)
         string(REPLACE "/" "." target ${CMAKE_MATCH_1})
-        string(PREPEND target "test.")
+        string(PREPEND target "utest.")
         message("	add: ${target}  <=  ${CMAKE_CURRENT_SOURCE_DIR}/${file}")
-        add_kerbal_test_target(${target} ${CMAKE_CURRENT_SOURCE_DIR}/${file})
-        set(test_targets ${test_targets} PARENT_SCOPE)
+        add_kerbal_utest_target(${target} ${CMAKE_CURRENT_SOURCE_DIR}/${file})
+        set(utest_targets ${utest_targets} PARENT_SCOPE)
     else ()
         message(WARNING "   ${file} has been ignored")
     endif ()
@@ -75,12 +75,12 @@ foreach (child ${children})
 endforeach()
 
 
-set(test_targets_count 0)
-foreach (target ${test_targets})
-    message("test-target ${test_targets_count}: ${target}")
-    math(EXPR test_targets_count "${test_targets_count} + 1")
+set(utest_targets_count 0)
+foreach (target ${utest_targets})
+    message("utest-target ${utest_targets_count}: ${target}")
+    math(EXPR utest_targets_count "${utest_targets_count} + 1")
 endforeach ()
-message("test targets: ${test_targets_count}")
+message("utest targets: ${utest_targets_count}")
 message("\n")
 
 
@@ -88,43 +88,40 @@ message("\n")
 enable_testing()
 
 
-foreach (target ${test_targets})
-    set(run_target_name "run_${target}")
-    get_target_property(path ${target} RUNTIME_OUTPUT_DIRECTORY)
+# run_utest_target
+foreach (utest_target ${utest_targets})
+    set(run_utest_target_name "run_${utest_target}")
+    get_target_property(path ${utest_target} RUNTIME_OUTPUT_DIRECTORY)
     if (${CMAKE_GENERATOR} MATCHES "Visual Studio")
-        file(RELATIVE_PATH path ${PROJECT_BINARY_DIR} ${path}/$<CONFIG>/${target})
+        file(RELATIVE_PATH path ${PROJECT_BINARY_DIR} ${path}/$<CONFIG>/${utest_target})
     else()
-        file(RELATIVE_PATH path ${PROJECT_BINARY_DIR} ${path}/${target})
+        file(RELATIVE_PATH path ${PROJECT_BINARY_DIR} ${path}/${utest_target})
     endif ()
     if (${KERBAL_WASM})
-        add_custom_target(${run_target_name}
+        add_custom_target(${run_utest_target_name}
                 COMMAND
                     mkdir -p test_output\;
-                    node ./${path} | tee test_output/${target}.out.txt\;
+                    node ./${path} | tee test_output/${utest_target}.out.txt\;
                 WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
-                COMMENT "Running test target ${target}"
+                COMMENT "Running utest target ${utest_target}"
         )
     elseif (${CMAKE_CXX_PLATFORM_ID} MATCHES "Windows")
-        add_custom_target(${run_target_name}
+        add_custom_target(${run_utest_target_name}
                 COMMAND if not exist test_output mkdir test_output
-                COMMAND ./${path}.exe > test_output/${target}.out.txt
-                COMMAND cat test_output/${target}.out.txt
+                COMMAND ./${path}.exe > test_output/${utest_target}.out.txt
+                COMMAND cat test_output/${utest_target}.out.txt
                 WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
-                COMMENT "Running test target ${target}"
+                COMMENT "Running utest target ${utest_target}"
         )
     else ()
-        add_custom_target(${run_target_name}
+        add_custom_target(${run_utest_target_name}
                 COMMAND
                     mkdir -p test_output\;
-                    ./${path} | tee test_output/${target}.out.txt\;
+                    ./${path} | tee test_output/${utest_target}.out.txt\;
                 WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
-                COMMENT "Running test target ${target}"
+                COMMENT "Running utest target ${utest_target}"
         )
     endif ()
-    list(APPEND run_test_targets_list ${run_target_name})
+    add_dependencies(${run_utest_target_name} ${utest_target})
+    add_kerbal_parent_target(${run_utest_target_name})
 endforeach ()
-
-
-add_custom_target(run_test_targets
-        DEPENDS ${run_test_targets_list}
-)

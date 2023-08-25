@@ -41,9 +41,9 @@ set(try_test_guess_list
 )
 
 foreach (e ${try_test_guess_list})
-    add_kerbal_test_target(test.type_traits.${e}_guess ${e}.test.cpp)
+    add_kerbal_utest_target(utest.type_traits.${e}_guess ${e}.test.cpp)
     string(TOUPPER ${e} E)
-    target_compile_definitions(test.type_traits.${e}_guess PRIVATE KERBAL_HAS_${E}_SUPPORT=0)
+    target_compile_definitions(utest.type_traits.${e}_guess PRIVATE KERBAL_HAS_${E}_SUPPORT=0)
 endforeach ()
 
 set(test_targets ${test_targets} PARENT_SCOPE)

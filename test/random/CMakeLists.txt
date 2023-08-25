@@ -9,10 +9,10 @@
 #   all rights reserved
 #
 
-add_kerbal_test_target_wih_ie(test.random.mersenne_twister_engine ./mersenne_twister_engine.test.cpp avx512f)
-add_kerbal_test_target_wih_ie(test.random.mersenne_twister_engine ./mersenne_twister_engine.test.cpp avx2)
-add_kerbal_test_target_wih_ie(test.random.mersenne_twister_engine ./mersenne_twister_engine.test.cpp sse2)
-add_kerbal_test_target_wih_ie(test.random.mersenne_twister_engine ./mersenne_twister_engine.test.cpp sve)
-add_kerbal_test_target_wih_ie(test.random.mersenne_twister_engine ./mersenne_twister_engine.test.cpp neon)
+add_kerbal_utest_target_wih_ie(utest.random.mersenne_twister_engine ./mersenne_twister_engine.test.cpp avx512f)
+add_kerbal_utest_target_wih_ie(utest.random.mersenne_twister_engine ./mersenne_twister_engine.test.cpp avx2)
+add_kerbal_utest_target_wih_ie(utest.random.mersenne_twister_engine ./mersenne_twister_engine.test.cpp sse2)
+add_kerbal_utest_target_wih_ie(utest.random.mersenne_twister_engine ./mersenne_twister_engine.test.cpp sve)
+add_kerbal_utest_target_wih_ie(utest.random.mersenne_twister_engine ./mersenne_twister_engine.test.cpp neon)
 
 set(test_targets ${test_targets} PARENT_SCOPE)

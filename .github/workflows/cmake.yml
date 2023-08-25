@@ -105,34 +105,34 @@ jobs:
         if: matrix.os != 'windows-latest'
         run: |
           cmake --build ${{github.workspace}}/build --target \
-              test.config.architecture \
-              test.config.compiler_id \
-              test.config.compiler_version \
-              test.config.cxx_stdlib \
-              test.config.language_standard \
-              test.config.system
-          ${{github.workspace}}/build/targets/test.config.architecture
-          ${{github.workspace}}/build/targets/test.config.compiler_id
-          ${{github.workspace}}/build/targets/test.config.compiler_version
-          ${{github.workspace}}/build/targets/test.config.cxx_stdlib
-          ${{github.workspace}}/build/targets/test.config.language_standard
-          ${{github.workspace}}/build/targets/test.config.system
+              utest.config.architecture \
+              utest.config.compiler_id \
+              utest.config.compiler_version \
+              utest.config.cxx_stdlib \
+              utest.config.language_standard \
+              utest.config.system
+          ${{github.workspace}}/build/targets/utest.config.architecture
+          ${{github.workspace}}/build/targets/utest.config.compiler_id
+          ${{github.workspace}}/build/targets/utest.config.compiler_version
+          ${{github.workspace}}/build/targets/utest.config.cxx_stdlib
+          ${{github.workspace}}/build/targets/utest.config.language_standard
+          ${{github.workspace}}/build/targets/utest.config.system
 
       - name: Show Environment Kerbal Detect (Windows)
         if: matrix.os == 'windows-latest'
         run: |
-          cmake --build ${{github.workspace}}\build --config ${{env.BUILD_TYPE}} --target test.config.architecture
-          cmake --build ${{github.workspace}}\build --config ${{env.BUILD_TYPE}} --target test.config.compiler_id
-          cmake --build ${{github.workspace}}\build --config ${{env.BUILD_TYPE}} --target test.config.compiler_version
-          cmake --build ${{github.workspace}}\build --config ${{env.BUILD_TYPE}} --target test.config.cxx_stdlib
-          cmake --build ${{github.workspace}}\build --config ${{env.BUILD_TYPE}} --target test.config.language_standard
-          cmake --build ${{github.workspace}}\build --config ${{env.BUILD_TYPE}} --target test.config.system
-          ${{github.workspace}}\build\targets\${{env.BUILD_TYPE}}\test.config.architecture.exe
-          ${{github.workspace}}\build\targets\${{env.BUILD_TYPE}}\test.config.compiler_id.exe
-          ${{github.workspace}}\build\targets\${{env.BUILD_TYPE}}\test.config.compiler_version.exe
-          ${{github.workspace}}\build\targets\${{env.BUILD_TYPE}}\test.config.cxx_stdlib.exe
-          ${{github.workspace}}\build\targets\${{env.BUILD_TYPE}}\test.config.language_standard.exe
-          ${{github.workspace}}\build\targets\${{env.BUILD_TYPE}}\test.config.system.exe
+          cmake --build ${{github.workspace}}\build --config ${{env.BUILD_TYPE}} --target utest.config.architecture
+          cmake --build ${{github.workspace}}\build --config ${{env.BUILD_TYPE}} --target utest.config.compiler_id
+          cmake --build ${{github.workspace}}\build --config ${{env.BUILD_TYPE}} --target utest.config.compiler_version
+          cmake --build ${{github.workspace}}\build --config ${{env.BUILD_TYPE}} --target utest.config.cxx_stdlib
+          cmake --build ${{github.workspace}}\build --config ${{env.BUILD_TYPE}} --target utest.config.language_standard
+          cmake --build ${{github.workspace}}\build --config ${{env.BUILD_TYPE}} --target utest.config.system
+          ${{github.workspace}}\build\targets\${{env.BUILD_TYPE}}\utest.config.architecture.exe
+          ${{github.workspace}}\build\targets\${{env.BUILD_TYPE}}\utest.config.compiler_id.exe
+          ${{github.workspace}}\build\targets\${{env.BUILD_TYPE}}\utest.config.compiler_version.exe
+          ${{github.workspace}}\build\targets\${{env.BUILD_TYPE}}\utest.config.cxx_stdlib.exe
+          ${{github.workspace}}\build\targets\${{env.BUILD_TYPE}}\utest.config.language_standard.exe
+          ${{github.workspace}}\build\targets\${{env.BUILD_TYPE}}\utest.config.system.exe
 
       - name: Build
         run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
@@ -140,9 +140,9 @@ jobs:
       - name: Run Unit Test
         if: matrix.os != 'windows-latest'
         run: |
-          cmake --build ${{github.workspace}}/build --target run_test_targets
+          cmake --build ${{github.workspace}}/build --target run_utest
 
       - name: Run Unit Test (Windows)
         if: matrix.os == 'windows-latest'
         run: |
-          cmake --build ${{github.workspace}}\build --config ${{env.BUILD_TYPE}} --target run_test_targets
+          cmake --build ${{github.workspace}}\build --config ${{env.BUILD_TYPE}} --target run_utest
