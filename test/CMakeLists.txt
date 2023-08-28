@@ -109,7 +109,7 @@ foreach (utest_target ${utest_targets})
         add_custom_target(${run_utest_target_name}
                 COMMAND if not exist test_output mkdir test_output
                 COMMAND ./${path}.exe > test_output/${utest_target}.out.txt
-                COMMAND cat test_output/${utest_target}.out.txt
+                COMMAND type test_output\\${utest_target}.out.txt
                 WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
                 COMMENT "Running utest target ${utest_target}"
         )
