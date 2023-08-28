@@ -90,25 +90,30 @@ enable_testing()
 
 # run_utest_target
 foreach (utest_target ${utest_targets})
-    set(run_utest_target_name "run_${utest_target}")
     get_target_property(path ${utest_target} RUNTIME_OUTPUT_DIRECTORY)
     if (${CMAKE_GENERATOR} MATCHES "Visual Studio")
         file(RELATIVE_PATH path ${PROJECT_BINARY_DIR} ${path}/$<CONFIG>/${utest_target})
     else()
         file(RELATIVE_PATH path ${PROJECT_BINARY_DIR} ${path}/${utest_target})
     endif ()
+    if (${CMAKE_CXX_PLATFORM_ID} MATCHES "Windows")
+        set(path "./${path}.exe")
+    else ()
+        set(path "./${path}")
+    endif ()
+
     if (${KERBAL_WASM})
-        add_custom_target(${run_utest_target_name}
-                COMMAND
-                    mkdir -p test_output\;
-                    node ./${path} | tee test_output/${utest_target}.out.txt\;
-                WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
-                COMMENT "Running utest target ${utest_target}"
-        )
-    elseif (${CMAKE_CXX_PLATFORM_ID} MATCHES "Windows")
+        if (NOT DEFINED WASM_RUN_UTEST_INVOKER)
+            set (WASM_RUN_UTEST_INVOKER "node")
+        endif ()
+        set (run_utest_invoker "${WASM_RUN_UTEST_INVOKER}")
+    endif ()
+
+    set(run_utest_target_name "run_${utest_target}")
+    if (${CMAKE_CXX_PLATFORM_ID} MATCHES "Windows")
         add_custom_target(${run_utest_target_name}
                 COMMAND if not exist test_output mkdir test_output
-                COMMAND ./${path}.exe > test_output/${utest_target}.out.txt
+                COMMAND ${path} > test_output/${utest_target}.out.txt
                 COMMAND type test_output\\${utest_target}.out.txt
                 WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
                 COMMENT "Running utest target ${utest_target}"
@@ -117,7 +122,7 @@ foreach (utest_target ${utest_targets})
         add_custom_target(${run_utest_target_name}
                 COMMAND
                     mkdir -p test_output\;
-                    ./${path} | tee test_output/${utest_target}.out.txt\;
+                    ${run_utest_invoker} ${path} | tee test_output/${utest_target}.out.txt\;
                 WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
                 COMMENT "Running utest target ${utest_target}"
         )
