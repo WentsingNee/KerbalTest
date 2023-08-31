@@ -190,3 +190,44 @@ jobs:
 #
 #      - name: Run Unit Test
 #        run: cmake --build ${{github.workspace}}/KerbalTest-build --config ${{env.BUILD_TYPE}} --target run_utest
+
+  cpack:
+    continue-on-error: true
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            cpack_generators: "DEB;STGZ;TGZ;ZIP;"
+          - os: windows-latest
+            cpack_generators: "NuGet;WIX;"
+          - os: macos-latest
+            cpack_generators: "Bundle;DragNDrop;"
+
+    runs-on: ${{matrix.os}}
+    needs: build
+
+    steps:
+      - name: Clone Kerbal
+        uses: actions/checkout@v4
+        with:
+          repository: WentsingNee/Kerbal
+          ref: ${{env.KERBAL_BRANCH}}
+          path: Kerbal
+          submodules: 'true'
+
+      - name: CPack Kerbal
+        run: >
+          cmake
+          -S ${{github.workspace}}/Kerbal/
+          -B ${{github.workspace}}/Kerbal-pack/
+          -DCMAKE_BUILD_TYPE=Release -DCPACK_OUTPUT_FILE_PREFIX=packages -DKERBAL_INSTALL_GDB_PRETTY_PRINTER=ON
+
+          cd ${{github.workspace}}/Kerbal-pack/
+
+          cpack -G "${{matrix.cpack_generators}}"
+
+      - name: Upload Package
+        uses: actions/upload-artifact@v3
+        with:
+          name: Kerbal ${{matrix.os}}
+          path: ${{github.workspace}}/Kerbal-pack/packages
