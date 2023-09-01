@@ -10,6 +10,7 @@
  */
 
 #include <kerbal/test/test.hpp>
+#include <kerbal/config/exceptions.hpp>
 
 #if __cplusplus >= 201103L
 
@@ -83,12 +84,17 @@ do { \
 	TEST_CHECK(true, int(*)());
 
 	TEST_CHECK(true, NothrowMoveConstructible);
-	TEST_CHECK(false, NothrowMoveConstructible[]);
 	TEST_CHECK(false, NothrowMoveConstructible[2]);
+	TEST_CHECK(false, NothrowMoveConstructible[]);
 
+#if KERBAL_HAS_EXCEPTIONS_SUPPORT
 	TEST_CHECK(false, NonNothrowMoveConstructible);
-	TEST_CHECK(false, NonNothrowMoveConstructible[]);
+#else
+	TEST_CHECK(true, NonNothrowMoveConstructible);
+#endif
+
 	TEST_CHECK(false, NonNothrowMoveConstructible[2]);
+	TEST_CHECK(false, NonNothrowMoveConstructible[]);
 
 	TEST_CHECK(false, PrivateMoveConstructible);
 #if __cplusplus >= 201103L
@@ -121,12 +127,17 @@ KERBAL_TEST_CASE(test_try_test_is_nothrow_move_constructible, "test try_test_is_
 	TRY_TEST_CHECK_STRONG_(tribool_true, int(*)());
 
 	TRY_TEST_CHECK_WEAK_(tribool_true, NothrowMoveConstructible);
-	TRY_TEST_CHECK_STRONG_(tribool_false, NothrowMoveConstructible[]);
 	TRY_TEST_CHECK_STRONG_(tribool_false, NothrowMoveConstructible[2]);
+	TRY_TEST_CHECK_STRONG_(tribool_false, NothrowMoveConstructible[]);
 
+#if KERBAL_HAS_EXCEPTIONS_SUPPORT
 	TRY_TEST_CHECK_WEAK_(tribool_false, NonNothrowMoveConstructible);
-	TRY_TEST_CHECK_STRONG_(tribool_false, NonNothrowMoveConstructible[]);
+#else
+	TRY_TEST_CHECK_WEAK_(tribool_true, NonNothrowMoveConstructible);
+#endif
+
 	TRY_TEST_CHECK_STRONG_(tribool_false, NonNothrowMoveConstructible[2]);
+	TRY_TEST_CHECK_STRONG_(tribool_false, NonNothrowMoveConstructible[]);
 
 	TRY_TEST_CHECK_WEAK_(tribool_false, PrivateMoveConstructible);
 #if __cplusplus >= 201103L

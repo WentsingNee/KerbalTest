@@ -26,6 +26,7 @@
 #include <kerbal/type_traits/is_nothrow_destructible.hpp>
 
 #include <kerbal/test/test.hpp>
+#include <kerbal/config/exceptions.hpp>
 
 
 
@@ -94,12 +95,18 @@ do { \
 	TEST_CHECK(true, int(*)());
 
 	TEST_CHECK(true, NothrowDestructible);
-	TEST_CHECK(false, NothrowDestructible[]);
 	TEST_CHECK(true, NothrowDestructible[2]);
+	TEST_CHECK(false, NothrowDestructible[]);
 
+#if KERBAL_HAS_EXCEPTIONS_SUPPORT
 	TEST_CHECK(false, ThrowDestructible);
-	TEST_CHECK(false, ThrowDestructible[]);
 	TEST_CHECK(false, ThrowDestructible[2]);
+#else
+	TEST_CHECK(true, ThrowDestructible);
+	TEST_CHECK(true, ThrowDestructible[2]);
+#endif
+
+	TEST_CHECK(false, ThrowDestructible[]);
 
 #if KERBAL_COMPILER_ID != KERBAL_COMPILER_ID_CLANG || __cplusplus >= 201103 // old version clang cannot detect this case
 	TEST_CHECK(false, PrivateDestructible);
@@ -134,12 +141,18 @@ KERBAL_TEST_CASE(test_try_test_is_nothrow_destructible, "test try_test_is_nothro
 	TRY_TEST_CHECK_STRONG_(tribool_true, int(*)());
 
 	TRY_TEST_CHECK_WEAK_(tribool_true, NothrowDestructible);
-	TRY_TEST_CHECK_STRONG_(tribool_false, NothrowDestructible[]);
 	TRY_TEST_CHECK_WEAK_(tribool_true, NothrowDestructible[2]);
+	TRY_TEST_CHECK_STRONG_(tribool_false, NothrowDestructible[]);
 
+#if KERBAL_HAS_EXCEPTIONS_SUPPORT
 	TRY_TEST_CHECK_WEAK_(tribool_false, ThrowDestructible);
-	TRY_TEST_CHECK_STRONG_(tribool_false, ThrowDestructible[]);
 	TRY_TEST_CHECK_WEAK_(tribool_false, ThrowDestructible[2]);
+#else
+	TRY_TEST_CHECK_WEAK_(tribool_true, ThrowDestructible);
+	TRY_TEST_CHECK_WEAK_(tribool_true, ThrowDestructible[2]);
+#endif
+
+	TRY_TEST_CHECK_STRONG_(tribool_false, ThrowDestructible[]);
 
 #if KERBAL_COMPILER_ID != KERBAL_COMPILER_ID_CLANG || __cplusplus >= 201103 // old version clang cannot detect this case
 	TRY_TEST_CHECK_WEAK_(tribool_false, PrivateDestructible);

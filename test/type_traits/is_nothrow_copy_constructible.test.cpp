@@ -12,6 +12,7 @@
 #include <kerbal/type_traits/is_nothrow_copy_constructible.hpp>
 
 #include <kerbal/test/test.hpp>
+#include <kerbal/config/exceptions.hpp>
 
 
 KERBAL_TEST_CASE(test_has_is_nothrow_copy_constructible_support, "test has is_nothrow_copy_constructible support")
@@ -81,12 +82,17 @@ do { \
 	TEST_CHECK(true, int(*)());
 
 	TEST_CHECK(true, NothrowCopyConstructible);
-	TEST_CHECK(false, NothrowCopyConstructible[]);
 	TEST_CHECK(false, NothrowCopyConstructible[2]);
+	TEST_CHECK(false, NothrowCopyConstructible[]);
 
+#if KERBAL_HAS_EXCEPTIONS_SUPPORT
 	TEST_CHECK(false, NonNothrowCopyConstructible);
-	TEST_CHECK(false, NonNothrowCopyConstructible[]);
+#else
+	TEST_CHECK(true, NonNothrowCopyConstructible);
+#endif
+
 	TEST_CHECK(false, NonNothrowCopyConstructible[2]);
+	TEST_CHECK(false, NonNothrowCopyConstructible[]);
 
 	TEST_CHECK(false, PrivateCopyConstructible);
 #if __cplusplus >= 201103L
@@ -119,12 +125,17 @@ KERBAL_TEST_CASE(test_try_test_is_nothrow_copy_constructible, "test try_test_is_
 	TRY_TEST_CHECK_STRONG_(tribool_true, int(*)());
 
 	TRY_TEST_CHECK_WEAK_(tribool_true, NothrowCopyConstructible);
-	TRY_TEST_CHECK_STRONG_(tribool_false, NothrowCopyConstructible[]);
 	TRY_TEST_CHECK_STRONG_(tribool_false, NothrowCopyConstructible[2]);
+	TRY_TEST_CHECK_STRONG_(tribool_false, NothrowCopyConstructible[]);
 
+#if KERBAL_HAS_EXCEPTIONS_SUPPORT
 	TRY_TEST_CHECK_WEAK_(tribool_false, NonNothrowCopyConstructible);
-	TRY_TEST_CHECK_STRONG_(tribool_false, NonNothrowCopyConstructible[]);
+#else
+	TRY_TEST_CHECK_WEAK_(tribool_true, NonNothrowCopyConstructible);
+#endif
+
 	TRY_TEST_CHECK_STRONG_(tribool_false, NonNothrowCopyConstructible[2]);
+	TRY_TEST_CHECK_STRONG_(tribool_false, NonNothrowCopyConstructible[]);
 
 	TRY_TEST_CHECK_WEAK_(tribool_false, PrivateCopyConstructible);
 #if __cplusplus >= 201103L

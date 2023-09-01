@@ -12,6 +12,7 @@
 #include <kerbal/type_traits/is_nothrow_default_constructible.hpp>
 
 #include <kerbal/test/test.hpp>
+#include <kerbal/config/exceptions.hpp>
 
 
 KERBAL_TEST_CASE(test_has_is_nothrow_default_constructible_support, "test has is_nothrow_default_constructible support")
@@ -75,12 +76,18 @@ do { \
 	TEST_CHECK(true, int(*)());
 
 	TEST_CHECK(true, NothrowDefaultConstructible);
-	TEST_CHECK(false, NothrowDefaultConstructible[]);
 	TEST_CHECK(true, NothrowDefaultConstructible[2]);
+	TEST_CHECK(false, NothrowDefaultConstructible[]);
 
+#if KERBAL_HAS_EXCEPTIONS_SUPPORT
 	TEST_CHECK(false, NonNothrowDefaultConstructible);
-	TEST_CHECK(false, NonNothrowDefaultConstructible[]);
 	TEST_CHECK(false, NonNothrowDefaultConstructible[2]);
+#else
+	TEST_CHECK(true, NonNothrowDefaultConstructible);
+	TEST_CHECK(true, NonNothrowDefaultConstructible[2]);
+#endif
+
+	TEST_CHECK(false, NonNothrowDefaultConstructible[]);
 
 	TEST_CHECK(false, PrivateDefaultConstructible);
 #if __cplusplus >= 201103L
@@ -113,12 +120,18 @@ KERBAL_TEST_CASE(test_try_test_is_nothrow_default_constructible, "test try_test_
 	TRY_TEST_CHECK_STRONG_(tribool_true, int(*)());
 
 	TRY_TEST_CHECK_WEAK_(tribool_true, NothrowDefaultConstructible);
-	TRY_TEST_CHECK_STRONG_(tribool_false, NothrowDefaultConstructible[]);
 	TRY_TEST_CHECK_WEAK_(tribool_true, NothrowDefaultConstructible[2]);
+	TRY_TEST_CHECK_STRONG_(tribool_false, NothrowDefaultConstructible[]);
 
+#if KERBAL_HAS_EXCEPTIONS_SUPPORT
 	TRY_TEST_CHECK_WEAK_(tribool_false, NonNothrowDefaultConstructible);
-	TRY_TEST_CHECK_STRONG_(tribool_false, NonNothrowDefaultConstructible[]);
-	TRY_TEST_CHECK_WEAK_(tribool_false, NonNothrowDefaultConstructible[2]);
+	TRY_TEST_CHECK_STRONG_(tribool_false, NonNothrowDefaultConstructible[2]);
+#else
+	TRY_TEST_CHECK_WEAK_(tribool_true, NonNothrowDefaultConstructible);
+	TRY_TEST_CHECK_WEAK_(tribool_true, NonNothrowDefaultConstructible[2]);
+#endif
+
+	TRY_TEST_CHECK_WEAK_(tribool_false, NonNothrowDefaultConstructible[]);
 
 	TRY_TEST_CHECK_WEAK_(tribool_false, PrivateDefaultConstructible);
 #if __cplusplus >= 201103L
