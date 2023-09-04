@@ -38,7 +38,7 @@ struct cmp_nothrow
 #endif
 
 
-template class kc::detail::sl_allocator_unrelated<int>;
+template class kc::detail::sl_type_only<int>;
 
 template class kc::single_list<int>;
 template kc::single_list<int>::single_list(pointer, pointer, int);
@@ -98,7 +98,7 @@ bool operator>=(const kc::single_list<int> &, const kc::single_list<int> &);
 
 #include <string>
 
-template class kc::detail::sl_allocator_unrelated<std::string>;
+template class kc::detail::sl_type_only<std::string>;
 
 template class kc::single_list<std::string>;
 template kc::single_list<std::string>::single_list(pointer, pointer, int);
@@ -160,7 +160,7 @@ bool operator>=(const kc::single_list<std::string> &, const kc::single_list<std:
 
 
 
-template class kc::detail::sl_allocator_unrelated<int[8]>;
+template class kc::detail::sl_type_only<int[8]>;
 
 template class kc::single_list<int[8]>;
 template kc::single_list<int[8]>::single_list(pointer, pointer, int);
@@ -206,7 +206,7 @@ kc::single_list<int[8]> operator+(kc::single_list<int[8]> &&, kc::single_list<in
 
 
 
-template class kc::detail::sl_allocator_unrelated<kc::single_list<int> >;
+template class kc::detail::sl_type_only<kc::single_list<int> >;
 
 template class kc::single_list<kc::single_list<int> >;
 template kc::single_list<kc::single_list<int> >::single_list(pointer, pointer, int);

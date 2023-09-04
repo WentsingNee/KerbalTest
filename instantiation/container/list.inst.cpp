@@ -38,12 +38,12 @@ struct cmp_nothrow
 #endif
 
 
-template class kc::detail::list_allocator_unrelated<int>;
+template class kc::detail::list_type_only<int>;
 
-template void kc::detail::list_allocator_unrelated<int>::sort(cmp_may_throw<value_type>);
+template void kc::detail::list_type_only<int>::sort(cmp_may_throw<value_type>);
 
 #if __cplusplus >= 201103L
-template void kc::detail::list_allocator_unrelated<int>::sort(cmp_nothrow<value_type>);
+template void kc::detail::list_type_only<int>::sort(cmp_nothrow<value_type>);
 #endif
 
 
@@ -141,12 +141,12 @@ bool operator>=(const kc::list<int> &, const kc::list<int> &);
 
 #include <string>
 
-template class kc::detail::list_allocator_unrelated<std::string>;
+template class kc::detail::list_type_only<std::string>;
 
-template void kc::detail::list_allocator_unrelated<std::string>::sort(cmp_may_throw<value_type>);
+template void kc::detail::list_type_only<std::string>::sort(cmp_may_throw<value_type>);
 
 #if __cplusplus >= 201103L
-template void kc::detail::list_allocator_unrelated<std::string>::sort(cmp_nothrow<value_type>);
+template void kc::detail::list_type_only<std::string>::sort(cmp_nothrow<value_type>);
 #endif
 
 
@@ -251,12 +251,12 @@ bool operator>=(const kc::list<std::string> &, const kc::list<std::string> &);
 
 
 
-template class kc::detail::list_allocator_unrelated<int[8]>;
+template class kc::detail::list_type_only<int[8]>;
 
-template void kc::detail::list_allocator_unrelated<int[8]>::sort(cmp_may_throw<value_type>);
+template void kc::detail::list_type_only<int[8]>::sort(cmp_may_throw<value_type>);
 
 #if __cplusplus >= 201103L
-template void kc::detail::list_allocator_unrelated<int[8]>::sort(cmp_nothrow<value_type>);
+template void kc::detail::list_type_only<int[8]>::sort(cmp_nothrow<value_type>);
 #endif
 
 
@@ -338,12 +338,12 @@ kc::list<int[8]> operator+(kc::list<int[8]> &&, kc::list<int[8]> &&);
 
 
 
-template class kc::detail::list_allocator_unrelated<kc::list<int> >;
+template class kc::detail::list_type_only<kc::list<int> >;
 
-template void kc::detail::list_allocator_unrelated<kc::list<int> >::sort(cmp_may_throw<value_type>);
+template void kc::detail::list_type_only<kc::list<int> >::sort(cmp_may_throw<value_type>);
 
 #if __cplusplus >= 201103L
-template void kc::detail::list_allocator_unrelated<kc::list<int> >::sort(cmp_nothrow<value_type>);
+template void kc::detail::list_type_only<kc::list<int> >::sort(cmp_nothrow<value_type>);
 #endif
 
 
