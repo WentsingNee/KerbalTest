@@ -10,6 +10,7 @@
  */
 
 #include <kerbal/container/flat_set.hpp>
+#include <kerbal/container/flat_multiset.hpp>
 
 namespace kc = kerbal::container;
 

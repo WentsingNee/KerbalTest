@@ -12,7 +12,9 @@
 #include <ktest/random/random_vector.hpp>
 
 #include <kerbal/container/flat_set.hpp>
+#include <kerbal/container/flat_multiset.hpp>
 #include <kerbal/container/static_flat_set.hpp>
+#include <kerbal/container/static_flat_multiset.hpp>
 
 #include <kerbal/test/test.hpp>
 
