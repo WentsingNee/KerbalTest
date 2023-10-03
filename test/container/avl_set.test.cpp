@@ -465,8 +465,8 @@ KERBAL_TEST_CASE(test_avl_set_merge, "test avl_set::merge")
 
 	s1.merge(s2);
 
-    kc::vector<int> r1 = KERBAL_ILIST(1, 2, 3, 5, 7, 10, 353, 4325, 32432);
-    kc::vector<int> r2 = KERBAL_ILIST(2, 5);
+	kc::vector<int> r1 = KERBAL_ILIST(1, 2, 3, 5, 7, 10, 353, 4325, 32432);
+	kc::vector<int> r2 = KERBAL_ILIST(2, 5);
 
 	KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(s1, r1));
 	KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(s2, r2));
@@ -504,21 +504,24 @@ KERBAL_TEST_CASE(test_avl_set_CTAD, "test avl_set CTAD")
 	{
 		kc::avl_set s(s0.cbegin(), s0.cend(), kerbal::compare::greater<void>());
 		KERBAL_TEST_CHECK_STATIC((
-			kerbal::type_traits::is_same<decltype(s),
+			kerbal::type_traits::is_same<
+				decltype(s),
 				kc::avl_set<int, kerbal::compare::greater<void> >
 			>::value));
 	}
 	{
 		kc::avl_set s(s0.cbegin(), s0.cend(), std::allocator<int>());
 		KERBAL_TEST_CHECK_STATIC((
-			kerbal::type_traits::is_same<decltype(s),
+			kerbal::type_traits::is_same<
+				decltype(s),
 				kc::avl_set<int, kerbal::compare::binary_type_less<void, void>, std::allocator<int> >
 			>::value));
 	}
 	{
 		kc::avl_set s(s0.cbegin(), s0.cend(), kerbal::compare::greater<void>(), std::allocator<int>());
 		KERBAL_TEST_CHECK_STATIC((
-			kerbal::type_traits::is_same<decltype(s),
+			kerbal::type_traits::is_same<
+				decltype(s),
 				kc::avl_set<int, kerbal::compare::greater<void>, std::allocator<int> >
 			>::value));
 	}
@@ -537,21 +540,24 @@ KERBAL_TEST_CASE(test_avl_set_CTAD, "test avl_set CTAD")
 	{
 		kc::avl_set s(ilist, kerbal::compare::greater<void>());
 		KERBAL_TEST_CHECK_STATIC((
-			kerbal::type_traits::is_same<decltype(s),
+			kerbal::type_traits::is_same<
+				decltype(s),
 				kc::avl_set<int, kerbal::compare::greater<void> >
 			>::value));
 	}
 	{
 		kc::avl_set s(ilist, std::allocator<int>());
 		KERBAL_TEST_CHECK_STATIC((
-			kerbal::type_traits::is_same<decltype(s),
+			kerbal::type_traits::is_same<
+				decltype(s),
 				kc::avl_set<int, kerbal::compare::binary_type_less<void, void>, std::allocator<int> >
 			>::value));
 	}
 	{
 		kc::avl_set s(ilist, kerbal::compare::greater<void>(), std::allocator<int>());
 		KERBAL_TEST_CHECK_STATIC((
-			kerbal::type_traits::is_same<decltype(s),
+			kerbal::type_traits::is_same<
+				decltype(s),
 				kc::avl_set<int, kerbal::compare::greater<void>, std::allocator<int> >
 			>::value));
 	}
