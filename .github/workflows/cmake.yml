@@ -82,6 +82,16 @@ jobs:
       - name: Clone Kerbal
         run: git clone --depth=1 --branch=${{env.KERBAL_BRANCH}} https://github.com/WentsingNee/Kerbal.git
 
+      - name: Install Kerbal
+        run: >
+          cmake
+          -S ${{github.workspace}}/Kerbal
+          -B ${{github.workspace}}/Kerbal/build
+          -DCMAKE_INSTALL_PREFIX=${{github.workspace}}/Kerbal/install
+
+          cmake --build ${{github.workspace}}/Kerbal/build --target install
+
+
       - name: Show Generator Support
         run: cmake --help
 
@@ -89,37 +99,46 @@ jobs:
         if: matrix.compiler != 'msvc'
         # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
         # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
-        run: |
-          cmake -B ${{github.workspace}}/build \
-            -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} \
-            -DCMAKE_CXX_COMPILER=${{matrix.compiler}} \
-            -DCMAKE_CXX_STANDARD=${{matrix.cxx_standard}} \
-            -DKERBAL_TEST_USE_LIBCXX=${{matrix.stdlib}} \
-            -DKERBAL_INCLUDE_DIRECTORY=${{github.workspace}}/Kerbal/include/ \
-            -DKERBAL_TEST_ENABLE_PRECOMPILE_HEADER=OFF \
+        run: >
+          cmake
+          -B ${{github.workspace}}/build
+          -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+          -DCMAKE_CXX_COMPILER=${{matrix.compiler}}
+          -DCMAKE_CXX_STANDARD=${{matrix.cxx_standard}}
+          -DCMAKE_PREFIX_PATH=${{github.workspace}}/Kerbal/install
+          -DKERBAL_TEST_USE_LIBCXX=${{matrix.stdlib}}
+          -DKERBAL_TEST_ENABLE_PRECOMPILE_HEADER=OFF
 
       - name: Configure CMake (MSVC)
         if: matrix.compiler == 'msvc'
-        run: cmake -B ${{github.workspace}}/build -G "Visual Studio 17 2022" -DCMAKE_CXX_STANDARD=${{matrix.cxx_standard}} -DKERBAL_INCLUDE_DIRECTORY=${{github.workspace}}/Kerbal/include/ -DKERBAL_TEST_ENABLE_PRECOMPILE_HEADER=OFF
+        run: >
+          cmake
+          -B ${{github.workspace}}/build
+          -G "Visual Studio 17 2022"
+          -DCMAKE_CXX_STANDARD=${{matrix.cxx_standard}}
+          -DCMAKE_PREFIX_PATH=${{github.workspace}}/Kerbal/install
+          -DKERBAL_TEST_ENABLE_PRECOMPILE_HEADER=OFF
 
       - name: Show Environment Kerbal Detect
-        run: |
-          cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} --target utest.config.architecture
-          cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} --target utest.config.compiler_id
-          cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} --target utest.config.compiler_version
-          cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} --target utest.config.cxx_stdlib
-          cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} --target utest.config.language_standard
-          cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} --target utest.config.system
-          cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} --target run_utest.config.architecture
-          cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} --target run_utest.config.compiler_id
-          cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} --target run_utest.config.compiler_version
-          cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} --target run_utest.config.cxx_stdlib
-          cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} --target run_utest.config.language_standard
-          cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} --target run_utest.config.system
+        run: >
+          cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} --target
+          utest.config.architecture
+          utest.config.compiler_id
+          utest.config.compiler_version
+          utest.config.cxx_stdlib
+          utest.config.language_standard
+          utest.config.system
+
+          cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} --target
+          run_utest.config.architecture
+          run_utest.config.compiler_id
+          run_utest.config.compiler_version
+          run_utest.config.cxx_stdlib
+          run_utest.config.language_standard
+          run_utest.config.system
 
       - name: Build
         run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
 
       - name: Run Unit Test
-        run: |
-          cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} --target run_utest
+        run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} --target run_utest

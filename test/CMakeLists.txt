@@ -1,5 +1,5 @@
 
-include(${CMAKE_SOURCE_DIR}/cmake/add_kerbal_parent_target.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/../cmake/add_kerbal_parent_target.cmake)
 
 
 if (${KERBAL_WASM})
@@ -16,6 +16,7 @@ function(add_kerbal_utest_target_impl target target_src_file)
     set_target_properties(${target}
             PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/targets
     )
+    target_link_libraries(${target} PUBLIC Kerbal::kerbal)
     target_include_directories(${target} PUBLIC "${PROJECT_SOURCE_DIR}/include")
     if (KERBAL_TEST_USE_LIBCXX)
         target_compile_options(${target} PUBLIC -stdlib=libc++)

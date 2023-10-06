@@ -9,11 +9,14 @@ message(STATUS "CMAKE_HOST_SYSTEM_PROCESSOR: ${CMAKE_HOST_SYSTEM_PROCESSOR}")
 message(STATUS "CMAKE_TARGET_SYSTEM_PROCESSOR: ${CMAKE_TARGET_SYSTEM_PROCESSOR}")
 
 
-include_directories(${KERBAL_INCLUDE_DIRECTORY})
+if (NOT TARGET Kerbal::kerbal)
+    message(STATUS "Finding Kerbal")
+    find_package(Kerbal REQUIRED)
+    message(STATUS "Finding Kerbal -- found")
+    message(STATUS "Kerbal_VERSION: ${Kerbal_VERSION}")
+endif ()
 
-include(cmake/get_kerbal_public_headers.cmake)
-get_kerbal_public_headers("${KERBAL_INCLUDE_DIRECTORY}" kerbal_public_headers)
-
+message(STATUS "Kerbal_INCLUDE_DIRS: ${Kerbal_INCLUDE_DIRS}")
 
 # compiler global configuration
 
@@ -26,12 +29,6 @@ if (CMAKE_CXX_COMPILER_ID MATCHES "GNU" OR CMAKE_CXX_COMPILER_ID MATCHES "Clang"
 
     add_compile_options(-Wno-unused-parameter)
     message(STATUS "CXX flags: -Wno-unused-parameter")
-
-    if (${CMAKE_CXX_STANDARD} MATCHES 98)
-        add_compile_definitions(LITTLE_ENDIAN=0)
-        add_compile_definitions(BIG_ENDIAN=1)
-        add_compile_definitions(BYTE_ORDER=LITTLE_ENDIAN)
-    endif ()
 elseif (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
     add_compile_options(/Zc:__cplusplus)
     message(STATUS "CXX flags: /Zc:__cplusplus")
@@ -102,23 +99,27 @@ option(KERBAL_TEST_ENABLE_PRECOMPILE_HEADER "enable precompile header" OFF)
 
 if (${KERBAL_TEST_ENABLE_PRECOMPILE_HEADER})
 
-    list(LENGTH kerbal_public_headers kerbal_public_headers_len)
+    include(cmake/aux_headers.cmake)
+    set(block_patterns
+            ".*part\.hpp$"
+            "^kerbal/openmp/*"
+    )
+    aux_headers(kerbal_public_headers "${Kerbal_INCLUDE_DIRS}/" "${Kerbal_INCLUDE_DIRS}" ${block_patterns})
 
+    list(LENGTH kerbal_public_headers kerbal_public_headers_len)
     if (kerbal_public_headers_len EQUAL 0)
-        message(WARNING "you should provide variable KERBAL_INCLUDE_DIRECTORY correctly to support precompile header")
-        set(KERBAL_TEST_ENABLE_PRECOMPILE_HEADER OFF)
+        message(FATAL_ERROR "you should provide variable Kerbal_INCLUDE_DIRS correctly to support precompile header")
     endif ()
 
     file(WRITE "${CMAKE_BINARY_DIR}/kerbal_test_pch.cpp" "")
-    add_library(kerbal_test_precompile_header OBJECT kerbal_test_pch.cpp)
+    add_library(kerbal_test_precompile_header OBJECT "${CMAKE_BINARY_DIR}/kerbal_test_pch.cpp")
     if (KERBAL_TEST_USE_LIBCXX)
         target_compile_options(kerbal_test_precompile_header PUBLIC -stdlib=libc++)
         target_link_libraries(kerbal_test_precompile_header PUBLIC ${LIB_CPP})
         target_link_libraries(kerbal_test_precompile_header PUBLIC ${LIB_CPPABI})
     endif ()
-    foreach (header ${kerbal_public_headers})
-        target_precompile_headers(kerbal_test_precompile_header PUBLIC "${KERBAL_INCLUDE_DIRECTORY}${header}")
-    endforeach ()
+    target_precompile_headers(kerbal_test_precompile_header PUBLIC "${kerbal_public_headers}")
+    target_link_libraries(kerbal_test_precompile_header PUBLIC Kerbal::kerbal)
 endif ()
 
 
