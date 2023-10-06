@@ -1,7 +1,16 @@
 
 include(${CMAKE_SOURCE_DIR}/cmake/add_kerbal_parent_target.cmake)
 
-macro(add_kerbal_utest_target target target_src_file)
+
+if (${KERBAL_WASM})
+    if (NOT DEFINED WASM_RUN_UTEST_INVOKER)
+        set (WASM_RUN_UTEST_INVOKER "node")
+    endif ()
+    set (run_utest_invoker "${WASM_RUN_UTEST_INVOKER}")
+endif ()
+
+
+function(add_kerbal_utest_target_impl target target_src_file)
     add_executable(${target} ${target_src_file})
     add_kerbal_parent_target(${target})
     set_target_properties(${target}
@@ -34,39 +43,81 @@ macro(add_kerbal_utest_target target target_src_file)
             NAME ${target}
             COMMAND ${target}
     )
+
+    # run_utest_target
+    get_target_property(path ${target} RUNTIME_OUTPUT_DIRECTORY)
+    if (${CMAKE_GENERATOR} MATCHES "Visual Studio")
+        file(RELATIVE_PATH path ${PROJECT_BINARY_DIR} "${path}/$<CONFIG>/${target}")
+    else()
+        file(RELATIVE_PATH path ${PROJECT_BINARY_DIR} "${path}/${target}")
+    endif ()
+    if (${CMAKE_CXX_PLATFORM_ID} MATCHES "Windows")
+        set(path "./${path}.exe")
+    else ()
+        set(path "./${path}")
+    endif ()
+
+    set(run_utest_target_name "run_${target}")
+    if (${CMAKE_CXX_PLATFORM_ID} MATCHES "Windows")
+        add_custom_target(${run_utest_target_name}
+                COMMAND if not exist test_output mkdir test_output
+                COMMAND ${path} > test_output/${target}.out.txt
+                COMMAND type test_output\\${target}.out.txt
+                WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
+                COMMENT "Running utest target ${target}"
+        )
+    else ()
+        add_custom_target(${run_utest_target_name}
+                COMMAND
+                    mkdir -p test_output\;
+                    ${run_utest_invoker} ${path} | tee test_output/${target}.out.txt\;
+                WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
+                COMMENT "Running utest target ${target}"
+        )
+    endif ()
+    add_dependencies(${run_utest_target_name} ${target})
+    add_kerbal_parent_target(${run_utest_target_name})
+endfunction()
+
+macro(add_kerbal_utest_target target target_src_file)
+    add_kerbal_utest_target_impl(${target} ${target_src_file})
     list(APPEND utest_targets ${target})
 endmacro()
 
 
-macro(add_kerbal_utest_target_wih_ie target target_src_file ie)
-    if (${KERBAL_TEST_SUPPORT_${ie}})
-        set(target_name_with_ie ${target}_${ie})
-        add_kerbal_utest_target(${target_name_with_ie} ${target_src_file})
-        target_compile_options(${target_name_with_ie} PUBLIC ${KERBAL_TEST_FLAGS_${ie}})
-    else ()
+function(add_kerbal_utest_target_wih_ie target target_src_file ie)
+    if (NOT KERBAL_TEST_SUPPORT_${ie})
         message(WARNING "Compiler doesn't support ${ie}")
+        return()
     endif ()
-endmacro()
+    set(target_name_with_ie ${target}_${ie})
+    add_kerbal_utest_target(${target_name_with_ie} ${target_src_file})
+    target_compile_options(${target_name_with_ie} PUBLIC ${KERBAL_TEST_FLAGS_${ie}})
+endfunction()
 
 
 file(GLOB_RECURSE test_src_files RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "*")
 foreach (file ${test_src_files})
-    string(REGEX MATCH "(.+)\\.test\\.cpp$" _ ${file})
-    if (CMAKE_MATCH_1)
-        string(REPLACE "/" "." target ${CMAKE_MATCH_1})
-        string(PREPEND target "utest.")
-        message(VERBOSE "	add: ${target}  <=  ${CMAKE_CURRENT_SOURCE_DIR}/${file}")
-        add_kerbal_utest_target(${target} ${CMAKE_CURRENT_SOURCE_DIR}/${file})
-        if (${KERBAL_TEST_ENABLE_PRECOMPILE_HEADER})
-            target_precompile_headers(${target} REUSE_FROM kerbal_test_precompile_header)
-        endif ()
-        set(utest_targets ${utest_targets} PARENT_SCOPE)
-    else ()
-        message(WARNING "   ${file} has been ignored")
+    if (NOT file MATCHES "(.+)\\.test\\.cpp$")
+        string(APPEND ignored_utest_src_files "${CMAKE_CURRENT_SOURCE_DIR}/${file}:0\n")
+        continue()
     endif ()
+    string(REPLACE "/" "." target ${CMAKE_MATCH_1})
+    string(PREPEND target "utest.")
+    message(VERBOSE "	add: ${target}  <=  ${CMAKE_CURRENT_SOURCE_DIR}/${file}")
+    add_kerbal_utest_target(${target} ${CMAKE_CURRENT_SOURCE_DIR}/${file})
+    if (${KERBAL_TEST_ENABLE_PRECOMPILE_HEADER})
+        target_precompile_headers(${target} REUSE_FROM kerbal_test_precompile_header)
+    endif ()
+    set(utest_targets ${utest_targets} PARENT_SCOPE)
 endforeach ()
 
 message("\n")
+
+if (NOT ignored_utest_src_files STREQUAL "")
+    message(WARNING "These files have been ignored:")
+    message(STATUS "${ignored_utest_src_files}")
+endif ()
 
 
 file(GLOB children RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "*")
@@ -89,47 +140,3 @@ message("\n")
 
 # ctest
 enable_testing()
-
-
-# run_utest_target
-foreach (utest_target ${utest_targets})
-    get_target_property(path ${utest_target} RUNTIME_OUTPUT_DIRECTORY)
-    if (${CMAKE_GENERATOR} MATCHES "Visual Studio")
-        file(RELATIVE_PATH path ${PROJECT_BINARY_DIR} ${path}/$<CONFIG>/${utest_target})
-    else()
-        file(RELATIVE_PATH path ${PROJECT_BINARY_DIR} ${path}/${utest_target})
-    endif ()
-    if (${CMAKE_CXX_PLATFORM_ID} MATCHES "Windows")
-        set(path "./${path}.exe")
-    else ()
-        set(path "./${path}")
-    endif ()
-
-    if (${KERBAL_WASM})
-        if (NOT DEFINED WASM_RUN_UTEST_INVOKER)
-            set (WASM_RUN_UTEST_INVOKER "node")
-        endif ()
-        set (run_utest_invoker "${WASM_RUN_UTEST_INVOKER}")
-    endif ()
-
-    set(run_utest_target_name "run_${utest_target}")
-    if (${CMAKE_CXX_PLATFORM_ID} MATCHES "Windows")
-        add_custom_target(${run_utest_target_name}
-                COMMAND if not exist test_output mkdir test_output
-                COMMAND ${path} > test_output/${utest_target}.out.txt
-                COMMAND type test_output\\${utest_target}.out.txt
-                WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
-                COMMENT "Running utest target ${utest_target}"
-        )
-    else ()
-        add_custom_target(${run_utest_target_name}
-                COMMAND
-                    mkdir -p test_output\;
-                    ${run_utest_invoker} ${path} | tee test_output/${utest_target}.out.txt\;
-                WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
-                COMMENT "Running utest target ${utest_target}"
-        )
-    endif ()
-    add_dependencies(${run_utest_target_name} ${utest_target})
-    add_kerbal_parent_target(${run_utest_target_name})
-endforeach ()

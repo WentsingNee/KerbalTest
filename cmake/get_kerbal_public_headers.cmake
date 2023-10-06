@@ -14,7 +14,7 @@ function(get_kerbal_public_headers KERBAL_INCLUDE_DIRECTORY _OUTPUT_LIST_NAME)
         message(WARNING "KERBAL_INCLUDE_DIRECTORY is not found. \nKERBAL_INCLUDE_DIRECTORY: ${KERBAL_INCLUDE_DIRECTORY}")
     endif ()
 
-    file(GLOB_RECURSE kerbal_header_files RELATIVE "${KERBAL_INCLUDE_DIRECTORY}/" "${KERBAL_INCLUDE_DIRECTORY}/*.hpp")
+    file(GLOB_RECURSE kerbal_header_files RELATIVE "${KERBAL_INCLUDE_DIRECTORY}/" "${KERBAL_INCLUDE_DIRECTORY}/kerbal/*.hpp")
 
     set(kerbal_public_headers)
 
@@ -27,9 +27,7 @@ function(get_kerbal_public_headers KERBAL_INCLUDE_DIRECTORY _OUTPUT_LIST_NAME)
 
         set(block FALSE)
         foreach (block_pattern ${block_patterns})
-            string(REGEX MATCH ${block_pattern} _ ${file})
-            if (CMAKE_MATCH_0)
-#                message(WARNING "   ${file} has been ignored")
+            if (file MATCHES ${block_pattern})
                 set(block TRUE)
                 break()
             endif ()
