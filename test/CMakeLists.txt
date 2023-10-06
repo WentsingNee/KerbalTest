@@ -144,7 +144,3 @@ foreach (target ${utest_targets})
 endforeach ()
 message("utest targets: ${utest_targets_count}")
 message("\n")
-
-
-# ctest
-enable_testing()

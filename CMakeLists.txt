@@ -123,6 +123,10 @@ if (${KTEST_ENABLE_PRECOMPILE_HEADER})
 endif ()
 
 
+# ctest
+enable_testing()
+
+
 add_subdirectory(instantiation)
 add_subdirectory(test)
 
