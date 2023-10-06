@@ -4,7 +4,9 @@ include(${PROJECT_SOURCE_DIR}/cmake/add_kerbal_parent_target.cmake)
 
 if (${KERBAL_WASM})
     if (NOT DEFINED KTEST_WASM_RUN_UTEST_INVOKER)
-        set (KTEST_WASM_RUN_UTEST_INVOKER "node")
+        message(STATUS "Finding node")
+        find_program(KTEST_WASM_RUN_UTEST_INVOKER "node" REQUIRED)
+        message(STATUS "Found node: ${KTEST_WASM_RUN_UTEST_INVOKER}")
     endif ()
 endif ()
 
