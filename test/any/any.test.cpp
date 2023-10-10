@@ -1,6 +1,6 @@
 /**
  * @file       any.test.cpp
- * @brief      
+ * @brief
  * @date       2019-7-14
  * @author     Peter
  * @copyright

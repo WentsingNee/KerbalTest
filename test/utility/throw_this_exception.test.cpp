@@ -1,6 +1,6 @@
 /**
  * @file       throw_this_exception.test.cpp
- * @brief      
+ * @brief
  * @date       2019-8-7
  * @author     Peter
  * @copyright

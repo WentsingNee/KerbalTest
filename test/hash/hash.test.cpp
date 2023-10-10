@@ -1,6 +1,6 @@
 /**
  * @file       hash.test.cpp
- * @brief      
+ * @brief
  * @date       2019-7-24
  * @author     Peter
  * @copyright

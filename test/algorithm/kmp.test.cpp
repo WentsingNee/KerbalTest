@@ -1,6 +1,6 @@
 /**
  * @file       kmp.test.cpp
- * @brief      
+ * @brief
  * @date       2019-8-5
  * @author     Peter
  * @copyright

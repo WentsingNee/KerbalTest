@@ -1,10 +1,13 @@
-/*
- * midden_iterator.test.cpp
- *
- *  Created on: 2019-4-26
- *      Author: peter
+/**
+ * @file       midden_iterator.test.cpp
+ * @brief
+ * @date       2019-04-26
+ * @author     Peter
+ * @copyright
+ *      Peter of [ThinkSpirit Laboratory](http://thinkspirit.org/)
+ *   of [Nanjing University of Information Science & Technology](http://www.nuist.edu.cn/)
+ *   all rights reserved
  */
-
 
 #include <kerbal/iterator/iterator.hpp>
 
