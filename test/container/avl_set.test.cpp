@@ -171,7 +171,7 @@ KERBAL_TEST_CASE(test_avl_set_move_construct, "test avl_set::avl_set(avl_set &&)
 
 KERBAL_TEST_CASE(test_avl_set_assign_range, "test avl_set::assign(iterator, iterator)")
 {
-	kerbal::random::mt19937 eg(time(NULL));
+	kerbal::random::mt19937 eg;
 
 	int ns[] = {0, 3, 7, 8, 10, 15, 100, 1000, 10000};
 
