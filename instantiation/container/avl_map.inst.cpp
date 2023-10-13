@@ -170,3 +170,13 @@ namespace km = kerbal::memory;
 template class kc::avl_map<int, int, cmp_func<int>::type, km::fixed_size_node_allocator<int> >;
 template class kc::avl_map<int, int, cmp_func<int>::type, km::monotonic_allocator<int> >;
 template class kc::avl_map<int, int, cmp_func<int>::type, km::over_aligned_allocator<int> >;
+
+
+#include <kerbal/utility/noncopyable.hpp>
+
+namespace ku = kerbal::utility;
+
+void noncopyable_swap_inst_test(kc::avl_map<ku::noncopyable, ku::noncopyable> & lhs, kc::avl_map<ku::noncopyable, ku::noncopyable> & rhs)
+{
+	lhs.swap(rhs);
+}

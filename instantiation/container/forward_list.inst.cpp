@@ -509,3 +509,13 @@ struct Recursive
 
 template class
 kc::forward_list<Recursive>;
+
+
+#include <kerbal/utility/noncopyable.hpp>
+
+namespace ku = kerbal::utility;
+
+void noncopyable_swap_inst_test(kc::forward_list<ku::noncopyable> & lhs, kc::forward_list<ku::noncopyable> & rhs)
+{
+	lhs.swap(rhs);
+}

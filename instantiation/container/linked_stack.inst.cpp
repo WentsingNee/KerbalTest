@@ -33,3 +33,13 @@ struct Recursive
 
 template class
 kc::linked_stack<Recursive>;
+
+
+#include <kerbal/utility/noncopyable.hpp>
+
+namespace ku = kerbal::utility;
+
+void noncopyable_swap_inst_test(kc::linked_stack<ku::noncopyable> & lhs, kc::linked_stack<ku::noncopyable> & rhs)
+{
+	lhs.swap(rhs);
+}

@@ -51,3 +51,18 @@ struct Recursive
 
 template class
 kc::flat_set<Recursive>;
+
+
+#include <kerbal/utility/noncopyable.hpp>
+
+namespace ku = kerbal::utility;
+
+void noncopyable_swap_inst_test(kc::flat_set<ku::noncopyable> & lhs, kc::flat_set<ku::noncopyable> & rhs)
+{
+	lhs.swap(rhs);
+}
+
+void noncopyable_swap_inst_test(kc::flat_multiset<ku::noncopyable> & lhs, kc::flat_multiset<ku::noncopyable> & rhs)
+{
+	lhs.swap(rhs);
+}

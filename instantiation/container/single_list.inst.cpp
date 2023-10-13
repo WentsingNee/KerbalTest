@@ -347,3 +347,13 @@ struct Recursive
 
 template class
 kc::single_list<Recursive>;
+
+
+#include <kerbal/utility/noncopyable.hpp>
+
+namespace ku = kerbal::utility;
+
+void noncopyable_swap_inst_test(kc::single_list<ku::noncopyable> & lhs, kc::single_list<ku::noncopyable> & rhs)
+{
+	lhs.swap(rhs);
+}

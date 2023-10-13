@@ -41,3 +41,13 @@ struct Recursive
 
 template class
 kc::flat_ordered<Recursive>;
+
+
+#include <kerbal/utility/noncopyable.hpp>
+
+namespace ku = kerbal::utility;
+
+void noncopyable_swap_inst_test(kc::flat_ordered<ku::noncopyable> & lhs, kc::flat_ordered<ku::noncopyable> & rhs)
+{
+	lhs.swap(rhs);
+}
