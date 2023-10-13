@@ -9,9 +9,6 @@
  *   all rights reserved
  */
 
-#include <kerbal/memory/allocator/fixed_size_node_allocator/fixed_size_node_allocator.fwd.hpp>
-#include <kerbal/memory/allocator/monotonic_allocator/monotonic_allocator.fwd.hpp>
-
 #include <kerbal/container/avl_set.hpp>
 
 #include <string>
@@ -233,8 +230,10 @@ kc::avl_set<Recursive>;
 
 #include <kerbal/memory/allocator/fixed_size_node_allocator.hpp>
 #include <kerbal/memory/allocator/monotonic_allocator.hpp>
+#include <kerbal/memory/allocator/over_aligned_allocator.hpp>
 
 namespace km = kerbal::memory;
 
 template class kc::avl_set<int, cmp_func<int>::type, km::fixed_size_node_allocator<int> >;
 template class kc::avl_set<int, cmp_func<int>::type, km::monotonic_allocator<int> >;
+template class kc::avl_set<int, cmp_func<int>::type, km::over_aligned_allocator<int> >;
