@@ -1,5 +1,5 @@
 
-include(${CMAKE_CURRENT_LIST_DIR}/../cmake/add_kerbal_parent_target.cmake)
+include(${PROJECT_SOURCE_DIR}/cmake/add_kerbal_parent_target.cmake)
 
 
 if (${KERBAL_WASM})

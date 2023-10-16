@@ -1,5 +1,5 @@
 
-include(${CMAKE_CURRENT_LIST_DIR}/../cmake/add_kerbal_parent_target.cmake)
+include(${PROJECT_SOURCE_DIR}/cmake/add_kerbal_parent_target.cmake)
 
 function(add_kerbal_inst_target_impl target target_src_file)
     add_library(${target} OBJECT ${file})
