@@ -34,7 +34,7 @@ KERBAL_TEST_CASE(test_function, "test function")
 
 int g(float x)
 {
-	return x;
+	return static_cast<int>(x);
 }
 
 KERBAL_TEST_CASE(test_function_construct_by_funptr, "test function::function(funptr)")

@@ -25,6 +25,8 @@
 #include <kerbal/random/mersenne_twister_engine.hpp>
 #include <kerbal/random/uniform_real_distribution.hpp>
 
+#include <cstddef>
+
 
 KERBAL_TEST_CASE(test_kmp_longest_matched_suffix, "test kmp longest_matched_suffix")
 {
@@ -39,7 +41,7 @@ KERBAL_TEST_CASE(test_kmp_longest_matched_suffix, "test kmp longest_matched_suff
 			"abcabd",
 	};
 
-	const kerbal::container::static_vector<int, MAX_STRING_LEN::value + 1> next_ans[] = {
+	const kerbal::container::static_vector<std::size_t, MAX_STRING_LEN::value + 1> next_ans[] = {
 			KERBAL_ILIST(0, 0, 1, 2, 3, 4),
 			KERBAL_ILIST(0, 0, 0, 1, 2, 3, 4),
 			KERBAL_ILIST(0, 0, 0, 1, 0, 1, 2, 3, 2),
@@ -49,7 +51,7 @@ KERBAL_TEST_CASE(test_kmp_longest_matched_suffix, "test kmp longest_matched_suff
 	};
 
 	for (size_t i = 0; i < kerbal::container::size(s); ++i) {
-		int next[MAX_STRING_LEN::value + 1];
+		std::size_t next[MAX_STRING_LEN::value + 1];
 
 		kerbal::algorithm::longest_matched_suffix_prefix(s[i], s[i] + strlen(s[i]), next);
 
@@ -70,7 +72,7 @@ std::string make_pattern(size_t len, Engine & eg)
 	std::string pattern;
 
 	while (len--) {
-		pattern += dis(eg);
+		pattern += static_cast<char>(dis(eg));
 	}
 
 	if (pattern.size() > 3 && kerbal::random::bernoulli_distribution(0.5)(eg)) {
@@ -91,7 +93,8 @@ std::string make_host(const std::string & pattern, size_t n, Engine & eg)
 
 	for (size_t i = 0; i < n; ++i) {
 		if (kerbal::random::bernoulli_distribution(0.5)(eg)) {
-			host += make_pattern(pattern_len_dis(eg), eg);
+			std::size_t pattern_size = static_cast<std::size_t>(pattern_len_dis(eg));
+			host += make_pattern(pattern_size, eg);
 		} else {
 			host += pattern;
 		}
@@ -104,9 +107,10 @@ std::string make_host(const std::string & pattern, size_t n, Engine & eg)
 KERBAL_TEST_CASE(test_kmp_auto, "test kmp auto")
 {
 	kerbal::random::mt19937 eg;
-
+	kerbal::random::uniform_real_distribution<> dis(1, 10);
 	for (int test_times = 0; test_times < 100; ++test_times) {
-		const std::string pattern(make_pattern(kerbal::random::uniform_real_distribution<>(1, 10)(eg), eg));
+		std::size_t pattern_size = static_cast<std::size_t>(dis(eg));
+		const std::string pattern(make_pattern(pattern_size, eg));
 		const std::string host(make_host(pattern, 15, eg));
 
 		for (std::string::size_type start_pos = 0; start_pos != host.size(); ++start_pos) {
@@ -130,10 +134,11 @@ KERBAL_TEST_CASE(test_kmp_visually, "test kmp visually")
 	using namespace kerbal::utility::costream;
 
 	kerbal::random::mt19937 eg;
-
+	kerbal::random::uniform_real_distribution<> dis(5, 10);
 	for (size_t test_times = 0; test_times < 10; ++test_times) {
 		cout << "[ " << test_times << " ]" << endl;
-		const std::string pattern(make_pattern(kerbal::random::uniform_real_distribution<>(5, 10)(eg), eg));
+		std::size_t pattern_size = static_cast<std::size_t>(dis(eg));
+		const std::string pattern(make_pattern(pattern_size, eg));
 		const std::string host(make_host(pattern, 15, eg));
 
 //		costream<cout>(GREEN) << pattern << endl;

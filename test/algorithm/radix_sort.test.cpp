@@ -31,7 +31,7 @@ KERBAL_TEMPLATE_TEST_CASE(test_radix_sort, "test radix_sort")
 	v0.reserve(N::value);
 
 	for (std::size_t i = 0; i < N::value; ++i) {
-		v0.push_back(eg());
+		v0.push_back(static_cast<T>(eg()));
 	}
 
 	kerbal::container::vector<T> v(v0);

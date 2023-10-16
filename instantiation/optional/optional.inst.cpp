@@ -23,16 +23,16 @@ namespace ko = kerbal::optional;
 template class ko::optional<int>;
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR14
-ko::optional<int>::optional(const float &);
+ko::optional<int>::optional(const short &);
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR14
-ko::optional<int>::optional(kerbal::utility::in_place_t, const float &);
+ko::optional<int>::optional(kerbal::utility::in_place_t, const short &);
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR14
-ko::optional<int>& ko::optional<int>::operator=(const float &);
+ko::optional<int>& ko::optional<int>::operator=(const short &);
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR14
-ko::optional<int>& ko::optional<int>::operator=(const ko::optional<float> &);
+ko::optional<int>& ko::optional<int>::operator=(const ko::optional<short> &);
 
 # if __cplusplus < 201103L
 
@@ -48,10 +48,10 @@ template KERBAL_MSVC_TMPINST_CONSTEXPR
 int ko::optional<int>::value_or(int &&) const &;
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR
-int ko::optional<int>::value_or(const float &) const &;
+int ko::optional<int>::value_or(const short &) const &;
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR14
-int ko::optional<int>::value_or(const float &) &&;
+int ko::optional<int>::value_or(const short &) &&;
 
 #endif
 
@@ -111,10 +111,10 @@ template KERBAL_MSVC_TMPINST_CONSTEXPR14
 ko::optional<ko::optional<int> >& ko::optional<ko::optional<int> >::emplace(const_reference);
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR14
-ko::optional<ko::optional<int> >& ko::optional<ko::optional<int> >::operator=(const float &);
+ko::optional<ko::optional<int> >& ko::optional<ko::optional<int> >::operator=(const short &);
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR14
-ko::optional<ko::optional<int> >& ko::optional<ko::optional<int> >::operator=(const ko::optional<float> &);
+ko::optional<ko::optional<int> >& ko::optional<ko::optional<int> >::operator=(const ko::optional<short> &);
 
 
 

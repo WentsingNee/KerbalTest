@@ -27,7 +27,7 @@ KERBAL_TEMPLATE_TEST_CASE(test_popcount, "test popcount")
 		T test = 0;
 
 		for (unsigned int i = 0; i < CHAR_BIT * sizeof(T); ++i) {
-			T bit = eg() % 2u;
+			int bit = static_cast<int>(eg() % 2u);
 			test |= static_cast<T>(bit) << i;
 			ans_plain += bit;
 		}

@@ -117,27 +117,27 @@ KERBAL_TEST_CASE(test_optional_cast_assign, "test optional cast assign")
 	{
 		ko::optional<int> opt;
 
-		opt = ko::optional<double>(15.89);
+		opt = ko::optional<short>(15);
 		KERBAL_TEST_CHECK_EQUAL(opt.empty(), false);
 		KERBAL_TEST_CHECK_EQUAL(*opt, 15);
 	}
 	{
 		ko::optional<int> opt(3);
 
-		opt = ko::optional<double>(15.89);
+		opt = ko::optional<short>(15);
 		KERBAL_TEST_CHECK_EQUAL(opt.empty(), false);
 		KERBAL_TEST_CHECK_EQUAL(*opt, 15);
 	}
 	{
 		ko::optional<int> opt;
 
-		opt = ko::optional<double>();
+		opt = ko::optional<short>();
 		KERBAL_TEST_CHECK_EQUAL(opt.empty(), true);
 	}
 	{
 		ko::optional<int> opt(3);
 
-		opt = ko::optional<double>();
+		opt = ko::optional<short>();
 		KERBAL_TEST_CHECK_EQUAL(opt.empty(), true);
 	}
 }
@@ -190,7 +190,8 @@ KERBAL_TEST_CASE(test_make_optional_with_specified, "test make_optional (with sp
 		KERBAL_TEST_CHECK(opt.value() == x);
 	}
 	{
-		ko::optional<int> opt = ko::make_optional<int>(3.5);
+		short x = 3;
+		ko::optional<int> opt = ko::make_optional<int>(x);
 		KERBAL_TEST_CHECK(opt.has_value());
 		KERBAL_TEST_CHECK(opt.value() == 3);
 	}

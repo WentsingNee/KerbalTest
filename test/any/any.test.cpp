@@ -280,7 +280,7 @@ KERBAL_TEST_CASE(test_bad_any_cast, "test bad_any_cast")
 			bool catch_flag = false;
 			try {
 				s = ka::any_cast<std::string>(a);
-			} catch (const ka::bad_any_cast & e) {
+			} catch (const ka::bad_any_cast &) {
 				catch_flag = true;
 			}
 			KERBAL_TEST_CHECK_EQUAL(catch_flag, false);
@@ -290,7 +290,7 @@ KERBAL_TEST_CASE(test_bad_any_cast, "test bad_any_cast")
 			bool catch_flag = false;
 			try {
 				i = ka::any_cast<int>(a);
-			} catch (const ka::bad_any_cast & e) {
+			} catch (const ka::bad_any_cast &) {
 				catch_flag = true;
 			}
 			kerbal::utility::ignore_unused(i);

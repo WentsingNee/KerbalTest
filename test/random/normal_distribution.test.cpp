@@ -15,9 +15,9 @@
 #include <kerbal/container/nonmember_container_access.hpp>
 #include <kerbal/random/linear_congruential_engine.hpp>
 #include <kerbal/random/mersenne_twister_engine.hpp>
+#include <kerbal/utility/compressed_pair.hpp>
 
 #include <map>
-#include <utility> // std::pair
 
 #if __cplusplus >= 201103L
 #	include <random>
@@ -36,15 +36,15 @@ KERBAL_TEMPLATE_TEST_CASE(test_normal_distribution, "test normal_distribution")
 {
 	Eg eg;
 
-	std::pair<float, float> args[] = {
-			std::pair<float, float>(250.0, 10.0),
-			std::pair<float, float>(0.0, 10.0),
-			std::pair<float, float>(0.0, 1.0),
+	float args[][2] = {
+			{250.0, 10.0},
+			{0.0, 10.0},
+			{0.0, 1.0},
 	};
 
 	for (std::size_t tcase = 0; tcase < kerbal::container::size(args); ++tcase) {
-		float mean = args[tcase].first;
-		float stddev = args[tcase].second;
+		float mean = args[tcase][0];
+		float stddev = args[tcase][1];
 
 		std::cout << "mean = " << mean << ", stddev = " << stddev;
 		std::cout << "\n" << std::endl;
@@ -54,7 +54,7 @@ KERBAL_TEMPLATE_TEST_CASE(test_normal_distribution, "test normal_distribution")
 		int n = 10000000;
 		std::map<int, int> hist;
 		for (int i = 0; i < n; ++i) {
-			++hist[my_round(dis(eg))];
+			++hist[static_cast<int>(my_round(dis(eg)))];
 		}
 		print_bar(n, hist);
 
@@ -73,15 +73,15 @@ KERBAL_TEST_CASE(cmp_with_std_normal_distribution_bar, "compare with std::normal
 {
 	kerbal::random::mt19937 eg[2];
 
-	std::pair<float, float> args[] = {
-			std::pair<float, float>(250.0, 10.0),
-			std::pair<float, float>(0.0, 10.0),
-			std::pair<float, float>(0.0, 1.0),
+	float args[][2] = {
+			{250.0f, 10.0f},
+			{0.0f, 10.0f},
+			{0.0f, 1.0f},
 	};
 
 	for (std::size_t tcase = 0; tcase < kerbal::container::size(args); ++tcase) {
-		float mean = args[tcase].first;
-		float stddev = args[tcase].second;
+		float mean = args[tcase][0];
+		float stddev = args[tcase][1];
 
 		std::cout << "mean = " << mean << ", stddev = " << stddev;
 		std::cout << "\n" << std::endl;
@@ -92,8 +92,8 @@ KERBAL_TEST_CASE(cmp_with_std_normal_distribution_bar, "compare with std::normal
 		int n = 10000000;
 		std::map<int, std::pair<int, int> > hist;
 		for (int i = 0; i < n; ++i) {
-			++hist[my_round(ker_dis(eg[0]))].first;
-			++hist[my_round(std_dis(eg[1]))].second;
+			++hist[static_cast<int>(my_round(ker_dis(eg[0])))].first;
+			++hist[static_cast<int>(my_round(std_dis(eg[1])))].second;
 		}
 		print_bar(n, hist);
 

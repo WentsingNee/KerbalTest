@@ -36,14 +36,14 @@ KERBAL_TEST_CASE(test_fixed_size_node_allocator_on_list, "test fixed_size_node_a
 	{
 		kerbal::test::runtime_timer t;
 		for (N::value_type i = 0; i < N::value; ++i) {
-			l.push_back(i);
+			l.push_back(static_cast<int>(i));
 		}
 		std::cout << "common  " << t.count() << std::endl;
 	}
 	{
 		kerbal::test::runtime_timer t;
 		for (N::value_type i = 0; i < N::value; ++i) {
-			lfast.push_back(i);
+			lfast.push_back(static_cast<int>(i));
 		}
 		std::cout << "fast  " << t.count() << std::endl;
 	}

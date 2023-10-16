@@ -26,7 +26,7 @@ KERBAL_TEST_CASE(test_throw_this_exception, "test throw_this_exception")
 		bool thrown = false;
 		try {
 			kerbal::utility::throw_this_exception_helper<std::exception>::throw_this_exception();
-		} catch (const std::exception & e) {
+		} catch (const std::exception &) {
 			thrown = true;
 		}
 		KERBAL_TEST_CHECK(thrown == true);
@@ -36,7 +36,7 @@ KERBAL_TEST_CASE(test_throw_this_exception, "test throw_this_exception")
 		bool thrown = false;
 		try {
 			MyException::throw_this_exception();
-		} catch (const MyException & e) {
+		} catch (const MyException &) {
 			thrown = true;
 		}
 		KERBAL_TEST_CHECK(thrown == true);

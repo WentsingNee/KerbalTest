@@ -73,7 +73,7 @@ KERBAL_TEST_CASE(test_autonm_list_range_insert, "test autonm_list::range_insert"
 	autonm_list l;
 
 	for (N::value_type i = 0; i < N::value; ++i) {
-		node[i].member() = r[i] = i;
+		node[i].member() = r[i] = static_cast<int>(i);
 	}
 
 	autonm_list::iterator ret = l.insert(l.cbegin(), node, node + N::value);

@@ -25,7 +25,6 @@ KERBAL_TEST_CASE(test_hash_float, "test hash float")
 
 	{
 		kerbal::hash::hash<float> hs;
-		std::cout << hs(1.23) << std::endl;
 		std::cout << hs(1.23f) << std::endl;
 	}
 

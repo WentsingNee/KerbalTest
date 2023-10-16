@@ -30,7 +30,7 @@ KERBAL_TEST_CASE(test_uniform_real_distribution, "test uniform_real_distribution
 	int n = 10000000;
 	std::map<int, int> hist;
 	for (int i = 0; i < n; ++i) {
-		++hist[dis(eg)];
+		++hist[static_cast<int>(dis(eg))];
 	}
 	print_bar(n, hist);
 }
@@ -47,8 +47,8 @@ KERBAL_TEST_CASE(cmp_with_std_uniform_real_distribution_bar, "compare with std::
 	int n = 10000000;
 	std::map<int, std::pair<int, int> > hist;
 	for (int i = 0; i < n; ++i) {
-		++hist[ker_dis(eg[0])].first;
-		++hist[std_dis(eg[1])].second;
+		++hist[static_cast<int>(ker_dis(eg[0]))].first;
+		++hist[static_cast<int>(std_dis(eg[1]))].second;
 	}
 	print_bar(n, hist);
 }
