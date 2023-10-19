@@ -11,6 +11,8 @@
 
 #include <kerbal/container/avl_map.hpp>
 
+#include "../msvc_tmpinst_constexpr.hpp"
+
 #include <string>
 
 
@@ -35,7 +37,7 @@ kc::avl_map<int, std::string>::avl_map(const_iterator, const_iterator);
 template
 kc::avl_map<int, std::string>::avl_map(const_reverse_iterator, const_reverse_iterator);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 void kc::avl_map<int, std::string>::assign(const_pointer, const_pointer);
 
 template

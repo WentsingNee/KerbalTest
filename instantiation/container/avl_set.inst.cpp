@@ -11,6 +11,8 @@
 
 #include <kerbal/container/avl_set.hpp>
 
+#include "../msvc_tmpinst_constexpr.hpp"
+
 #include <string>
 
 
@@ -40,7 +42,7 @@ template
 kc::avl_set<int>::avl_set(const kerbal::assign::assign_list<int> &);
 #endif
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 void kc::avl_set<int>::assign(const_pointer, const_pointer);
 
 template
@@ -120,7 +122,7 @@ template
 kc::avl_set<std::string>::avl_set(const kerbal::assign::assign_list<std::string> &);
 #endif
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 void kc::avl_set<std::string>::assign(const_pointer, const_pointer);
 
 template
@@ -199,15 +201,15 @@ kc::avl_set<int[2]>::avl_set(const_iterator, const_iterator);
 template
 kc::avl_set<int[2]>::avl_set(const_reverse_iterator, const_reverse_iterator);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::avl_set<int[2]>::unique_insert_r
 kc::avl_set<int[2]>::emplace(const int (&) [2]);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::avl_set<int[2]>::unique_insert_r
 kc::avl_set<int[2]>::replace_emplace(const_iterator, const int (&) [2]);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 void kc::avl_set<int[2]>::merge(avl_set &);
 
 
