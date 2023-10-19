@@ -125,3 +125,14 @@ endif ()
 
 add_subdirectory(instantiation)
 add_subdirectory(test)
+
+if (NOT TARGET inst)
+    add_custom_target(inst)
+endif ()
+if (NOT TARGET utest)
+    add_custom_target(utest)
+endif ()
+add_custom_target(
+        ktest
+        DEPENDS inst utest
+)
