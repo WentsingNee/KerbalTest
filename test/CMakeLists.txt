@@ -61,7 +61,7 @@ function(add_kerbal_utest_target_impl target target_src_file)
     set(run_utest_target_name "run_${target}")
     if (${CMAKE_CXX_PLATFORM_ID} MATCHES "Windows")
         add_custom_target(${run_utest_target_name}
-                COMMAND if not exist test_output mkdir test_output
+                COMMAND (if not exist test_output (mkdir test_output))
                 COMMAND ${path} > test_output/${target}.out.txt
                 COMMAND type test_output\\${target}.out.txt
                 WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
