@@ -42,10 +42,14 @@ function(add_ktest_utest_target_impl target target_src_file)
         target_link_libraries(${target} PUBLIC ${KTEST_LIB_CPPABI})
     endif ()
     if (KTEST_ENABLE_SANITIZE)
-        target_compile_options(${target} PUBLIC -fsanitize=address)
-        target_compile_options(${target} PUBLIC -fsanitize=undefined)
-        target_link_libraries(${target} PUBLIC ${KTEST_LIB_ASAN})
-        target_link_libraries(${target} PUBLIC ${KTEST_LIB_UBSAN})
+        if (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
+            target_compile_options(${target} PUBLIC /fsanitize=address)
+        else ()
+            target_compile_options(${target} PUBLIC -fsanitize=address)
+            target_compile_options(${target} PUBLIC -fsanitize=undefined)
+            target_link_libraries(${target} PUBLIC ${KTEST_LIB_ASAN})
+            target_link_libraries(${target} PUBLIC ${KTEST_LIB_UBSAN})
+        endif ()
     endif ()
     if (KTEST_ENABLE_GCOV)
         target_compile_options(${target} PUBLIC --coverage)
@@ -84,6 +88,18 @@ function(add_ktest_utest_target_impl target target_src_file)
             COMMENT "Running utest target ${target}"
             DEPENDS ${target} run_utest_make_test_output_dir
     )
+
+    if (${KTEST_ENABLE_SANITIZE} AND ${CMAKE_CXX_COMPILER} MATCHES "MSVC")
+        if (NOT TARGET copy_sanitize_dll_before_run_utest)
+            add_custom_target(
+                    copy_sanitize_dll_before_run_utest
+                    COMMAND ${CMAKE_COMMAND} -E copy ${KTEST_LIB_ASAN_DLL} ${PROJECT_BINARY_DIR}/targets
+                    WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
+            )
+        endif ()
+        add_dependencies(${run_utest_target_name} copy_sanitize_dll_before_run_utest)
+    endif ()
+
     add_kerbal_parent_target(${run_utest_target_name})
 endfunction()
 
