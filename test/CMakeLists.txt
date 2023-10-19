@@ -3,33 +3,42 @@ include(${PROJECT_SOURCE_DIR}/cmake/add_kerbal_parent_target.cmake)
 
 
 if (${KERBAL_WASM})
-    if (NOT DEFINED WASM_RUN_UTEST_INVOKER)
-        set (WASM_RUN_UTEST_INVOKER "node")
+    if (NOT DEFINED KTEST_WASM_RUN_UTEST_INVOKER)
+        set (KTEST_WASM_RUN_UTEST_INVOKER "node")
     endif ()
-    set (run_utest_invoker "${WASM_RUN_UTEST_INVOKER}")
 endif ()
 
 
-function(add_kerbal_utest_target_impl target target_src_file)
-    add_executable(${target} ${target_src_file})
+if (NOT DEFINED KTEST_RUN_UTEST_INVOKER)
+    if (${KERBAL_WASM})
+        if (NOT DEFINED KTEST_WASM_RUN_UTEST_INVOKER)
+            message(FATAL_ERROR "Neither KTEST_RUN_UTEST_INVOKER nor KTEST_WASM_RUN_UTEST_INVOKER is defined")
+        endif ()
+        set (KTEST_RUN_UTEST_INVOKER "${KTEST_WASM_RUN_UTEST_INVOKER}")
+    endif ()
+endif ()
+
+
+function(add_ktest_utest_target_impl target target_src_file)
+    add_executable("${target}" ${target_src_file})
     add_kerbal_parent_target(${target})
     set_target_properties(${target}
             PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/targets
     )
     target_link_libraries(${target} PUBLIC Kerbal::kerbal)
     target_include_directories(${target} PUBLIC "${PROJECT_SOURCE_DIR}/include")
-    if (KERBAL_TEST_USE_LIBCXX)
+    if (KTEST_USE_LIBCXX)
         target_compile_options(${target} PUBLIC -stdlib=libc++)
-        target_link_libraries(${target} PUBLIC ${LIB_CPP})
-        target_link_libraries(${target} PUBLIC ${LIB_CPPABI})
+        target_link_libraries(${target} PUBLIC ${KTEST_LIB_CPP})
+        target_link_libraries(${target} PUBLIC ${KTEST_LIB_CPPABI})
     endif ()
-    if (KERBAL_TEST_ENABLE_SANITIZE)
+    if (KTEST_ENABLE_SANITIZE)
         target_compile_options(${target} PUBLIC -fsanitize=address)
         target_compile_options(${target} PUBLIC -fsanitize=undefined)
-        target_link_libraries(${target} PUBLIC ${LIB_ASAN})
-        target_link_libraries(${target} PUBLIC ${LIB_UBSAN})
+        target_link_libraries(${target} PUBLIC ${KTEST_LIB_ASAN})
+        target_link_libraries(${target} PUBLIC ${KTEST_LIB_UBSAN})
     endif ()
-    if (KERBAL_TEST_ENABLE_GCOV)
+    if (KTEST_ENABLE_GCOV)
         target_compile_options(${target} PUBLIC --coverage)
         target_link_options(${target} PUBLIC --coverage)
     endif ()
@@ -62,7 +71,7 @@ function(add_kerbal_utest_target_impl target target_src_file)
     if (${CMAKE_CXX_PLATFORM_ID} MATCHES "Windows")
         add_custom_target(${run_utest_target_name}
                 COMMAND (if not exist test_output (mkdir test_output))
-                COMMAND ${path} > test_output/${target}.out.txt
+                COMMAND ${KTEST_RUN_UTEST_INVOKER} ${path} > test_output/${target}.out.txt
                 COMMAND type test_output\\${target}.out.txt
                 WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
                 COMMENT "Running utest target ${target}"
@@ -71,7 +80,7 @@ function(add_kerbal_utest_target_impl target target_src_file)
         add_custom_target(${run_utest_target_name}
                 COMMAND
                     mkdir -p test_output\;
-                    ${run_utest_invoker} ${path} | tee test_output/${target}.out.txt\;
+                    ${KTEST_RUN_UTEST_INVOKER} ${path} | tee test_output/${target}.out.txt\;
                 WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
                 COMMENT "Running utest target ${target}"
         )
@@ -80,20 +89,20 @@ function(add_kerbal_utest_target_impl target target_src_file)
     add_kerbal_parent_target(${run_utest_target_name})
 endfunction()
 
-macro(add_kerbal_utest_target target target_src_file)
-    add_kerbal_utest_target_impl(${target} ${target_src_file})
+macro(add_ktest_utest_target target target_src_file)
+    add_ktest_utest_target_impl(${target} ${target_src_file})
     list(APPEND utest_targets ${target})
 endmacro()
 
 
-function(add_kerbal_utest_target_wih_ie target target_src_file ie)
-    if (NOT KERBAL_TEST_SUPPORT_${ie})
+function(add_ktest_utest_target_wih_ie target target_src_file ie)
+    if (NOT KTEST_SUPPORT_${ie})
         message(WARNING "Compiler doesn't support ${ie}")
         return()
     endif ()
     set(target_name_with_ie ${target}_${ie})
-    add_kerbal_utest_target(${target_name_with_ie} ${target_src_file})
-    target_compile_options(${target_name_with_ie} PUBLIC ${KERBAL_TEST_FLAGS_${ie}})
+    add_ktest_utest_target(${target_name_with_ie} ${target_src_file})
+    target_compile_options(${target_name_with_ie} PUBLIC ${KTEST_FLAGS_${ie}})
 endfunction()
 
 
@@ -106,9 +115,9 @@ foreach (file ${test_src_files})
     string(REPLACE "/" "." target ${CMAKE_MATCH_1})
     string(PREPEND target "utest.")
     message(VERBOSE "	add: ${target}  <=  ${CMAKE_CURRENT_SOURCE_DIR}/${file}")
-    add_kerbal_utest_target(${target} ${CMAKE_CURRENT_SOURCE_DIR}/${file})
-    if (${KERBAL_TEST_ENABLE_PRECOMPILE_HEADER})
-        target_precompile_headers(${target} REUSE_FROM kerbal_test_precompile_header)
+    add_ktest_utest_target(${target} ${CMAKE_CURRENT_SOURCE_DIR}/${file})
+    if (${KTEST_ENABLE_PRECOMPILE_HEADER})
+        target_precompile_headers(${target} REUSE_FROM ktest_precompile_header)
     endif ()
     set(utest_targets ${utest_targets} PARENT_SCOPE)
 endforeach ()

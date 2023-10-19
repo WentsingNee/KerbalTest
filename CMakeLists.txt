@@ -51,53 +51,53 @@ endif ()
 
 # instruction extensions
 
-option(KERBAL_TEST_ENABLE_IE "enable instruction extensions" ON)
+option(KTEST_ENABLE_IE "enable instruction extensions" ON)
 
-if (KERBAL_TEST_ENABLE_IE)
+if (KTEST_ENABLE_IE)
     include(cmake/instruction_extensions.cmake)
 endif ()
 
 
 # libc++
 
-option(KERBAL_TEST_USE_LIBCXX "use libc++" OFF)
+option(KTEST_USE_LIBCXX "use libc++" OFF)
 
-if (KERBAL_TEST_USE_LIBCXX)
+if (KTEST_USE_LIBCXX)
     message(STATUS "Finding libc++")
-    find_library(LIB_CPP c++ REQUIRED)
-    message(STATUS "Found libc++: ${LIB_CPP}")
+    find_library(KTEST_LIB_CPP c++ REQUIRED)
+    message(STATUS "Found libc++: ${KTEST_LIB_CPP}")
 
     message(STATUS "Finding libc++abi")
-    find_library(LIB_CPPABI c++abi REQUIRED)
-    message(STATUS "Found libc++abi: ${LIB_CPPABI}")
+    find_library(KTEST_LIB_CPPABI c++abi REQUIRED)
+    message(STATUS "Found libc++abi: ${KTEST_LIB_CPPABI}")
 endif ()
 
 
 # sanitize
 
-option(KERBAL_TEST_ENABLE_SANITIZE "enable sanitize" OFF)
+option(KTEST_ENABLE_SANITIZE "enable sanitize" OFF)
 
-if (KERBAL_TEST_ENABLE_SANITIZE)
+if (KTEST_ENABLE_SANITIZE)
     message(STATUS "Finding libasan")
-    find_library(LIB_ASAN asan REQUIRED)
-    message(STATUS "Found libasan: ${LIB_ASAN}")
+    find_library(KTEST_LIB_ASAN asan REQUIRED)
+    message(STATUS "Found libasan: ${KTEST_LIB_ASAN}")
 
     message(STATUS "Finding libubsan")
-    find_library(LIB_UBSAN ubsan REQUIRED)
-    message(STATUS "Found libubsan: ${LIB_UBSAN}")
+    find_library(KTEST_LIB_UBSAN ubsan REQUIRED)
+    message(STATUS "Found libubsan: ${KTEST_LIB_UBSAN}")
 endif ()
 
 
 # gcov
 
-option(KERBAL_TEST_ENABLE_GCOV "enable gcov" OFF)
+option(KTEST_ENABLE_GCOV "enable gcov" OFF)
 
 
 # precompile header
 
-option(KERBAL_TEST_ENABLE_PRECOMPILE_HEADER "enable precompile header" OFF)
+option(KTEST_ENABLE_PRECOMPILE_HEADER "enable precompile header" OFF)
 
-if (${KERBAL_TEST_ENABLE_PRECOMPILE_HEADER})
+if (${KTEST_ENABLE_PRECOMPILE_HEADER})
 
     include(cmake/aux_headers.cmake)
     set(block_patterns
@@ -111,15 +111,15 @@ if (${KERBAL_TEST_ENABLE_PRECOMPILE_HEADER})
         message(FATAL_ERROR "you should provide variable Kerbal_INCLUDE_DIRS correctly to support precompile header")
     endif ()
 
-    file(WRITE "${CMAKE_BINARY_DIR}/kerbal_test_pch.cpp" "")
-    add_library(kerbal_test_precompile_header OBJECT "${CMAKE_BINARY_DIR}/kerbal_test_pch.cpp")
-    if (KERBAL_TEST_USE_LIBCXX)
-        target_compile_options(kerbal_test_precompile_header PUBLIC -stdlib=libc++)
-        target_link_libraries(kerbal_test_precompile_header PUBLIC ${LIB_CPP})
-        target_link_libraries(kerbal_test_precompile_header PUBLIC ${LIB_CPPABI})
+    file(WRITE "${CMAKE_BINARY_DIR}/ktest_precompile_header.cpp" "")
+    add_library(ktest_precompile_header OBJECT "${CMAKE_BINARY_DIR}/ktest_precompile_header.cpp")
+    if (KTEST_USE_LIBCXX)
+        target_compile_options(ktest_precompile_header PUBLIC -stdlib=libc++)
+        target_link_libraries(ktest_precompile_header PUBLIC ${KTEST_LIB_CPP})
+        target_link_libraries(ktest_precompile_header PUBLIC ${KTEST_LIB_CPPABI})
     endif ()
-    target_precompile_headers(kerbal_test_precompile_header PUBLIC "${kerbal_public_headers}")
-    target_link_libraries(kerbal_test_precompile_header PUBLIC Kerbal::kerbal)
+    target_precompile_headers(ktest_precompile_header PUBLIC "${kerbal_public_headers}")
+    target_link_libraries(ktest_precompile_header PUBLIC Kerbal::kerbal)
 endif ()
 
 

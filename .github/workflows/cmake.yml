@@ -106,8 +106,8 @@ jobs:
           -DCMAKE_CXX_COMPILER=${{matrix.compiler}}
           -DCMAKE_CXX_STANDARD=${{matrix.cxx_standard}}
           -DCMAKE_PREFIX_PATH=${{github.workspace}}/Kerbal/install
-          -DKERBAL_TEST_USE_LIBCXX=${{matrix.stdlib}}
-          -DKERBAL_TEST_ENABLE_PRECOMPILE_HEADER=OFF
+          -DKTEST_USE_LIBCXX=${{matrix.stdlib}}
+          -DKTEST_ENABLE_PRECOMPILE_HEADER=OFF
 
       - name: Configure CMake (MSVC)
         if: matrix.compiler == 'msvc'
@@ -117,7 +117,7 @@ jobs:
           -G "Visual Studio 17 2022"
           -DCMAKE_CXX_STANDARD=${{matrix.cxx_standard}}
           -DCMAKE_PREFIX_PATH=${{github.workspace}}/Kerbal/install
-          -DKERBAL_TEST_ENABLE_PRECOMPILE_HEADER=OFF
+          -DKTEST_ENABLE_PRECOMPILE_HEADER=OFF
 
       - name: Show Environment Kerbal Detect
         run: >
