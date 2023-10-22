@@ -11,6 +11,10 @@
 
 #include <ktest/compatibility/msvc_tmpinst_constexpr.hpp>
 
+#if __cplusplus >= 201103L
+#	include <ktest/utility/move_only_type.hpp>
+#endif
+
 #include <kerbal/container/vector.hpp>
 #include <kerbal/memory/allocator/default_allocator.hpp>
 
@@ -153,6 +157,107 @@ template kc::vector<std::string>::iterator
 kc::vector<std::string>::insert(const_iterator, const kerbal::assign::assign_list<std::string> &);
 #endif
 
+
+
+#if __cplusplus >= 201103L
+
+template
+kc::vector<ktest::move_only_type>::vector();
+
+template
+kc::vector<ktest::move_only_type>::vector(size_type);
+
+template
+kc::vector<ktest::move_only_type>::vector(
+		kerbal::iterator::move_iterator<iterator>,
+		kerbal::iterator::move_iterator<iterator>,
+		int
+);
+
+template
+kc::vector<ktest::move_only_type>::vector(
+		kerbal::iterator::move_iterator<reverse_iterator>,
+		kerbal::iterator::move_iterator<reverse_iterator>,
+		int
+);
+
+template
+kc::vector<ktest::move_only_type>::vector(vector &&);
+
+template
+kc::vector<ktest::move_only_type>::~vector();
+
+template
+kc::vector<ktest::move_only_type> &
+kc::vector<ktest::move_only_type>::operator=(vector &&);
+
+template
+void kc::vector<ktest::move_only_type>::assign(
+		kerbal::iterator::move_iterator<iterator>,
+		kerbal::iterator::move_iterator<iterator>
+);
+
+template
+void kc::vector<ktest::move_only_type>::assign(vector &&);
+
+template
+void kc::vector<ktest::move_only_type>::reserve(size_type);
+
+template
+void kc::vector<ktest::move_only_type>::shrink_to_fit();
+
+template
+kc::vector<ktest::move_only_type>::iterator
+kc::vector<ktest::move_only_type>::emplace(const_iterator);
+
+template
+kc::vector<ktest::move_only_type>::iterator
+kc::vector<ktest::move_only_type>::emplace(const_iterator, rvalue_reference);
+
+template
+kc::vector<ktest::move_only_type>::iterator
+kc::vector<ktest::move_only_type>::insert(
+		const_iterator,
+		kerbal::iterator::move_iterator<iterator>,
+		kerbal::iterator::move_iterator<iterator>
+);
+
+template
+kc::vector<ktest::move_only_type>::iterator
+kc::vector<ktest::move_only_type>::insert(const_iterator, rvalue_reference);
+
+template
+kc::vector<ktest::move_only_type>::reference
+kc::vector<ktest::move_only_type>::emplace_back();
+
+template
+kc::vector<ktest::move_only_type>::reference
+kc::vector<ktest::move_only_type>::emplace_back(rvalue_reference);
+
+template
+void kc::vector<ktest::move_only_type>::push_back(rvalue_reference);
+
+template
+kc::vector<ktest::move_only_type>::iterator
+kc::vector<ktest::move_only_type>::erase(const_iterator);
+
+template
+kc::vector<ktest::move_only_type>::iterator
+kc::vector<ktest::move_only_type>::erase(const_iterator, const_iterator);
+
+template
+void kc::vector<ktest::move_only_type>::pop_back();
+
+template
+void kc::vector<ktest::move_only_type>::clear();
+
+template
+void kc::vector<ktest::move_only_type>::resize(size_type);
+
+template
+void kc::vector<ktest::move_only_type>::swap(vector &);
+
+#endif
 
 
 
