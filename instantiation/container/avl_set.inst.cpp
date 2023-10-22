@@ -11,6 +11,10 @@
 
 #include <ktest/compatibility/msvc_tmpinst_constexpr.hpp>
 
+#if __cplusplus >= 201103L
+#	include <ktest/utility/move_only_type.hpp>
+#endif
+
 #include <kerbal/container/avl_set.hpp>
 
 #include <string>
@@ -187,6 +191,60 @@ kc::avl_set<std::string>::replace_emplace(const_iterator, const std::string::siz
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
 void kc::avl_set<std::string>::merge(avl_set &);
+
+
+
+#if __cplusplus >= 201103L
+
+template
+kc::avl_set<ktest::move_only_type>::avl_set(
+		kerbal::iterator::move_iterator<ktest::move_only_type *>,
+		kerbal::iterator::move_iterator<ktest::move_only_type *>
+);
+
+template
+kc::avl_set<ktest::move_only_type>::avl_set(avl_set &&);
+
+template
+kc::avl_set<ktest::move_only_type> &
+kc::avl_set<ktest::move_only_type>::operator=(avl_set &&);
+
+template
+void
+kc::avl_set<ktest::move_only_type>::assign(
+		kerbal::iterator::move_iterator<ktest::move_only_type *>,
+		kerbal::iterator::move_iterator<ktest::move_only_type *>
+);
+
+template
+kc::avl_set<ktest::move_only_type>::unique_insert_r
+kc::avl_set<ktest::move_only_type>::emplace();
+
+template
+kc::avl_set<ktest::move_only_type>::iterator
+kc::avl_set<ktest::move_only_type>::erase(iterator);
+
+template
+kc::avl_set<ktest::move_only_type>::iterator
+kc::avl_set<ktest::move_only_type>::erase(iterator, iterator);
+
+template
+void
+kc::avl_set<ktest::move_only_type>::clear();
+
+template
+kc::avl_set<ktest::move_only_type>::unique_insert_r
+kc::avl_set<ktest::move_only_type>::replace_emplace(const_iterator);
+
+template
+void
+kc::avl_set<ktest::move_only_type>::merge(avl_set &);
+
+template
+void
+kc::avl_set<ktest::move_only_type>::swap(avl_set &);
+
+#endif
 
 
 
