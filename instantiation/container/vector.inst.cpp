@@ -12,6 +12,7 @@
 #include <ktest/compatibility/msvc_tmpinst_constexpr.hpp>
 
 #include <kerbal/container/vector.hpp>
+#include <kerbal/memory/allocator/default_allocator.hpp>
 
 
 #include <iterator>
@@ -25,6 +26,7 @@ struct input_iterator
 
 
 namespace kc = kerbal::container;
+namespace km = kerbal::memory;
 
 template class kc::vector<int>;
 
@@ -140,27 +142,25 @@ kc::vector<std::string>::insert(const_iterator, const kerbal::assign::assign_lis
 #endif
 
 
-#if __cplusplus >= 201703L // std::allocator doesn't support array
 
-template class kc::vector<int[8]>;
 
-template KERBAL_MSVC_TMPINST_CONSTEXPR20
-kc::vector<int[8]>::vector(const_pointer, const_pointer, int);
+// std::allocator doesn't support array
 
-template KERBAL_MSVC_TMPINST_CONSTEXPR20
-kc::vector<int[8]>::vector(const_iterator, const_iterator, int);
+template class kc::vector<int[8], km::default_allocator<int[8]> >;
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
-kc::vector<int[8]>::vector(const_reverse_iterator, const_reverse_iterator, int);
+kc::vector<int[8], km::default_allocator<int[8]> >::vector(const_pointer, const_pointer, int);
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
-kc::vector<int[8]>::iterator
-kc::vector<int[8]>::emplace(const_iterator);
+kc::vector<int[8], km::default_allocator<int[8]> >::vector(const_iterator, const_iterator, int);
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
-kc::vector<int[8]>::iterator
-kc::vector<int[8]>::emplace(const_iterator, const_reference);
+kc::vector<int[8], km::default_allocator<int[8]> >::vector(const_reverse_iterator, const_reverse_iterator, int);
 
+#if __cplusplus >= 201103L
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+kc::vector<int[8], km::default_allocator<int[8]> >::iterator
+kc::vector<int[8], km::default_allocator<int[8]> >::emplace(const_iterator);
 #endif
 
 
