@@ -64,6 +64,10 @@ kc::vector<int>::iterator
 kc::vector<int>::emplace(const_iterator, const_reference);
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
+kc::vector<int>::reference
+kc::vector<int>::emplace_back(const_reference);
+
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::vector<int>::iterator
 kc::vector<int>::insert(const_iterator, const_iterator, const_iterator);
 
@@ -125,6 +129,14 @@ kc::vector<std::string>::iterator
 kc::vector<std::string>::emplace(const_iterator, const value_type::size_type&, const value_type::value_type &);
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
+kc::vector<std::string>::reference
+kc::vector<std::string>::emplace_back(const_reference);
+
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+kc::vector<std::string>::reference
+kc::vector<std::string>::emplace_back(const value_type::size_type&, const value_type::value_type &);
+
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::vector<std::string>::iterator
 kc::vector<std::string>::insert(const_iterator, const_iterator, const_iterator);
 
@@ -162,6 +174,15 @@ template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::vector<int[8], km::default_allocator<int[8]> >::iterator
 kc::vector<int[8], km::default_allocator<int[8]> >::emplace(const_iterator);
 #endif
+
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+kc::vector<int[8], km::default_allocator<int[8]> >::iterator
+kc::vector<int[8], km::default_allocator<int[8]> >::emplace(const_iterator, const_reference);
+
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+kc::vector<int[8], km::default_allocator<int[8]> >::reference
+kc::vector<int[8], km::default_allocator<int[8]> >::emplace_back(const_reference);
+
 
 
 #if __cplusplus >= 201703L
