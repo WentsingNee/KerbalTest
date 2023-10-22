@@ -168,6 +168,31 @@ KERBAL_TEST_CASE(test_tuple_select, "test tuple::select")
 #endif
 
 
+
+#if __cplusplus >= 201103L
+
+KERBAL_TEST_CASE(test_tuple_join, "test tuple::join")
+{
+	{
+		ku::tuple<int, char, double> t(3, 'a', 3.14);
+		t.join(
+				[](){},
+				[](auto idx, auto t) {
+					std::cout << t;
+				},
+				[](auto idx){
+					std::cout << '-';
+				},
+				[](){
+					std::cout << std::endl;
+				}
+		);
+	}
+}
+
+#endif
+
+
 KERBAL_TEST_CASE(test_tuple_reverse, "test tuple::reverse")
 {
 
