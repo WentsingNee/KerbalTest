@@ -7,7 +7,7 @@ macro(add_kerbal_utest_target target target_src_file)
     set_target_properties(${target}
             PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/targets
     )
-    target_include_directories(${target} PUBLIC ./)
+    target_include_directories(${target} PUBLIC "${PROJECT_SOURCE_DIR}/include")
     if (KERBAL_TEST_USE_LIBCXX)
         target_compile_options(${target} PUBLIC -stdlib=libc++)
         target_link_libraries(${target} PUBLIC ${LIB_CPP})

@@ -9,10 +9,11 @@
  *   all rights reserved
  */
 
+#include <ktest/random/random_vector.hpp>
+
 #include <kerbal/container/list.hpp>
 
 #include <kerbal/test/test.hpp>
-#include "helper/random_vector.hpp"
 
 #include <kerbal/algorithm/modifier/fill.hpp>
 #include <kerbal/algorithm/modifier/iota.hpp>
@@ -908,7 +909,7 @@ KERBAL_TEMPLATE_TEST_CASE(test_list_merge, "test list::merge")
 		std::list<int> stdl_into;
 		kerbal::container::list<int> l_into;
 		{
-			kerbal::container::vector<int> v_into = ktn::get_random_vec_i_mod(into_init_len, eg, 1024);
+			kerbal::container::vector<int> v_into = ktest::get_random_vec_i_mod(into_init_len, eg, 1024);
 			kerbal::algorithm::sort(v_into.begin(), v_into.end());
 			stdl_into.assign(v_into.cbegin(), v_into.cend());
 			l_into.assign(v_into.cbegin(), v_into.cend());
@@ -917,7 +918,7 @@ KERBAL_TEMPLATE_TEST_CASE(test_list_merge, "test list::merge")
 		std::list<int> stdl_other;
 		kerbal::container::list<int> l_other;
 		{
-			kerbal::container::vector<int> v_other = ktn::get_random_vec_i_mod(other_init_len, eg, 1024);
+			kerbal::container::vector<int> v_other = ktest::get_random_vec_i_mod(other_init_len, eg, 1024);
 			kerbal::algorithm::sort(v_other.begin(), v_other.end());
 			stdl_other.assign(v_other.cbegin(), v_other.cend());
 			l_other.assign(v_other.cbegin(), v_other.cend());
@@ -989,14 +990,14 @@ KERBAL_TEST_CASE(test_list_merge_is_stable, "test list::merge is_stable")
 
 		kerbal::container::list<int> l_into;
 		{
-			kerbal::container::vector<int> v_into = ktn::get_random_vec_i_mod(into_init_len, eg, 1024);
+			kerbal::container::vector<int> v_into = ktest::get_random_vec_i_mod(into_init_len, eg, 1024);
 			kerbal::algorithm::sort(v_into.begin(), v_into.end());
 			l_into.assign(v_into.cbegin(), v_into.cend());
 		}
 
 		kerbal::container::list<int> l_other;
 		{
-			kerbal::container::vector<int> v_other = ktn::get_random_vec_i_mod(other_init_len, eg, 1024);
+			kerbal::container::vector<int> v_other = ktest::get_random_vec_i_mod(other_init_len, eg, 1024);
 			kerbal::algorithm::sort(v_other.begin(), v_other.end());
 			l_other.assign(v_other.cbegin(), v_other.cend());
 		}
@@ -1125,7 +1126,7 @@ KERBAL_TEMPLATE_TEST_CASE(test_list_sort, "test list::sort")
 		std::size_t list_size = size_group[tcase];
 
 		{ // default compare
-			kerbal::container::vector<int> v = ktn::get_random_vec_i_mod(list_size, eg, 100);
+			kerbal::container::vector<int> v = ktest::get_random_vec_i_mod(list_size, eg, 100);
 			kerbal::container::list<int, Allocator> l(v.cbegin(), v.cend());
 
 			kerbal::algorithm::sort(v.begin(), v.end());
@@ -1142,7 +1143,7 @@ KERBAL_TEMPLATE_TEST_CASE(test_list_sort, "test list::sort")
 		}
 
 		{ // given compare
-			kerbal::container::vector<int> v = ktn::get_random_vec_i_mod(list_size, eg, 100);
+			kerbal::container::vector<int> v = ktest::get_random_vec_i_mod(list_size, eg, 100);
 			kerbal::container::list<int, Allocator> l(v.cbegin(), v.cend());
 
 			kerbal::algorithm::sort(v.begin(), v.end(), kerbal::compare::greater<>());
@@ -1159,7 +1160,7 @@ KERBAL_TEMPLATE_TEST_CASE(test_list_sort, "test list::sort")
 		}
 
 		{ // given compare
-			kerbal::container::vector<int> v = ktn::get_random_vec_i_mod(list_size, eg, 100);
+			kerbal::container::vector<int> v = ktest::get_random_vec_i_mod(list_size, eg, 100);
 			kerbal::container::list<int, Allocator> l(v.cbegin(), v.cend());
 
 			kerbal::algorithm::sort(v.begin(), v.end(), disable_list_radix_sort_cmp());
@@ -1176,7 +1177,7 @@ KERBAL_TEMPLATE_TEST_CASE(test_list_sort, "test list::sort")
 		}
 
 		{ // sort partial range
-			kerbal::container::vector<int> v = ktn::get_random_vec_i_mod(1000, eg, 100);
+			kerbal::container::vector<int> v = ktest::get_random_vec_i_mod(1000, eg, 100);
 			kerbal::container::list<int, Allocator> l(v.cbegin(), v.cend());
 
 			kerbal::container::vector<int>::iterator nth_500(kerbal::container::nth(v, 500));

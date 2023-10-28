@@ -9,8 +9,8 @@
  *   all rights reserved
  */
 
-#ifndef KERBALTEST_RANDOM_VECTOR_HPP
-#define KERBALTEST_RANDOM_VECTOR_HPP
+#ifndef KTEST_RANDOM_VECTOR_HPP
+#define KTEST_RANDOM_VECTOR_HPP
 
 #include <kerbal/compatibility/constexpr.hpp>
 #include <kerbal/container/vector.hpp>
@@ -19,7 +19,7 @@
 #include <cstddef>
 
 
-namespace ktn
+namespace ktest
 {
 
 	template <typename Eg>
@@ -44,6 +44,6 @@ namespace ktn
 		return v;
 	}
 
-} // namespace ktn
+} // namespace ktest
 
-#endif // KERBALTEST_RANDOM_VECTOR_HPP
+#endif // KTEST_RANDOM_VECTOR_HPP

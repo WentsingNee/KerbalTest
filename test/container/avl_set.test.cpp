@@ -9,10 +9,11 @@
  *   all rights reserved
  */
 
+#include <ktest/random/random_vector.hpp>
+
 #include <kerbal/container/avl_set.hpp>
 
 #include <kerbal/test/test.hpp>
-#include "helper/random_vector.hpp"
 
 #include <kerbal/algorithm/modifier/iota.hpp>
 #include <kerbal/compare/sequence_compare.hpp>
@@ -130,7 +131,7 @@ KERBAL_TEST_CASE(test_avl_set_copy_construct, "test avl_set::avl_set(const avl_s
 
 	for (std::size_t tcase = 0; tcase < kc::size(sizes); ++tcase) {
 		std::size_t size = sizes[tcase];
-		kerbal::container::vector<int> v0 = ktn::get_random_vec_i(size, eg);
+		kerbal::container::vector<int> v0 = ktest::get_random_vec_i(size, eg);
 
 		kc::avl_set<int> s(v0.cbegin(), v0.cend());
 		kc::avl_set<int> u(s);
@@ -152,7 +153,7 @@ KERBAL_TEST_CASE(test_avl_set_move_construct, "test avl_set::avl_set(avl_set &&)
 
 	for (std::size_t tcase = 0; tcase < kc::size(sizes); ++tcase) {
 		std::size_t size = sizes[tcase];
-		kerbal::container::vector<int> v0 = ktn::get_random_vec_i(size, eg);
+		kerbal::container::vector<int> v0 = ktest::get_random_vec_i(size, eg);
 
 		kc::avl_set<int> s(v0.cbegin(), v0.cend());
 		v0.assign(s.cbegin(), s.cend());
@@ -178,7 +179,7 @@ KERBAL_TEST_CASE(test_avl_set_assign_range, "test avl_set::assign(iterator, iter
 	for (std::size_t i = 0; i < kc::size(ns); ++i) {
 		int n1 = ns[i];
 
-		kc::vector<int> origin_data = ktn::get_random_vec_i(n1, eg);
+		kc::vector<int> origin_data = ktest::get_random_vec_i(n1, eg);
 
 		kc::vector<int>::iterator it = origin_data.begin(), end = origin_data.end();
 		for (; it != end; ++it) {
@@ -189,7 +190,7 @@ KERBAL_TEST_CASE(test_avl_set_assign_range, "test avl_set::assign(iterator, iter
 
 		for (std::size_t j = 0; j < kc::size(ns); ++j) {
 			int n2 = ns[j];
-			kc::vector<int> assign_data = ktn::get_random_vec_i(n2, eg);
+			kc::vector<int> assign_data = ktest::get_random_vec_i(n2, eg);
 
 			kc::vector<int>::iterator it = origin_data.begin(), end = origin_data.end();
 			for (; it != end; ++it) {
@@ -399,7 +400,7 @@ KERBAL_TEST_CASE(test_avl_set_erase, "test avl_set::erase")
 
 		for (int j = 0; j < 10; ++j) {
 
-			kerbal::container::vector<int> v0 = ktn::get_random_vec_i(size, eg);
+			kerbal::container::vector<int> v0 = ktest::get_random_vec_i(size, eg);
 
 			for (std::size_t i = 0; i < v0.size(); ++i) {
 				kc::avl_set<int> s(v0.cbegin(), v0.cend());

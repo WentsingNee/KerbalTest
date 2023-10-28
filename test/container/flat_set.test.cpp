@@ -9,11 +9,12 @@
  *   all rights reserved
  */
 
+#include <ktest/random/random_vector.hpp>
+
 #include <kerbal/container/flat_set.hpp>
 #include <kerbal/container/static_flat_set.hpp>
 
 #include <kerbal/test/test.hpp>
-#include "helper/random_vector.hpp"
 
 #include <kerbal/compare/sequence_compare.hpp>
 #include <kerbal/container/nonmember_container_access.hpp>
@@ -39,7 +40,7 @@ KERBAL_TEST_CASE(test_flat_set_range_constructor, "test flat_set::flat_set(itera
 		printf("seeds: %d\n", seeds[j]);
 
 		kerbal::random::mt19937 eg(seeds[j]);
-		kerbal::container::vector<int> v = ktn::get_random_vec_i(N::value, eg);
+		kerbal::container::vector<int> v = ktest::get_random_vec_i(N::value, eg);
 
 		std::set<int> set(v.cbegin(), v.cend());
 		std::multiset<int> multiset(v.cbegin(), v.cend());
@@ -154,7 +155,7 @@ KERBAL_TEST_CASE(test_flat_multiset_erase, "test flat_multiset::erase)")
 
 		kerbal::random::mt19937 eg(seeds[j]);
 
-		kerbal::container::vector<int> v = ktn::get_random_vec_i_mod(N::value, eg, N::value / 10);
+		kerbal::container::vector<int> v = ktest::get_random_vec_i_mod(N::value, eg, N::value / 10);
 
 		std::multiset<int> multiset(v.cbegin(), v.cend());
 		kerbal::container::flat_multiset<int> flatMultiset(v.cbegin(), v.cend());
