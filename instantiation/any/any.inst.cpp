@@ -9,10 +9,12 @@
  *   all rights reserved
  */
 
+#include <ktest/compatibility/msvc_tmpinst_constexpr.hpp>
+
 #include <kerbal/any/any.hpp>
 
 #include <kerbal/container/array.hpp>
-#include "msvc_tmpinst_constexpr.hpp"
+
 
 namespace ka = kerbal::any;
 

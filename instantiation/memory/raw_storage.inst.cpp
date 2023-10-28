@@ -9,7 +9,8 @@
  *   all rights reserved
  */
 
-#include "msvc_tmpinst_constexpr.hpp"
+#include <ktest/compatibility/msvc_tmpinst_constexpr.hpp>
+
 #include <kerbal/memory/raw_storage.hpp>
 #include <kerbal/container/vector.hpp>
 #include <kerbal/utility/ignore_unused.hpp>
@@ -21,6 +22,7 @@
 #else
 #	include <kerbal/utility/forward.hpp>
 #endif
+
 
 namespace km = kerbal::memory;
 namespace ku = kerbal::utility;

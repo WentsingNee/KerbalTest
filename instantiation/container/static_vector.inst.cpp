@@ -9,10 +9,12 @@
  *   all rights reserved
  */
 
-#include "msvc_tmpinst_constexpr.hpp"
+#include <ktest/compatibility/msvc_tmpinst_constexpr.hpp>
+
 #include <kerbal/container/static_vector.hpp>
 
 #include <string>
+
 
 namespace kc = kerbal::container;
 

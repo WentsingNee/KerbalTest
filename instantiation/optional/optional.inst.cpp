@@ -9,7 +9,8 @@
  *   all rights reserved
  */
 
-#include "msvc_tmpinst_constexpr.hpp"
+#include <ktest/compatibility/msvc_tmpinst_constexpr.hpp>
+
 #include <kerbal/optional/optional.hpp>
 
 #include <string>

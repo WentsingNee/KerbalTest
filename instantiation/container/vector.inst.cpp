@@ -9,8 +9,10 @@
  *   all rights reserved
  */
 
-#include "msvc_tmpinst_constexpr.hpp"
+#include <ktest/compatibility/msvc_tmpinst_constexpr.hpp>
+
 #include <kerbal/container/vector.hpp>
+
 
 #include <iterator>
 #include <sstream>

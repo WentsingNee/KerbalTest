@@ -1,5 +1,5 @@
 /**
- * @file       msvc_tmpinst_constexpr
+ * @file       msvc_tmpinst_constexpr.hpp
  * @brief
  * @date       2021-07-4
  * @author     Peter
@@ -9,8 +9,8 @@
  *   all rights reserved
  */
 
-#ifndef KERBAL_INSTANTIATION_MSVC_TMPINST_CONSTEXPR_HPP
-#define KERBAL_INSTANTIATION_MSVC_TMPINST_CONSTEXPR_HPP
+#ifndef KTEST_COMPATIBILITY_MSVC_TMPINST_CONSTEXPR_HPP
+#define KTEST_COMPATIBILITY_MSVC_TMPINST_CONSTEXPR_HPP
 
 #include <kerbal/compatibility/constexpr.hpp>
 #include <kerbal/config/compiler_id.hpp>
@@ -29,4 +29,4 @@
 
 #endif
 
-#endif // KERBAL_INSTANTIATION_MSVC_TMPINST_CONSTEXPR_HPP
+#endif // KTEST_COMPATIBILITY_MSVC_TMPINST_CONSTEXPR_HPP

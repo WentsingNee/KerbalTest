@@ -9,9 +9,9 @@
  *   all rights reserved
  */
 
-#include <kerbal/container/avl_map.hpp>
+#include <ktest/compatibility/msvc_tmpinst_constexpr.hpp>
 
-#include "../msvc_tmpinst_constexpr.hpp"
+#include <kerbal/container/avl_map.hpp>
 
 #include <string>
 

@@ -9,9 +9,10 @@
  *   all rights reserved
  */
 
+#include <ktest/compatibility/msvc_tmpinst_constexpr.hpp>
+
 #include <kerbal/container/priority_queue.hpp>
 
-#include "msvc_tmpinst_constexpr.hpp"
 
 template class kerbal::container::priority_queue<int>;
 
