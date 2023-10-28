@@ -13,7 +13,7 @@
 
 #include <kerbal/test/test.hpp>
 #include <kerbal/compatibility/noexcept.hpp>
-#include <kerbal/memory/uninitialized.hpp>
+#include <kerbal/memory/uninitialized/destroy_at.hpp>
 #include <kerbal/numeric/numeric_limits.hpp>
 
 
