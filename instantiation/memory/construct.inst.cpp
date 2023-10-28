@@ -9,49 +9,16 @@
  *   all rights reserved
  */
 
+#include <ktest/iterator/iterators.hpp>
+
 #include <kerbal/memory/uninitialized.hpp>
 
-#include <kerbal/container/forward_list.hpp>
-#include <kerbal/container/list.hpp>
-#include <kerbal/container/single_list.hpp>
-
-#include <deque>
 #include <string>
+
 
 typedef std::string s;
 
 namespace km = kerbal::memory;
-
-
-template <typename T>
-struct CtgIter
-{
-		typedef T* type;
-};
-
-template <typename T>
-struct RasIter
-{
-		typedef typename std::deque<T>::iterator type;
-};
-
-template <typename T>
-struct BdrIter
-{
-		typedef typename kerbal::container::list<T>::iterator type;
-};
-
-template <typename T>
-struct FwlIter
-{
-		typedef typename kerbal::container::forward_list<T>::iterator type;
-};
-
-template <typename T>
-struct FwdIter
-{
-		typedef typename kerbal::container::single_list<T>::iterator type;
-};
 
 
 template <typename T>
@@ -66,6 +33,10 @@ struct uninitialized_inst_helper
 			km::uninitialized_value_construct_n(b, n);
 			km::uninitialized_copy(b, e, o);
 			km::uninitialized_copy_n(b, n, o);
+#	if __cplusplus >= 201103L
+			km::uninitialized_move(b, e, o);
+			km::uninitialized_move_n(b, n, o);
+#	endif
 			km::uninitialized_fill(b, e, v);
 			km::uninitialized_fill_n(b, n, v);
 		}

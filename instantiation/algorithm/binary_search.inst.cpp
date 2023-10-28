@@ -9,6 +9,8 @@
  *   all rights reserved
  */
 
+#include <ktest/iterator/iterators.hpp>
+
 #include <kerbal/algorithm/binary_search.hpp>
 
 template <typename T>
@@ -17,19 +19,7 @@ struct cmp_fnptr
 		typedef bool(*type)(const T&, const T&);
 };
 
-#include <kerbal/container/list.hpp>
-#include <kerbal/container/forward_list.hpp>
-#include <kerbal/container/single_list.hpp>
-
-#include <deque>
 #include <string>
-
-
-template <typename T> struct CtgIter { typedef T* type; };
-template <typename T> struct RasIter { typedef typename std::deque<T>::iterator type; };
-template <typename T> struct BdrIter { typedef typename kerbal::container::list<T>::iterator type; };
-template <typename T> struct FwlIter { typedef typename kerbal::container::forward_list<T>::iterator type; };
-template <typename T> struct FwdIter { typedef typename kerbal::container::single_list<T>::iterator type; };
 
 
 template CtgIter<int>::type kerbal::algorithm::lower_bound(CtgIter<int>::type, CtgIter<int>::type, const int&, cmp_fnptr<int>::type);

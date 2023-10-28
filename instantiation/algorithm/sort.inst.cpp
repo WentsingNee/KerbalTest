@@ -9,6 +9,8 @@
  *   all rights reserved
  */
 
+#include <ktest/iterator/iterators.hpp>
+
 #include <kerbal/algorithm/sort.hpp>
 
 template <typename T>
@@ -17,43 +19,10 @@ struct cmp_fnptr
 		typedef bool(*type)(const T&, const T&);
 };
 
+
 #include <kerbal/compare/basic_compare.hpp>
-#include <kerbal/container/list.hpp>
-#include <kerbal/container/forward_list.hpp>
-#include <kerbal/container/single_list.hpp>
 
-#include <deque>
 #include <string>
-
-template <typename T>
-struct CtgIter
-{
-		typedef T* type;
-};
-
-template <typename T>
-struct RasIter
-{
-		typedef typename std::deque<T>::iterator type;
-};
-
-template <typename T>
-struct BdrIter
-{
-		typedef typename kerbal::container::list<T>::iterator type;
-};
-
-template <typename T>
-struct FwlIter
-{
-		typedef typename kerbal::container::forward_list<T>::iterator type;
-};
-
-template <typename T>
-struct FwdIter
-{
-		typedef typename kerbal::container::single_list<T>::iterator type;
-};
 
 template void kerbal::algorithm::bubble_sort(CtgIter<int>::type, CtgIter<int>::type, cmp_fnptr<int>::type);
 template void kerbal::algorithm::bubble_sort(RasIter<int>::type, RasIter<int>::type, cmp_fnptr<int>::type);

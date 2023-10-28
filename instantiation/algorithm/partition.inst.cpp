@@ -9,34 +9,25 @@
  *   all rights reserved
  */
 
+#include <ktest/iterator/iterators.hpp>
+
 #include <kerbal/algorithm/partition.hpp>
 
-#include <deque>
-#include <kerbal/container/list.hpp>
-#include <kerbal/container/forward_list.hpp>
-#include <kerbal/container/single_list.hpp>
 
-typedef int* CtgIter;
-typedef std::deque<int>::iterator RasIter;
-typedef kerbal::container::list<int>::iterator BdrIter;
-typedef kerbal::container::forward_list<int>::iterator FwlIter;
-typedef kerbal::container::single_list<int>::iterator FwdIter;
+template CtgIter<int>::type kerbal::algorithm::is_partitioned_until(CtgIter<int>::type, CtgIter<int>::type, bool(*)(const int&));
+template RasIter<int>::type kerbal::algorithm::is_partitioned_until(RasIter<int>::type, RasIter<int>::type, bool(*)(const int&));
+template BdrIter<int>::type kerbal::algorithm::is_partitioned_until(BdrIter<int>::type, BdrIter<int>::type, bool(*)(const int&));
+template FwlIter<int>::type kerbal::algorithm::is_partitioned_until(FwlIter<int>::type, FwlIter<int>::type, bool(*)(const int&));
+template FwdIter<int>::type kerbal::algorithm::is_partitioned_until(FwdIter<int>::type, FwdIter<int>::type, bool(*)(const int&));
 
+template bool kerbal::algorithm::is_partitioned(CtgIter<int>::type, CtgIter<int>::type, bool(*)(const int&));
+template bool kerbal::algorithm::is_partitioned(RasIter<int>::type, RasIter<int>::type, bool(*)(const int&));
+template bool kerbal::algorithm::is_partitioned(BdrIter<int>::type, BdrIter<int>::type, bool(*)(const int&));
+template bool kerbal::algorithm::is_partitioned(FwlIter<int>::type, FwlIter<int>::type, bool(*)(const int&));
+template bool kerbal::algorithm::is_partitioned(FwdIter<int>::type, FwdIter<int>::type, bool(*)(const int&));
 
-template CtgIter kerbal::algorithm::is_partitioned_until(CtgIter, CtgIter, bool(*)(const int&));
-template RasIter kerbal::algorithm::is_partitioned_until(RasIter, RasIter, bool(*)(const int&));
-template BdrIter kerbal::algorithm::is_partitioned_until(BdrIter, BdrIter, bool(*)(const int&));
-template FwlIter kerbal::algorithm::is_partitioned_until(FwlIter, FwlIter, bool(*)(const int&));
-template FwdIter kerbal::algorithm::is_partitioned_until(FwdIter, FwdIter, bool(*)(const int&));
-
-template bool kerbal::algorithm::is_partitioned(CtgIter, CtgIter, bool(*)(const int&));
-template bool kerbal::algorithm::is_partitioned(RasIter, RasIter, bool(*)(const int&));
-template bool kerbal::algorithm::is_partitioned(BdrIter, BdrIter, bool(*)(const int&));
-template bool kerbal::algorithm::is_partitioned(FwlIter, FwlIter, bool(*)(const int&));
-template bool kerbal::algorithm::is_partitioned(FwdIter, FwdIter, bool(*)(const int&));
-
-template CtgIter kerbal::algorithm::partition(CtgIter, CtgIter, bool(*)(const int&));
-template RasIter kerbal::algorithm::partition(RasIter, RasIter, bool(*)(const int&));
-template BdrIter kerbal::algorithm::partition(BdrIter, BdrIter, bool(*)(const int&));
-template FwlIter kerbal::algorithm::partition(FwlIter, FwlIter, bool(*)(const int&));
-template FwdIter kerbal::algorithm::partition(FwdIter, FwdIter, bool(*)(const int&));
+template CtgIter<int>::type kerbal::algorithm::partition(CtgIter<int>::type, CtgIter<int>::type, bool(*)(const int&));
+template RasIter<int>::type kerbal::algorithm::partition(RasIter<int>::type, RasIter<int>::type, bool(*)(const int&));
+template BdrIter<int>::type kerbal::algorithm::partition(BdrIter<int>::type, BdrIter<int>::type, bool(*)(const int&));
+template FwlIter<int>::type kerbal::algorithm::partition(FwlIter<int>::type, FwlIter<int>::type, bool(*)(const int&));
+template FwdIter<int>::type kerbal::algorithm::partition(FwdIter<int>::type, FwdIter<int>::type, bool(*)(const int&));

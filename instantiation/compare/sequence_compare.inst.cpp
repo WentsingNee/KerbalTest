@@ -9,7 +9,10 @@
  *   all rights reserved
  */
 
+#include <ktest/iterator/iterators.hpp>
+
 #include <kerbal/compare/sequence_compare.hpp>
+
 
 template <typename T>
 struct cmp_fnptr
@@ -17,50 +20,39 @@ struct cmp_fnptr
 		typedef bool(*type)(const T&, const T&);
 };
 
-#include <deque>
-#include <kerbal/container/list.hpp>
-#include <kerbal/container/forward_list.hpp>
-#include <kerbal/container/single_list.hpp>
 
-typedef int* CtgIter;
-typedef std::deque<int>::iterator RasIter;
-typedef kerbal::container::list<int>::iterator BdrIter;
-typedef kerbal::container::forward_list<int>::iterator FwlIter;
-typedef kerbal::container::single_list<int>::iterator FwdIter;
+template bool kerbal::compare::sequence_equal_to(CtgIter<int>::type, CtgIter<int>::type, CtgIter<int>::type, CtgIter<int>::type, cmp_fnptr<int>::type);
+template bool kerbal::compare::sequence_equal_to(RasIter<int>::type, RasIter<int>::type, RasIter<int>::type, RasIter<int>::type, cmp_fnptr<int>::type);
+template bool kerbal::compare::sequence_equal_to(BdrIter<int>::type, BdrIter<int>::type, BdrIter<int>::type, BdrIter<int>::type, cmp_fnptr<int>::type);
+template bool kerbal::compare::sequence_equal_to(FwlIter<int>::type, FwlIter<int>::type, FwlIter<int>::type, FwlIter<int>::type, cmp_fnptr<int>::type);
+template bool kerbal::compare::sequence_equal_to(FwdIter<int>::type, FwdIter<int>::type, FwdIter<int>::type, FwdIter<int>::type, cmp_fnptr<int>::type);
 
+template bool kerbal::compare::sequence_not_equal_to(CtgIter<int>::type, CtgIter<int>::type, CtgIter<int>::type, CtgIter<int>::type, cmp_fnptr<int>::type);
+template bool kerbal::compare::sequence_not_equal_to(RasIter<int>::type, RasIter<int>::type, RasIter<int>::type, RasIter<int>::type, cmp_fnptr<int>::type);
+template bool kerbal::compare::sequence_not_equal_to(BdrIter<int>::type, BdrIter<int>::type, BdrIter<int>::type, BdrIter<int>::type, cmp_fnptr<int>::type);
+template bool kerbal::compare::sequence_not_equal_to(FwlIter<int>::type, FwlIter<int>::type, FwlIter<int>::type, FwlIter<int>::type, cmp_fnptr<int>::type);
+template bool kerbal::compare::sequence_not_equal_to(FwdIter<int>::type, FwdIter<int>::type, FwdIter<int>::type, FwdIter<int>::type, cmp_fnptr<int>::type);
 
-template bool kerbal::compare::sequence_equal_to(CtgIter, CtgIter, CtgIter, CtgIter, cmp_fnptr<int>::type);
-template bool kerbal::compare::sequence_equal_to(RasIter, RasIter, RasIter, RasIter, cmp_fnptr<int>::type);
-template bool kerbal::compare::sequence_equal_to(BdrIter, BdrIter, BdrIter, BdrIter, cmp_fnptr<int>::type);
-template bool kerbal::compare::sequence_equal_to(FwlIter, FwlIter, FwlIter, FwlIter, cmp_fnptr<int>::type);
-template bool kerbal::compare::sequence_equal_to(FwdIter, FwdIter, FwdIter, FwdIter, cmp_fnptr<int>::type);
+template bool kerbal::compare::sequence_less(CtgIter<int>::type, CtgIter<int>::type, CtgIter<int>::type, CtgIter<int>::type, cmp_fnptr<int>::type);
+template bool kerbal::compare::sequence_less(RasIter<int>::type, RasIter<int>::type, RasIter<int>::type, RasIter<int>::type, cmp_fnptr<int>::type);
+template bool kerbal::compare::sequence_less(BdrIter<int>::type, BdrIter<int>::type, BdrIter<int>::type, BdrIter<int>::type, cmp_fnptr<int>::type);
+template bool kerbal::compare::sequence_less(FwlIter<int>::type, FwlIter<int>::type, FwlIter<int>::type, FwlIter<int>::type, cmp_fnptr<int>::type);
+template bool kerbal::compare::sequence_less(FwdIter<int>::type, FwdIter<int>::type, FwdIter<int>::type, FwdIter<int>::type, cmp_fnptr<int>::type);
 
-template bool kerbal::compare::sequence_not_equal_to(CtgIter, CtgIter, CtgIter, CtgIter, cmp_fnptr<int>::type);
-template bool kerbal::compare::sequence_not_equal_to(RasIter, RasIter, RasIter, RasIter, cmp_fnptr<int>::type);
-template bool kerbal::compare::sequence_not_equal_to(BdrIter, BdrIter, BdrIter, BdrIter, cmp_fnptr<int>::type);
-template bool kerbal::compare::sequence_not_equal_to(FwlIter, FwlIter, FwlIter, FwlIter, cmp_fnptr<int>::type);
-template bool kerbal::compare::sequence_not_equal_to(FwdIter, FwdIter, FwdIter, FwdIter, cmp_fnptr<int>::type);
+template bool kerbal::compare::sequence_greater(CtgIter<int>::type, CtgIter<int>::type, CtgIter<int>::type, CtgIter<int>::type, cmp_fnptr<int>::type);
+template bool kerbal::compare::sequence_greater(RasIter<int>::type, RasIter<int>::type, RasIter<int>::type, RasIter<int>::type, cmp_fnptr<int>::type);
+template bool kerbal::compare::sequence_greater(BdrIter<int>::type, BdrIter<int>::type, BdrIter<int>::type, BdrIter<int>::type, cmp_fnptr<int>::type);
+template bool kerbal::compare::sequence_greater(FwlIter<int>::type, FwlIter<int>::type, FwlIter<int>::type, FwlIter<int>::type, cmp_fnptr<int>::type);
+template bool kerbal::compare::sequence_greater(FwdIter<int>::type, FwdIter<int>::type, FwdIter<int>::type, FwdIter<int>::type, cmp_fnptr<int>::type);
 
-template bool kerbal::compare::sequence_less(CtgIter, CtgIter, CtgIter, CtgIter, cmp_fnptr<int>::type);
-template bool kerbal::compare::sequence_less(RasIter, RasIter, RasIter, RasIter, cmp_fnptr<int>::type);
-template bool kerbal::compare::sequence_less(BdrIter, BdrIter, BdrIter, BdrIter, cmp_fnptr<int>::type);
-template bool kerbal::compare::sequence_less(FwlIter, FwlIter, FwlIter, FwlIter, cmp_fnptr<int>::type);
-template bool kerbal::compare::sequence_less(FwdIter, FwdIter, FwdIter, FwdIter, cmp_fnptr<int>::type);
+template bool kerbal::compare::sequence_less_equal(CtgIter<int>::type, CtgIter<int>::type, CtgIter<int>::type, CtgIter<int>::type, cmp_fnptr<int>::type);
+template bool kerbal::compare::sequence_less_equal(RasIter<int>::type, RasIter<int>::type, RasIter<int>::type, RasIter<int>::type, cmp_fnptr<int>::type);
+template bool kerbal::compare::sequence_less_equal(BdrIter<int>::type, BdrIter<int>::type, BdrIter<int>::type, BdrIter<int>::type, cmp_fnptr<int>::type);
+template bool kerbal::compare::sequence_less_equal(FwlIter<int>::type, FwlIter<int>::type, FwlIter<int>::type, FwlIter<int>::type, cmp_fnptr<int>::type);
+template bool kerbal::compare::sequence_less_equal(FwdIter<int>::type, FwdIter<int>::type, FwdIter<int>::type, FwdIter<int>::type, cmp_fnptr<int>::type);
 
-template bool kerbal::compare::sequence_greater(CtgIter, CtgIter, CtgIter, CtgIter, cmp_fnptr<int>::type);
-template bool kerbal::compare::sequence_greater(RasIter, RasIter, RasIter, RasIter, cmp_fnptr<int>::type);
-template bool kerbal::compare::sequence_greater(BdrIter, BdrIter, BdrIter, BdrIter, cmp_fnptr<int>::type);
-template bool kerbal::compare::sequence_greater(FwlIter, FwlIter, FwlIter, FwlIter, cmp_fnptr<int>::type);
-template bool kerbal::compare::sequence_greater(FwdIter, FwdIter, FwdIter, FwdIter, cmp_fnptr<int>::type);
-
-template bool kerbal::compare::sequence_less_equal(CtgIter, CtgIter, CtgIter, CtgIter, cmp_fnptr<int>::type);
-template bool kerbal::compare::sequence_less_equal(RasIter, RasIter, RasIter, RasIter, cmp_fnptr<int>::type);
-template bool kerbal::compare::sequence_less_equal(BdrIter, BdrIter, BdrIter, BdrIter, cmp_fnptr<int>::type);
-template bool kerbal::compare::sequence_less_equal(FwlIter, FwlIter, FwlIter, FwlIter, cmp_fnptr<int>::type);
-template bool kerbal::compare::sequence_less_equal(FwdIter, FwdIter, FwdIter, FwdIter, cmp_fnptr<int>::type);
-
-template bool kerbal::compare::sequence_greater_equal(CtgIter, CtgIter, CtgIter, CtgIter, cmp_fnptr<int>::type);
-template bool kerbal::compare::sequence_greater_equal(RasIter, RasIter, RasIter, RasIter, cmp_fnptr<int>::type);
-template bool kerbal::compare::sequence_greater_equal(BdrIter, BdrIter, BdrIter, BdrIter, cmp_fnptr<int>::type);
-template bool kerbal::compare::sequence_greater_equal(FwlIter, FwlIter, FwlIter, FwlIter, cmp_fnptr<int>::type);
-template bool kerbal::compare::sequence_greater_equal(FwdIter, FwdIter, FwdIter, FwdIter, cmp_fnptr<int>::type);
+template bool kerbal::compare::sequence_greater_equal(CtgIter<int>::type, CtgIter<int>::type, CtgIter<int>::type, CtgIter<int>::type, cmp_fnptr<int>::type);
+template bool kerbal::compare::sequence_greater_equal(RasIter<int>::type, RasIter<int>::type, RasIter<int>::type, RasIter<int>::type, cmp_fnptr<int>::type);
+template bool kerbal::compare::sequence_greater_equal(BdrIter<int>::type, BdrIter<int>::type, BdrIter<int>::type, BdrIter<int>::type, cmp_fnptr<int>::type);
+template bool kerbal::compare::sequence_greater_equal(FwlIter<int>::type, FwlIter<int>::type, FwlIter<int>::type, FwlIter<int>::type, cmp_fnptr<int>::type);
+template bool kerbal::compare::sequence_greater_equal(FwdIter<int>::type, FwdIter<int>::type, FwdIter<int>::type, FwdIter<int>::type, cmp_fnptr<int>::type);

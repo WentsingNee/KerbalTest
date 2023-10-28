@@ -9,48 +9,14 @@
  *   all rights reserved
  */
 
+#include <ktest/iterator/iterators.hpp>
+
 #include <kerbal/memory/uninitialized.hpp>
 
-#include <kerbal/container/forward_list.hpp>
-#include <kerbal/container/list.hpp>
-#include <kerbal/container/single_list.hpp>
-
-#include <deque>
 
 struct NoTriviallyDestroy
 {
 		~NoTriviallyDestroy() KERBAL_NOEXCEPT;
-};
-
-
-template <typename T>
-struct CtgIter
-{
-		typedef T* type;
-};
-
-template <typename T>
-struct RasIter
-{
-		typedef typename std::deque<T>::iterator type;
-};
-
-template <typename T>
-struct BdrIter
-{
-		typedef typename kerbal::container::list<T>::iterator type;
-};
-
-template <typename T>
-struct FwlIter
-{
-		typedef typename kerbal::container::forward_list<T>::iterator type;
-};
-
-template <typename T>
-struct FwdIter
-{
-		typedef typename kerbal::container::single_list<T>::iterator type;
 };
 
 
