@@ -11,7 +11,9 @@
 
 #include <ktest/iterator/iterators.hpp>
 
-#include <kerbal/memory/uninitialized.hpp>
+#include <kerbal/memory/uninitialized/destroy.hpp>
+#include <kerbal/memory/uninitialized/destroy_at.hpp>
+#include <kerbal/memory/uninitialized/reverse_destroy.hpp>
 
 
 struct NoTriviallyDestroy

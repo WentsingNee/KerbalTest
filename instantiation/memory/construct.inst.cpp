@@ -11,7 +11,19 @@
 
 #include <ktest/iterator/iterators.hpp>
 
-#include <kerbal/memory/uninitialized.hpp>
+#include <kerbal/memory/uninitialized/uninitialized_default_construct.hpp>
+#include <kerbal/memory/uninitialized/uninitialized_default_construct_n.hpp>
+#include <kerbal/memory/uninitialized/uninitialized_value_construct.hpp>
+#include <kerbal/memory/uninitialized/uninitialized_value_construct_n.hpp>
+#include <kerbal/memory/uninitialized/uninitialized_copy.hpp>
+#include <kerbal/memory/uninitialized/uninitialized_copy_n.hpp>
+#include <kerbal/memory/uninitialized/uninitialized_fill.hpp>
+#include <kerbal/memory/uninitialized/uninitialized_fill_n.hpp>
+
+#if __cplusplus >= 201103L
+#	include <kerbal/memory/uninitialized/uninitialized_move.hpp>
+#	include <kerbal/memory/uninitialized/uninitialized_move_n.hpp>
+#endif
 
 #include <string>
 
