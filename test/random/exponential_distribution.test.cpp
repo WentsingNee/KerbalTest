@@ -9,6 +9,8 @@
  *   all rights reserved
  */
 
+#include <ktest/random/print_bar.hpp>
+
 #include <kerbal/random/exponential_distribution.hpp>
 
 #include <kerbal/test/test.hpp>
@@ -20,7 +22,6 @@
 #	include <random>
 #endif
 
-#include "print_bar.hpp"
 
 KERBAL_TEST_CASE(test_exponential_distribution, "test exponential_distribution")
 {
@@ -32,7 +33,7 @@ KERBAL_TEST_CASE(test_exponential_distribution, "test exponential_distribution")
 	for (int i = 0; i < n; ++i) {
 		++hist[static_cast<int>(dis(eg))];
 	}
-	print_bar(n, hist);
+	ktest::print_bar(n, hist);
 }
 
 #if __cplusplus >= 201103L
@@ -50,7 +51,7 @@ KERBAL_TEST_CASE(cmp_with_std_exponential_distribution_bar, "compare with std::e
 		++hist[static_cast<int>(ker_dis(eg[0]))].first;
 		++hist[static_cast<int>(std_dis(eg[1]))].second;
 	}
-	print_bar(n, hist);
+	ktest::print_bar(n, hist);
 }
 
 #endif

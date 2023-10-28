@@ -9,6 +9,8 @@
  *   all rights reserved
  */
 
+#include <ktest/random/print_bar.hpp>
+
 #include <kerbal/random/normal_distribution.hpp>
 
 #include <kerbal/test/test.hpp>
@@ -23,7 +25,6 @@
 #	include <random>
 #endif
 
-#include "print_bar.hpp"
 
 double my_round(double x)
 {
@@ -56,7 +57,7 @@ KERBAL_TEMPLATE_TEST_CASE(test_normal_distribution, "test normal_distribution")
 		for (int i = 0; i < n; ++i) {
 			++hist[static_cast<int>(my_round(dis(eg)))];
 		}
-		print_bar(n, hist);
+		ktest::print_bar(n, hist);
 
 		std::cout << "\n\n\n" << std::endl;
 	}
@@ -95,7 +96,7 @@ KERBAL_TEST_CASE(cmp_with_std_normal_distribution_bar, "compare with std::normal
 			++hist[static_cast<int>(my_round(ker_dis(eg[0])))].first;
 			++hist[static_cast<int>(my_round(std_dis(eg[1])))].second;
 		}
-		print_bar(n, hist);
+		ktest::print_bar(n, hist);
 
 		std::cout << "\n\n\n" << std::endl;
 	}

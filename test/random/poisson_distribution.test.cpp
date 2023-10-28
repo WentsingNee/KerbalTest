@@ -9,6 +9,8 @@
  *   all rights reserved
  */
 
+#include <ktest/random/print_bar.hpp>
+
 #include <kerbal/random/poisson_distribution.hpp>
 
 #include <kerbal/test/test.hpp>
@@ -22,7 +24,6 @@
 #	include <random>
 #endif
 
-#include "print_bar.hpp"
 
 template <typename Eg>
 KERBAL_TEMPLATE_TEST_CASE(test_poisson_distribution, "test poisson_distribution")
@@ -46,7 +47,7 @@ KERBAL_TEMPLATE_TEST_CASE(test_poisson_distribution, "test poisson_distribution"
 		for (int i = 0; i < n; ++i) {
 			++hist[dis(eg)];
 		}
-		print_bar(n, hist);
+		ktest::print_bar(n, hist);
 
 		std::cout << "\n\n\n" << std::endl;
 	}
@@ -82,7 +83,7 @@ KERBAL_TEST_CASE(cmp_with_std_poisson_distribution_bar, "compare with std::poiss
 			++hist[ker_dis(eg[0])].first;
 			++hist[std_dis(eg[1])].second;
 		}
-		print_bar(n, hist);
+		ktest::print_bar(n, hist);
 
 		std::cout << "\n\n\n" << std::endl;
 	}
