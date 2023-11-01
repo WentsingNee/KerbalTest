@@ -45,6 +45,8 @@ KERBAL_TEMPLATE_TEST_CASE_INST(test_mersenne, "test mersenne::operator() 64", ke
 template <typename MTEngine>
 KERBAL_TEMPLATE_TEST_CASE(test_batch_generate, "test batch generate")
 {
+	typedef typename MTEngine::result_type result_type;
+
 	int seeds[] = {23, 3, 31, 313, 34153, 546};
 	int discard_times[] = {0, 10, 55, 465, 84465};
 	int Ns[] = {0, 10, 55, 465, 4286, 84465};
@@ -60,12 +62,12 @@ KERBAL_TEMPLATE_TEST_CASE(test_batch_generate, "test batch generate")
 				eg1.discard(discard);
 				MTEngine eg2(eg1);
 
-				kerbal::container::vector<typename MTEngine::result_type> v1(N);
+				kerbal::container::vector<result_type> v1(N);
 				{
 					eg1.generate(v1.begin(), v1.end());
 				}
 
-				kerbal::container::vector<typename MTEngine::result_type> v2(N);
+				kerbal::container::vector<result_type> v2(N);
 				{
 					for (int i = 0; i < N; ++i) {
 						v2[i] = eg2();
@@ -121,6 +123,51 @@ KERBAL_TEST_CASE(test_mersenne_minmax, "test mersenne::min/max()")
 	KERBAL_TEST_CHECK_EQUAL(mt19937::max(),    static_cast<mt32_rt>(4294967295u));
 	KERBAL_TEST_CHECK_EQUAL(mt19937_64::max(), static_cast<mt64_rt>(18446744073709551615ull));
 }
+
+
+#if __cplusplus >= 201103L
+
+#include <random>
+
+template <typename MTEngine, typename StdEngine>
+KERBAL_TEMPLATE_TEST_CASE(test_mersenne_with_std, "test mersenne with std")
+{
+	typedef typename MTEngine::result_type result_type;
+
+	int seeds[] = {23, 3, 31, 313, 34153, 546};
+	int discard_times[] = {0, 10, 55, 465, 84465};
+	int Ns[] = {0, 10, 55, 465, 4286, 84465};
+
+	for (std::size_t tcase1 = 0; tcase1 < kerbal::container::size(seeds); ++tcase1) {
+		for (std::size_t tcase2 = 0; tcase2 < kerbal::container::size(discard_times); ++tcase2) {
+			for (std::size_t tcase3 = 0; tcase3 < kerbal::container::size(Ns); ++tcase3) {
+				int seed = seeds[tcase1];
+				int discard = discard_times[tcase2];
+				int N = Ns[tcase3];
+
+				MTEngine eg1(seed);
+				eg1.discard(discard);
+				StdEngine eg2(seed);
+				eg2.discard(discard);
+
+				kerbal::container::vector<result_type> v1(N);
+				eg1.generate(v1.begin(), v1.end());
+
+				kerbal::container::vector<result_type> v2(N);
+				for (int i = 0; i < N; ++i) {
+					v2[i] = eg2();
+				}
+				KERBAL_TEST_CHECK(v1 == v2);
+			}
+		}
+	}
+}
+
+KERBAL_TEMPLATE_TEST_CASE_INST(test_mersenne_with_std, "test mersenne with std", kerbal::random::mt19937, std::mt19937);
+KERBAL_TEMPLATE_TEST_CASE_INST(test_mersenne_with_std, "test mersenne with std 64", kerbal::random::mt19937_64, std::mt19937_64);
+
+
+#endif
 
 
 int main(int argc, char * argv[])
