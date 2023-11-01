@@ -1,6 +1,6 @@
 /**
  * @file       bit.test.cpp
- * @brief      
+ * @brief
  * @date       2019-9-30
  * @author     Peter
  * @copyright
@@ -23,16 +23,31 @@ KERBAL_TEMPLATE_TEST_CASE(test_popcount, "test popcount")
 	kerbal::random::mt19937 eg;
 
 	for (int c = 0; c < 100; ++c) {
-		int r = 0;
+		int ans_plain = 0;
 		T test = 0;
 
 		for (unsigned int i = 0; i < CHAR_BIT * sizeof(T); ++i) {
 			T bit = eg() % 2u;
-			test |= bit << i;
-			r += bit;
+			test |= static_cast<T>(bit) << i;
+			ans_plain += bit;
 		}
 
-		KERBAL_TEST_CHECK_EQUAL(kerbal::numeric::popcount(test), r);
+		int ans_popcnt = kerbal::numeric::popcount(test);
+
+//		if (ans_popcnt != ans_plain) {
+//			kerbal::numeric::bitarray_result<T>::type bitarr = kerbal::numeric::bitarray(test);
+//			int cnt = 0;
+//			for (std::size_t i = 0; i < bitarr.size(); ++i) {
+//				printf("%d", bitarr[i]);
+//				if (bitarr[i]) {
+//					++cnt;
+//				}
+//			}
+//			printf("\n");
+//			printf("%d %d %d\n", ans_popcnt, ans_plain, cnt);
+//		}
+
+		KERBAL_TEST_CHECK_EQUAL(ans_popcnt, ans_plain);
 	}
 }
 
