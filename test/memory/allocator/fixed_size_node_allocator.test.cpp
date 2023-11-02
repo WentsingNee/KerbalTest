@@ -13,6 +13,7 @@
 #include <kerbal/test/test.hpp>
 
 #include <kerbal/compare/basic_compare.hpp>
+#include <kerbal/container/avl_set.hpp>
 #include <kerbal/container/list.hpp>
 #include <kerbal/container/vector.hpp>
 #include <kerbal/memory/allocator/default_allocator.hpp>
@@ -20,8 +21,6 @@
 #include <kerbal/test/runtime_timer.hpp>
 #include <kerbal/type_traits/integral_constant.hpp>
 #include <kerbal/type_traits/is_same.hpp>
-
-#include <set>
 
 
 KERBAL_TEST_CASE(test_fixed_size_node_allocator_on_list, "test fixed_size_node_allocator on list")
@@ -91,8 +90,8 @@ KERBAL_TEST_CASE(test_fixed_size_node_allocator_on_list, "test fixed_size_node_a
 	}
 }
 
-// warning: during C++98, container doesn't support stateful allocators
-#if __cplusplus >= 201103L
+
+// warning: std::set + fixed_size_node_allocator break down under msvc win32 AddressSanitize
 
 KERBAL_TEST_CASE(test_fixed_size_node_allocator_on_set, "test fixed_size_node_allocator on set")
 {
@@ -104,8 +103,8 @@ KERBAL_TEST_CASE(test_fixed_size_node_allocator_on_set, "test fixed_size_node_al
 	}
 
 
-	typedef std::set<int, kerbal::compare::less<int> > common_set;
-	typedef std::set<int, kerbal::compare::less<int>, kerbal::memory::fixed_size_node_allocator<int> > fast_set;
+	typedef kerbal::container::avl_set<int, kerbal::compare::less<int> > common_set;
+	typedef kerbal::container::avl_set<int, kerbal::compare::less<int>, kerbal::memory::fixed_size_node_allocator<int> > fast_set;
 	common_set l;
 	fast_set lfast;
 
@@ -163,7 +162,6 @@ KERBAL_TEST_CASE(test_fixed_size_node_allocator_on_set, "test fixed_size_node_al
 	}
 }
 
-#endif
 
 KERBAL_TEST_CASE(test_fixed_size_node_allocator_rebind, "test fixed_size_node_allocator rebind")
 {
