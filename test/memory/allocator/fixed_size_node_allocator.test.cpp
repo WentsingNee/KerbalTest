@@ -31,21 +31,26 @@ KERBAL_TEST_CASE(test_fixed_size_node_allocator_on_list, "test fixed_size_node_a
 	common_list l;
 	fast_list lfast;
 
-	typedef kerbal::type_traits::integral_constant<std::size_t, 40 * 1024 * 1024> N;
+	typedef kerbal::type_traits::integral_constant<std::size_t, 4 * 1024 * 1024> N;
 
 	{
 		kerbal::test::runtime_timer t;
 		for (N::value_type i = 0; i < N::value; ++i) {
 			l.push_back(static_cast<int>(i));
 		}
-		std::cout << "common  " << t.count() << std::endl;
+		std::cout << "common push_back  " << t.count() << std::endl;
 	}
 	{
 		kerbal::test::runtime_timer t;
 		for (N::value_type i = 0; i < N::value; ++i) {
 			lfast.push_back(static_cast<int>(i));
 		}
-		std::cout << "fast  " << t.count() << std::endl;
+		std::cout << "fast push_back  " << t.count() << std::endl;
+	}
+	{
+		kerbal::test::runtime_timer t;
+		common_list bak(l);
+		std::cout << "common copy  " << t.count() << std::endl;
 	}
 	{
 		kerbal::test::runtime_timer t;
@@ -107,12 +112,22 @@ KERBAL_TEST_CASE(test_fixed_size_node_allocator_on_set, "test fixed_size_node_al
 	{
 		kerbal::test::runtime_timer t;
 		l.insert(test_data.cbegin(), test_data.cend());
-		std::cout << "common  " << t.count() << std::endl;
+		std::cout << "common insert  " << t.count() << std::endl;
 	}
 	{
 		kerbal::test::runtime_timer t;
 		lfast.insert(test_data.cbegin(), test_data.cend());
-		std::cout << "fast  " << t.count() << std::endl;
+		std::cout << "fast insert  " << t.count() << std::endl;
+	}
+	{
+		kerbal::test::runtime_timer t;
+		common_set bak(l);
+		std::cout << "common copy  " << t.count() << std::endl;
+	}
+	{
+		kerbal::test::runtime_timer t;
+		fast_set bak(lfast);
+		std::cout << "fast copy  " << t.count() << std::endl;
 	}
 	{
 		kerbal::test::runtime_timer t;
