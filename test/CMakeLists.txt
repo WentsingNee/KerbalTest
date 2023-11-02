@@ -21,6 +21,13 @@ if (NOT DEFINED KTEST_RUN_UTEST_INVOKER)
 endif ()
 
 
+add_custom_target(
+        run_utest_make_test_output_dir
+        COMMAND ${CMAKE_COMMAND} -E make_directory test_output
+        WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
+)
+
+
 function(add_ktest_utest_target_impl target target_src_file)
     add_executable("${target}" ${target_src_file})
     add_kerbal_parent_target(${target})
@@ -70,24 +77,13 @@ function(add_ktest_utest_target_impl target target_src_file)
     endif ()
 
     set(run_utest_target_name "run_${target}")
-    if (${CMAKE_CXX_PLATFORM_ID} MATCHES "Windows")
-        add_custom_target(${run_utest_target_name}
-                COMMAND (if not exist test_output (mkdir test_output))
-                COMMAND ${KTEST_RUN_UTEST_INVOKER} ${path} > test_output/${target}.out.txt
-                COMMAND type test_output\\${target}.out.txt
-                WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
-                COMMENT "Running utest target ${target}"
-        )
-    else ()
-        add_custom_target(${run_utest_target_name}
-                COMMAND
-                    mkdir -p test_output\;
-                    ${KTEST_RUN_UTEST_INVOKER} ${path} | tee test_output/${target}.out.txt\;
-                WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
-                COMMENT "Running utest target ${target}"
-        )
-    endif ()
-    add_dependencies(${run_utest_target_name} ${target})
+    add_custom_target(${run_utest_target_name}
+            COMMAND ${KTEST_RUN_UTEST_INVOKER} ${path} > test_output/${target}.out.txt
+            COMMAND ${CMAKE_COMMAND} -E cat test_output/${target}.out.txt
+            WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
+            COMMENT "Running utest target ${target}"
+            DEPENDS ${target} run_utest_make_test_output_dir
+    )
     add_kerbal_parent_target(${run_utest_target_name})
 endfunction()
 
