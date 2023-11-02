@@ -43,6 +43,10 @@ elseif (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
     message(STATUS "CXX flags: /D_CRT_SECURE_NO_WARNINGS")
 endif ()
 
+add_compile_definitions(LITTLE_ENDIAN=0)
+add_compile_definitions(BIG_ENDIAN=1)
+add_compile_definitions(BYTE_ORDER=LITTLE_ENDIAN)
+
 if (${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.12")
     add_compile_definitions(KERBAL_TYPE_TRAITS_DEBUG_WARNING=1)
 endif ()
