@@ -12,6 +12,7 @@
 #ifndef KTEST_RANDOM_VECTOR_HPP
 #define KTEST_RANDOM_VECTOR_HPP
 
+#include <kerbal/algorithm/modifier/iota.hpp>
 #include <kerbal/compatibility/constexpr.hpp>
 #include <kerbal/container/vector.hpp>
 #include <kerbal/random/mersenne_twister_engine.hpp>
@@ -21,6 +22,26 @@
 
 namespace ktest
 {
+
+	template <typename T>
+	KERBAL_CONSTEXPR20
+	kerbal::container::vector<T>
+	get_iota(std::size_t n, T const & start)
+	{
+		kerbal::container::vector<T> v(n);
+		kerbal::algorithm::iota(v.begin(), v.end(), start);
+		return v;
+	}
+
+	template <typename T>
+	KERBAL_CONSTEXPR20
+	kerbal::container::vector<T>
+	get_riota(std::size_t n, T const & start)
+	{
+		kerbal::container::vector<T> v(n);
+		kerbal::algorithm::iota(v.rbegin(), v.rend(), start);
+		return v;
+	}
 
 	template <typename Eg>
 	KERBAL_CONSTEXPR20

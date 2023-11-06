@@ -15,7 +15,6 @@
 
 #include <kerbal/test/test.hpp>
 
-#include <kerbal/algorithm/modifier/iota.hpp>
 #include <kerbal/compare/sequence_compare.hpp>
 #include <kerbal/container/nonmember_container_access.hpp>
 #include <kerbal/container/vector.hpp>
@@ -68,48 +67,6 @@ void print_avl_normal_result_if_wrong(kerbal::container::detail::avl_normal_resu
 			break;
 		}
 	}
-}
-
-
-inline
-kerbal::container::vector<int>
-get_sorted(std::size_t n)
-{
-	kerbal::container::vector<int> v(n);
-	kerbal::algorithm::iota(v.begin(), v.end(), 0);
-	return v;
-}
-
-inline
-kerbal::container::vector<int>
-get_reverse(std::size_t n)
-{
-	kerbal::container::vector<int> v(n);
-	kerbal::algorithm::iota(v.rbegin(), v.rend(), 0);
-	return v;
-}
-
-inline
-kerbal::container::vector<int>
-get_random(std::size_t n)
-{
-	kerbal::container::vector<int> v(n);
-	kerbal::random::mt19937 eg;
-	eg.generate_n(v.begin(), n);
-	return v;
-}
-
-inline
-kerbal::container::vector<int>
-get_random_mod(std::size_t n, int mod)
-{
-	kerbal::container::vector<int> v(n);
-	kerbal::random::mt19937 eg;
-	eg.generate_n(v.begin(), n);
-	for (std::size_t i = 0; i < v.size(); ++i) {
-		v[i] %= mod;
-	}
-	return v;
 }
 
 
@@ -239,22 +196,24 @@ KERBAL_TEMPLATE_TEST_CASE(test_avl_set_copy_assign, "test avl_set::operator=(con
 			pair_set_size_t(10, 0),
 	};
 
+	kerbal::random::mt19937 eg;
+
 	for (std::size_t tcase = 0; tcase < kc::size(sizes); ++tcase) {
 		std::size_t ssize = sizes[tcase].first;
 		std::size_t tsize = sizes[tcase].second;
 
 		kerbal::container::vector<int> sdata[] = {
-				get_sorted(ssize),
-				get_reverse(ssize),
-				get_random(ssize),
-				get_random_mod(ssize, 7),
+				ktest::get_iota(ssize, 0),
+				ktest::get_riota(ssize, 0),
+				ktest::get_random_vec_i(ssize, eg),
+				ktest::get_random_vec_i_mod(ssize, eg, 7),
 		};
 
 		kerbal::container::vector<int> tdata[] = {
-				get_sorted(tsize),
-				get_reverse(tsize),
-				get_random(tsize),
-				get_random_mod(tsize, 7),
+				ktest::get_iota(tsize, 0),
+				ktest::get_riota(tsize, 0),
+				ktest::get_random_vec_i(tsize, eg),
+				ktest::get_random_vec_i_mod(tsize, eg, 7),
 		};
 
 		for (std::size_t dcase = 0; dcase < kc::size(sdata); ++dcase) {
@@ -302,22 +261,24 @@ KERBAL_TEMPLATE_TEST_CASE(test_avl_set_move_assign, "test avl_set::operator=(avl
 			pair_set_size_t(10, 0),
 	};
 
+	kerbal::random::mt19937 eg;
+
 	for (std::size_t tcase = 0; tcase < kc::size(sizes); ++tcase) {
 		std::size_t ssize = sizes[tcase].first;
 		std::size_t tsize = sizes[tcase].second;
 
 		kerbal::container::vector<int> sdata[] = {
-				get_sorted(ssize),
-				get_reverse(ssize),
-				get_random(ssize),
-				get_random_mod(ssize, 7),
+				ktest::get_iota(ssize, 0),
+				ktest::get_riota(ssize, 0),
+				ktest::get_random_vec_i(ssize, eg),
+				ktest::get_random_vec_i_mod(ssize, eg, 7),
 		};
 
 		kerbal::container::vector<int> tdata[] = {
-				get_sorted(tsize),
-				get_reverse(tsize),
-				get_random(tsize),
-				get_random_mod(tsize, 7),
+				ktest::get_iota(tsize, 0),
+				ktest::get_riota(tsize, 0),
+				ktest::get_random_vec_i(tsize, eg),
+				ktest::get_random_vec_i_mod(tsize, eg, 7),
 		};
 
 		for (std::size_t dcase = 0; dcase < kc::size(sdata); ++dcase) {
@@ -359,16 +320,18 @@ KERBAL_TEMPLATE_TEST_CASE_INST(test_avl_set_move_assign, "test avl_set::operator
 template <typename Allocator>
 KERBAL_TEMPLATE_TEST_CASE(test_avl_set_emplace, "test avl_set::emplace")
 {
+	kerbal::random::mt19937 eg;
+
 	std::size_t sizes[] = {1, 2, 3, 4, 5, 10, 100, 1000, 10000};
 
 	for (std::size_t tcase = 0; tcase < kc::size(sizes); ++tcase) {
 		std::size_t size = sizes[tcase];
 
 		kerbal::container::vector<int> data[] = {
-				get_sorted(size),
-				get_reverse(size),
-				get_random(size),
-				get_random_mod(size, 7),
+				ktest::get_iota(size, 0),
+				ktest::get_riota(size, 0),
+				ktest::get_random_vec_i(size, eg),
+				ktest::get_random_vec_i_mod(size, eg, 7),
 		};
 
 		for (std::size_t dcase = 0; dcase < kc::size(data); ++dcase) {
@@ -428,9 +391,7 @@ KERBAL_TEST_CASE(test_avl_set_erase_insert_sorted, "test avl_set::erase (insert 
 	for (std::size_t tcase = 0; tcase < kc::size(sizes); ++tcase) {
 		std::size_t size = sizes[tcase];
 
-		kerbal::container::vector<int> v0(size); {
-			kerbal::algorithm::iota(v0.begin(), v0.end(), 0);
-		}
+		kerbal::container::vector<int> v0 = ktest::get_iota(size, 0);
 
 		kerbal::container::vector<int> erase_data(v0);
 #if __cplusplus >= 201103L
@@ -468,12 +429,14 @@ KERBAL_TEMPLATE_TEST_CASE(test_avl_set_swap, "test avl_set::swap")
 			pair_set_size_t(10, 0),
 	};
 
+	kerbal::random::mt19937 eg;
+
 	for (std::size_t tcase = 0; tcase < kc::size(sizes); ++tcase) {
 		std::size_t ssize = sizes[tcase].first;
 		std::size_t tsize = sizes[tcase].second;
 
-		kerbal::container::vector<int> sdata = get_random(ssize);
-		kerbal::container::vector<int> tdata = get_random(tsize);
+		kerbal::container::vector<int> sdata = ktest::get_random_vec_i(ssize, eg);
+		kerbal::container::vector<int> tdata = ktest::get_random_vec_i(tsize, eg);
 
 		kc::avl_set<int, kerbal::compare::binary_type_less<void, void>, Allocator> s(sdata.cbegin(), sdata.cend());
 		kc::avl_set<int, kerbal::compare::binary_type_less<void, void>, Allocator> t(tdata.cbegin(), tdata.cend());
