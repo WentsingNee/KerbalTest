@@ -255,6 +255,8 @@ KERBAL_TEMPLATE_TEST_CASE(test_static_bitset_all, "test static_bitset::all")
 	static_bitset bs;
 	kerbal::random::mt19937 eg;
 
+	KERBAL_TEST_CHECK_EQUAL(static_bitset_all_impl_in_fool_way(bs), bs.all());
+
 	{
 		for (size_t loop = 0; loop < N; ++loop) {
 			bs.set(eg() % N);
@@ -263,6 +265,7 @@ KERBAL_TEMPLATE_TEST_CASE(test_static_bitset_all, "test static_bitset::all")
 	}
 
 	bs.set();
+	KERBAL_TEST_CHECK_EQUAL(static_bitset_all_impl_in_fool_way(bs), bs.all());
 
 	{
 		for (size_t loop = 0; loop < N; ++loop) {
@@ -307,6 +310,8 @@ KERBAL_TEMPLATE_TEST_CASE(test_static_bitset_any, "test static_bitset::any")
 	static_bitset bs;
 	kerbal::random::mt19937 eg;
 
+	KERBAL_TEST_CHECK_EQUAL(static_bitset_any_impl_in_fool_way(bs), bs.any());
+
 	{
 		for (size_t loop = 0; loop < N; ++loop) {
 			bs.set(eg() % N);
@@ -315,6 +320,7 @@ KERBAL_TEMPLATE_TEST_CASE(test_static_bitset_any, "test static_bitset::any")
 	}
 
 	bs.set();
+	KERBAL_TEST_CHECK_EQUAL(static_bitset_any_impl_in_fool_way(bs), bs.any());
 
 	{
 		for (size_t loop = 0; loop < N; ++loop) {
@@ -325,7 +331,7 @@ KERBAL_TEMPLATE_TEST_CASE(test_static_bitset_any, "test static_bitset::any")
 
 }
 
-#define INST(N, T) KERBAL_TEMPLATE_TEST_CASE_INST(test_static_bitset_all, "test static_bitset::all (" # N ", " # T ")", N, T);
+#define INST(N, T) KERBAL_TEMPLATE_TEST_CASE_INST(test_static_bitset_any, "test static_bitset::any (" # N ", " # T ")", N, T);
 
 INST(0 * CHAR_BIT * sizeof(unsigned char) + 7, unsigned char);
 INST(4 * CHAR_BIT * sizeof(unsigned char) + 0, unsigned char);
@@ -357,7 +363,7 @@ KERBAL_TEMPLATE_TEST_CASE(test_static_bitset_count, "test static_bitset::count")
 
 }
 
-#define INST(N, T) KERBAL_TEMPLATE_TEST_CASE_INST(test_static_bitset_all, "test static_bitset::all (" # N ", " # T ")", N, T);
+#define INST(N, T) KERBAL_TEMPLATE_TEST_CASE_INST(test_static_bitset_count, "test static_bitset::count (" # N ", " # T ")", N, T);
 
 INST(0 * CHAR_BIT * sizeof(unsigned char) + 7, unsigned char);
 INST(4 * CHAR_BIT * sizeof(unsigned char) + 0, unsigned char);
