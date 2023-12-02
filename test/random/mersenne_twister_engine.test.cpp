@@ -167,6 +167,53 @@ KERBAL_TEMPLATE_TEST_CASE_INST(test_mersenne_with_std, "test mersenne with std",
 KERBAL_TEMPLATE_TEST_CASE_INST(test_mersenne_with_std, "test mersenne with std 64", kerbal::random::mt19937_64, std::mt19937_64);
 
 
+template <std::size_t N, std::size_t M>
+struct helper
+{
+	typedef kerbal::random::mersenne_twister_engine<
+			kerbal::compatibility::uint32_t,
+			32, N, M, 31,
+			0x9908b0dfUL, 11, 0xffffffffUL, 7,
+			0x9d2c5680UL, 15,
+			0xefc60000UL, 18, 1812433253UL>
+	ker_eg;
+
+	typedef std::mersenne_twister_engine<
+			kerbal::compatibility::uint32_t,
+			32, N, M, 31,
+			0x9908b0dfUL, 11, 0xffffffffUL, 7,
+			0x9d2c5680UL, 15,
+			0xefc60000UL, 18, 1812433253UL>
+	std_eg;
+
+	typedef kerbal::random::mersenne_twister_engine<
+			kerbal::compatibility::uint64_t,
+			64, N, M, 31,
+			0xb5026f5aa96619e9ULL, 29, 0x5555555555555555ULL, 17,
+			0x71d67fffeda60000ULL, 37,
+			0xfff7eee000000000ULL, 43, 6364136223846793005ULL>
+	ker_eg_64;
+
+	typedef std::mersenne_twister_engine<
+			kerbal::compatibility::uint64_t,
+			64, N, M, 31,
+			0xb5026f5aa96619e9ULL, 29, 0x5555555555555555ULL, 17,
+			0x71d67fffeda60000ULL, 37,
+			0xfff7eee000000000ULL, 43, 6364136223846793005ULL>
+	std_eg_64;
+};
+
+KERBAL_TEMPLATE_TEST_CASE_INST(test_mersenne_with_std, "test mersenne with std", helper<624, 397 + 0>::ker_eg, helper<624, 397 + 0>::std_eg);
+KERBAL_TEMPLATE_TEST_CASE_INST(test_mersenne_with_std, "test mersenne with std", helper<624, 397 + 1>::ker_eg, helper<624, 397 + 1>::std_eg);
+KERBAL_TEMPLATE_TEST_CASE_INST(test_mersenne_with_std, "test mersenne with std", helper<624, 397 + 2>::ker_eg, helper<624, 397 + 2>::std_eg);
+KERBAL_TEMPLATE_TEST_CASE_INST(test_mersenne_with_std, "test mersenne with std", helper<624, 397 + 3>::ker_eg, helper<624, 397 + 3>::std_eg);
+
+KERBAL_TEMPLATE_TEST_CASE_INST(test_mersenne_with_std, "test mersenne with std 64", helper<624, 397 + 0>::ker_eg_64, helper<624, 397 + 0>::std_eg_64);
+KERBAL_TEMPLATE_TEST_CASE_INST(test_mersenne_with_std, "test mersenne with std 64", helper<624, 397 + 1>::ker_eg_64, helper<624, 397 + 1>::std_eg_64);
+KERBAL_TEMPLATE_TEST_CASE_INST(test_mersenne_with_std, "test mersenne with std 64", helper<624, 397 + 2>::ker_eg_64, helper<624, 397 + 2>::std_eg_64);
+KERBAL_TEMPLATE_TEST_CASE_INST(test_mersenne_with_std, "test mersenne with std 64", helper<624, 397 + 3>::ker_eg_64, helper<624, 397 + 3>::std_eg_64);
+
+
 #endif
 
 
