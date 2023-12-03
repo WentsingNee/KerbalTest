@@ -378,13 +378,31 @@ KERBAL_TEST_CASE(test_any_swap, "test any::swap")
 		KERBAL_TEST_CHECK(b.get<int>() == 3);
 	}
 	{
+		ka::any a;
+		ka::any b(4);
+		a.swap(b);
+
+		KERBAL_TEST_CHECK(a.has_value());
+		KERBAL_TEST_CHECK(a.get<int>() == 4);
+		KERBAL_TEST_CHECK(!b.has_value());
+	}
+	{
 		ka::any a(std::string(100, 'a'));
 		ka::any b;
 		a.swap(b);
 
 		KERBAL_TEST_CHECK(!a.has_value());
 		KERBAL_TEST_CHECK(b.has_value());
-		KERBAL_TEST_CHECK(b.get<std::string>() == std::string(100, 'a'));
+		KERBAL_TEST_CHECK(b.get<std::string&>() == std::string(100, 'a'));
+	}
+	{
+		ka::any a;
+		ka::any b(std::string(100, 'b'));
+		a.swap(b);
+
+		KERBAL_TEST_CHECK(a.has_value());
+		KERBAL_TEST_CHECK(a.get<std::string&>() == std::string(100, 'b'));
+		KERBAL_TEST_CHECK(!b.has_value());
 	}
 	{
 		ka::any a(3);
@@ -403,8 +421,18 @@ KERBAL_TEST_CASE(test_any_swap, "test any::swap")
 
 		KERBAL_TEST_CHECK(a.has_value());
 		KERBAL_TEST_CHECK(b.has_value());
-		KERBAL_TEST_CHECK(a.get<std::string>() == std::string(100, 'a'));
+		KERBAL_TEST_CHECK(a.get<std::string&>() == std::string(100, 'a'));
 		KERBAL_TEST_CHECK(b.get<int>() == 3);
+	}
+	{
+		ka::any a(std::string(100, 'a'));
+		ka::any b(3);
+		a.swap(b);
+
+		KERBAL_TEST_CHECK(a.has_value());
+		KERBAL_TEST_CHECK(b.has_value());
+		KERBAL_TEST_CHECK(a.get<int>() == 3);
+		KERBAL_TEST_CHECK(b.get<std::string&>() == std::string(100, 'a'));
 	}
 	{
 		ka::any a(std::string(77, 'b'));
@@ -413,8 +441,8 @@ KERBAL_TEST_CASE(test_any_swap, "test any::swap")
 
 		KERBAL_TEST_CHECK(a.has_value());
 		KERBAL_TEST_CHECK(b.has_value());
-		KERBAL_TEST_CHECK(a.get<std::string>() == std::string(100, 'a'));
-		KERBAL_TEST_CHECK(b.get<std::string>() == std::string(77, 'b'));
+		KERBAL_TEST_CHECK(a.get<std::string&>() == std::string(100, 'a'));
+		KERBAL_TEST_CHECK(b.get<std::string&>() == std::string(77, 'b'));
 	}
 }
 
