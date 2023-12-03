@@ -105,14 +105,14 @@ do { \
 
 
 
-#include "detail/try_test_check.hpp"
+#include <ktest/test/try_test_check.hpp>
 
 KERBAL_TEST_CASE(test_try_test_is_nothrow_move_assignable, "test try_test_is_nothrow_move_assignable")
 {
 	using namespace kerbal::type_traits;
 
-#define TRY_TEST_CHECK_STRONG_(Ans, Type) TRY_TEST_CHECK_STRONG(Ans, kerbal::type_traits::try_test_is_nothrow_move_assignable, Type)
-#define TRY_TEST_CHECK_WEAK_(Ans, Type) TRY_TEST_CHECK_WEAK(Ans, kerbal::type_traits::try_test_is_nothrow_move_assignable, Type)
+#define TRY_TEST_CHECK_STRONG_(Ans, Type) TRY_TEST_CHECK_STRONG(Ans, kerbal::type_traits::try_test_is_nothrow_move_assignable<Type>::value)
+#define TRY_TEST_CHECK_WEAK_(Ans, Type) TRY_TEST_CHECK_WEAK(Ans, kerbal::type_traits::try_test_is_nothrow_move_assignable<Type>::value)
 
 	TRY_TEST_CHECK_STRONG_(tribool_false, void);
 	TRY_TEST_CHECK_STRONG_(tribool_true, int);

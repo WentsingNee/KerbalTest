@@ -76,14 +76,14 @@ KERBAL_TEST_CASE(test_is_enum, "test is_enum")
 #endif // KERBAL_HAS_IS_ENUM_SUPPORT
 
 
-#include "detail/try_test_check.hpp"
+#include <ktest/test/try_test_check.hpp>
 
 KERBAL_TEST_CASE(test_try_test_is_enum, "test try_test_is_enum")
 {
 	using namespace kerbal::type_traits;
 
-#define TRY_TEST_CHECK_STRONG_(Ans, Type) TRY_TEST_CHECK_STRONG(Ans, kerbal::type_traits::try_test_is_enum, Type)
-#define TRY_TEST_CHECK_WEAK_(Ans, Type) TRY_TEST_CHECK_WEAK(Ans, kerbal::type_traits::try_test_is_enum, Type)
+#define TRY_TEST_CHECK_STRONG_(Ans, Type) TRY_TEST_CHECK_STRONG(Ans, kerbal::type_traits::try_test_is_enum<Type>::value)
+#define TRY_TEST_CHECK_WEAK_(Ans, Type) TRY_TEST_CHECK_WEAK(Ans, kerbal::type_traits::try_test_is_enum<Type>::value)
 
 	TRY_TEST_CHECK_STRONG_(tribool_false, void);
 	TRY_TEST_CHECK_STRONG_(tribool_false, int);
