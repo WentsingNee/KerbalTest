@@ -240,8 +240,6 @@ KERBAL_TEST_CASE(test_tie, "test tie")
 
 #if __cplusplus >= 201103L && __cpp_exceptions
 
-#include <type_traits>
-
 struct Foo
 {
 	Foo();
@@ -250,28 +248,38 @@ struct Foo
 	Foo(Foo &&) noexcept;
 };
 
+#include <kerbal/type_traits/tribool_constant.hpp>
+
+#include <kerbal/type_traits/is_nothrow_default_constructible.hpp>
+#include <kerbal/type_traits/is_nothrow_constructible.hpp>
+
+#include <ktest/test/try_test_check.hpp>
+
+
 KERBAL_TEST_CASE(test_tuple_nothrow, "test tuple nothrow")
 {
-	KERBAL_TEST_CHECK_STATIC((std::is_nothrow_default_constructible<ku::tuple<> >::value));
-	KERBAL_TEST_CHECK_STATIC((std::is_nothrow_default_constructible<ku::tuple<int> >::value));
-	KERBAL_TEST_CHECK_STATIC((std::is_nothrow_default_constructible<ku::tuple<int, float, ku::tuple<> > >::value));
-	KERBAL_TEST_CHECK_STATIC(!(std::is_nothrow_default_constructible<ku::tuple<int, float, Foo> >::value));
+	using namespace kerbal::type_traits;
+
+	TRY_TEST_CHECK_WEAK(tribool_true, (try_test_is_nothrow_default_constructible<ku::tuple<> >::value));
+	TRY_TEST_CHECK_WEAK(tribool_true, (try_test_is_nothrow_default_constructible<ku::tuple<int> >::value));
+	TRY_TEST_CHECK_WEAK(tribool_true, (try_test_is_nothrow_default_constructible<ku::tuple<int, float, ku::tuple<> > >::value));
+	TRY_TEST_CHECK_WEAK(tribool_false, (try_test_is_nothrow_default_constructible<ku::tuple<int, float, Foo> >::value));
 
 	// partially init
-	KERBAL_TEST_CHECK_STATIC(!(std::is_nothrow_constructible<ku::tuple<int, Foo>, ku::tuple_partially_init_t, int>::value));
-	KERBAL_TEST_CHECK_STATIC((std::is_nothrow_constructible<ku::tuple<Foo, int>, ku::tuple_partially_init_t, Foo&&>::value));
+	TRY_TEST_CHECK_WEAK(tribool_false, (try_test_is_nothrow_constructible<ku::tuple<int, Foo>, ku::tuple_partially_init_t, int>::value));
+	TRY_TEST_CHECK_WEAK(tribool_true, (try_test_is_nothrow_constructible<ku::tuple<Foo, int>, ku::tuple_partially_init_t, Foo&&>::value));
 
 	// completely init
-	KERBAL_TEST_CHECK_STATIC((std::is_nothrow_constructible<ku::tuple<int>, int>::value));
-	KERBAL_TEST_CHECK_STATIC((std::is_nothrow_constructible<ku::tuple<int, Foo>, int, int>::value));
-	KERBAL_TEST_CHECK_STATIC(!(std::is_nothrow_constructible<ku::tuple<int, Foo>, int, const Foo &>::value));
-	KERBAL_TEST_CHECK_STATIC((std::is_nothrow_constructible<ku::tuple<int, Foo>, int, Foo &&>::value));
+	TRY_TEST_CHECK_WEAK(tribool_true, (try_test_is_nothrow_constructible<ku::tuple<int>, int>::value));
+	TRY_TEST_CHECK_WEAK(tribool_true, (try_test_is_nothrow_constructible<ku::tuple<int, Foo>, int, int>::value));
+	TRY_TEST_CHECK_WEAK(tribool_false, (try_test_is_nothrow_constructible<ku::tuple<int, Foo>, int, const Foo &>::value));
+	TRY_TEST_CHECK_WEAK(tribool_true, (try_test_is_nothrow_constructible<ku::tuple<int, Foo>, int, Foo &&>::value));
 
 	// covariant copy constructible
-	KERBAL_TEST_CHECK_STATIC(!(std::is_nothrow_constructible<ku::tuple<Foo, int>, const ku::tuple<Foo, float> & >::value));
+	TRY_TEST_CHECK_WEAK(tribool_false, (try_test_is_nothrow_constructible<ku::tuple<Foo, int>, const ku::tuple<Foo, float> & >::value));
 
 	// covariant move constructible
-	KERBAL_TEST_CHECK_STATIC((std::is_nothrow_constructible<ku::tuple<Foo, int>, ku::tuple<Foo, float> &&>::value));
+	TRY_TEST_CHECK_WEAK(tribool_true, (try_test_is_nothrow_constructible<ku::tuple<Foo, int>, ku::tuple<Foo, float> &&>::value));
 
 }
 

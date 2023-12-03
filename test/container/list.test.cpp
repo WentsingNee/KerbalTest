@@ -11,6 +11,7 @@
 
 #include <ktest/container/test_pmr_container.hpp>
 #include <ktest/random/random_vector.hpp>
+#include <ktest/test/try_test_check.hpp>
 
 #include <kerbal/container/list.hpp>
 
@@ -32,13 +33,13 @@
 #include <kerbal/memory/allocator_traits.hpp>
 #include <kerbal/random/mersenne_twister_engine.hpp>
 #include <kerbal/test/object_count.hpp>
+#include <kerbal/type_traits/is_nothrow_assignable.hpp>
+#include <kerbal/type_traits/is_nothrow_constructible.hpp>
+#include <kerbal/type_traits/is_nothrow_default_constructible.hpp>
+#include <kerbal/type_traits/is_nothrow_move_constructible.hpp>
 
 #include <iostream>
 #include <list>
-
-#if __cplusplus >= 201103L
-#	include <type_traits>
-#endif
 
 
 template <typename Allocator>
@@ -68,6 +69,7 @@ void print_list_reverse(const kerbal::container::list<int, Allocator>& l)
 
 KERBAL_TEST_CASE(test_list_noexcept, "test list noexcept")
 {
+	using namespace kerbal::type_traits;
 
 	typedef std::allocator<int> alloci;
 	typedef std::allocator<std::string> allocs;
@@ -75,36 +77,36 @@ KERBAL_TEST_CASE(test_list_noexcept, "test list noexcept")
 	typedef kerbal::container::list<std::string> cs;
 
 	{
-		KERBAL_TEST_CHECK_STATIC((std::is_nothrow_default_constructible<alloci>::value));
+		TRY_TEST_CHECK_WEAK(tribool_true, (try_test_is_nothrow_default_constructible<alloci>::value));
 
-		KERBAL_TEST_CHECK_STATIC((std::is_nothrow_default_constructible<ci>::value));
-		KERBAL_TEST_CHECK_STATIC((std::is_nothrow_constructible<ci, const alloci &>::value));
-		KERBAL_TEST_CHECK_STATIC((std::is_nothrow_move_constructible<ci>::value));
-		KERBAL_TEST_CHECK_STATIC((std::is_nothrow_constructible<ci, ci &&, const alloci &>::value));
-		KERBAL_TEST_CHECK_STATIC((std::is_nothrow_assignable<ci, ci &&>::value));
+		TRY_TEST_CHECK_WEAK(tribool_true, (try_test_is_nothrow_default_constructible<ci>::value));
+		TRY_TEST_CHECK_WEAK(tribool_true, (try_test_is_nothrow_constructible<ci, const alloci &>::value));
+		TRY_TEST_CHECK_WEAK(tribool_true, (try_test_is_nothrow_move_constructible<ci>::value));
+		TRY_TEST_CHECK_WEAK(tribool_true, (try_test_is_nothrow_constructible<ci, ci &&, const alloci &>::value));
+		TRY_TEST_CHECK_WEAK(tribool_true, (try_test_is_nothrow_assignable<ci, ci &&>::value));
 
 		ci a, b;
 
-		KERBAL_TEST_CHECK_STATIC(noexcept(a.assign(kerbal::compatibility::move(b))));
-		KERBAL_TEST_CHECK_STATIC(noexcept(a.swap(b)));
-		KERBAL_TEST_CHECK_STATIC(noexcept(kerbal::algorithm::swap(a, b)));
-		KERBAL_TEST_CHECK_STATIC(noexcept(std::swap(a, b)));
+		TRY_TEST_CHECK_WEAK(tribool_true, noexcept(a.assign(kerbal::compatibility::move(b))));
+		TRY_TEST_CHECK_WEAK(tribool_true, noexcept(a.swap(b)));
+		TRY_TEST_CHECK_WEAK(tribool_true, noexcept(kerbal::algorithm::swap(a, b)));
+		TRY_TEST_CHECK_WEAK(tribool_true, noexcept(std::swap(a, b)));
 	}
 
 	{
-		KERBAL_TEST_CHECK_STATIC((std::is_nothrow_default_constructible<allocs>::value));
+		TRY_TEST_CHECK_WEAK(tribool_true, (try_test_is_nothrow_default_constructible<allocs>::value));
 
-		KERBAL_TEST_CHECK_STATIC((std::is_nothrow_default_constructible<cs>::value));
-		KERBAL_TEST_CHECK_STATIC((std::is_nothrow_constructible<cs, const allocs &>::value));
-		KERBAL_TEST_CHECK_STATIC((std::is_nothrow_move_constructible<cs>::value));
-		KERBAL_TEST_CHECK_STATIC((std::is_nothrow_constructible<cs, cs &&, const allocs &>::value));
+		TRY_TEST_CHECK_WEAK(tribool_true, (try_test_is_nothrow_default_constructible<cs>::value));
+		TRY_TEST_CHECK_WEAK(tribool_true, (try_test_is_nothrow_constructible<cs, const allocs &>::value));
+		TRY_TEST_CHECK_WEAK(tribool_true, (try_test_is_nothrow_move_constructible<cs>::value));
+		TRY_TEST_CHECK_WEAK(tribool_true, (try_test_is_nothrow_constructible<cs, cs &&, const allocs &>::value));
 
 		cs a, b;
 
-		KERBAL_TEST_CHECK_STATIC(noexcept(a.assign(kerbal::compatibility::move(b))));
-		KERBAL_TEST_CHECK_STATIC(noexcept(a.swap(b)));
-		KERBAL_TEST_CHECK_STATIC(noexcept(kerbal::algorithm::swap(a, b)));
-		KERBAL_TEST_CHECK_STATIC(noexcept(std::swap(a, b)));
+		TRY_TEST_CHECK_WEAK(tribool_true, noexcept(a.assign(kerbal::compatibility::move(b))));
+		TRY_TEST_CHECK_WEAK(tribool_true, noexcept(a.swap(b)));
+		TRY_TEST_CHECK_WEAK(tribool_true, noexcept(kerbal::algorithm::swap(a, b)));
+		TRY_TEST_CHECK_WEAK(tribool_true, noexcept(std::swap(a, b)));
 	}
 
 #if TEST_PMR_CONTAINER
@@ -115,35 +117,35 @@ KERBAL_TEST_CASE(test_list_noexcept, "test list noexcept")
 	typedef kerbal::container::list<std::string, pmrallocs> pmrcs;
 
 	{
-		KERBAL_TEST_CHECK_STATIC((std::is_nothrow_default_constructible<pmralloci>::value));
+		TRY_TEST_CHECK_WEAK(tribool_true, (try_test_is_nothrow_default_constructible<pmralloci>::value));
 
-		KERBAL_TEST_CHECK_STATIC((std::is_nothrow_default_constructible<pmrci>::value));
-		KERBAL_TEST_CHECK_STATIC((std::is_nothrow_constructible<pmrci, const pmralloci &>::value));
-		KERBAL_TEST_CHECK_STATIC((std::is_nothrow_move_constructible<pmrci>::value));
-//		KERBAL_TEST_CHECK_STATIC((std::is_nothrow_constructible<pmrci, pmrci &&, const pmralloci &>::value));
+		TRY_TEST_CHECK_WEAK(tribool_true, (try_test_is_nothrow_default_constructible<pmrci>::value));
+		TRY_TEST_CHECK_WEAK(tribool_true, (try_test_is_nothrow_constructible<pmrci, const pmralloci &>::value));
+		TRY_TEST_CHECK_WEAK(tribool_true, (try_test_is_nothrow_move_constructible<pmrci>::value));
+//		TRY_TEST_CHECK_WEAK(tribool_true, (try_test_is_nothrow_constructible<pmrci, pmrci &&, const pmralloci &>::value));
 
 		pmrci a, b;
 
-		KERBAL_TEST_CHECK_STATIC(!noexcept(a.assign(kerbal::compatibility::move(b))));
-		KERBAL_TEST_CHECK_STATIC(noexcept(a.swap(b)));
-		KERBAL_TEST_CHECK_STATIC(noexcept(kerbal::algorithm::swap(a, b)));
-		KERBAL_TEST_CHECK_STATIC(noexcept(std::swap(a, b)));
+		TRY_TEST_CHECK_WEAK(tribool_false, noexcept(a.assign(kerbal::compatibility::move(b))));
+		TRY_TEST_CHECK_WEAK(tribool_true, noexcept(a.swap(b)));
+		TRY_TEST_CHECK_WEAK(tribool_true, noexcept(kerbal::algorithm::swap(a, b)));
+		TRY_TEST_CHECK_WEAK(tribool_true, noexcept(std::swap(a, b)));
 	}
 
 	{
-		KERBAL_TEST_CHECK_STATIC((std::is_nothrow_default_constructible<pmrallocs>::value));
+		TRY_TEST_CHECK_WEAK(tribool_true, (try_test_is_nothrow_default_constructible<pmrallocs>::value));
 
-		KERBAL_TEST_CHECK_STATIC((std::is_nothrow_default_constructible<pmrcs>::value));
-		KERBAL_TEST_CHECK_STATIC((std::is_nothrow_constructible<pmrcs, const pmrallocs &>::value));
-		KERBAL_TEST_CHECK_STATIC((std::is_nothrow_move_constructible<pmrcs>::value));
-//		KERBAL_TEST_CHECK_STATIC((std::is_nothrow_constructible<pmrcs, pmrcs &&, const pmrallocs &>::value));
+		TRY_TEST_CHECK_WEAK(tribool_true, (try_test_is_nothrow_default_constructible<pmrcs>::value));
+		TRY_TEST_CHECK_WEAK(tribool_true, (try_test_is_nothrow_constructible<pmrcs, const pmrallocs &>::value));
+		TRY_TEST_CHECK_WEAK(tribool_true, (try_test_is_nothrow_move_constructible<pmrcs>::value));
+//		TRY_TEST_CHECK_WEAK(tribool_true, (try_test_is_nothrow_constructible<pmrcs, pmrcs &&, const pmrallocs &>::value));
 
 		pmrcs a, b;
 
-		KERBAL_TEST_CHECK_STATIC(!noexcept(a.assign(kerbal::compatibility::move(b))));
-		KERBAL_TEST_CHECK_STATIC(noexcept(a.swap(b)));
-		KERBAL_TEST_CHECK_STATIC(noexcept(kerbal::algorithm::swap(a, b)));
-		KERBAL_TEST_CHECK_STATIC(noexcept(std::swap(a, b)));
+		TRY_TEST_CHECK_WEAK(tribool_false, noexcept(a.assign(kerbal::compatibility::move(b))));
+		TRY_TEST_CHECK_WEAK(tribool_true, noexcept(a.swap(b)));
+		TRY_TEST_CHECK_WEAK(tribool_true, noexcept(kerbal::algorithm::swap(a, b)));
+		TRY_TEST_CHECK_WEAK(tribool_true, noexcept(std::swap(a, b)));
 	}
 
 #endif

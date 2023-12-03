@@ -9,21 +9,19 @@
  *   all rights reserved
  */
 
+#include <ktest/test/try_test_check.hpp>
+
 #include <kerbal/utility/compressed_pair.hpp>
 
 #include <kerbal/test/test.hpp>
 #include <kerbal/type_traits/is_same.hpp>
+#include <kerbal/type_traits/tribool_constant.hpp>
 
 #include <iostream>
 #include <string>
 #include <typeinfo>
 
-#if __cplusplus >= 201103L
-#	include <type_traits>
-#endif
 
-
-using namespace std;
 namespace ku = kerbal::utility;
 
 
@@ -87,7 +85,7 @@ struct type_name<const Tp>
 {
 	std::string operator()() const
 	{
-		return string("const ") + typeid(Tp).name();
+		return std::string("const ") + typeid(Tp).name();
 	}
 };
 
@@ -96,7 +94,7 @@ struct type_name<Tp&>
 {
 	std::string operator()() const
 	{
-		return typeid(Tp).name() + string("&");
+		return typeid(Tp).name() + std::string("&");
 	}
 };
 
@@ -105,7 +103,7 @@ struct type_name<const Tp&>
 {
 	std::string operator()() const
 	{
-		return string("const ") + typeid(Tp).name() + string("&");
+		return std::string("const ") + typeid(Tp).name() + std::string("&");
 	}
 };
 
@@ -135,7 +133,7 @@ void print_pair_info(const ku::compressed_pair<Tp, Up> & p)
 
 KERBAL_TEST_CASE(test_compressed_pair, "test compressed_pair")
 {
-	cout << boolalpha;
+	std::cout << std::boolalpha;
 
 	printf("under __cplusplus: %ld\n", __cplusplus);
 
@@ -168,7 +166,7 @@ KERBAL_TEST_CASE(test_compressed_pair, "test compressed_pair")
 		ku::compressed_pair<const Empty1, NotEmpty> p;
 		print_pair_info(p);
 	}
-	
+
 	{
 		ku::compressed_pair<const Empty1, Empty1> p;
 		print_pair_info(p);
@@ -343,125 +341,123 @@ KERBAL_TEST_CASE(test_compressed_pair_structured_binding, "test compressed_pair 
 
 #if __cplusplus >= 201103L
 
-#include <type_traits>
+
+#include <kerbal/type_traits/is_nothrow_constructible.hpp>
+
 
 template <typename T, typename U, typename ... Args>
 struct test_nothrow_constructible:
-		kerbal::type_traits::conditional<
-				std::is_constructible<ku::compressed_pair<T, U>, Args...>::value,
-				std::is_nothrow_constructible<ku::compressed_pair<T, U>, Args...>,
-				std::true_type
-		>::type
+		kerbal::type_traits::try_test_is_nothrow_constructible<ku::compressed_pair<T, U>, Args...>
 {};
 
 
 KERBAL_TEST_CASE(test_compressed_pair_is_nothrow, "test compressed_pair is nothrow")
 {
-	KERBAL_TEST_CHECK_STATIC((test_nothrow_constructible<int, int>::value));
-	KERBAL_TEST_CHECK_STATIC((test_nothrow_constructible<int, int, const int &, const int &>::value));
-	KERBAL_TEST_CHECK_STATIC((test_nothrow_constructible<int, int, ku::compressed_pair_default_construct_tag, const int &>::value));
+	using namespace kerbal::type_traits;
 
-}
-
-
-
-template <typename T, typename U>
-struct test_trivially_copy_constructible:
-		kerbal::type_traits::conditional<
-				std::is_copy_constructible<ku::compressed_pair<T, U> >::value,
-				std::is_trivially_copy_constructible<ku::compressed_pair<T, U> >,
-				std::true_type
-		>::type
-{};
-
-template <typename T, typename U>
-struct test_trivially_copy_assignable:
-		kerbal::type_traits::conditional<
-				std::is_copy_assignable<ku::compressed_pair<T, U> >::value,
-				std::is_trivially_copy_assignable<ku::compressed_pair<T, U> >,
-				std::true_type
-		>::type
-{};
-
-template <typename T, typename U>
-struct test_trivially_move_constructible:
-		kerbal::type_traits::conditional<
-				std::is_move_constructible<ku::compressed_pair<T, U> >::value,
-				std::is_trivially_move_constructible<ku::compressed_pair<T, U> >,
-				std::true_type
-		>::type
-{};
-
-template <typename T, typename U>
-struct test_trivially_move_assignable:
-		kerbal::type_traits::conditional<
-				std::is_move_assignable<ku::compressed_pair<T, U> >::value,
-				std::is_trivially_move_assignable<ku::compressed_pair<T, U> >,
-				std::true_type
-		>::type
-{};
-
-template <typename T, typename U>
-struct test_trivially_destructible:
-		kerbal::type_traits::conditional<
-				std::is_destructible<ku::compressed_pair<T, U> >::value,
-				std::is_trivially_destructible<ku::compressed_pair<T, U> >,
-				std::true_type
-		>::type
-{};
-
-template <typename T, typename U>
-struct test_trivially_copyable:
-		std::is_trivially_copyable<ku::compressed_pair<T, U> >
-{};
-
-
-KERBAL_TEST_CASE(test_compressed_pair_is_trivial, "test compressed_pair is trivial")
-{
-	KERBAL_TEST_CHECK_STATIC((test_trivially_copy_constructible<int, int>::value));
-	KERBAL_TEST_CHECK_STATIC((test_trivially_copy_constructible<int, Empty1>::value));
-	KERBAL_TEST_CHECK_STATIC((test_trivially_copy_constructible<Empty1, int>::value));
-	KERBAL_TEST_CHECK_STATIC((test_trivially_copy_constructible<Empty1, Empty2>::value));
-	KERBAL_TEST_CHECK_STATIC((test_trivially_copy_constructible<Empty1, Empty1>::value));
-	KERBAL_TEST_CHECK_STATIC((test_trivially_copy_constructible<int&, int>::value));
-
-	KERBAL_TEST_CHECK_STATIC((test_trivially_copy_assignable<int, int>::value));
-	KERBAL_TEST_CHECK_STATIC((test_trivially_copy_assignable<int, Empty1>::value));
-	KERBAL_TEST_CHECK_STATIC((test_trivially_copy_assignable<Empty1, int>::value));
-	KERBAL_TEST_CHECK_STATIC((test_trivially_copy_assignable<Empty1, Empty2>::value));
-	KERBAL_TEST_CHECK_STATIC((test_trivially_copy_assignable<Empty1, Empty1>::value));
-	KERBAL_TEST_CHECK_STATIC(!(test_trivially_copy_assignable<int&, int>::value));
-
-	KERBAL_TEST_CHECK_STATIC((test_trivially_move_constructible<int, int>::value));
-	KERBAL_TEST_CHECK_STATIC((test_trivially_move_constructible<int, Empty1>::value));
-	KERBAL_TEST_CHECK_STATIC((test_trivially_move_constructible<Empty1, int>::value));
-	KERBAL_TEST_CHECK_STATIC((test_trivially_move_constructible<Empty1, Empty2>::value));
-	KERBAL_TEST_CHECK_STATIC((test_trivially_move_constructible<Empty1, Empty1>::value));
-	KERBAL_TEST_CHECK_STATIC((test_trivially_move_constructible<int&, int>::value));
-
-	KERBAL_TEST_CHECK_STATIC((test_trivially_move_assignable<int, int>::value));
-	KERBAL_TEST_CHECK_STATIC((test_trivially_move_assignable<int, Empty1>::value));
-	KERBAL_TEST_CHECK_STATIC((test_trivially_move_assignable<Empty1, int>::value));
-	KERBAL_TEST_CHECK_STATIC((test_trivially_move_assignable<Empty1, Empty2>::value));
-	KERBAL_TEST_CHECK_STATIC((test_trivially_move_assignable<Empty1, Empty1>::value));
-	KERBAL_TEST_CHECK_STATIC(!(test_trivially_move_assignable<int&, int>::value));
-
-	KERBAL_TEST_CHECK_STATIC((test_trivially_destructible<int, int>::value));
-	KERBAL_TEST_CHECK_STATIC((test_trivially_destructible<int, Empty1>::value));
-	KERBAL_TEST_CHECK_STATIC((test_trivially_destructible<Empty1, int>::value));
-	KERBAL_TEST_CHECK_STATIC((test_trivially_destructible<Empty1, Empty2>::value));
-	KERBAL_TEST_CHECK_STATIC((test_trivially_destructible<Empty1, Empty1>::value));
-	KERBAL_TEST_CHECK_STATIC((test_trivially_destructible<int&, int>::value));
-
-	KERBAL_TEST_CHECK_STATIC((test_trivially_copyable<int, int>::value));
-	KERBAL_TEST_CHECK_STATIC((test_trivially_copyable<int, Empty1>::value));
-	KERBAL_TEST_CHECK_STATIC((test_trivially_copyable<Empty1, int>::value));
-	KERBAL_TEST_CHECK_STATIC((test_trivially_copyable<Empty1, Empty2>::value));
-	KERBAL_TEST_CHECK_STATIC((test_trivially_copyable<Empty1, Empty1>::value));
+	TRY_TEST_CHECK_WEAK(tribool_true, (test_nothrow_constructible<int, int>::value));
+	TRY_TEST_CHECK_WEAK(tribool_true, (test_nothrow_constructible<int, int, const int &, const int &>::value));
+	TRY_TEST_CHECK_WEAK(tribool_true, (test_nothrow_constructible<int, int, ku::compressed_pair_default_construct_tag, const int &>::value));
 
 }
 
 #endif
+
+
+#include <kerbal/type_traits/is_trivially_copy_constructible.hpp>
+#include <kerbal/type_traits/is_trivially_copy_assignable.hpp>
+#include <kerbal/type_traits/is_trivially_move_constructible.hpp>
+#include <kerbal/type_traits/is_trivially_move_assignable.hpp>
+#include <kerbal/type_traits/is_trivially_destructible.hpp>
+#include <kerbal/type_traits/is_trivially_copyable.hpp>
+
+
+template <typename T, typename U>
+struct test_trivially_copy_constructible:
+		kerbal::type_traits::try_test_is_trivially_copy_constructible<ku::compressed_pair<T, U> >
+{};
+
+template <typename T, typename U>
+struct test_trivially_copy_assignable:
+		kerbal::type_traits::try_test_is_trivially_copy_assignable<ku::compressed_pair<T, U> >
+{};
+
+template <typename T, typename U>
+struct test_trivially_destructible:
+		kerbal::type_traits::try_test_is_trivially_destructible<ku::compressed_pair<T, U> >
+{};
+
+template <typename T, typename U>
+struct test_trivially_copyable:
+		kerbal::type_traits::try_test_is_trivially_copyable<ku::compressed_pair<T, U> >
+{};
+
+#if __cplusplus >= 201103L
+
+template <typename T, typename U>
+struct test_trivially_move_constructible:
+		kerbal::type_traits::try_test_is_trivially_move_constructible<ku::compressed_pair<T, U> >
+{};
+
+template <typename T, typename U>
+struct test_trivially_move_assignable:
+		kerbal::type_traits::try_test_is_trivially_move_assignable<ku::compressed_pair<T, U> >
+{};
+
+#endif
+
+
+KERBAL_TEST_CASE(test_compressed_pair_is_trivial, "test compressed_pair is trivial")
+{
+	using namespace kerbal::type_traits;
+
+	TRY_TEST_CHECK_WEAK(tribool_true, (test_trivially_copy_constructible<int, int>::value));
+	TRY_TEST_CHECK_WEAK(tribool_true, (test_trivially_copy_constructible<int, Empty1>::value));
+	TRY_TEST_CHECK_WEAK(tribool_true, (test_trivially_copy_constructible<Empty1, int>::value));
+	TRY_TEST_CHECK_WEAK(tribool_true, (test_trivially_copy_constructible<Empty1, Empty2>::value));
+	TRY_TEST_CHECK_WEAK(tribool_true, (test_trivially_copy_constructible<Empty1, Empty1>::value));
+	TRY_TEST_CHECK_WEAK(tribool_true, (test_trivially_copy_constructible<int&, int>::value));
+
+	TRY_TEST_CHECK_WEAK(tribool_true, (test_trivially_copy_assignable<int, int>::value));
+	TRY_TEST_CHECK_WEAK(tribool_true, (test_trivially_copy_assignable<int, Empty1>::value));
+	TRY_TEST_CHECK_WEAK(tribool_true, (test_trivially_copy_assignable<Empty1, int>::value));
+	TRY_TEST_CHECK_WEAK(tribool_true, (test_trivially_copy_assignable<Empty1, Empty2>::value));
+	TRY_TEST_CHECK_WEAK(tribool_true, (test_trivially_copy_assignable<Empty1, Empty1>::value));
+	TRY_TEST_CHECK_WEAK(tribool_false, (test_trivially_copy_assignable<int&, int>::value));
+
+	TRY_TEST_CHECK_WEAK(tribool_true, (test_trivially_destructible<int, int>::value));
+	TRY_TEST_CHECK_WEAK(tribool_true, (test_trivially_destructible<int, Empty1>::value));
+	TRY_TEST_CHECK_WEAK(tribool_true, (test_trivially_destructible<Empty1, int>::value));
+	TRY_TEST_CHECK_WEAK(tribool_true, (test_trivially_destructible<Empty1, Empty2>::value));
+	TRY_TEST_CHECK_WEAK(tribool_true, (test_trivially_destructible<Empty1, Empty1>::value));
+	TRY_TEST_CHECK_WEAK(tribool_true, (test_trivially_destructible<int&, int>::value));
+
+	TRY_TEST_CHECK_WEAK(tribool_true, (test_trivially_copyable<int, int>::value));
+	TRY_TEST_CHECK_WEAK(tribool_true, (test_trivially_copyable<int, Empty1>::value));
+	TRY_TEST_CHECK_WEAK(tribool_true, (test_trivially_copyable<Empty1, int>::value));
+	TRY_TEST_CHECK_WEAK(tribool_true, (test_trivially_copyable<Empty1, Empty2>::value));
+	TRY_TEST_CHECK_WEAK(tribool_true, (test_trivially_copyable<Empty1, Empty1>::value));
+
+#if __cplusplus >= 201103L
+
+	TRY_TEST_CHECK_WEAK(tribool_true, (test_trivially_move_constructible<int, int>::value));
+	TRY_TEST_CHECK_WEAK(tribool_true, (test_trivially_move_constructible<int, Empty1>::value));
+	TRY_TEST_CHECK_WEAK(tribool_true, (test_trivially_move_constructible<Empty1, int>::value));
+	TRY_TEST_CHECK_WEAK(tribool_true, (test_trivially_move_constructible<Empty1, Empty2>::value));
+	TRY_TEST_CHECK_WEAK(tribool_true, (test_trivially_move_constructible<Empty1, Empty1>::value));
+	TRY_TEST_CHECK_WEAK(tribool_true, (test_trivially_move_constructible<int&, int>::value));
+
+	TRY_TEST_CHECK_WEAK(tribool_true, (test_trivially_move_assignable<int, int>::value));
+	TRY_TEST_CHECK_WEAK(tribool_true, (test_trivially_move_assignable<int, Empty1>::value));
+	TRY_TEST_CHECK_WEAK(tribool_true, (test_trivially_move_assignable<Empty1, int>::value));
+	TRY_TEST_CHECK_WEAK(tribool_true, (test_trivially_move_assignable<Empty1, Empty2>::value));
+	TRY_TEST_CHECK_WEAK(tribool_true, (test_trivially_move_assignable<Empty1, Empty1>::value));
+	TRY_TEST_CHECK_WEAK(tribool_false, (test_trivially_move_assignable<int&, int>::value));
+
+#endif
+
+}
+
 
 int main(int argc, char* args[])
 {
