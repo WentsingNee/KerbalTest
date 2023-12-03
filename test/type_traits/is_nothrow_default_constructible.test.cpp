@@ -113,11 +113,11 @@ KERBAL_TEST_CASE(test_try_test_is_nothrow_default_constructible, "test try_test_
 	TRY_TEST_CHECK_STRONG_(tribool_true, int(*)());
 
 	TRY_TEST_CHECK_WEAK_(tribool_true, NothrowDefaultConstructible);
-	TRY_TEST_CHECK_WEAK_(tribool_false, NothrowDefaultConstructible[]);
+	TRY_TEST_CHECK_STRONG_(tribool_false, NothrowDefaultConstructible[]);
 	TRY_TEST_CHECK_WEAK_(tribool_true, NothrowDefaultConstructible[2]);
 
 	TRY_TEST_CHECK_WEAK_(tribool_false, NonNothrowDefaultConstructible);
-	TRY_TEST_CHECK_WEAK_(tribool_false, NonNothrowDefaultConstructible[]);
+	TRY_TEST_CHECK_STRONG_(tribool_false, NonNothrowDefaultConstructible[]);
 	TRY_TEST_CHECK_WEAK_(tribool_false, NonNothrowDefaultConstructible[2]);
 
 	TRY_TEST_CHECK_WEAK_(tribool_false, PrivateDefaultConstructible);

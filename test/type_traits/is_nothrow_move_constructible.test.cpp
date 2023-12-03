@@ -121,12 +121,12 @@ KERBAL_TEST_CASE(test_try_test_is_nothrow_move_constructible, "test try_test_is_
 	TRY_TEST_CHECK_STRONG_(tribool_true, int(*)());
 
 	TRY_TEST_CHECK_WEAK_(tribool_true, NothrowMoveConstructible);
-	TRY_TEST_CHECK_WEAK_(tribool_false, NothrowMoveConstructible[]);
-	TRY_TEST_CHECK_WEAK_(tribool_false, NothrowMoveConstructible[2]);
+	TRY_TEST_CHECK_STRONG_(tribool_false, NothrowMoveConstructible[]);
+	TRY_TEST_CHECK_STRONG_(tribool_false, NothrowMoveConstructible[2]);
 
 	TRY_TEST_CHECK_WEAK_(tribool_false, NonNothrowMoveConstructible);
-	TRY_TEST_CHECK_WEAK_(tribool_false, NonNothrowMoveConstructible[]);
-	TRY_TEST_CHECK_WEAK_(tribool_false, NonNothrowMoveConstructible[2]);
+	TRY_TEST_CHECK_STRONG_(tribool_false, NonNothrowMoveConstructible[]);
+	TRY_TEST_CHECK_STRONG_(tribool_false, NonNothrowMoveConstructible[2]);
 
 	TRY_TEST_CHECK_WEAK_(tribool_false, PrivateMoveConstructible);
 #if __cplusplus >= 201103L

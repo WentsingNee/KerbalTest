@@ -119,12 +119,12 @@ KERBAL_TEST_CASE(test_try_test_is_trivially_copy_constructible, "test try_test_i
 	TRY_TEST_CHECK_STRONG_(tribool_true, int(*)());
 
 	TRY_TEST_CHECK_WEAK_(tribool_true, TriviallyCopyConstructible);
-	TRY_TEST_CHECK_WEAK_(tribool_false, TriviallyCopyConstructible[]);
-	TRY_TEST_CHECK_WEAK_(tribool_false, TriviallyCopyConstructible[2]);
+	TRY_TEST_CHECK_STRONG_(tribool_false, TriviallyCopyConstructible[]);
+	TRY_TEST_CHECK_STRONG_(tribool_false, TriviallyCopyConstructible[2]);
 
 	TRY_TEST_CHECK_WEAK_(tribool_false, NonTriviallyCopyConstructible);
-	TRY_TEST_CHECK_WEAK_(tribool_false, NonTriviallyCopyConstructible[]);
-	TRY_TEST_CHECK_WEAK_(tribool_false, NonTriviallyCopyConstructible[2]);
+	TRY_TEST_CHECK_STRONG_(tribool_false, NonTriviallyCopyConstructible[]);
+	TRY_TEST_CHECK_STRONG_(tribool_false, NonTriviallyCopyConstructible[2]);
 
 	TRY_TEST_CHECK_WEAK_(tribool_false, PrivateCopyConstructible);
 #if __cplusplus >= 201103L

@@ -138,16 +138,16 @@ KERBAL_TEST_CASE(test_try_test_is_trivially_copy_assignable, "test try_test_is_t
 	TRY_TEST_CHECK_STRONG_(tribool_true, int(*)());
 
 	TRY_TEST_CHECK_WEAK_(tribool_true, TriviallyCopyAssignable);
-	TRY_TEST_CHECK_WEAK_(tribool_false, TriviallyCopyAssignable[]);
-	TRY_TEST_CHECK_WEAK_(tribool_false, TriviallyCopyAssignable[2]);
-	TRY_TEST_CHECK_WEAK_(tribool_false, TriviallyCopyAssignable[2][2]);
-	TRY_TEST_CHECK_WEAK_(tribool_false, TriviallyCopyAssignable[][2]);
+	TRY_TEST_CHECK_STRONG_(tribool_false, TriviallyCopyAssignable[]);
+	TRY_TEST_CHECK_STRONG_(tribool_false, TriviallyCopyAssignable[2]);
+	TRY_TEST_CHECK_STRONG_(tribool_false, TriviallyCopyAssignable[2][2]);
+	TRY_TEST_CHECK_STRONG_(tribool_false, TriviallyCopyAssignable[][2]);
 
 	TRY_TEST_CHECK_WEAK_(tribool_false, NonTriviallyCopyAssignable);
-	TRY_TEST_CHECK_WEAK_(tribool_false, NonTriviallyCopyAssignable[]);
-	TRY_TEST_CHECK_WEAK_(tribool_false, NonTriviallyCopyAssignable[2]);
-	TRY_TEST_CHECK_WEAK_(tribool_false, NonTriviallyCopyAssignable[2][2]);
-	TRY_TEST_CHECK_WEAK_(tribool_false, NonTriviallyCopyAssignable[][2]);
+	TRY_TEST_CHECK_STRONG_(tribool_false, NonTriviallyCopyAssignable[]);
+	TRY_TEST_CHECK_STRONG_(tribool_false, NonTriviallyCopyAssignable[2]);
+	TRY_TEST_CHECK_STRONG_(tribool_false, NonTriviallyCopyAssignable[2][2]);
+	TRY_TEST_CHECK_STRONG_(tribool_false, NonTriviallyCopyAssignable[][2]);
 
 	TRY_TEST_CHECK_WEAK_(tribool_false, PrivateCopyAssignable);
 #if __cplusplus >= 201103L

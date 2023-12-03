@@ -115,11 +115,11 @@ KERBAL_TEST_CASE(test_try_test_is_trivially_destructible, "test try_test_is_triv
 	TRY_TEST_CHECK_STRONG_(tribool_true, int(*)());
 
 	TRY_TEST_CHECK_WEAK_(tribool_true, TriviallyDestructible);
-	TRY_TEST_CHECK_WEAK_(tribool_false, TriviallyDestructible[]);
+	TRY_TEST_CHECK_STRONG_(tribool_false, TriviallyDestructible[]);
 	TRY_TEST_CHECK_WEAK_(tribool_true, TriviallyDestructible[2]);
 
 	TRY_TEST_CHECK_WEAK_(tribool_false, NonTriviallyDestructible);
-	TRY_TEST_CHECK_WEAK_(tribool_false, NonTriviallyDestructible[]);
+	TRY_TEST_CHECK_STRONG_(tribool_false, NonTriviallyDestructible[]);
 	TRY_TEST_CHECK_WEAK_(tribool_false, NonTriviallyDestructible[2]);
 
 #if KERBAL_COMPILER_ID != KERBAL_COMPILER_ID_CLANG || __cplusplus >= 201103 // old version clang cannot detect this case

@@ -125,12 +125,12 @@ KERBAL_TEST_CASE(test_try_test_is_nothrow_move_assignable, "test try_test_is_not
 	TRY_TEST_CHECK_STRONG_(tribool_true, int(*)());
 
 	TRY_TEST_CHECK_WEAK_(tribool_true, NothrowMoveAssignable);
-	TRY_TEST_CHECK_WEAK_(tribool_false, NothrowMoveAssignable[]);
-	TRY_TEST_CHECK_WEAK_(tribool_false, NothrowMoveAssignable[2]);
+	TRY_TEST_CHECK_STRONG_(tribool_false, NothrowMoveAssignable[]);
+	TRY_TEST_CHECK_STRONG_(tribool_false, NothrowMoveAssignable[2]);
 
 	TRY_TEST_CHECK_WEAK_(tribool_false, NonNothrowMoveAssignable);
-	TRY_TEST_CHECK_WEAK_(tribool_false, NonNothrowMoveAssignable[]);
-	TRY_TEST_CHECK_WEAK_(tribool_false, NonNothrowMoveAssignable[2]);
+	TRY_TEST_CHECK_STRONG_(tribool_false, NonNothrowMoveAssignable[]);
+	TRY_TEST_CHECK_STRONG_(tribool_false, NonNothrowMoveAssignable[2]);
 
 	TRY_TEST_CHECK_WEAK_(tribool_false, PrivateMoveAssignable);
 #if __cplusplus >= 201103L

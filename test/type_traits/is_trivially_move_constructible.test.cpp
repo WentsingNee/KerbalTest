@@ -114,11 +114,11 @@ KERBAL_TEST_CASE(test_try_test_is_trivially_move_constructible, "test try_test_i
 	TRY_TEST_CHECK_STRONG_(tribool_true, int(*)());
 
 	TRY_TEST_CHECK_WEAK_(tribool_true, TriviallyMoveConstructible);
-	TRY_TEST_CHECK_WEAK_(tribool_false, TriviallyMoveConstructible[]);
+	TRY_TEST_CHECK_STRONG_(tribool_false, TriviallyMoveConstructible[]);
 	TRY_TEST_CHECK_WEAK_(tribool_false, TriviallyMoveConstructible[2]);
 
 	TRY_TEST_CHECK_WEAK_(tribool_false, NonTriviallyMoveConstructible);
-	TRY_TEST_CHECK_WEAK_(tribool_false, NonTriviallyMoveConstructible[]);
+	TRY_TEST_CHECK_STRONG_(tribool_false, NonTriviallyMoveConstructible[]);
 	TRY_TEST_CHECK_WEAK_(tribool_false, NonTriviallyMoveConstructible[2]);
 
 	TRY_TEST_CHECK_WEAK_(tribool_false, PrivateMoveConstructible);

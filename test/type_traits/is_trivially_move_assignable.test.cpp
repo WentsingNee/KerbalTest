@@ -116,11 +116,11 @@ KERBAL_TEST_CASE(test_try_test_is_trivially_move_assignable, "test try_test_is_t
 	TRY_TEST_CHECK_STRONG_(tribool_true, int(*)());
 
 	TRY_TEST_CHECK_WEAK_(tribool_true, TriviallyMoveAssignable);
-	TRY_TEST_CHECK_WEAK_(tribool_false, TriviallyMoveAssignable[]);
+	TRY_TEST_CHECK_STRONG_(tribool_false, TriviallyMoveAssignable[]);
 	TRY_TEST_CHECK_WEAK_(tribool_false, TriviallyMoveAssignable[2]);
 
 	TRY_TEST_CHECK_WEAK_(tribool_false, NonTriviallyMoveAssignable);
-	TRY_TEST_CHECK_WEAK_(tribool_false, NonTriviallyMoveAssignable[]);
+	TRY_TEST_CHECK_STRONG_(tribool_false, NonTriviallyMoveAssignable[]);
 	TRY_TEST_CHECK_WEAK_(tribool_false, NonTriviallyMoveAssignable[2]);
 
 	TRY_TEST_CHECK_WEAK_(tribool_false, PrivateMoveAssignable);
