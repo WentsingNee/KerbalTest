@@ -178,11 +178,6 @@ struct pair_ic : kerbal::utility::compressed_pair<int, char>
 			return kerbal::compatibility::move(*this).super::first();
 		}
 
-		const int && crfirst() const && KERBAL_NOEXCEPT
-		{
-			return kerbal::compatibility::move(*this).super::first();
-		}
-
 #	endif
 
 };

@@ -45,7 +45,11 @@ KERBAL_TEST_CASE(test_declval, "test declval")
 KERBAL_TEST_CASE(test_declval_rvalue, "test declval rvalue")
 {
 	KERBAL_TEST_CHECK_STATIC(sizeof(*(ku::declval<Foo&&>().f())) == sizeof(char[3]));
+
+#if KERBAL_HAS_CONST_RVALUE_REFERENCE_MEMBER
 	KERBAL_TEST_CHECK_STATIC(sizeof(*(ku::declval<const Foo&&>().f())) == sizeof(char[4]));
+#endif
+
 }
 
 #endif
