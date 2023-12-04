@@ -44,6 +44,7 @@ function(add_ktest_utest_target target target_src_file)
             PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/targets
     )
     if (KERBAL_WASM)
+        target_link_options(${target} PUBLIC "-sALLOW_MEMORY_GROWTH")
         set_target_properties(${target}
                 PROPERTIES RUNTIME_OUTPUT_NAME ${target}.js
         )
