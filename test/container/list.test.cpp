@@ -296,6 +296,11 @@ KERBAL_TEMPLATE_TEST_CASE(test_list_move_construct, "test list::list(list &&)")
 		kerbal::container::list<int, Allocator> l2(kerbal::compatibility::move(l));
 		l.clear();
 
+		if (tcase != 0) {
+			bool stolen = &l2.front() == ori_front_ptr;
+			KERBAL_TEST_CHECK(stolen);
+		}
+
 		KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(
 				l2.cbegin(), l2.cend(),
 				kerbal::container::cbegin(arr), kerbal::container::cbegin(arr) + tcase
@@ -306,10 +311,6 @@ KERBAL_TEMPLATE_TEST_CASE(test_list_move_construct, "test list::list(list &&)")
 		)); // r
 		KERBAL_TEST_CHECK(l2.size() == tcase);
 
-		if (tcase != 0) {
-//			bool steal = &l2.front() == ori_front_ptr;
-//			std::cout << (steal ? "steal" : "no steal") << std::endl;
-		}
 	}
 }
 
@@ -354,7 +355,7 @@ KERBAL_TEMPLATE_TEST_CASE_INST(test_list_copy_assignment, "test list::operator=(
 
 #if __cplusplus >= 201103L
 
-template <typename Allocator>
+template <typename Allocator, bool StolenRequired>
 KERBAL_TEMPLATE_TEST_CASE(test_list_move_assignment, "test list::operator=(list &&)")
 {
 	typedef kerbal::type_traits::integral_constant<std::size_t, 64> N;
@@ -375,6 +376,11 @@ KERBAL_TEMPLATE_TEST_CASE(test_list_move_assignment, "test list::operator=(list 
 		l2 = kerbal::compatibility::move(l);
 		l.clear();
 
+		if (tcase != 0) {
+			bool stolen = &l2.front() == ori_front_ptr;
+			KERBAL_TEST_CHECK(stolen == StolenRequired);
+		}
+
 		KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(
 				l2.cbegin(), l2.cend(),
 				kerbal::container::cbegin(arr), kerbal::container::cbegin(arr) + tcase
@@ -385,16 +391,12 @@ KERBAL_TEMPLATE_TEST_CASE(test_list_move_assignment, "test list::operator=(list 
 		)); // r
 		KERBAL_TEST_CHECK(l2.size() == tcase);
 
-		if (tcase != 0) {
-			bool steal = &l2.front() == ori_front_ptr;
-			std::cout << (steal ? "steal" : "no steal") << std::endl;
-		}
 	}
 }
 
-KERBAL_TEMPLATE_TEST_CASE_INST(test_list_move_assignment, "test list::operator=(list &&) default allocator", std::allocator<int> );
-KERBAL_TEMPLATE_TEST_CASE_INST(test_list_move_assignment, "test list::operator=(list &&) fsn allocator", kerbal::memory::fixed_size_node_allocator<int> );
-KERBAL_TEMPLATE_TEST_CASE_INST(test_list_move_assignment, "test list::operator=(list &&) mono allocator", kerbal::memory::monotonic_allocator<int> );
+KERBAL_TEMPLATE_TEST_CASE_INST(test_list_move_assignment, "test list::operator=(list &&) default allocator", std::allocator<int>, true);
+KERBAL_TEMPLATE_TEST_CASE_INST(test_list_move_assignment, "test list::operator=(list &&) fsn allocator", kerbal::memory::fixed_size_node_allocator<int>, false);
+KERBAL_TEMPLATE_TEST_CASE_INST(test_list_move_assignment, "test list::operator=(list &&) mono allocator", kerbal::memory::monotonic_allocator<int>, false);
 
 #endif
 
