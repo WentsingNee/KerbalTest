@@ -44,6 +44,36 @@ KERBAL_TEST_CASE(test_function_construct_by_funptr, "test function::function(fun
 }
 
 
+struct lambda_test_function_swap
+{
+	int& out;
+
+	lambda_test_function_swap(int& out) : out(out)
+	{
+	}
+
+	int operator()(int x)
+	{
+		out += x;
+		return out;
+	}
+};
+
+
+KERBAL_TEST_CASE(test_function_swap, "test function::swap")
+{
+	kerbal::function::function<int (int)> f;
+	// {
+	int out = 0;
+	lambda_test_function_swap lam(out);
+	kerbal::function::function<int (int)> g = lam;
+	KERBAL_TEST_CHECK(g(1) == 1);
+	f.swap(g);
+	// }
+	KERBAL_TEST_CHECK(f(1) == 2);
+}
+
+
 
 #endif
 
