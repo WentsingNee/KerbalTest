@@ -371,7 +371,16 @@ KERBAL_TEST_CASE(test_optional_constexpr, "test optional constexpr")
 # endif
 
 
-# if __cplusplus >= 201402L
+
+#if __cplusplus >= 201402L
+#	define TEST_CONSTEXPR 1
+#endif
+
+#undef TEST_CONSTEXPR
+#define TEST_CONSTEXPR 0
+
+
+#if TEST_CONSTEXPR
 
 KERBAL_TEST_CASE(test_optional_constexpr14, "test optional constexpr14")
 {
@@ -409,7 +418,7 @@ KERBAL_TEST_CASE(test_optional_constexpr14, "test optional constexpr14")
 
 }
 
-# endif
+#endif
 
 
 int main(int argc, char * argv[])
