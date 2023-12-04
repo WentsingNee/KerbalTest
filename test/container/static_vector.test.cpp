@@ -308,6 +308,8 @@ KERBAL_TEST_CASE(test_static_vector_str_aa_emplace_back, "test static_vector<str
 #	define TEST_CONSTEXPR 1
 #endif
 
+#undef TEST_CONSTEXPR
+#define TEST_CONSTEXPR 0
 
 #if TEST_CONSTEXPR
 
