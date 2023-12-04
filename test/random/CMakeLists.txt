@@ -9,10 +9,18 @@
 #   all rights reserved
 #
 
-add_kerbal_utest_target_wih_ie(utest.random.mersenne_twister_engine ./mersenne_twister_engine.test.cpp avx512f)
-add_kerbal_utest_target_wih_ie(utest.random.mersenne_twister_engine ./mersenne_twister_engine.test.cpp avx2)
-add_kerbal_utest_target_wih_ie(utest.random.mersenne_twister_engine ./mersenne_twister_engine.test.cpp sse2)
-add_kerbal_utest_target_wih_ie(utest.random.mersenne_twister_engine ./mersenne_twister_engine.test.cpp sve)
-add_kerbal_utest_target_wih_ie(utest.random.mersenne_twister_engine ./mersenne_twister_engine.test.cpp neon)
+set(
+        kerbal_random_mt_supported_IEs
+        avx512f
+        avx2
+        sse4.1
+        sse2
+        sve
+        neon
+)
+
+foreach (ie ${kerbal_random_mt_supported_IEs})
+    add_kerbal_utest_target_wih_ie(utest.random.mersenne_twister_engine ./mersenne_twister_engine.test.cpp ${ie})
+endforeach ()
 
 set(test_targets ${test_targets} PARENT_SCOPE)
