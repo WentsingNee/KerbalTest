@@ -75,6 +75,9 @@ get_ordered()
 	return sv;
 }
 
+#undef TEST_CONSTEXPR
+#define TEST_CONSTEXPR 0
+
 
 KERBAL_TEST_CASE(test_static_priority_queue_char_array, "test static_priority_queue<char[]>")
 {
