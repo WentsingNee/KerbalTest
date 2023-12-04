@@ -9,6 +9,7 @@
  *   all rights reserved
  */
 
+#include <ktest/container/test_pmr_container.hpp>
 #include <ktest/random/random_vector.hpp>
 
 #include <kerbal/container/forward_list.hpp>
@@ -88,9 +89,7 @@ KERBAL_TEST_CASE(test_forward_list_noexcept, "test forward_list noexcept")
 		KERBAL_TEST_CHECK_STATIC(noexcept(std::swap(a, b)));
 	}
 
-#if __cplusplus >= 201703L
-
-#	if __has_include(<memory_resource>)
+#if TEST_PMR_CONTAINER
 
 	typedef std::pmr::polymorphic_allocator<int> pmralloci;
 	typedef std::pmr::polymorphic_allocator<std::string> pmrallocs;
@@ -128,8 +127,6 @@ KERBAL_TEST_CASE(test_forward_list_noexcept, "test forward_list noexcept")
 		KERBAL_TEST_CHECK_STATIC(noexcept(kerbal::algorithm::swap(a, b)));
 		KERBAL_TEST_CHECK_STATIC(noexcept(std::swap(a, b)));
 	}
-
-#	endif
 
 #endif
 

@@ -9,6 +9,8 @@
  *   all rights reserved
  */
 
+#include <ktest/container/test_pmr_container.hpp>
+
 #include <iostream>
 #include <kerbal/container/vector.hpp>
 
@@ -27,6 +29,7 @@
 #if __cplusplus >= 201103L
 #	include <type_traits>
 #endif
+
 
 # if __cplusplus >= 201103L && __cpp_exceptions
 
@@ -71,9 +74,7 @@ KERBAL_TEST_CASE(test_vector_noexcept, "test vector noexcept")
 		KERBAL_TEST_CHECK_STATIC(noexcept(std::swap(a, b)));
 	}
 
-#if __cplusplus >= 201703L
-
-#	if __has_include(<memory_resource>)
+#if TEST_PMR_CONTAINER
 
 	typedef std::pmr::polymorphic_allocator<int> pmralloci;
 	typedef std::pmr::polymorphic_allocator<std::string> pmrallocs;
@@ -111,8 +112,6 @@ KERBAL_TEST_CASE(test_vector_noexcept, "test vector noexcept")
 		KERBAL_TEST_CHECK_STATIC(noexcept(kerbal::algorithm::swap(a, b)));
 		KERBAL_TEST_CHECK_STATIC(noexcept(std::swap(a, b)));
 	}
-
-#	endif
 
 #endif
 

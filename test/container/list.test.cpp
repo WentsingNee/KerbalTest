@@ -9,6 +9,7 @@
  *   all rights reserved
  */
 
+#include <ktest/container/test_pmr_container.hpp>
 #include <ktest/random/random_vector.hpp>
 
 #include <kerbal/container/list.hpp>
@@ -37,13 +38,6 @@
 
 #if __cplusplus >= 201103L
 #	include <type_traits>
-#endif
-
-#if __cplusplus >= 201703L
-#	if __has_include(<memory_resource>)
-#		include <memory_resource>
-#		define TEST_PMR_LIST 1
-#	endif
 #endif
 
 
@@ -113,9 +107,7 @@ KERBAL_TEST_CASE(test_list_noexcept, "test list noexcept")
 		KERBAL_TEST_CHECK_STATIC(noexcept(std::swap(a, b)));
 	}
 
-#if __cplusplus >= 201703L
-
-#	if __has_include(<memory_resource>)
+#if TEST_PMR_CONTAINER
 
 	typedef std::pmr::polymorphic_allocator<int> pmralloci;
 	typedef std::pmr::polymorphic_allocator<std::string> pmrallocs;
@@ -153,8 +145,6 @@ KERBAL_TEST_CASE(test_list_noexcept, "test list noexcept")
 		KERBAL_TEST_CHECK_STATIC(noexcept(kerbal::algorithm::swap(a, b)));
 		KERBAL_TEST_CHECK_STATIC(noexcept(std::swap(a, b)));
 	}
-
-#	endif
 
 #endif
 
@@ -277,9 +267,9 @@ KERBAL_TEMPLATE_TEST_CASE(test_list_range_copy_construct, "test list::list(first
 KERBAL_TEMPLATE_TEST_CASE_INST(test_list_range_copy_construct, "test list::list(first, last) default allocator", std::allocator<int> );
 KERBAL_TEMPLATE_TEST_CASE_INST(test_list_range_copy_construct, "test list::list(first, last) fsn allocator", kerbal::memory::fixed_size_node_allocator<int> );
 KERBAL_TEMPLATE_TEST_CASE_INST(test_list_range_copy_construct, "test list::list(first, last) mono allocator", kerbal::memory::monotonic_allocator<int> );
-#	if TEST_PMR_LIST
+#if TEST_PMR_CONTAINER
 KERBAL_TEMPLATE_TEST_CASE_INST(test_list_range_copy_construct, "test list::list(first, last) std::pmr::allocator", std::pmr::polymorphic_allocator<int> );
-#	endif
+#endif
 
 
 #if __cplusplus >= 201103L
@@ -413,9 +403,9 @@ KERBAL_TEST_CASE(test_list_insert, "test list::insert")
 		std::list<int> ls;
 		kerbal::container::list<int> l;
 
-#	if TEST_PMR_LIST
+#if TEST_PMR_CONTAINER
 		kerbal::container::pmr::list<int> lp;
-#	endif
+#endif
 
 		for (int i = 0; i < 10; ++i) {
 			ls.insert(ls.begin(), i);
@@ -430,7 +420,7 @@ KERBAL_TEST_CASE(test_list_insert, "test list::insert")
 					ls.rbegin(), ls.rend()
 			)); // r
 
-#	if TEST_PMR_LIST
+#if TEST_PMR_CONTAINER
 			lp.insert(lp.cbegin(), i);
 			KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(
 					lp.cbegin(), lp.cend(),
@@ -440,7 +430,7 @@ KERBAL_TEST_CASE(test_list_insert, "test list::insert")
 					lp.crbegin(), lp.crend(),
 					ls.rbegin(), ls.rend()
 			)); // r
-#	endif
+#endif
 
 		}
 
@@ -451,9 +441,9 @@ KERBAL_TEST_CASE(test_list_insert, "test list::insert")
 		std::list<int> ls;
 		kerbal::container::list<int> l;
 
-#	if TEST_PMR_LIST
+#if TEST_PMR_CONTAINER
 		kerbal::container::pmr::list<int> lp;
-#	endif
+#endif
 
 		for (int i = 0; i < 10; ++i) {
 			ls.insert(ls.end(), i);
@@ -468,7 +458,7 @@ KERBAL_TEST_CASE(test_list_insert, "test list::insert")
 					ls.rbegin(), ls.rend()
 			)); // r
 
-#	if TEST_PMR_LIST
+#if TEST_PMR_CONTAINER
 			lp.insert(lp.end(), i);
 			KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(
 					lp.cbegin(), lp.cend(),
@@ -478,7 +468,7 @@ KERBAL_TEST_CASE(test_list_insert, "test list::insert")
 					lp.crbegin(), lp.crend(),
 					ls.rbegin(), ls.rend()
 			)); // r
-#	endif
+#endif
 
 		}
 
@@ -496,10 +486,10 @@ KERBAL_TEST_CASE(test_list_insert, "test list::insert")
 		kerbal::container::list<int> l = KERBAL_ILIST(0, 1, 2, 3, 4);
 		kerbal::container::list<int>::iterator b_2 = l.nth(2);
 
-#	if TEST_PMR_LIST
+#if TEST_PMR_CONTAINER
 		kerbal::container::pmr::list<int> lp = KERBAL_ILIST(0, 1, 2, 3, 4);
 		kerbal::container::pmr::list<int>::iterator b_2p = lp.nth(2);
-#	endif
+#endif
 
 		for (int i = 0; i < 5; ++i) {
 			ls.insert(b_2s, i);
@@ -514,7 +504,7 @@ KERBAL_TEST_CASE(test_list_insert, "test list::insert")
 					ls.rbegin(), ls.rend()
 			)); // r
 
-#	if TEST_PMR_LIST
+#if TEST_PMR_CONTAINER
 			lp.insert(b_2p, i);
 			KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(
 					lp.cbegin(), lp.cend(),
@@ -524,7 +514,7 @@ KERBAL_TEST_CASE(test_list_insert, "test list::insert")
 					lp.crbegin(), lp.crend(),
 					ls.rbegin(), ls.rend()
 			)); // r
-#	endif
+#endif
 
 		}
 
