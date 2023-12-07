@@ -76,10 +76,26 @@ do { \
 	TEST_CHECK(false, int &&, int);
 	TEST_CHECK(false, int &&, int &);
 	TEST_CHECK(false, int &&, int &&);
+#endif
+
+
+	TEST_CHECK(true, Foo, Foo);
+	TEST_CHECK(true, Foo, Foo &);
+#if __cplusplus >= 201103L
+	TEST_CHECK(true, Foo, Foo &&);
+#endif
+	TEST_CHECK(true, Foo&, Foo);
+	TEST_CHECK(true, Foo&, Foo &);
+#if __cplusplus >= 201103L
+	TEST_CHECK(true, Foo&, Foo &&);
+#endif
+#if __cplusplus >= 201103L
 	TEST_CHECK(true, Foo &&, Foo);
 	TEST_CHECK(true, Foo &&, Foo &);
 	TEST_CHECK(true, Foo &&, Foo &&);
 #endif
+
+
 	TEST_CHECK(false, int[], int*);
 	TEST_CHECK(false, int(&)[], int*);
 	TEST_CHECK(false, int[2], int*);
@@ -89,6 +105,7 @@ do { \
 	TEST_CHECK(false, int(), int());
 	TEST_CHECK(false, int(*)(), int());
 	TEST_CHECK(true, int(*&)(), int());
+
 
 #if __cplusplus >= 201103L
 	TEST_CHECK(false, PrivateCopyAssignable &, const PrivateCopyAssignable &);
@@ -128,10 +145,26 @@ KERBAL_TEST_CASE(test_try_test_is_assignable, "test try_test_is_assignable")
 	TRY_TEST_CHECK_WEAK_(tribool_false, int&&, int);
 	TRY_TEST_CHECK_WEAK_(tribool_false, int&&, int&);
 	TRY_TEST_CHECK_WEAK_(tribool_false, int&&, int&&);
+#endif
+
+
+	TRY_TEST_CHECK_WEAK_(tribool_true, Foo, Foo);
+	TRY_TEST_CHECK_WEAK_(tribool_true, Foo, Foo &);
+#if __cplusplus >= 201103L
+	TRY_TEST_CHECK_WEAK_(tribool_true, Foo, Foo &&);
+#endif
+	TRY_TEST_CHECK_WEAK_(tribool_true, Foo&, Foo);
+	TRY_TEST_CHECK_WEAK_(tribool_true, Foo&, Foo &);
+#if __cplusplus >= 201103L
+	TRY_TEST_CHECK_WEAK_(tribool_true, Foo&, Foo &&);
+#endif
+#if __cplusplus >= 201103L
 	TRY_TEST_CHECK_WEAK_(tribool_true, Foo&&, Foo);
 	TRY_TEST_CHECK_WEAK_(tribool_true, Foo&&, Foo&);
 	TRY_TEST_CHECK_WEAK_(tribool_true, Foo&&, Foo&&);
 #endif
+
+
 	TRY_TEST_CHECK_WEAK_(tribool_false, int[], int*);
 	TRY_TEST_CHECK_WEAK_(tribool_false, int(&)[], int*);
 	TRY_TEST_CHECK_WEAK_(tribool_false, int[2], int*);
