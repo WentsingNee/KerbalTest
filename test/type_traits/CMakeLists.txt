@@ -39,7 +39,10 @@ foreach (e IN ITEMS
         is_trivially_move_assignable
         is_trivially_move_constructible
 )
-    add_ktest_utest_target(utest.type_traits.${e}_guess ${e}.test.cpp)
+    add_ktest_utest_target(
+            TARGET utest.type_traits.${e}_guess
+            SOURCES ${e}.test.cpp
+    )
     string(TOUPPER ${e} E)
     target_compile_definitions(utest.type_traits.${e}_guess PRIVATE KERBAL_HAS_${E}_SUPPORT=0)
 endforeach ()

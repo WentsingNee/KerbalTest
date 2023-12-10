@@ -17,5 +17,9 @@ foreach (ie IN ITEMS
         sve
         neon
 )
-    add_ktest_utest_target_wih_ie(utest.random.mersenne_twister_engine_${ie} ./mersenne_twister_engine.test.cpp ${ie})
+    add_ktest_utest_target(
+            TARGET utest.random.mersenne_twister_engine_${ie}
+            SOURCES ./mersenne_twister_engine.test.cpp
+            IE ${ie}
+    )
 endforeach ()
