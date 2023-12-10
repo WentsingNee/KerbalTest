@@ -108,6 +108,7 @@ jobs:
           -DCMAKE_PREFIX_PATH=${{github.workspace}}/Kerbal/install
           -DKTEST_USE_LIBCXX=${{matrix.stdlib}}
           -DKTEST_ENABLE_PRECOMPILE_HEADER=OFF
+          -DKTEST_CI="github"
 
       - name: Configure CMake (MSVC)
         if: matrix.compiler == 'msvc'
@@ -118,6 +119,7 @@ jobs:
           -DCMAKE_CXX_STANDARD=${{matrix.cxx_standard}}
           -DCMAKE_PREFIX_PATH=${{github.workspace}}/Kerbal/install
           -DKTEST_ENABLE_PRECOMPILE_HEADER=OFF
+          -DKTEST_CI="github"
 
       - name: Show Environment Kerbal Detect
         run: >

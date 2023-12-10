@@ -80,9 +80,13 @@ function(add_ktest_utest_target_impl target target_src_file)
         set(path "./${path}")
     endif ()
 
+    if (NOT ${KTEST_CI} STREQUAL "")
+        set (run_utest_args "--run_in_ci")
+    endif ()
+
     set(run_utest_target_name "run_${target}")
     add_custom_target(${run_utest_target_name}
-            COMMAND ${KTEST_RUN_UTEST_INVOKER} ${path} > test_output/${target}.out.txt
+            COMMAND ${KTEST_RUN_UTEST_INVOKER} ${path} ${run_utest_args} > test_output/${target}.out.txt
             COMMAND ${CMAKE_COMMAND} -E cat test_output/${target}.out.txt
             WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
             COMMENT "Running utest target ${target}"
