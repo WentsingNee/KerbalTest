@@ -21,12 +21,48 @@ if (NOT DEFINED KTEST_RUN_UTEST_INVOKER)
 endif ()
 
 
-function(add_ktest_utest_target target target_src_file)
-    add_executable(${target} ${target_src_file})
+###
+#
+# @param TARGET oneValueArgs required
+# @param SOURCES multiValueArgs required
+# @param IE oneValueArgs optional
+#
+function(add_ktest_utest_target)
+    # parse arguments
+    set(options)
+    set(oneValueArgs TARGET IE)
+    set(multiValueArgs SOURCES)
+    cmake_parse_arguments(
+            "Args"
+            "${options}"
+            "${oneValueArgs}"
+            "${multiValueArgs}"
+            ${ARGV}
+    )
+    set (target ${Args_TARGET})
+    set (sources ${Args_SOURCES})
+    if (DEFINED Args_IE)
+        set (ie ${Args_IE})
+        if (NOT KTEST_SUPPORT_${ie})
+            message(WARNING "Compiler doesn't support ${ie}")
+            return()
+        endif ()
+    endif ()
+
+    # utest target
+    add_executable(${target} ${sources})
     set_target_properties(${target}
             PROPERTIES ktest_category "utest"
     )
     add_kerbal_parent_target(${target})
+    if (DEFINED ie)
+        kerbal_target_with_ies(
+                TARGET ${target}
+                IEs ${ie}
+                SCOPE PUBLIC
+                MODE REQUIRED
+        )
+    endif ()
     set_property(
             GLOBAL
             APPEND
@@ -128,20 +164,6 @@ function(add_ktest_utest_target target target_src_file)
 endfunction()
 
 
-function(add_ktest_utest_target_wih_ie target target_src_file ie)
-    if (NOT KERBAL_SUPPORT_${ie})
-        message(WARNING "Compiler doesn't support ${ie}")
-        return()
-    endif ()
-    add_ktest_utest_target(${target} ${target_src_file})
-    kerbal_target_with_ies(
-            TARGET ${target}
-            IEs ${ie}
-            SCOPE PUBLIC
-            MODE REQUIRED
-    )
-endfunction()
-
 
 file(GLOB_RECURSE test_src_files RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "*")
 foreach (file IN LISTS test_src_files)
@@ -152,7 +174,10 @@ foreach (file IN LISTS test_src_files)
     string(REPLACE "/" "." target ${CMAKE_MATCH_1})
     string(PREPEND target "utest.")
     message(VERBOSE "	add: ${target}  <=  ${CMAKE_CURRENT_SOURCE_DIR}/${file}")
-    add_ktest_utest_target(${target} ${CMAKE_CURRENT_SOURCE_DIR}/${file})
+    add_ktest_utest_target(
+            TARGET ${target}
+            SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/${file}
+    )
     if (KTEST_ENABLE_PRECOMPILE_HEADER)
         target_precompile_headers(${target} REUSE_FROM ktest_precompile_header)
     endif ()
