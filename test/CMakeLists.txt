@@ -114,9 +114,8 @@ function(add_ktest_utest_target_wih_ie target target_src_file ie)
         message(WARNING "Compiler doesn't support ${ie}")
         return()
     endif ()
-    set(target_name_with_ie ${target}_${ie})
-    add_ktest_utest_target(${target_name_with_ie} ${target_src_file})
-    target_compile_options(${target_name_with_ie} PUBLIC ${KTEST_FLAGS_${ie}})
+    add_ktest_utest_target(${target} ${target_src_file})
+    target_compile_options(${target} PUBLIC ${KTEST_FLAGS_${ie}})
 endfunction()
 
 
