@@ -16,6 +16,7 @@ foreach (ie IN ITEMS
         sse2
         sve
         neon
+        riscv-v
 )
     add_ktest_utest_target_wih_ie(utest.random.mersenne_twister_engine_${ie} ./mersenne_twister_engine.test.cpp ${ie})
 endforeach ()
