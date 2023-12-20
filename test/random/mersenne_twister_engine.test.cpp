@@ -66,7 +66,7 @@ KERBAL_TEMPLATE_TEST_CASE(test_batch_generate, "test batch generate")
 
 				kerbal::container::vector<result_type> v1(N);
 				{
-					eg1.generate(v1.begin(), v1.end());
+					eg1.generate_n(&v1[0], N);
 				}
 
 				kerbal::container::vector<result_type> v2(N);
