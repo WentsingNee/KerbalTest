@@ -99,5 +99,5 @@ KERBAL_TEMPLATE_TEST_CASE_INST(test_includes, "test includes (Fwd)", kerbal::con
 
 int main(int argc, char * argv[])
 {
-	kerbal::test::run_all_test_case(argc, argv);
+	return kerbal::test::run_all_test_case(argc, argv);
 }

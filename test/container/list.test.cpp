@@ -1351,5 +1351,5 @@ KERBAL_TEST_CASE(test_list_under_constexpr_context, "test list under constexpr c
 
 int main(int argc, char * argv[])
 {
-	kerbal::test::run_all_test_case(argc, argv);
+	return kerbal::test::run_all_test_case(argc, argv);
 }

@@ -56,5 +56,5 @@ INST(kerbal::compatibility::uint64_t, 31243214ull, 42543656ull, 7314325342524532
 
 int main(int argc, char * argv[])
 {
-	kerbal::test::run_all_test_case(argc, argv);
+	return kerbal::test::run_all_test_case(argc, argv);
 }

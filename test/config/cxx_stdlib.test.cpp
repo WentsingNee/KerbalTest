@@ -46,5 +46,5 @@ KERBAL_TEST_CASE(print_cxx_stdlib, "print c++ stdlib")
 
 int main(int argc, char * argv[])
 {
-	kerbal::test::run_all_test_case(argc, argv);
+	return kerbal::test::run_all_test_case(argc, argv);
 }

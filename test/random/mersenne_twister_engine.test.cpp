@@ -238,5 +238,5 @@ int main(int argc, char * argv[])
 		return 0;
 #endif
 	}
-	kerbal::test::run_all_test_case(argc, argv);
+	return kerbal::test::run_all_test_case(argc, argv);
 }

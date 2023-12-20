@@ -131,5 +131,5 @@ KERBAL_TEST_CASE(test_is_function, "test is_function")
 
 int main(int argc, char * argv[])
 {
-	kerbal::test::run_all_test_case(argc, argv);
+	return kerbal::test::run_all_test_case(argc, argv);
 }

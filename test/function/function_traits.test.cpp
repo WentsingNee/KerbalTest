@@ -35,5 +35,5 @@ KERBAL_TEST_CASE(test_function_traits_arguments_num, "test function_traits::argu
 
 int main(int argc, char * argv[])
 {
-	kerbal::test::run_all_test_case(argc, argv);
+	return kerbal::test::run_all_test_case(argc, argv);
 }

@@ -61,5 +61,5 @@ KERBAL_TEST_CASE(test_reverse_iterator_non_inplace, "test reverse_iterator(non-i
 
 int main(int argc, char * argv[])
 {
-	kerbal::test::run_all_test_case(argc, argv);
+	return kerbal::test::run_all_test_case(argc, argv);
 }
