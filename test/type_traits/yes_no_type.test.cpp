@@ -227,5 +227,5 @@ KERBAL_TEST_CASE(test_yes_no_type_could_use_method, "test yes_no_type could use 
 
 int main(int argc, char * argv[])
 {
-	kerbal::test::run_all_test_case(argc, argv);
+	return kerbal::test::run_all_test_case(argc, argv);
 }

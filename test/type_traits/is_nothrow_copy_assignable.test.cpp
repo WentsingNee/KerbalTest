@@ -144,5 +144,5 @@ KERBAL_TEST_CASE(test_try_test_is_nothrow_copy_assignable, "test try_test_is_not
 
 int main(int argc, char * argv[])
 {
-	kerbal::test::run_all_test_case(argc, argv);
+	return kerbal::test::run_all_test_case(argc, argv);
 }

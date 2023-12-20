@@ -63,5 +63,5 @@ KERBAL_TEST_CASE(test_murmur_hash2, "test murmur_hash2")
 
 int main(int argc, char * argv[])
 {
-	kerbal::test::run_all_test_case(argc, argv);
+	return kerbal::test::run_all_test_case(argc, argv);
 }

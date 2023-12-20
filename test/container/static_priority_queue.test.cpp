@@ -96,5 +96,5 @@ KERBAL_TEST_CASE(test_static_priority_queue_char_array, "test static_priority_qu
 
 int main(int argc, char * argv[])
 {
-	kerbal::test::run_all_test_case(argc, argv);
+	return kerbal::test::run_all_test_case(argc, argv);
 }

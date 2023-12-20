@@ -88,5 +88,5 @@ INST(kerbal::compatibility::uint64_t, 1ull, 4294967295ull, 4294967297ull);
 
 int main(int argc, char * argv[])
 {
-	kerbal::test::run_all_test_case(argc, argv);
+	return kerbal::test::run_all_test_case(argc, argv);
 }
