@@ -106,5 +106,5 @@ KERBAL_TEST_CASE(test_sigma_pow_mod, "test sigma_pow_mod")
 
 int main(int argc, char * argv[])
 {
-	kerbal::test::run_all_test_case(argc, argv);
+	return kerbal::test::run_all_test_case(argc, argv);
 }

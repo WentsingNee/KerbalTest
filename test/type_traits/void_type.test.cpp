@@ -202,5 +202,5 @@ KERBAL_TEST_CASE(test_void_type_could_use_method, "test void_type could use meth
 
 int main(int argc, char * argv[])
 {
-	kerbal::test::run_all_test_case(argc, argv);
+	return kerbal::test::run_all_test_case(argc, argv);
 }

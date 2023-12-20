@@ -322,5 +322,5 @@ KERBAL_TEST_CASE(test_copy_const, "test copy_const")
 
 int main(int argc, char * argv[])
 {
-	kerbal::test::run_all_test_case(argc, argv);
+	return kerbal::test::run_all_test_case(argc, argv);
 }

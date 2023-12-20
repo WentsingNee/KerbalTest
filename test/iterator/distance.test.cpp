@@ -56,5 +56,5 @@ KERBAL_TEMPLATE_TEST_CASE_INST(test_distance_comp, "test distance compare (rando
 
 int main(int argc, char * argv[])
 {
-	kerbal::test::run_all_test_case(argc, argv);
+	return kerbal::test::run_all_test_case(argc, argv);
 }

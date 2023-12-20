@@ -408,5 +408,5 @@ KERBAL_TEST_CASE(test_unique_with_predict, "test unique with predict")
 
 int main(int argc, char * argv[])
 {
-	kerbal::test::run_all_test_case(argc, argv);
+	return kerbal::test::run_all_test_case(argc, argv);
 }

@@ -105,5 +105,5 @@ KERBAL_TEST_CASE(cmp_with_std_normal_distribution_bar, "compare with std::normal
 
 int main(int argc, char * argv[])
 {
-	kerbal::test::run_all_test_case(argc, argv);
+	return kerbal::test::run_all_test_case(argc, argv);
 }

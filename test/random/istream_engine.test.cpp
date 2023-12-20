@@ -32,5 +32,5 @@ KERBAL_TEST_CASE(test_istream_engine, "test istream_engine")
 
 int main(int argc, char * argv[])
 {
-	kerbal::test::run_all_test_case(argc, argv);
+	return kerbal::test::run_all_test_case(argc, argv);
 }

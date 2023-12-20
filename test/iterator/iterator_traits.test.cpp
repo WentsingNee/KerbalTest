@@ -57,5 +57,5 @@ KERBAL_TEST_CASE(test_is_contiguous_iterator, "test is_contiguous_iterator)")
 
 int main(int argc, char * argv[])
 {
-	kerbal::test::run_all_test_case(argc, argv);
+	return kerbal::test::run_all_test_case(argc, argv);
 }

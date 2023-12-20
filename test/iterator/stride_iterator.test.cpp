@@ -105,5 +105,5 @@ KERBAL_TEST_CASE(test_stride_iterator_dedution, "test stride_iterator deduction"
 
 int main(int argc, char * argv[])
 {
-	kerbal::test::run_all_test_case(argc, argv);
+	return kerbal::test::run_all_test_case(argc, argv);
 }

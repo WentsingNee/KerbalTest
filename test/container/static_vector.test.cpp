@@ -338,5 +338,5 @@ KERBAL_TEST_CASE(test_static_vector_with_integer_sequence, "test static_vector w
 
 int main(int argc, char * argv[])
 {
-	kerbal::test::run_all_test_case(argc, argv);
+	return kerbal::test::run_all_test_case(argc, argv);
 }

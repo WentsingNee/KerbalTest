@@ -525,5 +525,5 @@ KERBAL_TEST_CASE(test_any_is_support_array_assign, "test any is support array as
 
 int main(int argc, char * argv[])
 {
-	kerbal::test::run_all_test_case(argc, argv);
+	return kerbal::test::run_all_test_case(argc, argv);
 }
