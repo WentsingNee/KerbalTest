@@ -30,6 +30,7 @@
 
 #include <algorithm>
 #include <iostream>
+#include <set>
 #include <utility>
 
 #include <cstddef>
@@ -348,6 +349,8 @@ KERBAL_TEMPLATE_TEST_CASE(test_avl_set_emplace, "test avl_set::emplace")
 				print_avl_normal_result_if_wrong(avl_normal_result);
 			}
 
+			std::set<int, kerbal::compare::binary_type_less<void, void> > stds(d.cbegin(), d.cend());
+			KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(s.begin(), s.end(), stds.begin(), stds.end()));
 		}
 	}
 }
