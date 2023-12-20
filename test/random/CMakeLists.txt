@@ -17,6 +17,7 @@ set(
         sse2
         sve
         neon
+        riscv-v
 )
 
 foreach (ie ${kerbal_random_mt_supported_IEs})
