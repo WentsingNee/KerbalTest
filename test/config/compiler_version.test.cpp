@@ -12,9 +12,12 @@
 #include <kerbal/config/compiler_id.hpp>
 #include <kerbal/config/compiler_private.hpp>
 
+#include <kerbal/test/test.hpp>
+
 #include <iostream>
 
-int main(int argc, char* argv[])
+
+KERBAL_TEST_CASE(print_compiler_version, "print compiler version")
 {
 
 #if KERBAL_COMPILER_ID == KERBAL_COMPILER_ID_GNU
@@ -65,4 +68,10 @@ int main(int argc, char* argv[])
 
 #endif
 
+}
+
+
+int main(int argc, char * argv[])
+{
+	kerbal::test::run_all_test_case(argc, argv);
 }

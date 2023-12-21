@@ -11,6 +11,8 @@
 
 #include <kerbal/config/cxx_stdlib.hpp>
 
+#include <kerbal/test/test.hpp>
+
 #include <kerbal/compatibility/constexpr.hpp>
 
 #include <cstdio>
@@ -36,7 +38,13 @@ static const char * cxx_stdlib()
 
 }
 
-int main()
+KERBAL_TEST_CASE(print_cxx_stdlib, "print c++ stdlib")
 {
 	printf("%s\n", cxx_stdlib());
+}
+
+
+int main(int argc, char * argv[])
+{
+	kerbal::test::run_all_test_case(argc, argv);
 }

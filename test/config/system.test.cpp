@@ -11,6 +11,8 @@
 
 #include <kerbal/config/system.hpp>
 
+#include <kerbal/test/test.hpp>
+
 #include <kerbal/compatibility/constexpr.hpp>
 
 #include <cstdio>
@@ -40,7 +42,13 @@ static const char * system_id()
 
 }
 
-int main(int argc, char* argv[])
+KERBAL_TEST_CASE(print_system_id, "print system id")
 {
 	printf("%s\n", system_id());
+}
+
+
+int main(int argc, char * argv[])
+{
+	kerbal::test::run_all_test_case(argc, argv);
 }

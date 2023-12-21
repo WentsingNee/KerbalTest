@@ -11,6 +11,8 @@
 
 #include <kerbal/config/compiler_id.hpp>
 
+#include <kerbal/test/test.hpp>
+
 #include <kerbal/compatibility/constexpr.hpp>
 
 #include <cstdio>
@@ -40,7 +42,13 @@ static const char * compiler_name()
 
 }
 
-int main()
+KERBAL_TEST_CASE(print_compiler_name, "print compiler name")
 {
 	printf("%s\n", compiler_name());
+}
+
+
+int main(int argc, char * argv[])
+{
+	kerbal::test::run_all_test_case(argc, argv);
 }
