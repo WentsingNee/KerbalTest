@@ -65,7 +65,4 @@ KERBAL_TEST_CASE(test_guard_release, "test guard::release")
 	KERBAL_TEST_CHECK(A::get_count() - pre == 0);
 }
 
-int main(int argc, char * argv[])
-{
-	kerbal::test::run_all_test_case(argc, argv);
-}
+KTEST_MAIN

@@ -45,7 +45,4 @@ KERBAL_TEST_CASE(test_is_constant_evaluated, "test is_constant_evaluated")
 
 #endif
 
-int main(int argc, char * argv[])
-{
-	kerbal::test::run_all_test_case(argc, argv);
-}
+KTEST_MAIN

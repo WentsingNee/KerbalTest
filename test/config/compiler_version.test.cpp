@@ -71,7 +71,4 @@ KERBAL_TEST_CASE(print_compiler_version, "print compiler version")
 }
 
 
-int main(int argc, char * argv[])
-{
-	kerbal::test::run_all_test_case(argc, argv);
-}
+KTEST_MAIN

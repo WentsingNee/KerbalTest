@@ -88,7 +88,4 @@ KERBAL_TEST_CASE(check_alignas, "check alignas")
 
 #endif
 
-int main(int argc, char * argv[])
-{
-	kerbal::test::run_all_test_case(argc, argv);
-}
+KTEST_MAIN

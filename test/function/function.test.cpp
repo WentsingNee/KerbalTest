@@ -48,7 +48,4 @@ KERBAL_TEST_CASE(test_function_construct_by_funptr, "test function::function(fun
 #endif
 
 
-int main(int argc, char * argv[])
-{
-	kerbal::test::run_all_test_case(argc, argv);
-}
+KTEST_MAIN

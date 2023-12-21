@@ -90,7 +90,4 @@ KERBAL_TEST_CASE(cmp_with_std_geometric_distribution_bar, "compare with std::geo
 #endif
 
 
-int main(int argc, char * argv[])
-{
-	kerbal::test::run_all_test_case(argc, argv);
-}
+KTEST_MAIN

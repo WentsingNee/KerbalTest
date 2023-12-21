@@ -32,7 +32,4 @@ KERBAL_TEMPLATE_TEST_CASE_INST(test_single_bit_bsearch, "test single_bit_bsearch
 KERBAL_TEMPLATE_TEST_CASE_INST(test_single_bit_bsearch, "test single_bit_bsearch (unsigned long long)", unsigned long long);
 
 
-int main(int argc, char * argv[])
-{
-	kerbal::test::run_all_test_case(argc, argv);
-}
+KTEST_MAIN

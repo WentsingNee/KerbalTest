@@ -59,7 +59,4 @@ KERBAL_TEST_CASE(test_reference_assign, "test reference assign")
 }
 
 
-int main(int argc, char * argv[])
-{
-	kerbal::test::run_all_test_case(argc, argv);
-}
+KTEST_MAIN

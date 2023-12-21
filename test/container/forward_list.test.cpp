@@ -1021,8 +1021,4 @@ KERBAL_TEMPLATE_TEST_CASE_INST(test_forward_list_radix_sort_is_stable, "test for
 KERBAL_TEMPLATE_TEST_CASE_INST(test_forward_list_radix_sort_is_stable, "test forward_list::radix_sort is stable (uint, desc)", unsigned int, kerbal::compare::greater<>);
 
 
-
-int main(int argc, char * argv[])
-{
-	kerbal::test::run_all_test_case(argc, argv);
-}
+KTEST_MAIN
