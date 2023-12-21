@@ -212,7 +212,4 @@ KERBAL_TEST_CASE(test_class_subordinate_to, "test class_subordinate_to")
 
 
 
-int main(int argc, char * argv[])
-{
-	kerbal::test::run_all_test_case(argc, argv);
-}
+KTEST_MAIN

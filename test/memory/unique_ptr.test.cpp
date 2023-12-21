@@ -200,7 +200,4 @@ KERBAL_TEST_CASE(test_unique_ptr_as_return_type, "test unique_ptr<T> as return t
 #endif
 
 
-int main(int argc, char * argv[])
-{
-	kerbal::test::run_all_test_case(argc, argv);
-}
+KTEST_MAIN

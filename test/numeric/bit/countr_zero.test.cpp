@@ -49,7 +49,4 @@ KERBAL_TEMPLATE_TEST_CASE_INST(test_countr_zero, "test countr_zero", unsigned lo
 KERBAL_TEMPLATE_TEST_CASE_INST(test_countr_zero, "test countr_zero", unsigned long long)
 
 
-int main(int argc, char * argv[])
-{
-	kerbal::test::run_all_test_case(argc, argv);
-}
+KTEST_MAIN

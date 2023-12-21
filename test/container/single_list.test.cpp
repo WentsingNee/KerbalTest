@@ -595,7 +595,4 @@ KERBAL_TEST_CASE(test_single_list_splice_all, "test single_list::splice(single_l
 }
 
 
-int main(int argc, char * argv[])
-{
-	kerbal::test::run_all_test_case(argc, argv);
-}
+KTEST_MAIN

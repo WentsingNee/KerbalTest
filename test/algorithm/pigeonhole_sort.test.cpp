@@ -65,7 +65,4 @@ KERBAL_TEST_CASE(test_pigeonhole_sort, "test pigeonhole sort")
 	KERBAL_TEST_CHECK((test_suite<kerbal::compatibility::int8_t, kerbal::type_traits::true_type>::test()));
 }
 
-int main(int argc, char * argv[])
-{
-	kerbal::test::run_all_test_case(argc, argv);
-}
+KTEST_MAIN

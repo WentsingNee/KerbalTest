@@ -88,7 +88,4 @@ KERBAL_TEST_CASE(test_static_ordered_unique_insert, "test static_ordered::unique
 }
 
 
-int main(int argc, char * argv[])
-{
-	kerbal::test::run_all_test_case(argc, argv);
-}
+KTEST_MAIN

@@ -174,7 +174,4 @@ KERBAL_TEST_CASE(test_kmp_visually, "test kmp visually")
 	}
 }
 
-int main(int argc, char * argv[])
-{
-	kerbal::test::run_all_test_case(argc, argv);
-}
+KTEST_MAIN

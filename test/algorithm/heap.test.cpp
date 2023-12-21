@@ -123,7 +123,4 @@ KERBAL_TEMPLATE_TEST_CASE_INST(test_pop_heap, "test pop_heap<std::deque>", std::
 //KERBAL_TEMPLATE_TEST_CASE_INST(test_pop_heap, "test pop_heap<list>", kerbal::container::list<int>); // failed!
 
 
-int main(int argc, char * argv[])
-{
-	kerbal::test::run_all_test_case(argc, argv);
-}
+KTEST_MAIN

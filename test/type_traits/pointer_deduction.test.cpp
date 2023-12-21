@@ -366,7 +366,4 @@ KERBAL_TEST_CASE(test_remove_all_pointers, "test remove_all_pointers")
 
 }
 
-int main(int argc, char * argv[])
-{
-	kerbal::test::run_all_test_case(argc, argv);
-}
+KTEST_MAIN

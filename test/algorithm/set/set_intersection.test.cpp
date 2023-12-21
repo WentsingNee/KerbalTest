@@ -99,7 +99,4 @@ KERBAL_TEMPLATE_TEST_CASE_INST(test_set_intersection, "test set_intersection (Bi
 KERBAL_TEMPLATE_TEST_CASE_INST(test_set_intersection, "test set_intersection (Fwd)", kerbal::container::forward_list<int>);
 
 
-int main(int argc, char * argv[])
-{
-	kerbal::test::run_all_test_case(argc, argv);
-}
+KTEST_MAIN

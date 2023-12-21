@@ -30,7 +30,4 @@ KERBAL_TEST_CASE(test_sizeof_void_p, "test sizeof(void *)")
 }
 
 
-int main(int argc, char * argv[])
-{
-	kerbal::test::run_all_test_case(argc, argv);
-}
+KTEST_MAIN

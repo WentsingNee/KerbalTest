@@ -53,7 +53,4 @@ KERBAL_TEMPLATE_TEST_CASE_INST(test_shuffle_order_engine, "test_shuffle_order_en
 #endif
 
 
-int main(int argc, char * argv[])
-{
-	kerbal::test::run_all_test_case(argc, argv);
-}
+KTEST_MAIN

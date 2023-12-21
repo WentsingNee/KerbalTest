@@ -187,7 +187,4 @@ KERBAL_TEST_CASE(test_try_test_is_assignable, "test try_test_is_assignable")
 
 
 
-int main(int argc, char * argv[])
-{
-	kerbal::test::run_all_test_case(argc, argv);
-}
+KTEST_MAIN

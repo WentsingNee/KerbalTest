@@ -163,7 +163,4 @@ KERBAL_TEST_CASE(test_monotonic_allocator_on_set, "test monotonic_allocator on s
 }
 
 
-int main(int argc, char * argv[])
-{
-	kerbal::test::run_all_test_case(argc, argv);
-}
+KTEST_MAIN

@@ -132,7 +132,4 @@ KERBAL_TEST_CASE(test_try_test_is_nothrow_default_constructible, "test try_test_
 
 
 
-int main(int argc, char * argv[])
-{
-	kerbal::test::run_all_test_case(argc, argv);
-}
+KTEST_MAIN

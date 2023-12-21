@@ -219,24 +219,4 @@ KERBAL_TEMPLATE_TEST_CASE_INST(test_mersenne_with_std, "test mersenne with std 6
 #endif
 
 
-static
-bool is_run_in_ci(int argc, char * argv[])
-{
-	for (int i = 1; i < argc; ++i) {
-		if (std::strcmp(argv[i], "--run_in_ci") == 0) {
-			return true;
-		}
-	}
-	return false;
-}
-
-
-int main(int argc, char * argv[])
-{
-	if (is_run_in_ci(argc, argv)) {
-#if __AVX512F__ || __AVX2__ || __ARM_FEATURE_SVE
-		return 0;
-#endif
-	}
-	kerbal::test::run_all_test_case(argc, argv);
-}
+KTEST_MAIN

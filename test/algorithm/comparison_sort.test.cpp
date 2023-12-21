@@ -317,7 +317,4 @@ KERBAL_TEMPLATE_TEST_CASE_INST(test_sort, "test sort (random, string)", std::str
 //
 //#endif
 
-int main(int argc, char * argv[])
-{
-	kerbal::test::run_all_test_case(argc, argv);
-}
+KTEST_MAIN

@@ -58,7 +58,4 @@ KERBAL_TEST_CASE(test_default_delete_work_on_array, "test default_delete<Tp[]>")
 
 
 
-int main(int argc, char * argv[])
-{
-	kerbal::test::run_all_test_case(argc, argv);
-}
+KTEST_MAIN

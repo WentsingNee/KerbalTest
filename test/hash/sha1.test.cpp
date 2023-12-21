@@ -123,7 +123,4 @@ KERBAL_TEST_CASE(test_sha1_constexpr, "test sha1 constexpr")
 #endif // __cplusplus >= 201402L
 
 
-int main(int argc, char * argv[])
-{
-	kerbal::test::run_all_test_case(argc, argv);
-}
+KTEST_MAIN

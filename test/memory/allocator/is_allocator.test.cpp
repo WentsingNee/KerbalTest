@@ -20,7 +20,4 @@ KERBAL_TEST_CASE(test_is_allocator, "test is_allocator")
 	KERBAL_TEST_CHECK_STATIC(!kerbal::memory::is_allocator<int>::value);
 }
 
-int main(int argc, char * argv[])
-{
-	kerbal::test::run_all_test_case(argc, argv);
-}
+KTEST_MAIN

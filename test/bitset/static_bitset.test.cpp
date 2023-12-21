@@ -599,7 +599,4 @@ INST(4 * CHAR_BIT * sizeof(unsigned long long) + 7, unsigned long long);
 #undef INST
 
 
-int main(int argc, char * argv[])
-{
-	kerbal::test::run_all_test_case(argc, argv);
-}
+KTEST_MAIN

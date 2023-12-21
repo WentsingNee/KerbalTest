@@ -112,7 +112,4 @@ KERBAL_TEST_CASE(test_noncopyable_is_not_copy_constructible, "test noncopyable i
 #endif // if __cplusplus >= 201103L
 
 
-int main(int argc, char * argv[])
-{
-	kerbal::test::run_all_test_case(argc, argv);
-}
+KTEST_MAIN
