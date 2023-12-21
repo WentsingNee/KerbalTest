@@ -412,7 +412,7 @@ KERBAL_TEST_CASE(test_optional_constexpr14, "test optional constexpr14")
 # endif
 
 
-int main(int argc, char* argv[])
+int main(int argc, char * argv[])
 {
 	kerbal::test::run_all_test_case(argc, argv);
 }

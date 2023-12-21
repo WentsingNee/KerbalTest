@@ -31,7 +31,7 @@ KERBAL_TEST_CASE(test_hash_float, "test hash float")
 }
 
 
-int main(int argc, char* args[])
+int main(int argc, char * argv[])
 {
-	kerbal::test::run_all_test_case(argc, args);
+	kerbal::test::run_all_test_case(argc, argv);
 }

@@ -47,7 +47,7 @@ KERBAL_TEMPLATE_TEST_CASE_INST(test_midden_iterator, "test RasIter", std::deque<
 KERBAL_TEMPLATE_TEST_CASE_INST(test_midden_iterator, "test CtgIter", kerbal::container::vector<int>);
 
 
-int main(int argc, char* argv[])
+int main(int argc, char * argv[])
 {
 	kerbal::test::run_all_test_case(argc, argv);
 }

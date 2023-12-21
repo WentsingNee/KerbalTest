@@ -54,7 +54,7 @@ KERBAL_TEMPLATE_TEST_CASE(test_distance_comp, "test distance compare")
 KERBAL_TEMPLATE_TEST_CASE_INST(test_distance_comp, "test distance compare (forward iterator)", kerbal::container::single_list<int>);
 KERBAL_TEMPLATE_TEST_CASE_INST(test_distance_comp, "test distance compare (random access iterator)", kerbal::container::vector<int>);
 
-int main(int argc, char* argv[])
+int main(int argc, char * argv[])
 {
 	kerbal::test::run_all_test_case(argc, argv);
 }

@@ -142,7 +142,7 @@ KERBAL_TEMPLATE_TEST_CASE_INST(test_over_aligned_new3, "test over_aligned_new 3"
 KERBAL_TEMPLATE_TEST_CASE_INST(test_over_aligned_new3, "test over_aligned_new 3", 256);
 
 
-int main(int argc, char* argv[])
+int main(int argc, char * argv[])
 {
 	kerbal::test::run_all_test_case(argc, argv);
 }

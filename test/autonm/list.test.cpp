@@ -161,7 +161,7 @@ KERBAL_TEST_CASE(test_autonm_list_move_assign, "test autonm_list::operator=(auto
 #endif
 
 
-int main(int argc, char* argv[])
+int main(int argc, char * argv[])
 {
 	kerbal::test::run_all_test_case(argc, argv);
 }

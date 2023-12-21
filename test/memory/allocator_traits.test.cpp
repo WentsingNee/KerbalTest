@@ -88,7 +88,7 @@ KERBAL_TEST_CASE(test_has_max_size, "test has_max_size")
 }
 
 
-int main(int argc, char* argv[])
+int main(int argc, char * argv[])
 {
 	kerbal::test::run_all_test_case(argc, argv);
 }

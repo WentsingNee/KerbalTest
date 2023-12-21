@@ -199,7 +199,7 @@ KERBAL_TEMPLATE_TEST_CASE_INST(test_binary_search, "test test_binary_search<forw
 KERBAL_TEMPLATE_TEST_CASE_INST(test_binary_search, "test test_binary_search<single_list>", kerbal::container::single_list<int>);
 
 
-int main(int argc, char* argv[])
+int main(int argc, char * argv[])
 {
 	kerbal::test::run_all_test_case(argc, argv);
 }

@@ -73,6 +73,7 @@ KERBAL_TEST_CASE(test_invoke_r_mem_fun, "test invoke_r mem_fun")
 
 
 
-int main(int argc, char *argv[]) {
+int main(int argc, char * argv[])
+{
 	kerbal::test::run_all_test_case(argc, argv);
 }
