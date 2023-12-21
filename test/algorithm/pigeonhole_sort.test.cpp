@@ -21,13 +21,12 @@
 #include <kerbal/type_traits/integral_constant.hpp>
 
 
-kerbal::random::mt19937 eg;
-
 template <typename value_type, typename Order>
 struct test_suite
 {
 		static bool test()
 		{
+			kerbal::random::mt19937 eg;
 			using namespace kerbal::algorithm;
 			typedef kerbal::type_traits::integral_constant<size_t, 300000> N;
 			typedef kerbal::container::vector<value_type> container_type;

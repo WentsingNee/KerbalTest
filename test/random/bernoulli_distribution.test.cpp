@@ -17,10 +17,10 @@
 
 #include <cstdio>
 
-kerbal::random::mt19937 eg;
 
 std::pair<int, int> cnt(double p)
 {
+	kerbal::random::mt19937 eg;
 	kerbal::random::bernoulli_distribution dis(p);
 
 	int cnt[2] = {0, 0};
