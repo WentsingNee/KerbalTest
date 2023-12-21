@@ -1,0 +1,206 @@
+/**
+ * @file       void_type.test.cpp
+ * @brief
+ * @date       2023-10-13
+ * @author     Peter
+ * @copyright
+ *      Peter of [ThinkSpirit Laboratory](http://thinkspirit.org/)
+ *   of [Nanjing University of Information Science & Technology](http://www.nuist.edu.cn/)
+ *   all rights reserved
+ */
+
+#include <kerbal/test/test.hpp>
+
+#include <kerbal/type_traits/void_type.hpp>
+
+#include <kerbal/config/compiler_id.hpp>
+#include <kerbal/config/compiler_private.hpp>
+#include <kerbal/type_traits/integral_constant.hpp>
+#include <kerbal/utility/declval.hpp>
+#include <kerbal/utility/ignore_unused.hpp>
+
+#include <cstddef>
+
+
+struct FooNoTypedef
+{
+};
+
+struct FooHasTypedef
+{
+		typedef int type;
+};
+
+struct FooPrivateTypedef
+{
+	private:
+		typedef int type;
+};
+
+
+template <typename T, typename = kerbal::type_traits::void_type<>::type>
+struct could_use_typedef :
+		kerbal::type_traits::false_type
+{
+};
+
+template <typename T>
+struct could_use_typedef<T, typename kerbal::type_traits::void_type<
+		typename T::type
+>::type> : kerbal::type_traits::true_type
+{
+};
+
+KERBAL_TEST_CASE(test_yes_no_type_could_use_typedef, "test yes_no_type could use typedef")
+{
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_typedef<FooNoTypedef>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_typedef<FooHasTypedef>::value, true);
+
+#if KERBAL_COMPILER_ID == KERBAL_COMPILER_ID_GNU
+#	if KERBAL_GNU_VERSION_MEETS(5, 0, 0)
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_typedef<FooPrivateTypedef>::value, false);
+#	endif
+#elif KERBAL_COMPILER_ID == KERBAL_COMPILER_ID_CLANG
+#	if __cplusplus >= 201103L
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_typedef<FooPrivateTypedef>::value, false);
+#	endif
+#elif KERBAL_COMPILER_ID == KERBAL_COMPILER_ID_MSVC
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_typedef<FooPrivateTypedef>::value, false);
+#endif
+
+}
+
+
+struct FooNoField
+{
+};
+
+struct FooHasField
+{
+		int data;
+};
+
+struct FooPrivateField
+{
+	private:
+		int data;
+
+	public:
+		// use private field to avoid warning
+		void f()
+		{
+			kerbal::utility::ignore_unused(data);
+		}
+};
+
+
+template <typename T, typename = kerbal::type_traits::void_type<>::type>
+struct could_use_field :
+		kerbal::type_traits::false_type
+{
+};
+
+template <typename T>
+struct could_use_field<T, typename kerbal::type_traits::void_type<
+#	if __cplusplus >= 201103L // compatible with msvc
+		decltype(
+			kerbal::utility::declval<T&>().data
+		)
+#	else
+		kerbal::type_traits::integral_constant<
+			std::size_t,
+			sizeof(
+				kerbal::utility::declval<T&>().data,
+				0
+			)
+		>
+#	endif
+>::type> : kerbal::type_traits::true_type
+{
+};
+
+KERBAL_TEST_CASE(test_yes_no_type_could_use_field, "test yes_no_type could use field")
+{
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<FooNoField>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<FooHasField>::value, true);
+
+#if KERBAL_COMPILER_ID == KERBAL_COMPILER_ID_GNU
+#	if KERBAL_GNU_VERSION_MEETS(5, 0, 0)
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<FooPrivateField>::value, false);
+#	endif
+#elif KERBAL_COMPILER_ID == KERBAL_COMPILER_ID_CLANG
+#	if __cplusplus >= 201103L
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<FooPrivateField>::value, false);
+#	endif
+#elif KERBAL_COMPILER_ID == KERBAL_COMPILER_ID_MSVC
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<FooPrivateField>::value, false);
+#endif
+
+}
+
+
+struct FooNoMethod
+{
+};
+
+struct FooHasMethod
+{
+		void f();
+};
+
+struct FooPrivateMethod
+{
+	private:
+		void f();
+};
+
+
+template <typename T, typename = kerbal::type_traits::void_type<>::type>
+struct could_use_method :
+		kerbal::type_traits::false_type
+{
+};
+
+template <typename T>
+struct could_use_method<T, typename kerbal::type_traits::void_type<
+#	if __cplusplus >= 201103L // compatible with msvc
+		decltype(
+			kerbal::utility::declval<T&>().f()
+		)
+#	else
+		kerbal::type_traits::integral_constant<
+			std::size_t,
+			sizeof(
+				kerbal::utility::declval<T&>().f(),
+				0
+			)
+		>
+#	endif
+>::type> : kerbal::type_traits::true_type
+{
+};
+
+KERBAL_TEST_CASE(test_yes_no_type_could_use_method, "test yes_no_type could use method")
+{
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_method<FooNoMethod>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_method<FooHasMethod>::value, true);
+
+#if KERBAL_COMPILER_ID == KERBAL_COMPILER_ID_GNU
+#	if KERBAL_GNU_VERSION_MEETS(5, 0, 0)
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_method<FooPrivateMethod>::value, false);
+#	endif
+#elif KERBAL_COMPILER_ID == KERBAL_COMPILER_ID_CLANG
+#	if __cplusplus >= 201103L
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_method<FooPrivateMethod>::value, false);
+#	endif
+#elif KERBAL_COMPILER_ID == KERBAL_COMPILER_ID_MSVC
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_method<FooPrivateMethod>::value, false);
+#endif
+
+}
+
+
+int main(int argc, char * argv[])
+{
+	kerbal::test::run_all_test_case(argc, argv);
+}
