@@ -29,3 +29,16 @@ template class kerbal::container::single_list<int, km::fixed_size_node_allocator
 template class kerbal::container::forward_list<int, km::fixed_size_node_allocator<int, km::monotonic_allocator<int> > >;
 template class kerbal::container::list<int, km::fixed_size_node_allocator<int, km::monotonic_allocator<int> > >;
 template class kerbal::container::single_list<int, km::fixed_size_node_allocator<int, km::monotonic_allocator<int> > >;
+
+
+template
+void kerbal::algorithm::swap(
+	km::fixed_size_node_allocator<int> &,
+	km::fixed_size_node_allocator<int> &
+);
+
+template
+void kerbal::algorithm::swap(
+	km::fixed_size_node_allocator<int, km::monotonic_allocator<int> > &,
+	km::fixed_size_node_allocator<int, km::monotonic_allocator<int> > &
+);
