@@ -21,7 +21,7 @@
 #include <kerbal/type_traits/integral_constant.hpp>
 
 
-template <typename value_type, typename Order>
+template <typename ValueType, bool Order>
 struct test_suite
 {
 		static bool test()
@@ -29,11 +29,11 @@ struct test_suite
 			kerbal::random::mt19937 eg;
 			using namespace kerbal::algorithm;
 			typedef kerbal::type_traits::integral_constant<size_t, 300000> N;
-			typedef kerbal::container::vector<value_type> container_type;
+			typedef kerbal::container::vector<ValueType> container_type;
 
 			container_type v(N::value); {
 				for (N::value_type i = 0; i < N::value; ++i) {
-					if (kerbal::type_traits::is_same<value_type, bool>::value) {
+					if (kerbal::type_traits::is_same<ValueType, bool>::value) {
 						v[i] = eg() % 2;
 					} else {
 						v[i] = eg();
@@ -44,11 +44,11 @@ struct test_suite
 
 			typename container_type::iterator begin(kerbal::container::begin(v));
 			typename container_type::iterator end(kerbal::container::end(v));
-			kerbal::algorithm::pigeonhole_sort(begin, end, Order());
+			kerbal::algorithm::pigeonhole_sort(begin, end, kerbal::type_traits::bool_constant<Order>());
 
 			typename container_type::iterator begin2(kerbal::container::begin(v2));
 			typename container_type::iterator end2(kerbal::container::end(v2));
-			typedef typename kerbal::type_traits::conditional<Order::value, kerbal::compare::greater<>, kerbal::compare::less<> >::type compare;
+			typedef typename kerbal::type_traits::conditional<Order, kerbal::compare::greater<>, kerbal::compare::less<> >::type compare;
 			kerbal::algorithm::sort(begin2, end2, compare());
 
 			return (kerbal::compare::sequence_equal_to(begin, end, begin2, end2));
@@ -57,12 +57,12 @@ struct test_suite
 
 KERBAL_TEST_CASE(test_pigeonhole_sort, "test pigeonhole sort")
 {
-	KERBAL_TEST_CHECK((test_suite<bool, kerbal::type_traits::false_type>::test()));
-	KERBAL_TEST_CHECK((test_suite<bool, kerbal::type_traits::true_type>::test()));
-	KERBAL_TEST_CHECK((test_suite<kerbal::compatibility::uint8_t, kerbal::type_traits::false_type>::test()));
-	KERBAL_TEST_CHECK((test_suite<kerbal::compatibility::uint8_t, kerbal::type_traits::true_type>::test()));
-	KERBAL_TEST_CHECK((test_suite<kerbal::compatibility::int8_t, kerbal::type_traits::false_type>::test()));
-	KERBAL_TEST_CHECK((test_suite<kerbal::compatibility::int8_t, kerbal::type_traits::true_type>::test()));
+	KERBAL_TEST_CHECK((test_suite<bool, false>::test()));
+	KERBAL_TEST_CHECK((test_suite<bool, true>::test()));
+	KERBAL_TEST_CHECK((test_suite<kerbal::compatibility::uint8_t, false>::test()));
+	KERBAL_TEST_CHECK((test_suite<kerbal::compatibility::uint8_t, true>::test()));
+	KERBAL_TEST_CHECK((test_suite<kerbal::compatibility::int8_t, false>::test()));
+	KERBAL_TEST_CHECK((test_suite<kerbal::compatibility::int8_t, true>::test()));
 }
 
 KTEST_MAIN
