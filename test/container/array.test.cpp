@@ -162,7 +162,4 @@ KERBAL_TEST_CASE(test_array_c_arr, "test array::c_arr")
 
 }
 
-int main(int argc, char * argv[])
-{
-	kerbal::test::run_all_test_case(argc, argv);
-}
+KTEST_MAIN

@@ -73,7 +73,4 @@ KERBAL_TEST_CASE(test_avl_map_CTAD, "test avl_map CTAD")
 #endif
 
 
-int main(int argc, char * argv[])
-{
-	kerbal::test::run_all_test_case(argc, argv);
-}
+KTEST_MAIN

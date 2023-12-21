@@ -27,7 +27,4 @@ KERBAL_TEST_CASE(check_width, "check width")
 	KERBAL_TEST_CHECK_EQUAL_STATIC(sizeof(kerbal::compatibility::uint64_t) * CHAR_BIT, 64u);
 }
 
-int main(int argc, char * argv[])
-{
-	kerbal::test::run_all_test_case(argc, argv);
-}
+KTEST_MAIN

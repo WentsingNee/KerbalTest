@@ -575,7 +575,4 @@ KERBAL_TEST_CASE(test_copy_lvalue_reference, "test copy_lvalue_reference")
 }
 
 
-int main(int argc, char * argv[])
-{
-	kerbal::test::run_all_test_case(argc, argv);
-}
+KTEST_MAIN

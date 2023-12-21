@@ -48,7 +48,4 @@ KERBAL_TEST_CASE(print_system_id, "print system id")
 }
 
 
-int main(int argc, char * argv[])
-{
-	kerbal::test::run_all_test_case(argc, argv);
-}
+KTEST_MAIN

@@ -72,7 +72,4 @@ KERBAL_TEST_CASE(test_raw_storage_trivially_destructible, "test rawst trivially_
 #endif // if __cplusplus >= 201103L
 
 
-int main(int argc, char * argv[])
-{
-	kerbal::test::run_all_test_case(argc, argv);
-}
+KTEST_MAIN

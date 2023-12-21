@@ -28,8 +28,15 @@ add_custom_target(
 )
 
 
-function(add_ktest_utest_target target target_src_file)
-    add_executable(${target} ${target_src_file})
+add_library(ktest_main OBJECT "${PROJECT_SOURCE_DIR}/test/ktest_main.cpp")
+ktest_basic_configuration(ktest_main)
+
+
+function(add_ktest_utest_target target)
+    list(POP_FRONT ARGV)
+    set(target_src_files ${ARGV})
+
+    add_executable(${target} ${target_src_files})
     set_target_properties(${target}
             PROPERTIES ktest_category "utest"
     )
@@ -40,6 +47,8 @@ function(add_ktest_utest_target target target_src_file)
             PROPERTY KTEST_UTEST_TARGETS_MANIFEST "${target}"
     )
     ktest_basic_configuration(${target})
+    target_link_libraries(${target} PUBLIC ktest_main)
+    target_compile_definitions(${target} PUBLIC KTEST_MAIN=)
     set_target_properties(${target}
             PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/targets
     )
