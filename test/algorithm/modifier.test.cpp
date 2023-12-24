@@ -11,7 +11,15 @@
 
 #include <ktest/random/random_vector.hpp>
 
-#include <kerbal/algorithm/modifier.hpp>
+#include <kerbal/algorithm/modifier/iota.hpp>
+#include <kerbal/algorithm/modifier/copy.hpp>
+#include <kerbal/algorithm/modifier/reverse.hpp>
+#include <kerbal/algorithm/modifier/reverse_copy.hpp>
+#include <kerbal/algorithm/modifier/rotate.hpp>
+#include <kerbal/algorithm/modifier/rotate_copy.hpp>
+#include <kerbal/algorithm/modifier/inplace_merge.hpp>
+#include <kerbal/algorithm/modifier/merge.hpp>
+#include <kerbal/algorithm/modifier/unique.hpp>
 
 #include <kerbal/test/test.hpp>
 
