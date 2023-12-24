@@ -26,6 +26,9 @@
 #	include <string_view>
 #endif
 
+#include <cstdio>
+
+
 KERBAL_TEST_CASE(test_iterator_tratis, "test iterator_traits)")
 {
 
@@ -40,16 +43,16 @@ KERBAL_TEST_CASE(test_iterator_tratis, "test iterator_traits)")
 
 KERBAL_TEST_CASE(test_is_contiguous_iterator, "test is_contiguous_iterator)")
 {
-	std::cout << kerbal::iterator::is_contiguous_iterator<int*>::value << std::endl;
-	std::cout << kerbal::iterator::is_contiguous_iterator<std::string::iterator>::value << std::endl;
-	std::cout << kerbal::iterator::is_contiguous_iterator<std::vector<int>::iterator>::value << std::endl;
+	KERBAL_TEST_CHECK_EQUAL_STATIC(true, kerbal::iterator::is_contiguous_iterator<int*>::value);
+	std::printf("%d\n", kerbal::iterator::is_contiguous_iterator<std::string::iterator>::value);
+	std::printf("%d\n", kerbal::iterator::is_contiguous_iterator<std::vector<int>::iterator>::value);
 
 #if __cplusplus >= 201103L
-	std::cout << kerbal::iterator::is_contiguous_iterator<std::array<int, 10>::iterator>::value << std::endl;
+	std::printf("%d\n", kerbal::iterator::is_contiguous_iterator<std::array<int, 10>::iterator>::value);
 #endif
 
 #if __cplusplus >= 201703L
-	std::cout << kerbal::iterator::is_contiguous_iterator<std::string_view::iterator>::value << std::endl;
+	std::printf("%d\n", kerbal::iterator::is_contiguous_iterator<std::string_view::iterator>::value);
 #endif
 
 }

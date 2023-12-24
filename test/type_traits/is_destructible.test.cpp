@@ -27,14 +27,16 @@
 
 #include <kerbal/test/test.hpp>
 
+#include <cstdio>
+
 
 KERBAL_TEST_CASE(test_has_is_destructible_support, "test has is_destructible support")
 {
 
 #if KERBAL_HAS_IS_DESTRUCTIBLE_SUPPORT
-	std::cout << "kerbal::type_traits::is_destructible is supported!" << std::endl;
+	std::puts("kerbal::type_traits::is_destructible is supported!");
 #else
-	std::cout << "kerbal::type_traits::is_destructible is not supported!" << std::endl;
+	std::puts("kerbal::type_traits::is_destructible is not supported!");
 #endif
 
 }

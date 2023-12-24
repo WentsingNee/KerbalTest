@@ -13,14 +13,16 @@
 
 #include <kerbal/test/test.hpp>
 
+#include <cstdio>
+
 
 KERBAL_TEST_CASE(test_has_is_nothrow_copy_assignable_support, "test has is_nothrow_copy_assignable support")
 {
 
 #if KERBAL_HAS_IS_NOTHROW_COPY_ASSIGNABLE_SUPPORT
-	std::cout << "kerbal::type_traits::is_nothrow_copy_assignable is supported!" << std::endl;
+	std::puts("kerbal::type_traits::is_nothrow_copy_assignable is supported!");
 #else
-	std::cout << "kerbal::type_traits::is_nothrow_copy_assignable is not supported!" << std::endl;
+	std::puts("kerbal::type_traits::is_nothrow_copy_assignable is not supported!");
 #endif
 
 }
