@@ -14,10 +14,6 @@
 #include <kerbal/test/test.hpp>
 #include <kerbal/compatibility/cv_qualified_function.hpp>
 
-#if __cplusplus >= 201103L
-#	include <type_traits>
-#endif
-
 
 #define KERBAL_TEST_CHECK_AT_COMPILE_TIME
 
@@ -30,10 +26,9 @@
 
 KERBAL_TEST_CASE(test_is_function, "test is_function")
 {
-	namespace ns = kerbal::type_traits;
-//	namespace ns = std;
+	using namespace kerbal::type_traits;
 
-#define CHECK_IS_FUNCTION(Fun, Expected) KERBAL_TEST_CHECK_EQUAL(ns::is_function<Fun>::value, Expected);
+#define CHECK_IS_FUNCTION(Fun, Expected) KERBAL_TEST_CHECK_EQUAL(is_function<Fun>::value, Expected);
 
 	CHECK_IS_FUNCTION(int, false);
 	CHECK_IS_FUNCTION(int*, false);

@@ -19,10 +19,6 @@
 #include <kerbal/compatibility/cv_qualified_function.hpp>
 #include <kerbal/type_traits/is_same.hpp>
 
-#if __cplusplus >= 201103L
-#	include <type_traits>
-#endif
-
 
 #define KERBAL_TEST_CHECK_AT_COMPILE_TIME
 
@@ -44,7 +40,6 @@ struct Foo
 
 KERBAL_TEST_CASE(test_is_pointer, "test is_pointer")
 {
-//	using namespace std;
 	using namespace kerbal::type_traits;
 
 #define IS_POINTER(T, Result) CHECK_EQUAL(is_pointer<T>::value, (Result));
@@ -107,7 +102,6 @@ KERBAL_TEST_CASE(test_is_pointer, "test is_pointer")
 
 KERBAL_TEST_CASE(test_remove_pointer, "test remove_pointer")
 {
-//	using namespace std;
 	using namespace kerbal::type_traits;
 
 #define AFTER_REMOVE_POINTER_IS(T, U) CHECK_EQUAL((is_same<remove_pointer<T>::type, U>::value), true);

@@ -17,9 +17,6 @@
 #include <kerbal/test/test.hpp>
 #include <kerbal/type_traits/is_same.hpp>
 
-#if __cplusplus >= 201103L
-#	include <type_traits>
-#endif
 
 #define KERBAL_TEST_CHECK_AT_COMPILE_TIME
 

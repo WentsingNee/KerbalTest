@@ -25,10 +25,6 @@
 #	include <kerbal/type_traits/add_const_rvalue_reference.hpp>
 #endif
 
-#if __cplusplus >= 201103L
-#	include <type_traits>
-#endif
-
 
 #define KERBAL_TEST_CHECK_AT_COMPILE_TIME
 
@@ -200,7 +196,6 @@ KERBAL_TEST_CASE(test_is_rvalue_reference, "test add_rvalue_reference")
 
 KERBAL_TEST_CASE(test_add_lvalue_reference, "test add_lvalue_reference")
 {
-//	using namespace std;
 	using namespace kerbal::type_traits;
 
 #define AFTER_ADD_LVALUE_REFERENCE_IS(Type, res) CHECK_EQUAL((is_same<add_lvalue_reference<Type>::type, res>::value), true)

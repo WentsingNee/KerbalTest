@@ -15,10 +15,6 @@
 #include <kerbal/compatibility/cv_qualified_function.hpp>
 #include <kerbal/type_traits/is_same.hpp>
 
-#if __cplusplus >= 201103L
-#	include <type_traits>
-#endif
-
 
 #define KERBAL_TEST_CHECK_AT_COMPILE_TIME
 
@@ -35,14 +31,12 @@ struct Foo
 
 	void f(int)
 	{
-
 	}
 };
 
 
 KERBAL_TEST_CASE(test_decay, "test decay")
 {
-//	using namespace std;
 	using namespace kerbal::type_traits;
 
 #define AFTER_DECAY_IS(T, U) CHECK_EQUAL((is_same<decay<T>::type, U>::value), true);

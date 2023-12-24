@@ -17,10 +17,6 @@
 #include <kerbal/compatibility/cv_qualified_function.hpp>
 #include <kerbal/type_traits/is_same.hpp>
 
-#if __cplusplus >= 201103L
-#	include <type_traits>
-#endif
-
 
 #define KERBAL_TEST_CHECK_AT_COMPILE_TIME
 
@@ -68,7 +64,6 @@ struct Foo
 
 KERBAL_TEST_CASE(test_is_member_pointer, "test is_member_pointer")
 {
-//	using namespace std;
 	using namespace kerbal::type_traits;
 
 #define IS_MEMBER_POINTER(T, Result) CHECK_EQUAL(is_member_pointer<T>::value, (Result));
