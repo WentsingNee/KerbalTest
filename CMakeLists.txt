@@ -201,7 +201,10 @@ endif ()
 enable_testing()
 
 
-add_subdirectory(instantiation)
+if (NOT KTEST_ENABLE_SANITIZE AND NOT KTEST_ENABLE_GCOV)
+    add_subdirectory(instantiation)
+endif ()
+
 add_subdirectory(test)
 
 if (NOT TARGET inst)
