@@ -20,6 +20,8 @@
 #include <kerbal/test/runtime_timer.hpp>
 #include <kerbal/type_traits/integral_constant.hpp>
 
+#include <iostream>
+
 
 KERBAL_TEST_CASE(test_monotonic_allocator_on_list, "test monotonic_allocator on list")
 {

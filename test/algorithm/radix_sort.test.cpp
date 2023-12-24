@@ -18,6 +18,8 @@
 #include <kerbal/test/runtime_timer.hpp>
 #include <kerbal/type_traits/integral_constant.hpp>
 
+#include <iostream>
+
 #include <cstddef>
 
 

@@ -18,6 +18,8 @@
 #include <kerbal/test/runtime_timer.hpp>
 #include <kerbal/utility/ignore_unused.hpp>
 
+#include <iostream>
+
 
 #if __cplusplus >= 201103L
 

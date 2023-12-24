@@ -22,6 +22,8 @@
 #include <kerbal/type_traits/integral_constant.hpp>
 #include <kerbal/type_traits/is_same.hpp>
 
+#include <iostream>
+
 
 KERBAL_TEST_CASE(test_fixed_size_node_allocator_on_list, "test fixed_size_node_allocator on list")
 {

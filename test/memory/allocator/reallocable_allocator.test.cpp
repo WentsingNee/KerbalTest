@@ -14,6 +14,8 @@
 #include <kerbal/test/test.hpp>
 #include <kerbal/container/vector.hpp>
 
+#include <iostream>
+
 
 KERBAL_TEST_CASE(test_SUPPORT_REALLOCATE, "test SUPPORT_REALLOCATE")
 {

@@ -14,6 +14,9 @@
 
 #include <kerbal/test/test.hpp>
 
+#include <iostream>
+
+
 #if !KERBAL_ALIGNOF_SUPPORTED
 #	warning "macro KERBAL_ALIGNOF is not supported"
 #else

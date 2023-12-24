@@ -17,6 +17,8 @@
 #include <kerbal/compare/sequence_compare.hpp>
 #include <kerbal/random/mersenne_twister_engine.hpp>
 
+#include <iostream>
+
 
 template <std::size_t N, typename BlockType, typename Engine>
 void random_init(kerbal::bitset::static_bitset<N, BlockType> & bs, Engine & eg)
