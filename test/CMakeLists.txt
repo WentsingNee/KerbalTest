@@ -59,7 +59,7 @@ function(add_ktest_utest_target_impl target target_src_file)
         target_compile_options(${target} PUBLIC -fexceptions)
         target_link_options(${target} PUBLIC -fexceptions)
         set_target_properties(${target}
-                PROPERTIES RUNTIME_OUTPUT_NAME ${target}.html
+                PROPERTIES RUNTIME_OUTPUT_NAME ${target}.js
         )
     endif ()
     add_test(
