@@ -18,36 +18,6 @@ endif ()
 message(STATUS "Kerbal_VERSION: ${Kerbal_VERSION}")
 message(STATUS "Kerbal_INCLUDE_DIRS: ${Kerbal_INCLUDE_DIRS}")
 
-# compiler global configuration
-
-if (CMAKE_CXX_COMPILER_ID MATCHES "GNU" OR CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID MATCHES "Intel")
-    add_compile_options(-Wall)
-    message(STATUS "CXX flags: -Wall")
-
-    add_compile_options(-Wextra)
-    message(STATUS "CXX flags: -Wextra")
-
-    add_compile_options(-Wno-unused-parameter)
-    message(STATUS "CXX flags: -Wno-unused-parameter")
-elseif (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
-    add_compile_options(/Zc:__cplusplus)
-    message(STATUS "CXX flags: /Zc:__cplusplus")
-
-    add_compile_options(/wd4819) # Disable warning C4819, file coding problem
-    message(STATUS "CXX flags: /wdC4819")
-
-    add_compile_options(/D_CRT_SECURE_NO_WARNINGS) # Disable warning C4996: 'scanf': This function or variable may be unsafe.
-    message(STATUS "CXX flags: /D_CRT_SECURE_NO_WARNINGS")
-endif ()
-
-add_compile_definitions(LITTLE_ENDIAN=0)
-add_compile_definitions(BIG_ENDIAN=1)
-add_compile_definitions(BYTE_ORDER=LITTLE_ENDIAN)
-
-if (${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.12")
-    add_compile_definitions(KERBAL_TYPE_TRAITS_DEBUG_WARNING=1)
-endif ()
-
 
 # instruction extensions
 
@@ -112,6 +82,97 @@ endif ()
 option(KTEST_ENABLE_GCOV "enable gcov" OFF)
 
 
+# basic configuration
+
+function(ktest_basic_configuration target)
+    get_target_property(ktest_category ${target} "ktest_category")
+
+
+    # compiler global configuration
+
+    if (CMAKE_CXX_COMPILER_ID MATCHES "GNU" OR
+        CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR
+        CMAKE_CXX_COMPILER_ID MATCHES "Intel"
+    )
+        target_compile_options(
+                ${target} PUBLIC
+                -Wall
+                -Wextra
+                -Wno-unused-parameter
+        )
+    elseif (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
+        target_compile_options(${target} PUBLIC /Zc:__cplusplus)
+        target_compile_options(${target} PUBLIC /wd4819) # Disable warning C4819, file coding problem
+        target_compile_definitions(${target} PUBLIC _CRT_SECURE_NO_WARNINGS) # Disable warning C4996: 'scanf': This function or variable may be unsafe.
+    endif ()
+
+    target_compile_definitions(
+            ${target} PUBLIC
+            LITTLE_ENDIAN=0
+            BIG_ENDIAN=1
+            BYTE_ORDER=LITTLE_ENDIAN
+    )
+
+    target_compile_definitions(${target} PUBLIC KERBAL_TYPE_TRAITS_DEBUG_WARNING=1)
+
+    target_include_directories(${target} PUBLIC "${PROJECT_SOURCE_DIR}/include")
+    target_link_libraries(${target} PUBLIC Kerbal::kerbal)
+
+
+    # libc++
+    if (KTEST_USE_LIBCXX)
+        target_compile_options(${target} PUBLIC -stdlib=libc++)
+        if (ktest_category STREQUAL "utest")
+            target_link_libraries(
+                    ${target} PUBLIC
+                    ${KTEST_LIB_CPP}
+                    ${KTEST_LIB_CPPABI}
+            )
+        endif ()
+    endif ()
+
+
+    # sanitize
+    if (KTEST_ENABLE_SANITIZE)
+        if (ktest_category STREQUAL "utest")
+            if (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
+                target_compile_options(${target} PUBLIC /fsanitize=address)
+            else ()
+                target_compile_options(
+                        ${target} PUBLIC
+                        -fsanitize=address
+                        -fsanitize=undefined
+                )
+                target_link_libraries(
+                        ${target} PUBLIC
+                        ${KTEST_LIB_ASAN}
+                        ${KTEST_LIB_UBSAN}
+                )
+            endif ()
+        endif ()
+    endif ()
+
+
+    # gcov
+    if (KTEST_ENABLE_GCOV)
+        target_compile_options(${target} PUBLIC --coverage)
+        if (ktest_category STREQUAL "utest")
+            target_link_options(${target} PUBLIC --coverage)
+        endif ()
+    endif ()
+
+
+    # wasm
+    if (KERBAL_WASM)
+        target_compile_options(${target} PUBLIC -fexceptions)
+        if (ktest_category STREQUAL "utest")
+            target_link_options(${target} PUBLIC -fexceptions)
+        endif ()
+    endif ()
+
+endfunction()
+
+
 # precompile header
 
 option(KTEST_ENABLE_PRECOMPILE_HEADER "enable precompile header" OFF)
@@ -119,13 +180,8 @@ option(KTEST_ENABLE_PRECOMPILE_HEADER "enable precompile header" OFF)
 if (KTEST_ENABLE_PRECOMPILE_HEADER)
     file(WRITE "${CMAKE_BINARY_DIR}/ktest_precompile_header.cpp" "")
     add_library(ktest_precompile_header OBJECT "${CMAKE_BINARY_DIR}/ktest_precompile_header.cpp")
-    if (KTEST_USE_LIBCXX)
-        target_compile_options(ktest_precompile_header PUBLIC -stdlib=libc++)
-        target_link_libraries(ktest_precompile_header PUBLIC ${KTEST_LIB_CPP})
-        target_link_libraries(ktest_precompile_header PUBLIC ${KTEST_LIB_CPPABI})
-    endif ()
+    ktest_basic_configuration(ktest_precompile_header)
     target_precompile_headers(ktest_precompile_header PUBLIC "${Kerbal_PUBLIC_HEADERS_kerbal}")
-    target_link_libraries(ktest_precompile_header PUBLIC Kerbal::kerbal)
 endif ()
 
 

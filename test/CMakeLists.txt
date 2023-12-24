@@ -29,38 +29,16 @@ add_custom_target(
 
 
 function(add_ktest_utest_target_impl target target_src_file)
-    add_executable("${target}" ${target_src_file})
-    set_target_properties("${target}"
+    add_executable(${target} ${target_src_file})
+    set_target_properties(${target}
             PROPERTIES ktest_category "utest"
     )
     add_kerbal_parent_target(${target})
+    ktest_basic_configuration(${target})
     set_target_properties(${target}
             PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/targets
     )
-    target_link_libraries(${target} PUBLIC Kerbal::kerbal)
-    target_include_directories(${target} PUBLIC "${PROJECT_SOURCE_DIR}/include")
-    if (KTEST_USE_LIBCXX)
-        target_compile_options(${target} PUBLIC -stdlib=libc++)
-        target_link_libraries(${target} PUBLIC ${KTEST_LIB_CPP})
-        target_link_libraries(${target} PUBLIC ${KTEST_LIB_CPPABI})
-    endif ()
-    if (KTEST_ENABLE_SANITIZE)
-        if (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
-            target_compile_options(${target} PUBLIC /fsanitize=address)
-        else ()
-            target_compile_options(${target} PUBLIC -fsanitize=address)
-            target_compile_options(${target} PUBLIC -fsanitize=undefined)
-            target_link_libraries(${target} PUBLIC ${KTEST_LIB_ASAN})
-            target_link_libraries(${target} PUBLIC ${KTEST_LIB_UBSAN})
-        endif ()
-    endif ()
-    if (KTEST_ENABLE_GCOV)
-        target_compile_options(${target} PUBLIC --coverage)
-        target_link_options(${target} PUBLIC --coverage)
-    endif ()
     if (KERBAL_WASM)
-        target_compile_options(${target} PUBLIC -fexceptions)
-        target_link_options(${target} PUBLIC -fexceptions)
         set_target_properties(${target}
                 PROPERTIES RUNTIME_OUTPUT_NAME ${target}.js
         )
