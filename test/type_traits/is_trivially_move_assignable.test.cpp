@@ -15,14 +15,16 @@
 
 #include <kerbal/type_traits/is_trivially_move_assignable.hpp>
 
+#include <cstdio>
+
 
 KERBAL_TEST_CASE(test_has_is_trivially_move_assignable_support, "test has is_trivially_move_assignable support")
 {
 
 #if KERBAL_HAS_IS_TRIVIALLY_MOVE_ASSIGNABLE_SUPPORT
-	std::cout << "kerbal::type_traits::is_trivially_move_assignable is supported!" << std::endl;
+	std::puts("kerbal::type_traits::is_trivially_move_assignable is supported!");
 #else
-	std::cout << "kerbal::type_traits::is_trivially_move_assignable is not supported!" << std::endl;
+	std::puts("kerbal::type_traits::is_trivially_move_assignable is not supported!");
 #endif
 
 }

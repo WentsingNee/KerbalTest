@@ -13,14 +13,16 @@
 
 #include <kerbal/test/test.hpp>
 
+#include <cstdio>
+
 
 KERBAL_TEST_CASE(test_has_is_constructible_support, "test has is_constructible support")
 {
 
 #if KERBAL_HAS_IS_CONSTRUCTIBLE_SUPPORT
-	std::cout << "kerbal::type_traits::is_constructible is supported!" << std::endl;
+	std::puts("kerbal::type_traits::is_constructible is supported!");
 #else
-	std::cout << "kerbal::type_traits::is_constructible is not supported!" << std::endl;
+	std::puts("kerbal::type_traits::is_constructible is not supported!");
 #endif
 
 }

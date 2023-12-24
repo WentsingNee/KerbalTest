@@ -22,6 +22,8 @@
 #	include <random>
 #endif
 
+#include <cstdio>
+
 
 template <typename Eg>
 KERBAL_TEMPLATE_TEST_CASE(test_geometric_distribution, "test geometric_distribution")
@@ -35,8 +37,7 @@ KERBAL_TEMPLATE_TEST_CASE(test_geometric_distribution, "test geometric_distribut
 	for (std::size_t tcase = 0; tcase < kerbal::container::size(ps); ++tcase) {
 		double p = ps[tcase];
 
-		std::cout << "p = " << p;
-		std::cout << "\n" << std::endl;
+		std::printf("p = %lf\n\n", p);
 
 		kerbal::random::geometric_distribution<int> dis(p);
 
@@ -47,7 +48,7 @@ KERBAL_TEMPLATE_TEST_CASE(test_geometric_distribution, "test geometric_distribut
 		}
 		ktest::print_bar(n, hist);
 
-		std::cout << "\n\n\n" << std::endl;
+		std::printf("\n\n\n\n");
 	}
 }
 
@@ -69,8 +70,7 @@ KERBAL_TEST_CASE(cmp_with_std_geometric_distribution_bar, "compare with std::geo
 	for (std::size_t tcase = 0; tcase < kerbal::container::size(ps); ++tcase) {
 		double p = ps[tcase];
 
-		std::cout << "p = " << p;
-		std::cout << "\n" << std::endl;
+		std::printf("p = %lf\n\n", p);
 
 		kerbal::random::geometric_distribution<int> ker_dis(p);
 		std::geometric_distribution<int> std_dis(p);
@@ -83,7 +83,7 @@ KERBAL_TEST_CASE(cmp_with_std_geometric_distribution_bar, "compare with std::geo
 		}
 		ktest::print_bar2(n, hist);
 
-		std::cout << "\n\n\n" << std::endl;
+		std::printf("\n\n\n\n");
 	}
 }
 

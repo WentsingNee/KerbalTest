@@ -110,14 +110,15 @@ struct Foo
 
 KERBAL_TEST_CASE(test_cvref_mem, "test cvref mem")
 {
+	int i = 0;
 	Foo f;
 	const Foo cf;
 
-	KERBAL_TEST_CHECK(f.g(std::cin) == 0);
-	KERBAL_TEST_CHECK(cf.g(std::cin) == 1);
-	KERBAL_TEST_CHECK(kerbal::compatibility::move(f).g(std::cin) == 2);
+	KERBAL_TEST_CHECK(f.g(i) == 0);
+	KERBAL_TEST_CHECK(cf.g(i) == 1);
+	KERBAL_TEST_CHECK(kerbal::compatibility::move(f).g(i) == 2);
 #if KERBAL_HAS_CONST_RVALUE_REFERENCE_MEMBER_SUPPORT
-	KERBAL_TEST_CHECK(kerbal::compatibility::move(cf).g(std::cin) == 3);
+	KERBAL_TEST_CHECK(kerbal::compatibility::move(cf).g(i) == 3);
 #endif
 }
 

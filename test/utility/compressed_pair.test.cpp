@@ -17,9 +17,10 @@
 #include <kerbal/type_traits/is_same.hpp>
 #include <kerbal/type_traits/tribool_constant.hpp>
 
-#include <iostream>
 #include <string>
 #include <typeinfo>
+
+#include <cstdio>
 
 
 namespace ku = kerbal::utility;
@@ -68,7 +69,7 @@ void print_address_and_assert(const ku::compressed_pair<Tp, Up> & pair)
 	const void *p  = &pair;
 	const void *pf = &(pair.first());
 	const void *ps = &(pair.second());
-	printf("%p %p %p\n", p, pf, ps);
+	std::printf("%p %p %p\n", p, pf, ps);
 }
 
 template <typename Tp>
@@ -121,23 +122,21 @@ struct type_size<Tp&> : kerbal::type_traits::integral_constant<size_t, sizeof(vo
 template <typename Tp, typename Up>
 void print_pair_info(const ku::compressed_pair<Tp, Up> & p)
 {
-	printf("sizeof(std::pair<%s, %s>): %zu + %zu -> %zu\n",
+	std::printf("sizeof(std::pair<%s, %s>): %zu + %zu -> %zu\n",
 		type_name<Tp>()().c_str(), type_name<Up>()().c_str(), type_size<Tp>::value, type_size<Up>::value, sizeof(std::pair<Tp, Up>));
-	printf("sizeof(compressed_pair<%s, %s>): %zu + %zu -> %zu\n",
+	std::printf("sizeof(compressed_pair<%s, %s>): %zu + %zu -> %zu\n",
 		type_name<Tp>()().c_str(), type_name<Up>()().c_str(), type_size<Tp>::value, type_size<Up>::value, sizeof(p));
 	print_address_and_assert(p);
 	bool compressed(sizeof(p) < sizeof(std::pair<Tp, Up>));
-	printf(compressed ? "compressed\n" : "not compressed\n");
-	printf("\n");
+	std::printf(compressed ? "compressed\n" : "not compressed\n");
+	std::printf("\n");
 }
 
 
 
 KERBAL_TEST_CASE(test_compressed_pair, "test compressed_pair")
 {
-	std::cout << std::boolalpha;
-
-	printf("under __cplusplus: %ld\n", __cplusplus);
+	std::printf("under __cplusplus: %ld\n", __cplusplus);
 
 	{
 		ku::compressed_pair<Empty1, Empty1> p;
@@ -222,24 +221,24 @@ KERBAL_TEST_CASE(test_compressed_pair_compare, "test compressed_pair compare")
 			ku::compressed_pair<int, int> k_rhs(i, j);
 
 			KERBAL_TEST_CHECK_EQUAL(s_lhs == s_rhs, k_lhs == k_rhs);
-			printf(fmts, 0, 0, "==", i, j, s_lhs == s_rhs);
+			std::printf(fmts, 0, 0, "==", i, j, s_lhs == s_rhs);
 
 			KERBAL_TEST_CHECK_EQUAL(s_lhs != s_rhs, k_lhs != k_rhs);
-			printf(fmts, 0, 0, "!=", i, j, s_lhs != s_rhs);
+			std::printf(fmts, 0, 0, "!=", i, j, s_lhs != s_rhs);
 
 			KERBAL_TEST_CHECK_EQUAL(s_lhs < s_rhs, k_lhs < k_rhs);
-			printf(fmts, 0, 0, "<", i, j, s_lhs < s_rhs);
+			std::printf(fmts, 0, 0, "<", i, j, s_lhs < s_rhs);
 
 			KERBAL_TEST_CHECK_EQUAL(s_lhs <= s_rhs, k_lhs <= k_rhs);
-			printf(fmts, 0, 0, "<=", i, j, s_lhs <= s_rhs);
+			std::printf(fmts, 0, 0, "<=", i, j, s_lhs <= s_rhs);
 
 			KERBAL_TEST_CHECK_EQUAL(s_lhs > s_rhs, k_lhs > k_rhs);
-			printf(fmts, 0, 0, ">", i, j, s_lhs > s_rhs);
+			std::printf(fmts, 0, 0, ">", i, j, s_lhs > s_rhs);
 
 			KERBAL_TEST_CHECK_EQUAL(s_lhs >= s_rhs, k_lhs >= k_rhs);
-			printf(fmts, 0, 0, ">=", i, j, s_lhs >= s_rhs);
+			std::printf(fmts, 0, 0, ">=", i, j, s_lhs >= s_rhs);
 
-			printf("\n");
+			std::printf("\n");
 
 		}
 	}
