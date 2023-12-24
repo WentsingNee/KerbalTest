@@ -13,9 +13,9 @@ if (NOT TARGET Kerbal::kerbal)
     message(STATUS "Finding Kerbal")
     find_package(Kerbal REQUIRED)
     message(STATUS "Finding Kerbal -- found")
-    message(STATUS "Kerbal_VERSION: ${Kerbal_VERSION}")
 endif ()
 
+message(STATUS "Kerbal_VERSION: ${Kerbal_VERSION}")
 message(STATUS "Kerbal_INCLUDE_DIRS: ${Kerbal_INCLUDE_DIRS}")
 
 # compiler global configuration
@@ -54,7 +54,8 @@ endif ()
 option(KTEST_ENABLE_IE "enable instruction extensions" ON)
 
 if (KTEST_ENABLE_IE)
-    include(cmake/instruction_extensions.cmake)
+    include(Kerbal/instruction_extensions)
+    kerbal_ies_required(${KERBAL_IE_LIST})
 endif ()
 
 
@@ -115,14 +116,19 @@ option(KTEST_ENABLE_GCOV "enable gcov" OFF)
 
 option(KTEST_ENABLE_PRECOMPILE_HEADER "enable precompile header" OFF)
 
-if (${KTEST_ENABLE_PRECOMPILE_HEADER})
+if (KTEST_ENABLE_PRECOMPILE_HEADER)
 
-    include(cmake/aux_headers.cmake)
+    include(Kerbal/aux_headers)
     set(block_patterns
             ".*part\.hpp$"
+            "/detail/"
             "^kerbal/openmp/*"
     )
-    aux_headers(kerbal_public_headers "${Kerbal_INCLUDE_DIRS}/" "${Kerbal_INCLUDE_DIRS}" ${block_patterns})
+
+    kerbal_aux_headers(
+            kerbal_public_headers "${Kerbal_INCLUDE_DIRS}/kerbal"
+            BLOCK_PATTERNS ${block_patterns}
+    )
 
     list(LENGTH kerbal_public_headers kerbal_public_headers_len)
     if (kerbal_public_headers_len EQUAL 0)

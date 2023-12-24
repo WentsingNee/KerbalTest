@@ -114,12 +114,17 @@ endmacro()
 
 
 function(add_ktest_utest_target_wih_ie target target_src_file ie)
-    if (NOT KTEST_SUPPORT_${ie})
+    if (NOT KERBAL_SUPPORT_${ie})
         message(WARNING "Compiler doesn't support ${ie}")
         return()
     endif ()
     add_ktest_utest_target(${target} ${target_src_file})
-    target_compile_options(${target} PUBLIC ${KTEST_FLAGS_${ie}})
+    kerbal_target_with_ies(
+            TARGET ${target}
+            IEs ${ie}
+            SCOPE PUBLIC
+            MODE REQUIRED
+    )
 endfunction()
 
 
