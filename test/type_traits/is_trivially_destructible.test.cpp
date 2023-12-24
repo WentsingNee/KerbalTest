@@ -13,14 +13,16 @@
 
 #include <kerbal/test/test.hpp>
 
+#include <cstdio>
+
 
 KERBAL_TEST_CASE(test_has_is_trivially_destructible_support, "test has is_trivially_destructible support")
 {
 
 #if KERBAL_HAS_IS_TRIVIALLY_DESTRUCTIBLE_SUPPORT
-	std::cout << "kerbal::type_traits::is_trivially_destructible is supported!" << std::endl;
+	std::puts("kerbal::type_traits::is_trivially_destructible is supported!");
 #else
-	std::cout << "kerbal::type_traits::is_trivially_destructible is not supported!" << std::endl;
+	std::puts("kerbal::type_traits::is_trivially_destructible is not supported!");
 #endif
 
 }

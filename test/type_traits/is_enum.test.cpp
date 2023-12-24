@@ -13,6 +13,9 @@
 
 #include <kerbal/test/test.hpp>
 
+#include <cstdio>
+
+
 #define KERBAL_TEST_CHECK_AT_COMPILE_TIME
 
 #ifdef KERBAL_TEST_CHECK_AT_COMPILE_TIME
@@ -27,9 +30,9 @@ KERBAL_TEST_CASE(test_has_is_enum_support, "test has is_enum support")
 {
 
 #if KERBAL_HAS_IS_ENUM_SUPPORT
-	std::cout << "kerbal::type_traits::is_enum is supported!" << std::endl;
+	std::puts("kerbal::type_traits::is_enum is supported!");
 #else
-	std::cout << "kerbal::type_traits::is_enum is not supported!" << std::endl;
+	std::puts("kerbal::type_traits::is_enum is not supported!");
 #endif
 
 }

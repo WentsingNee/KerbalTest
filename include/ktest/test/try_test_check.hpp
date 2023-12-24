@@ -14,6 +14,8 @@
 
 #include <kerbal/type_traits/tribool_constant.hpp>
 
+#include <cstdio>
+
 
 #define TRY_TEST_CHECK_STRONG(Ans, Res) \
 do { \
@@ -27,7 +29,7 @@ do { \
 		(Res) == kerbal::type_traits::tribool_unspecified::value \
 	); \
 	if ((Res) == kerbal::type_traits::tribool_unspecified::value) { \
-		std::cout << __FILE__ << ":" << __LINE__ << " Check is weak: TRY_TEST_CHECK_WEAK(" #Ans ", " #Res ")" << std::endl; \
+		std::printf("%s:%d Check is weak: TRY_TEST_CHECK_WEAK(" #Ans ", " #Res ")\n", __FILE__ , __LINE__); \
 	} \
 } while(false);
 

@@ -22,6 +22,8 @@
 #	include <random>
 #endif
 
+#include <cstdio>
+
 
 double my_round(double x)
 {
@@ -45,8 +47,7 @@ KERBAL_TEMPLATE_TEST_CASE(test_normal_distribution, "test normal_distribution")
 		float mean = means[tcase];
 		float stddev = stds[tcase];
 
-		std::cout << "mean = " << mean << ", stddev = " << stddev;
-		std::cout << "\n" << std::endl;
+		std::printf("mean = %f, stddev = %f\n", mean, stddev);
 
 		kerbal::random::normal_distribution<double> dis(mean, stddev);
 
@@ -57,7 +58,7 @@ KERBAL_TEMPLATE_TEST_CASE(test_normal_distribution, "test normal_distribution")
 		}
 		ktest::print_bar(n, hist);
 
-		std::cout << "\n\n\n" << std::endl;
+		std::printf("\n\n\n\n");
 	}
 }
 
@@ -82,8 +83,7 @@ KERBAL_TEST_CASE(cmp_with_std_normal_distribution_bar, "compare with std::normal
 		float mean = args[tcase][0];
 		float stddev = args[tcase][1];
 
-		std::cout << "mean = " << mean << ", stddev = " << stddev;
-		std::cout << "\n" << std::endl;
+		std::printf("mean = %f, stddev = %f\n", mean, stddev);
 
 		kerbal::random::normal_distribution<double> ker_dis(mean, stddev);
 		std::normal_distribution<double> std_dis(mean, stddev);
@@ -96,7 +96,7 @@ KERBAL_TEST_CASE(cmp_with_std_normal_distribution_bar, "compare with std::normal
 		}
 		ktest::print_bar2(n, hist);
 
-		std::cout << "\n\n\n" << std::endl;
+		std::printf("\n\n\n\n");
 	}
 }
 

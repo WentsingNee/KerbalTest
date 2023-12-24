@@ -22,6 +22,8 @@
 #	include <random>
 #endif
 
+#include <cstdio>
+
 
 template <typename Eg>
 KERBAL_TEMPLATE_TEST_CASE(test_poisson_distribution, "test poisson_distribution")
@@ -35,8 +37,7 @@ KERBAL_TEMPLATE_TEST_CASE(test_poisson_distribution, "test poisson_distribution"
 	for (std::size_t tcase = 0; tcase < kerbal::container::size(means); ++tcase) {
 		int mean = means[tcase];
 
-		std::cout << "mean = " << mean;
-		std::cout << "\n" << std::endl;
+		std::printf("mean = %d\n", mean);
 
 		kerbal::random::poisson_distribution<int> dis(mean);
 
@@ -47,7 +48,7 @@ KERBAL_TEMPLATE_TEST_CASE(test_poisson_distribution, "test poisson_distribution"
 		}
 		ktest::print_bar(n, hist);
 
-		std::cout << "\n\n\n" << std::endl;
+		std::printf("\n\n\n\n");
 	}
 }
 
@@ -69,8 +70,7 @@ KERBAL_TEST_CASE(cmp_with_std_poisson_distribution_bar, "compare with std::poiss
 	for (std::size_t tcase = 0; tcase < kerbal::container::size(means); ++tcase) {
 		int mean = means[tcase];
 
-		std::cout << "mean = " << mean;
-		std::cout << "\n" << std::endl;
+		std::printf("mean = %d\n", mean);
 
 		kerbal::random::poisson_distribution<int> ker_dis(mean);
 		std::poisson_distribution<int> std_dis(mean);
@@ -83,7 +83,7 @@ KERBAL_TEST_CASE(cmp_with_std_poisson_distribution_bar, "compare with std::poiss
 		}
 		ktest::print_bar2(n, hist);
 
-		std::cout << "\n\n\n" << std::endl;
+		std::printf("\n\n\n\n");
 	}
 }
 

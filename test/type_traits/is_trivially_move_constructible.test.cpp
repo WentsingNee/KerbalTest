@@ -15,14 +15,16 @@
 
 #include <kerbal/type_traits/is_trivially_move_constructible.hpp>
 
+#include <cstdio>
+
 
 KERBAL_TEST_CASE(test_has_is_trivially_move_constructible_support, "test has is_trivially_move_constructible support")
 {
 
 #if KERBAL_HAS_IS_TRIVIALLY_MOVE_CONSTRUCTIBLE_SUPPORT
-	std::cout << "kerbal::type_traits::is_trivially_move_constructible is supported!" << std::endl;
+	std::puts("kerbal::type_traits::is_trivially_move_constructible is supported!");
 #else
-	std::cout << "kerbal::type_traits::is_trivially_move_constructible is not supported!" << std::endl;
+	std::puts("kerbal::type_traits::is_trivially_move_constructible is not supported!");
 #endif
 
 }
