@@ -117,24 +117,6 @@ option(KTEST_ENABLE_GCOV "enable gcov" OFF)
 option(KTEST_ENABLE_PRECOMPILE_HEADER "enable precompile header" OFF)
 
 if (KTEST_ENABLE_PRECOMPILE_HEADER)
-
-    include(Kerbal/aux_headers)
-    set(block_patterns
-            ".*part\.hpp$"
-            "/detail/"
-            "^kerbal/openmp/*"
-    )
-
-    kerbal_aux_headers(
-            kerbal_public_headers "${Kerbal_INCLUDE_DIRS}/kerbal"
-            BLOCK_PATTERNS ${block_patterns}
-    )
-
-    list(LENGTH kerbal_public_headers kerbal_public_headers_len)
-    if (kerbal_public_headers_len EQUAL 0)
-        message(FATAL_ERROR "you should provide variable Kerbal_INCLUDE_DIRS correctly to support precompile header")
-    endif ()
-
     file(WRITE "${CMAKE_BINARY_DIR}/ktest_precompile_header.cpp" "")
     add_library(ktest_precompile_header OBJECT "${CMAKE_BINARY_DIR}/ktest_precompile_header.cpp")
     if (KTEST_USE_LIBCXX)
@@ -142,7 +124,7 @@ if (KTEST_ENABLE_PRECOMPILE_HEADER)
         target_link_libraries(ktest_precompile_header PUBLIC ${KTEST_LIB_CPP})
         target_link_libraries(ktest_precompile_header PUBLIC ${KTEST_LIB_CPPABI})
     endif ()
-    target_precompile_headers(ktest_precompile_header PUBLIC "${kerbal_public_headers}")
+    target_precompile_headers(ktest_precompile_header PUBLIC "${Kerbal_PUBLIC_HEADERS_kerbal}")
     target_link_libraries(ktest_precompile_header PUBLIC Kerbal::kerbal)
 endif ()
 
