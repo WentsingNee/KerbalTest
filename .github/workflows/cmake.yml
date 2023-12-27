@@ -93,7 +93,6 @@ jobs:
             cxx_standard: 20
 
     runs-on: ${{matrix.os}}
-    continue-on-error: true
 
     steps:
       - name: Show CMake Version
@@ -140,6 +139,13 @@ jobs:
         with:
           path: KerbalTest
 
+      - name: Build Cache
+        uses: actions/cache@v3
+        with:
+          path: ${{github.workspace}}/build
+          key: ${{matrix.os}}-${{matrix.compiler}}-${{matrix.cxx_standard}}-${{github.run_id}}
+          restore-keys: ${{matrix.os}}-${{matrix.compiler}}-${{matrix.cxx_standard}}
+
       - name: Configure KerbalTest
         if: matrix.compiler != 'msvc'
         run: >
@@ -184,8 +190,48 @@ jobs:
           run_utest.config.language_standard
           run_utest.config.system
 
-      - name: Build
-        run: cmake --build ${{github.workspace}}/KerbalTest-build --config ${{env.BUILD_TYPE}} --parallel
+#      - name: Build
+#        run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} --target utest.container
+
+#      - name: Run Unit Test
+#        run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} --target run_utest
+
+
+  pack:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v3
 
       - name: Run Unit Test
         run: cmake --build ${{github.workspace}}/KerbalTest-build --config ${{env.BUILD_TYPE}} --target run_utest
+      - name: Show Path
+        run: pwd
+
+      - name: Clone Kerbal
+        run: git clone --depth=1 --branch=${{env.KERBAL_BRANCH}} https://github.com/WentsingNee/Kerbal.git
+
+      - name: CPack Kerbal
+        run: >
+          cmake
+          -S ${{github.workspace}}/Kerbal
+          -B ${{github.workspace}}/Kerbal/build
+          -DCMAKE_INSTALL_PREFIX=${{github.workspace}}/Kerbal/install
+          
+          cd ${{github.workspace}}/Kerbal/build
+          
+          cpack ./
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.KERBAL_TEST_CI_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          repo: Kerbal
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: |
+            This is a release committed by GitHub Action
+          draft: true
+          prerelease: true
