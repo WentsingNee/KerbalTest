@@ -357,25 +357,27 @@ KERBAL_TEMPLATE_TEST_CASE_INST(test_avl_set_emplace, "test avl_set::emplace", ke
 KERBAL_TEMPLATE_TEST_CASE_INST(test_avl_set_emplace, "test avl_set::emplace", kerbal::memory::monotonic_allocator<int>);
 
 
-KERBAL_TEST_CASE(test_avl_set_erase, "test avl_set::erase")
+template <typename Allocator>
+KERBAL_TEMPLATE_TEST_CASE(test_avl_set_erase, "test avl_set::erase")
 {
 	kerbal::random::mt19937 eg;
-	std::size_t sizes[] = {0, 1, 2, 3, 4, 5, 10, 20, 100, 1000};
+	std::size_t sizes[] = {0, 1, 2, 3, 4, 5, 10, 20, 100, 1000, 2000};
 
 	for (std::size_t tcase = 0; tcase < kc::size(sizes); ++tcase) {
 		std::size_t size = sizes[tcase];
 
-		for (int j = 0; j < 10; ++j) {
+		for (int j = 0; j < 5; ++j) {
 
 			kerbal::container::vector<int> v0 = ktest::get_random_vec_i(size, eg);
 
 			for (std::size_t i = 0; i < v0.size(); ++i) {
-				kc::avl_set<int> s(v0.cbegin(), v0.cend());
+				typedef kc::avl_set<int, kerbal::compare::binary_type_less<void, void>, Allocator> AVL_SET;
+				AVL_SET s(v0.cbegin(), v0.cend());
 
-				kc::avl_set<int>::const_iterator pos = s.find(v0[i]);
-				kc::avl_set<int>::const_iterator next = kerbal::iterator::next(pos);
+				typename AVL_SET::const_iterator pos = s.find(v0[i]);
+				typename AVL_SET::const_iterator next = kerbal::iterator::next(pos);
 
-				kc::avl_set<int>::const_iterator res = s.erase(pos);
+				typename AVL_SET::const_iterator res = s.erase(pos);
 
 				KERBAL_TEST_CHECK(res == next);
 				kc::detail::avl_normal_result_t avl_normal_result = s.avl_normal();
@@ -386,6 +388,12 @@ KERBAL_TEST_CASE(test_avl_set_erase, "test avl_set::erase")
 		}
 	}
 }
+
+KERBAL_TEMPLATE_TEST_CASE_INST(test_avl_set_erase, "test avl_set::erase", kerbal::memory::default_allocator<int>);
+KERBAL_TEMPLATE_TEST_CASE_INST(test_avl_set_erase, "test avl_set::erase", kerbal::memory::fixed_size_node_allocator<int>);
+KERBAL_TEMPLATE_TEST_CASE_INST(test_avl_set_erase, "test avl_set::erase", kerbal::memory::monotonic_allocator<int>);
+
+
 
 KERBAL_TEST_CASE(test_avl_set_erase_insert_sorted, "test avl_set::erase (insert sorted)")
 {
