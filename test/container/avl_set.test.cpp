@@ -336,7 +336,7 @@ KERBAL_TEMPLATE_TEST_CASE(test_avl_set_emplace, "test avl_set::emplace")
 
 		for (std::size_t dcase = 0; dcase < kc::size(data); ++dcase) {
 			const kerbal::container::vector<int> & d = data[dcase];
-			kc::avl_set<int> s;
+			kc::avl_set<int, kerbal::compare::binary_type_less<void, void>, Allocator> s;
 			for (std::size_t i = 0; i < d.size(); ++i) {
 				s.emplace(d[i]);
 				kc::detail::avl_normal_result_t avl_normal_result = s.avl_normal();
