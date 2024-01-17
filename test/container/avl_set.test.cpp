@@ -48,7 +48,7 @@ void print_avl(const kc::avl_set<T, Compare, Allocator> & s)
 }
 
 
-void print_avl_normal_result_if_wrong(kerbal::container::detail::avl_normal_result_t result)
+static void print_avl_normal_result_if_wrong(kerbal::container::detail::avl_normal_result_t result)
 {
 	switch (result) {
 		case kerbal::container::detail::AVL_NORMAL_RESULT_CORRECT: {
@@ -56,6 +56,10 @@ void print_avl_normal_result_if_wrong(kerbal::container::detail::avl_normal_resu
 		}
 		case kerbal::container::detail::AVL_NORMAL_RESULT_BST_INVALID: {
 			std::cout << "BST INVALID" << std::endl;
+			break;
+		}
+		case kerbal::container::detail::AVL_NORMAL_RESULT_BAD_PARENT: {
+			std::cout << "BAD PARENT" << std::endl;
 			break;
 		}
 		case kerbal::container::detail::AVL_NORMAL_RESULT_NOT_BALANCED: {
