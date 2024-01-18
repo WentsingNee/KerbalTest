@@ -49,7 +49,11 @@ struct NothrowDestructible
 
 struct ThrowDestructible
 {
-		~ThrowDestructible() KERBAL_CONDITIONAL_NOEXCEPT(false);
+#	if __cplusplus >= 201103L
+		~ThrowDestructible() noexcept(false);
+#	else
+		~ThrowDestructible() throw();
+#	endif
 };
 
 
