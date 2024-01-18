@@ -35,6 +35,8 @@ static const char * architecture()
 	return "aarch64";
 #elif KERBAL_ARCHITECTURE == KERBAL_ARCHITECTURE_WASM
 	return "wasm";
+#elif KERBAL_ARCHITECTURE == KERBAL_ARCHITECTURE_RISCV
+	return "riscv";
 #else
 	return "else";
 #endif
