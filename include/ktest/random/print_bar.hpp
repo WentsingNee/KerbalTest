@@ -12,7 +12,8 @@
 #ifndef KTEST_RANDOM_PRINT_BAR_HPP
 #define KTEST_RANDOM_PRINT_BAR_HPP
 
-#include <algorithm>
+#include <kerbal/compare/minmax.hpp>
+
 #include <map>
 #include <string>
 
@@ -87,7 +88,7 @@ namespace ktest
 			double per = dis / double(std_cnt) * 100.0;
 			int ker_bar_len = static_cast<int>(ker_cnt / mc * star_width);
 			int std_bar_len = static_cast<int>(std_cnt / mc * star_width);
-			std::string bar(std::min(ker_bar_len, std_bar_len), '*');
+			std::string bar(kerbal::compare::min(ker_bar_len, std_bar_len), '*');
 			if (ker_bar_len < std_bar_len) {
 				bar += std::string(std_bar_len - ker_bar_len, '-');
 			} else {
