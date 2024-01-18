@@ -19,6 +19,7 @@
 #include <kerbal/algorithm/modifier/iota.hpp>
 #include <kerbal/algorithm/modifier/reverse.hpp>
 #include <kerbal/compare/sequence_compare.hpp>
+#include <kerbal/config/exceptions.hpp>
 #include <kerbal/container/list.hpp>
 #include <kerbal/container/nonmember_container_access.hpp>
 #include <kerbal/type_traits/integral_constant.hpp>
@@ -42,7 +43,7 @@ void print_list(const kerbal::container::single_list<int>& l)
 }
 
 
-# if __cplusplus >= 201103L && __cpp_exceptions
+# if __cplusplus >= 201103L && KERBAL_HAS_EXCEPTIONS_SUPPORT
 
 KERBAL_TEST_CASE(test_single_list_noexcept, "test singlie_list noexcept")
 {

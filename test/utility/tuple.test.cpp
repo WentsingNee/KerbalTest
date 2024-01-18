@@ -12,6 +12,7 @@
 #include <kerbal/utility/tuple.hpp>
 
 #include <kerbal/test/test.hpp>
+#include <kerbal/config/exceptions.hpp>
 #include <kerbal/container/array.hpp>
 #include <kerbal/type_traits/integral_constant.hpp>
 #include <kerbal/utility/ignore_unused.hpp>
@@ -238,7 +239,7 @@ KERBAL_TEST_CASE(test_tie, "test tie")
 }
 
 
-#if __cplusplus >= 201103L && __cpp_exceptions
+#if __cplusplus >= 201103L && KERBAL_HAS_EXCEPTIONS_SUPPORT
 
 struct Foo
 {

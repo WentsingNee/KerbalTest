@@ -12,6 +12,7 @@
 #include <kerbal/any/any.hpp>
 
 #include <kerbal/test/test.hpp>
+#include <kerbal/config/exceptions.hpp>
 #include <kerbal/type_traits/remove_const.hpp>
 #include <kerbal/utility/ignore_unused.hpp>
 
@@ -269,7 +270,7 @@ KERBAL_TEST_CASE(test_any_cast_by_ref_const_any, "test any_cast by ref, const an
 }
 
 
-#if __cpp_exceptions
+#if KERBAL_HAS_EXCEPTIONS_SUPPORT
 
 KERBAL_TEST_CASE(test_bad_any_cast, "test bad_any_cast")
 {

@@ -12,13 +12,15 @@
 #include <kerbal/utility/throw_this_exception.hpp>
 
 #include <kerbal/test/test.hpp>
+#include <kerbal/config/exceptions.hpp>
+
 
 class MyException: public kerbal::utility::throw_this_exception_helper<MyException>
 {
 };
 
 
-#if __cpp_exceptions
+#if KERBAL_HAS_EXCEPTIONS_SUPPORT
 
 KERBAL_TEST_CASE(test_throw_this_exception, "test throw_this_exception")
 {

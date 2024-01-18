@@ -20,6 +20,7 @@
 
 #include <kerbal/algorithm/modifier/iota.hpp>
 #include <kerbal/compare/sequence_compare.hpp>
+#include <kerbal/config/exceptions.hpp>
 #include <kerbal/random/mersenne_twister_engine.hpp>
 #include <kerbal/type_traits/integral_constant.hpp>
 #include <kerbal/type_traits/is_same.hpp>
@@ -32,7 +33,7 @@
 #include <sstream>
 
 
-# if __cplusplus >= 201103L && __cpp_exceptions
+# if __cplusplus >= 201103L && KERBAL_HAS_EXCEPTIONS_SUPPORT
 
 KERBAL_TEST_CASE(test_vector_noexcept, "test vector noexcept")
 {

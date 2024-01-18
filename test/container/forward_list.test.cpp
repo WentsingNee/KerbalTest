@@ -23,6 +23,7 @@
 #include <kerbal/algorithm/sort/sort.hpp>
 #include <kerbal/compare/basic_compare.hpp>
 #include <kerbal/compare/sequence_compare.hpp>
+#include <kerbal/config/exceptions.hpp>
 #include <kerbal/container/list.hpp>
 #include <kerbal/container/nonmember_container_access.hpp>
 #include <kerbal/container/vector.hpp>
@@ -47,7 +48,7 @@ void print_list(const kerbal::container::forward_list<int>& l)
 }
 
 
-# if __cplusplus >= 201103L && __cpp_exceptions
+# if __cplusplus >= 201103L && KERBAL_HAS_EXCEPTIONS_SUPPORT
 
 KERBAL_TEST_CASE(test_forward_list_noexcept, "test forward_list noexcept")
 {

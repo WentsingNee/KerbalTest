@@ -18,6 +18,7 @@
 
 #include <kerbal/compatibility/constexpr.hpp>
 #include <kerbal/compatibility/noexcept.hpp>
+#include <kerbal/config/exceptions.hpp>
 #include <kerbal/type_traits/is_same.hpp>
 #include <kerbal/type_traits/is_lvalue_reference.hpp>
 #include <kerbal/utility/compressed_pair.hpp>
@@ -47,7 +48,7 @@ void do_nothing() KERBAL_NOEXCEPT
 }
 
 
-#if __cpp_exceptions
+#if KERBAL_HAS_EXCEPTIONS_SUPPORT
 
 void throw_something(int x)
 {
@@ -70,14 +71,14 @@ KERBAL_TEST_CASE(test_invoke_function, "test invoke function")
 	{
 		kf::invoke(do_nothing);
 
-#	if __cplusplus >= 201703L && __cpp_exceptions
+#	if __cplusplus >= 201703L && KERBAL_HAS_EXCEPTIONS_SUPPORT
 		KERBAL_TEST_CHECK_STATIC(noexcept(kf::invoke(do_nothing))); // function pointer supports noexcept qualifier over C++17
 #	endif
 
 	}
 	{
 
-#	if __cplusplus >= 201103L && __cpp_exceptions
+#	if __cplusplus >= 201103L && KERBAL_HAS_EXCEPTIONS_SUPPORT
 		KERBAL_TEST_CHECK_STATIC(!noexcept(kf::invoke(throw_something, 3)));
 #	endif
 
@@ -133,7 +134,7 @@ KERBAL_TEST_CASE(test_invoke_mem_obj, "test invoke mem_obj")
 		kf::invoke(&simple_pair::first, p) = 7;
 		KERBAL_TEST_CHECK(p.first == 7);
 
-#	if __cplusplus && __cpp_exceptions
+#	if __cplusplus && KERBAL_HAS_EXCEPTIONS_SUPPORT
 		KERBAL_TEST_CHECK_STATIC(noexcept(kf::invoke(&simple_pair::first, p)));
 #	endif
 
@@ -142,7 +143,7 @@ KERBAL_TEST_CASE(test_invoke_mem_obj, "test invoke mem_obj")
 		const simple_pair p(2, 3);
 		KERBAL_TEST_CHECK(&kf::invoke(&simple_pair::first, p) == &p.first);
 
-#	if __cplusplus && __cpp_exceptions
+#	if __cplusplus && KERBAL_HAS_EXCEPTIONS_SUPPORT
 		KERBAL_TEST_CHECK_STATIC(noexcept(kf::invoke(&simple_pair::first, p)));
 #	endif
 

@@ -26,6 +26,7 @@
 #include <kerbal/compare/basic_compare.hpp>
 #include <kerbal/compare/sequence_compare.hpp>
 #include <kerbal/config/architecture.hpp>
+#include <kerbal/config/exceptions.hpp>
 #include <kerbal/container/nonmember_container_access.hpp>
 #include <kerbal/container/vector.hpp>
 #include <kerbal/memory/allocator/fixed_size_node_allocator.hpp>
@@ -65,7 +66,7 @@ void print_list_reverse(const kerbal::container::list<int, Allocator>& l)
 }
 
 
-# if __cplusplus >= 201103L && __cpp_exceptions
+# if __cplusplus >= 201103L && KERBAL_HAS_EXCEPTIONS_SUPPORT
 
 KERBAL_TEST_CASE(test_list_noexcept, "test list noexcept")
 {
@@ -191,7 +192,7 @@ KERBAL_TEMPLATE_TEST_CASE_INST(test_list_n_construct, "test list::list(n) fsn al
 KERBAL_TEMPLATE_TEST_CASE_INST(test_list_n_construct, "test list::list(n) mono allocator", kerbal::memory::monotonic_allocator<int> );
 
 
-#if __cpp_exceptions
+#if KERBAL_HAS_EXCEPTIONS_SUPPORT
 
 struct list_n_value_construct_except_helper:
 		kerbal::test::object_count<list_n_value_construct_except_helper>
@@ -858,7 +859,7 @@ KERBAL_TEST_CASE(test_list_clear, "test list::clear")
 }
 
 
-#if __cpp_exceptions
+#if KERBAL_HAS_EXCEPTIONS_SUPPORT
 
 struct test_list_merge_may_throw_cmp
 {
@@ -937,7 +938,7 @@ KERBAL_TEMPLATE_TEST_CASE(test_list_merge, "test list::merge")
 
 }
 
-#if __cpp_exceptions
+#if KERBAL_HAS_EXCEPTIONS_SUPPORT
 KERBAL_TEMPLATE_TEST_CASE_INST(test_list_merge, "test list::merge(may_throw)", test_list_merge_may_throw_cmp);
 #endif
 
@@ -1047,7 +1048,7 @@ KERBAL_TEST_CASE(test_list_merge_is_stable, "test list::merge is_stable")
 }
 
 
-#if __cpp_exceptions && KERBAL_ARCHITECTURE != KERBAL_ARCHITECTURE_AARCH64
+#if KERBAL_HAS_EXCEPTIONS_SUPPORT && KERBAL_ARCHITECTURE != KERBAL_ARCHITECTURE_AARCH64
 
 struct list_merge_throwable_compare
 {
@@ -1097,7 +1098,7 @@ KERBAL_TEST_CASE(test_list_merge_exception_occurred, "test list::merge exception
 
 }
 
-#endif // __cpp_exceptions && KERBAL_ARCHITECTURE != KERBAL_ARCHITECTURE_AARCH64
+#endif // KERBAL_HAS_EXCEPTIONS_SUPPORT && KERBAL_ARCHITECTURE != KERBAL_ARCHITECTURE_AARCH64
 
 
 struct disable_list_radix_sort_cmp
