@@ -53,7 +53,7 @@ template
 kc::single_list<int>::single_list(const kerbal::assign::assign_list<int> &);
 #endif
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 void kc::single_list<int>::assign(pointer, pointer);
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
@@ -170,7 +170,7 @@ template kc::single_list<int[8]>::single_list(const_iterator, const_iterator, in
 template kc::single_list<int[8]>::single_list(pointer, pointer, const allocator_type&, int);
 template kc::single_list<int[8]>::single_list(const_iterator, const_iterator, const allocator_type&, int);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 void kc::single_list<int[8]>::assign(pointer, pointer);
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
@@ -216,7 +216,7 @@ template kc::single_list<kc::single_list<int> >::single_list(const_iterator, con
 template kc::single_list<kc::single_list<int> >::single_list(pointer, pointer, const allocator_type&, int);
 template kc::single_list<kc::single_list<int> >::single_list(const_iterator, const_iterator, const allocator_type&, int);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 void kc::single_list<kc::single_list<int> >::assign(pointer, pointer);
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR20

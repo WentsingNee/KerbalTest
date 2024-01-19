@@ -45,10 +45,10 @@ kc::avl_set<int>::avl_set(const kerbal::assign::assign_list<int> &);
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
 void kc::avl_set<int>::assign(const_pointer, const_pointer);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 void kc::avl_set<int>::assign(const_iterator, const_iterator);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 void kc::avl_set<int>::assign(const_reverse_iterator, const_reverse_iterator);
 
 #if __cplusplus < 201103L
@@ -57,47 +57,47 @@ kc::avl_set<int> &
 kc::avl_set<int>::operator=(const kerbal::assign::assign_list<int> &);
 #endif
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::avl_set<int>::const_iterator
 kc::avl_set<int>::find(long const &) const; // transparent lookup
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::avl_set<int>::const_iterator
 kc::avl_set<int>::lower_bound(long const &) const; // transparent lookup
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::avl_set<int>::const_iterator
 kc::avl_set<int>::upper_bound(long const &) const; // transparent lookup
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kerbal::utility::compressed_pair<
 	kc::avl_set<int>::const_iterator,
 	kc::avl_set<int>::const_iterator
 >
 kc::avl_set<int>::equal_range(long const &) const; // transparent lookup
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 bool
 kc::avl_set<int>::contains(long const &) const; // transparent lookup
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::avl_set<int>::unique_insert_r
 kc::avl_set<int>::emplace(const int &);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 void kc::avl_set<int>::insert(const_pointer, const_pointer);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 void kc::avl_set<int>::insert(const_iterator, const_iterator);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 void kc::avl_set<int>::insert(const_reverse_iterator, const_reverse_iterator);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::avl_set<int>::unique_insert_r
 kc::avl_set<int>::replace_emplace(const_iterator, const int &);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 void kc::avl_set<int>::merge(avl_set &);
 
 
@@ -125,10 +125,10 @@ kc::avl_set<std::string>::avl_set(const kerbal::assign::assign_list<std::string>
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
 void kc::avl_set<std::string>::assign(const_pointer, const_pointer);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 void kc::avl_set<std::string>::assign(const_iterator, const_iterator);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 void kc::avl_set<std::string>::assign(const_reverse_iterator, const_reverse_iterator);
 
 #if __cplusplus < 201103L
@@ -137,55 +137,55 @@ kc::avl_set<std::string> &
 kc::avl_set<std::string>::operator=(const kerbal::assign::assign_list<std::string> &);
 #endif
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::avl_set<std::string>::const_iterator
 kc::avl_set<std::string>::find(std::string::const_pointer const &) const; // transparent lookup
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::avl_set<std::string>::const_iterator
 kc::avl_set<std::string>::lower_bound(std::string::const_pointer const &) const; // transparent lookup
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::avl_set<std::string>::const_iterator
 kc::avl_set<std::string>::upper_bound(std::string::const_pointer const &) const; // transparent lookup
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kerbal::utility::compressed_pair<
 	kc::avl_set<std::string>::const_iterator,
 	kc::avl_set<std::string>::const_iterator
 >
 kc::avl_set<std::string>::equal_range(std::string::const_pointer const &) const; // transparent lookup
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 bool
 kc::avl_set<std::string>::contains(std::string::const_pointer const &) const; // transparent lookup
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::avl_set<std::string>::unique_insert_r
 kc::avl_set<std::string>::emplace(const std::string::const_pointer &);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::avl_set<std::string>::unique_insert_r
 kc::avl_set<std::string>::emplace(const std::string::size_type &, std::string::const_reference);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 void kc::avl_set<std::string>::insert(const_pointer, const_pointer);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 void kc::avl_set<std::string>::insert(const_iterator, const_iterator);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 void kc::avl_set<std::string>::insert(const_reverse_iterator, const_reverse_iterator);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::avl_set<std::string>::unique_insert_r
 kc::avl_set<std::string>::replace_emplace(const_iterator, const std::string::const_pointer &);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::avl_set<std::string>::unique_insert_r
 kc::avl_set<std::string>::replace_emplace(const_iterator, const std::string::size_type &, std::string::const_reference);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 void kc::avl_set<std::string>::merge(avl_set &);
 
 

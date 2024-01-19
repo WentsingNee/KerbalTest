@@ -42,10 +42,12 @@ struct cmp_nothrow
 
 template class kc::detail::list_type_only<int>;
 
-template void kc::detail::list_type_only<int>::sort(cmp_may_throw<value_type>);
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+void kc::detail::list_type_only<int>::sort(cmp_may_throw<value_type>);
 
 #if __cplusplus >= 201103L
-template void kc::detail::list_type_only<int>::sort(cmp_nothrow<value_type>);
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+void kc::detail::list_type_only<int>::sort(cmp_nothrow<value_type>);
 #endif
 
 
@@ -80,7 +82,7 @@ void kc::list<int>::assign(const_pointer, const_pointer);
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
 void kc::list<int>::assign(const_iterator, const_iterator);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 void kc::list<int>::assign(const_reverse_iterator, const_reverse_iterator);
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
@@ -109,19 +111,24 @@ template KERBAL_MSVC_TMPINST_CONSTEXPR20
 void kc::list<int>::merge(list&, cmp_may_throw<value_type>);
 
 #if __cplusplus >= 201103L
-template void kc::list<int>::merge(list&, cmp_nothrow<value_type>);
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+void kc::list<int>::merge(list&, cmp_nothrow<value_type>);
 #endif
 
-template kc::list<int>::size_type
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+kc::list<int>::size_type
 kc::list<int>::remove_if(const_iterator, const_iterator, unary_predict<value_type>);
 
-template kc::list<int>::size_type
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+kc::list<int>::size_type
 kc::list<int>::remove_if(unary_predict<value_type>);
 
-template kc::list<int>::size_type
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+kc::list<int>::size_type
 kc::list<int>::unique(const_iterator, const_iterator, cmp_may_throw<value_type>);
 
-template kc::list<int>::size_type
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+kc::list<int>::size_type
 kc::list<int>::unique(cmp_may_throw<value_type>);
 
 kc::list<int> operator+(const kc::list<int> &, const kc::list<int> &);
@@ -145,10 +152,12 @@ bool operator>=(const kc::list<int> &, const kc::list<int> &);
 
 template class kc::detail::list_type_only<std::string>;
 
-template void kc::detail::list_type_only<std::string>::sort(cmp_may_throw<value_type>);
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+void kc::detail::list_type_only<std::string>::sort(cmp_may_throw<value_type>);
 
 #if __cplusplus >= 201103L
-template void kc::detail::list_type_only<std::string>::sort(cmp_nothrow<value_type>);
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+void kc::detail::list_type_only<std::string>::sort(cmp_nothrow<value_type>);
 #endif
 
 
@@ -255,10 +264,12 @@ bool operator>=(const kc::list<std::string> &, const kc::list<std::string> &);
 
 template class kc::detail::list_type_only<int[8]>;
 
-template void kc::detail::list_type_only<int[8]>::sort(cmp_may_throw<value_type>);
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+void kc::detail::list_type_only<int[8]>::sort(cmp_may_throw<value_type>);
 
 #if __cplusplus >= 201103L
-template void kc::detail::list_type_only<int[8]>::sort(cmp_nothrow<value_type>);
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+void kc::detail::list_type_only<int[8]>::sort(cmp_nothrow<value_type>);
 #endif
 
 
@@ -287,7 +298,9 @@ void kc::list<int[8]>::assign(const_pointer, const_pointer);
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
 void kc::list<int[8]>::assign(const_iterator, const_iterator);
-template void kc::list<int[8]>::assign(const_reverse_iterator, const_reverse_iterator);
+
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+void kc::list<int[8]>::assign(const_reverse_iterator, const_reverse_iterator);
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::list<int[8]>::iterator
@@ -315,19 +328,24 @@ template KERBAL_MSVC_TMPINST_CONSTEXPR20
 void kc::list<int[8]>::merge(list&, cmp_may_throw<value_type>);
 
 #if __cplusplus >= 201103L
-template void kc::list<int[8]>::merge(list&, cmp_nothrow<value_type>);
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+void kc::list<int[8]>::merge(list&, cmp_nothrow<value_type>);
 #endif
 
-template kc::list<int[8]>::size_type
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+kc::list<int[8]>::size_type
 kc::list<int[8]>::remove_if(const_iterator, const_iterator, unary_predict<value_type>);
 
-template kc::list<int[8]>::size_type
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+kc::list<int[8]>::size_type
 kc::list<int[8]>::remove_if(unary_predict<value_type>);
 
-template kc::list<int[8]>::size_type
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+kc::list<int[8]>::size_type
 kc::list<int[8]>::unique(const_iterator, const_iterator, cmp_may_throw<value_type>);
 
-template kc::list<int[8]>::size_type
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+kc::list<int[8]>::size_type
 kc::list<int[8]>::unique(cmp_may_throw<value_type>);
 
 kc::list<int[8]> operator+(const kc::list<int[8]> &, const kc::list<int[8]> &);
@@ -342,10 +360,12 @@ kc::list<int[8]> operator+(kc::list<int[8]> &&, kc::list<int[8]> &&);
 
 template class kc::detail::list_type_only<kc::list<int> >;
 
-template void kc::detail::list_type_only<kc::list<int> >::sort(cmp_may_throw<value_type>);
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+void kc::detail::list_type_only<kc::list<int> >::sort(cmp_may_throw<value_type>);
 
 #if __cplusplus >= 201103L
-template void kc::detail::list_type_only<kc::list<int> >::sort(cmp_nothrow<value_type>);
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+void kc::detail::list_type_only<kc::list<int> >::sort(cmp_nothrow<value_type>);
 #endif
 
 
@@ -373,7 +393,7 @@ void kc::list<kc::list<int> >::assign(const_pointer, const_pointer);
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
 void kc::list<kc::list<int> >::assign(const_iterator, const_iterator);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 void kc::list<kc::list<int> >::assign(const_reverse_iterator, const_reverse_iterator);
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
@@ -402,21 +422,23 @@ template KERBAL_MSVC_TMPINST_CONSTEXPR20
 void kc::list<kc::list<int> >::merge(list&, cmp_may_throw<value_type>);
 
 #if __cplusplus >= 201103L
-template void kc::list<kc::list<int> >::merge(list&, cmp_nothrow<value_type>);
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+void kc::list<kc::list<int> >::merge(list&, cmp_nothrow<value_type>);
 #endif
 
-template kc::list<kc::list<int> >::size_type
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+kc::list<kc::list<int> >::size_type
 kc::list<kc::list<int> >::remove_if(const_iterator, const_iterator, unary_predict<value_type>);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::list<kc::list<int> >::size_type
 kc::list<kc::list<int> >::remove_if(unary_predict<value_type>);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::list<kc::list<int> >::size_type
 kc::list<kc::list<int> >::unique(const_iterator, const_iterator, cmp_may_throw<value_type>);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::list<kc::list<int> >::size_type
 kc::list<kc::list<int> >::unique(cmp_may_throw<value_type>);
 
@@ -473,7 +495,7 @@ void kc::list<int, palloc<int> >::assign(const_pointer, const_pointer);
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
 void kc::list<int, palloc<int> >::assign(const_iterator, const_iterator);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 void kc::list<int, palloc<int> >::assign(const_reverse_iterator, const_reverse_iterator);
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
@@ -500,20 +522,23 @@ template KERBAL_MSVC_TMPINST_CONSTEXPR20
 void kc::list<int, palloc<int> >::merge(list&, cmp_may_throw<value_type>);
 
 #if __cplusplus >= 201103L
-template void kc::list<int, palloc<int> >::merge(list&, cmp_nothrow<value_type>);
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+void kc::list<int, palloc<int> >::merge(list&, cmp_nothrow<value_type>);
 #endif
 
-template kc::list<int, palloc<int> >::size_type
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+kc::list<int, palloc<int> >::size_type
 kc::list<int, palloc<int> >::remove_if(const_iterator, const_iterator, unary_predict<value_type>);
 
-template kc::list<int, palloc<int> >::size_type
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+kc::list<int, palloc<int> >::size_type
 kc::list<int, palloc<int> >::remove_if(unary_predict<value_type>);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::list<int, palloc<int> >::size_type
 kc::list<int, palloc<int> >::unique(const_iterator, const_iterator, cmp_may_throw<value_type>);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::list<int, palloc<int> >::size_type
 kc::list<int, palloc<int> >::unique(cmp_may_throw<value_type>);
 

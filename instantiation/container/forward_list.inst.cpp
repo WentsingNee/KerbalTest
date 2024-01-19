@@ -98,19 +98,24 @@ template KERBAL_MSVC_TMPINST_CONSTEXPR20
 void kc::forward_list<int>::merge(forward_list&, cmp_may_throw<value_type>);
 
 #if __cplusplus >= 201103L
-template void kc::forward_list<int>::merge(forward_list&, cmp_nothrow<value_type>);
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+void kc::forward_list<int>::merge(forward_list&, cmp_nothrow<value_type>);
 #endif
 
-template kc::forward_list<int>::size_type
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+kc::forward_list<int>::size_type
 kc::forward_list<int>::remove_after_if(const_iterator, const_iterator, unary_predict<value_type>);
 
-template kc::forward_list<int>::size_type
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+kc::forward_list<int>::size_type
 kc::forward_list<int>::remove_if(unary_predict<value_type>);
 
-template kc::forward_list<int>::size_type
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+kc::forward_list<int>::size_type
 kc::forward_list<int>::unique(const_iterator, const_iterator, cmp_may_throw<value_type>);
 
-template kc::forward_list<int>::size_type
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+kc::forward_list<int>::size_type
 kc::forward_list<int>::unique(cmp_may_throw<value_type>);
 
 kc::forward_list<int> operator+(const kc::forward_list<int> &, const kc::forward_list<int> &);
@@ -144,6 +149,7 @@ void kc::detail::fl_type_only<std::string>::k_sort(cmp_nothrow<value_type>);
 
 
 template class kc::forward_list<std::string>;
+
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::forward_list<std::string>::forward_list(const_pointer, const_pointer, int);
 
@@ -193,22 +199,23 @@ template KERBAL_MSVC_TMPINST_CONSTEXPR20
 void kc::forward_list<std::string>::merge(forward_list&, cmp_may_throw<value_type>);
 
 #if __cplusplus >= 201103L
-template void kc::forward_list<std::string>::merge(forward_list&, cmp_nothrow<value_type>);
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+void kc::forward_list<std::string>::merge(forward_list&, cmp_nothrow<value_type>);
 #endif
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::forward_list<std::string>::size_type
 kc::forward_list<std::string>::remove_after_if(const_iterator, const_iterator, unary_predict<value_type>);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::forward_list<std::string>::size_type
 kc::forward_list<std::string>::remove_if(unary_predict<value_type>);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::forward_list<std::string>::size_type
 kc::forward_list<std::string>::unique(const_iterator, const_iterator, cmp_may_throw<value_type>);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::forward_list<std::string>::size_type
 kc::forward_list<std::string>::unique(cmp_may_throw<value_type>);
 
@@ -369,16 +376,20 @@ template KERBAL_MSVC_TMPINST_CONSTEXPR20
 void kc::forward_list<kc::forward_list<int> >::merge(forward_list&, cmp_nothrow<value_type>);
 #endif
 
-template kc::forward_list<kc::forward_list<int> >::size_type
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+kc::forward_list<kc::forward_list<int> >::size_type
 kc::forward_list<kc::forward_list<int> >::remove_after_if(const_iterator, const_iterator, unary_predict<value_type>);
 
-template kc::forward_list<kc::forward_list<int> >::size_type
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+kc::forward_list<kc::forward_list<int> >::size_type
 kc::forward_list<kc::forward_list<int> >::remove_if(unary_predict<value_type>);
 
-template kc::forward_list<kc::forward_list<int> >::size_type
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+kc::forward_list<kc::forward_list<int> >::size_type
 kc::forward_list<kc::forward_list<int> >::unique(const_iterator, const_iterator, cmp_may_throw<value_type>);
 
-template kc::forward_list<kc::forward_list<int> >::size_type
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+kc::forward_list<kc::forward_list<int> >::size_type
 kc::forward_list<kc::forward_list<int> >::unique(cmp_may_throw<value_type>);
 
 kc::forward_list<kc::forward_list<int> >
@@ -450,19 +461,24 @@ template KERBAL_MSVC_TMPINST_CONSTEXPR20
 void kc::forward_list<int, palloc<int> >::merge(forward_list&, cmp_may_throw<value_type>);
 
 #if __cplusplus >= 201103L
-template void kc::forward_list<int, palloc<int> >::merge(forward_list&, cmp_nothrow<value_type>);
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+void kc::forward_list<int, palloc<int> >::merge(forward_list&, cmp_nothrow<value_type>);
 #endif
 
-template kc::forward_list<int, palloc<int> >::size_type
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+kc::forward_list<int, palloc<int> >::size_type
 kc::forward_list<int, palloc<int> >::remove_after_if(const_iterator, const_iterator, unary_predict<value_type>);
 
-template kc::forward_list<int, palloc<int> >::size_type
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+kc::forward_list<int, palloc<int> >::size_type
 kc::forward_list<int, palloc<int> >::remove_if(unary_predict<value_type>);
 
-template kc::forward_list<int, palloc<int> >::size_type
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+kc::forward_list<int, palloc<int> >::size_type
 kc::forward_list<int, palloc<int> >::unique(const_iterator, const_iterator, cmp_may_throw<value_type>);
 
-template kc::forward_list<int, palloc<int> >::size_type
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+kc::forward_list<int, palloc<int> >::size_type
 kc::forward_list<int, palloc<int> >::unique(cmp_may_throw<value_type>);
 
 kc::forward_list<int, palloc<int> >

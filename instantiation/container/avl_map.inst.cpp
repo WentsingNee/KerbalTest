@@ -40,46 +40,46 @@ kc::avl_map<int, std::string>::avl_map(const_reverse_iterator, const_reverse_ite
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
 void kc::avl_map<int, std::string>::assign(const_pointer, const_pointer);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 void kc::avl_map<int, std::string>::assign(const_iterator, const_iterator);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 void kc::avl_map<int, std::string>::assign(const_reverse_iterator, const_reverse_iterator);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::avl_map<int, std::string>::const_iterator
 kc::avl_map<int, std::string>::find(long const &) const; // transparent lookup
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::avl_map<int, std::string>::const_iterator
 kc::avl_map<int, std::string>::lower_bound(long const &) const; // transparent lookup
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::avl_map<int, std::string>::const_iterator
 kc::avl_map<int, std::string>::upper_bound(long const &) const; // transparent lookup
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kerbal::utility::compressed_pair<
 	kc::avl_map<int, std::string>::const_iterator,
 	kc::avl_map<int, std::string>::const_iterator
 >
 kc::avl_map<int, std::string>::equal_range(long const &) const; // transparent lookup
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 bool
 kc::avl_map<int, std::string>::contains(long const &) const; // transparent lookup
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::avl_map<int, std::string>::unique_insert_r
 kc::avl_map<int, std::string>::emplace(const int &, const std::string &);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 void kc::avl_map<int, std::string>::insert(const_pointer, const_pointer);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 void kc::avl_map<int, std::string>::insert(const_iterator, const_iterator);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 void kc::avl_map<int, std::string>::insert(const_reverse_iterator, const_reverse_iterator);
 
 
@@ -99,43 +99,43 @@ kc::avl_map<std::string, int>::avl_map(const_iterator, const_iterator);
 template
 kc::avl_map<std::string, int>::avl_map(const_reverse_iterator, const_reverse_iterator);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 void kc::avl_map<std::string, int>::assign(const_pointer, const_pointer);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 void kc::avl_map<std::string, int>::assign(const_iterator, const_iterator);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 void kc::avl_map<std::string, int>::assign(const_reverse_iterator, const_reverse_iterator);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::avl_map<std::string, int>::const_iterator
 kc::avl_map<std::string, int>::find(std::string::const_pointer const &) const; // transparent lookup
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::avl_map<std::string, int>::const_iterator
 kc::avl_map<std::string, int>::lower_bound(std::string::const_pointer const &) const; // transparent lookup
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::avl_map<std::string, int>::const_iterator
 kc::avl_map<std::string, int>::upper_bound(std::string::const_pointer const &) const; // transparent lookup
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kerbal::utility::compressed_pair<
 	kc::avl_map<std::string, int>::const_iterator,
 	kc::avl_map<std::string, int>::const_iterator
 >
 kc::avl_map<std::string, int>::equal_range(std::string::const_pointer const &) const; // transparent lookup
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 bool
 kc::avl_map<std::string, int>::contains(std::string::const_pointer const &) const; // transparent lookup
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::avl_map<std::string, int>::unique_insert_r
 kc::avl_map<std::string, int>::emplace(std::string::const_pointer const &, int const &);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::avl_map<std::string, int>::unique_insert_r
 kc::avl_map<std::string, int>::emplace(std::string const &, int const &);
 

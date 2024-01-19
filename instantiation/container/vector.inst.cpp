@@ -28,13 +28,13 @@ namespace kc = kerbal::container;
 
 template class kc::vector<int>;
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::vector<int>::vector(const_iterator, const_iterator, int);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::vector<int>::vector(const_reverse_iterator, const_reverse_iterator, int);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::vector<int>::vector(input_iterator<int>::type, input_iterator<int>::type, int);
 
 #if __cplusplus < 201103L
@@ -42,34 +42,34 @@ template
 kc::vector<int>::vector(const kerbal::assign::assign_list<int> &);
 #endif
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 void kc::vector<int>::assign(const_iterator, const_iterator);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 void kc::vector<int>::assign(const_reverse_iterator, const_reverse_iterator);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 void kc::vector<int>::assign(input_iterator<int>::type, input_iterator<int>::type);
 
 #if __cplusplus >= 201103L
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::vector<int>::iterator
 kc::vector<int>::emplace(const_iterator);
 #endif
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::vector<int>::iterator
 kc::vector<int>::emplace(const_iterator, const_reference);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::vector<int>::iterator
 kc::vector<int>::insert(const_iterator, const_iterator, const_iterator);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::vector<int>::iterator
 kc::vector<int>::insert(const_iterator, const_reverse_iterator, const_reverse_iterator);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::vector<int>::iterator
 kc::vector<int>::insert(const_iterator, input_iterator<int>::type, input_iterator<int>::type);
 
@@ -84,37 +84,54 @@ kc::vector<int>::insert(const_iterator, const kerbal::assign::assign_list<int> &
 #include <string>
 
 template class kc::vector<std::string>;
-template kc::vector<std::string>::vector(const_iterator, const_iterator, int);
-template kc::vector<std::string>::vector(const_reverse_iterator, const_reverse_iterator, int);
-template kc::vector<std::string>::vector(input_iterator<std::string>::type, input_iterator<std::string>::type, int);
+
+template
+kc::vector<std::string>::vector(const_iterator, const_iterator, int);
+
+template
+kc::vector<std::string>::vector(const_reverse_iterator, const_reverse_iterator, int);
+
+template
+kc::vector<std::string>::vector(input_iterator<std::string>::type, input_iterator<std::string>::type, int);
 
 #if __cplusplus < 201103L
 template
 kc::vector<std::string>::vector(const kerbal::assign::assign_list<std::string> &);
 #endif
 
-template void kc::vector<std::string>::assign(const_iterator, const_iterator);
-template void kc::vector<std::string>::assign(const_reverse_iterator, const_reverse_iterator);
-template void kc::vector<std::string>::assign(input_iterator<std::string>::type, input_iterator<std::string>::type);
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+void kc::vector<std::string>::assign(const_iterator, const_iterator);
+
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+void kc::vector<std::string>::assign(const_reverse_iterator, const_reverse_iterator);
+
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+void kc::vector<std::string>::assign(input_iterator<std::string>::type, input_iterator<std::string>::type);
 
 #if __cplusplus >= 201103L
-template kc::vector<std::string>::iterator
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+kc::vector<std::string>::iterator
 kc::vector<std::string>::emplace(const_iterator);
 #endif
 
-template kc::vector<std::string>::iterator
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+kc::vector<std::string>::iterator
 kc::vector<std::string>::emplace(const_iterator, const_reference);
 
-template kc::vector<std::string>::iterator
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+kc::vector<std::string>::iterator
 kc::vector<std::string>::emplace(const_iterator, const value_type::size_type&, const value_type::value_type &);
 
-template kc::vector<std::string>::iterator
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+kc::vector<std::string>::iterator
 kc::vector<std::string>::insert(const_iterator, const_iterator, const_iterator);
 
-template kc::vector<std::string>::iterator
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+kc::vector<std::string>::iterator
 kc::vector<std::string>::insert(const_iterator, const_reverse_iterator, const_reverse_iterator);
 
-template kc::vector<std::string>::iterator
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+kc::vector<std::string>::iterator
 kc::vector<std::string>::insert(const_iterator, input_iterator<std::string>::type, input_iterator<std::string>::type);
 
 #if __cplusplus < 201103L
