@@ -30,6 +30,9 @@ add_custom_target(
 
 function(add_ktest_utest_target_impl target target_src_file)
     add_executable("${target}" ${target_src_file})
+    set_target_properties("${target}"
+            PROPERTIES ktest_category "utest"
+    )
     add_kerbal_parent_target(${target})
     set_target_properties(${target}
             PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/targets
@@ -93,6 +96,9 @@ function(add_ktest_utest_target_impl target target_src_file)
             WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
             COMMENT "Running utest target ${target}"
             DEPENDS ${target} run_utest_make_test_output_dir
+    )
+    set_target_properties("${run_utest_target_name}"
+            PROPERTIES ktest_category "run_utest"
     )
 
     if (${KTEST_ENABLE_SANITIZE} AND ${CMAKE_CXX_COMPILER} MATCHES "MSVC")

@@ -3,6 +3,9 @@ include(${PROJECT_SOURCE_DIR}/cmake/add_kerbal_parent_target.cmake)
 
 function(add_ktest_inst_target_impl target target_src_file)
     add_library("${target}" OBJECT ${file})
+    set_target_properties("${target}"
+            PROPERTIES ktest_category "instantiation"
+    )
     add_kerbal_parent_target(${target})
     target_link_libraries(${target} PUBLIC Kerbal::kerbal)
     target_include_directories(${target} PUBLIC "${PROJECT_SOURCE_DIR}/include")
