@@ -1,24 +1,29 @@
+#
+# @file       CMakeLists.txt
+# @brief
+# @date       2023-6-10
+# @author     Peter
+# @copyright
+#      Peter of [ThinkSpirit Laboratory](http://thinkspirit.org/)
+#   of [Nanjing University of Information Science & Technology](http://www.nuist.edu.cn/)
+#   all rights reserved
+#
 
-#cmake_policy(SET CMP0079 NEW)
 
-message(STATUS "Finding library omp...")
-find_library(libomp omp)
-
-if (${libomp})
-    message(STATUS "Finding library omp -- Found: ${libomp}")
-    set(KERBAL_ENABLE_SUBLIB_OMP_UTEST TRUE)
-else ()
-    message(STATUS "Finding library omp -- Not FOUND")
-    set(KERBAL_ENABLE_SUBLIB_OMP_UTEST FALSE)
+if (NOT TARGET Kerbal::kerbal-omp)
+    message(WARNING "Kerbal::kerbal-omp target is not exist, utests under ompalgo will be skipped")
 endif ()
 
-macro(add_kerbal_ompalgo_utest_target target target_src_file)
-    if (KERBAL_ENABLE_SUBLIB_OMP_UTEST)
-        target_compile_options(${target} PUBLIC -fopenmp)
-        target_link_libraries(${target} PUBLIC ${libomp})
+
+function(add_ktest_ompalgo_utest_target target target_src_file)
+    if (NOT TARGET Kerbal::kerbal-omp)
+        continue()
     endif ()
-endmacro()
+    add_ktest_utest_target("${target}" "${target_src_file}")
+    target_link_libraries("${target}" PUBLIC Kerbal::kerbal-omp)
+endfunction()
 
 
-add_kerbal_ompalgo_utest_target(utest.ompalgo.querier                      querier.test.cpp)
-
+add_ktest_ompalgo_utest_target(utest.ompalgo.countif                      countif.test.noauto.cpp)
+add_ktest_ompalgo_utest_target(utest.ompalgo.foreach                      foreach.test.noauto.cpp)
+add_ktest_ompalgo_utest_target(utest.ompalgo.sort                         sort.test.noauto.cpp)
