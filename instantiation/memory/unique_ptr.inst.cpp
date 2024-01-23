@@ -11,6 +11,7 @@
 
 #include <kerbal/memory/unique_ptr.hpp>
 
+
 namespace km = kerbal::memory;
 
 
@@ -20,7 +21,9 @@ template class km::unique_ptr<int>;
 template class km::unique_ptr<const int>;
 
 #if __cplusplus >= 201103L
-template km::unique_ptr<const int>::unique_ptr(km::unique_ptr<int> &&, int);
+
+template km::unique_ptr<const int>::unique_ptr(km::unique_ptr<int> &&, int) KERBAL_CONDITIONAL_NOEXCEPT(true);
+
 #endif
 
 
@@ -34,5 +37,11 @@ template
 void kerbal::algorithm::swap(
 	km::unique_ptr<int> &,
 	km::unique_ptr<int> &
-);
+) KERBAL_CONDITIONAL_NOEXCEPT(true);
+
+template
+void kerbal::algorithm::swap(
+	km::unique_ptr<int[]> &,
+	km::unique_ptr<int[]> &
+) KERBAL_CONDITIONAL_NOEXCEPT(true);
 
