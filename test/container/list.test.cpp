@@ -9,6 +9,7 @@
  *   all rights reserved
  */
 
+#include <ktest/container/print_linked.hpp>
 #include <ktest/container/test_pmr_container.hpp>
 #include <ktest/random/random_vector.hpp>
 #include <ktest/test/try_test_check.hpp>
@@ -41,29 +42,6 @@
 
 #include <iostream>
 #include <list>
-
-
-template <typename Allocator>
-void print_list(const kerbal::container::list<int, Allocator>& l)
-{
-	typedef typename kerbal::container::list<int, Allocator>::const_iterator const_iterator;
-	const_iterator end = l.cend();
-	for (const_iterator it = l.cbegin(); it != end; ++it) {
-		std::cout << *it << "   " << &*it << std::endl;
-	}
-	std::cout << std::endl;
-}
-
-template <typename Allocator>
-void print_list_reverse(const kerbal::container::list<int, Allocator>& l)
-{
-	typedef typename kerbal::container::list<int, Allocator>::const_reverse_iterator const_reverse_iterator;
-	const_reverse_iterator rend = l.crend();
-	for (const_reverse_iterator it = l.crbegin(); it != rend; ++it) {
-		std::cout << *it << "   " << &*it << std::endl;
-	}
-	std::cout << std::endl;
-}
 
 
 # if __cplusplus >= 201103L && KERBAL_HAS_EXCEPTIONS_SUPPORT

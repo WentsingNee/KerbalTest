@@ -9,6 +9,7 @@
  *   all rights reserved
  */
 
+#include <ktest/container/print_linked.hpp>
 #include <ktest/container/test_pmr_container.hpp>
 #include <ktest/random/random_vector.hpp>
 #include <ktest/test/try_test_check.hpp>
@@ -29,23 +30,11 @@
 #include <kerbal/container/vector.hpp>
 #include <kerbal/random/mersenne_twister_engine.hpp>
 
-#include <iostream>
 #include <list>
 
 #if __cplusplus >= 201103L
 #	include <forward_list>
 #endif
-
-
-void print_list(const kerbal::container::forward_list<int>& l)
-{
-	typedef kerbal::container::forward_list<int>::const_iterator const_iterator;
-	const_iterator end = l.cend();
-	for (const_iterator it = l.cbegin(); it != end; ++it) {
-		std::cout << *it << "   " << &*it << std::endl;
-	}
-	std::cout << std::endl;
-}
 
 
 # if __cplusplus >= 201103L && KERBAL_HAS_EXCEPTIONS_SUPPORT
