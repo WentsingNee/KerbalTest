@@ -26,32 +26,36 @@ KERBAL_TEST_CASE(test_has_is_constructible_support, "test has is_constructible s
 }
 
 
-struct Foo
+namespace
 {
-		Foo(int);
-		Foo(int, float);
+
+	struct Foo
+	{
+			Foo(int);
+			Foo(int, float);
 
 #if __cplusplus >= 201103L
-		Foo(const Foo &) = delete;
+			Foo(const Foo &) = delete;
 #endif
 
-	private:
-		Foo(float);
-};
+		private:
+			Foo(float);
+	};
 
 
-struct Base
-{
-};
+	struct Base
+	{
+	};
 
-struct PublicDerived : public Base
-{
-};
+	struct PublicDerived : public Base
+	{
+	};
 
-struct PrivateDerived : private Base
-{
-};
+	struct PrivateDerived : private Base
+	{
+	};
 
+}
 
 
 #if KERBAL_HAS_IS_CONSTRUCTIBLE_SUPPORT

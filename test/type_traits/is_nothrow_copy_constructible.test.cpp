@@ -26,39 +26,44 @@ KERBAL_TEST_CASE(test_has_is_nothrow_copy_constructible_support, "test has is_no
 }
 
 
-struct NothrowCopyConstructible
+namespace
 {
-		NothrowCopyConstructible& operator=(const NothrowCopyConstructible &);
+
+	struct NothrowCopyConstructible
+	{
+			NothrowCopyConstructible& operator=(const NothrowCopyConstructible &);
 
 #if __cplusplus >= 201103L
-		NothrowCopyConstructible(const NothrowCopyConstructible &) KERBAL_NOEXCEPT;
-		NothrowCopyConstructible(NothrowCopyConstructible &&);
-		NothrowCopyConstructible& operator=(NothrowCopyConstructible &&);
+			NothrowCopyConstructible(const NothrowCopyConstructible &) KERBAL_NOEXCEPT;
+			NothrowCopyConstructible(NothrowCopyConstructible &&);
+			NothrowCopyConstructible& operator=(NothrowCopyConstructible &&);
 #endif
-};
+	};
 
 
-struct NonNothrowCopyConstructible
-{
-		NonNothrowCopyConstructible(const NonNothrowCopyConstructible &);
-};
+	struct NonNothrowCopyConstructible
+	{
+			NonNothrowCopyConstructible(const NonNothrowCopyConstructible &);
+	};
 
 
-struct PrivateCopyConstructible
-{
-	private:
-		PrivateCopyConstructible(const PrivateCopyConstructible &);
-};
+	struct PrivateCopyConstructible
+	{
+		private:
+			PrivateCopyConstructible(const PrivateCopyConstructible &);
+	};
 
 
 #if __cplusplus >= 201103L
 
-class DeleteCopyConstructible
-{
-		DeleteCopyConstructible(const DeleteCopyConstructible &) = delete;
-};
+	class DeleteCopyConstructible
+	{
+			DeleteCopyConstructible(const DeleteCopyConstructible &) = delete;
+	};
 
 #endif
+
+}
 
 
 #if KERBAL_HAS_IS_NOTHROW_COPY_CONSTRUCTIBLE_SUPPORT

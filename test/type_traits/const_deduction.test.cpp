@@ -27,8 +27,11 @@
 #endif
 
 
-struct Foo
+namespace
 {
+
+	struct Foo
+	{
 		int x;
 
 		void f()
@@ -59,7 +62,10 @@ struct Foo
 
 #	endif
 
-};
+	};
+
+}
+
 
 KERBAL_TEST_CASE(test_is_const, "test is_const")
 {

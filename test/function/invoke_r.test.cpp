@@ -17,6 +17,7 @@
 namespace ku = kerbal::utility;
 
 
+// TODO Global
 int f()
 {
 	return 1;

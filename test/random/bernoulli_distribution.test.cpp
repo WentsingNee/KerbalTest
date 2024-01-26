@@ -18,6 +18,7 @@
 #include <cstdio>
 
 
+static
 std::pair<int, int> cnt(double p)
 {
 	kerbal::random::mt19937 eg;

@@ -26,6 +26,7 @@
 namespace kf = kerbal::function;
 
 
+// TODO Global
 enum test_lr_result
 {
 		test_l,

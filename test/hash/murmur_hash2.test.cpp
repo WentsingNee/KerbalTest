@@ -14,6 +14,8 @@
 #include <kerbal/test/test.hpp>
 #include <kerbal/container/nonmember_container_access.hpp>
 
+
+static
 unsigned int murMurHash(const void *key, int len, const int seed = 97)
 {
 	const unsigned int m = 0x5bd1e995;

@@ -15,25 +15,27 @@
 #include <kerbal/algorithm/sort/is_sorted.hpp>
 #include <kerbal/container/static_vector.hpp>
 
-struct string_less
+namespace
 {
-	KERBAL_CONSTEXPR14
-	bool operator()(const char * p, const char * q) const
+	struct string_less
 	{
-		while (*p != '\0' && *q != '\0') {
-			if (*p < *q) {
-				return true;
-			} else if (*q < *p) {
-				return false;
-			} else {
-				++p;
-				++q;
+		KERBAL_CONSTEXPR14
+		bool operator()(const char * p, const char * q) const
+		{
+			while (*p != '\0' && *q != '\0') {
+				if (*p < *q) {
+					return true;
+				} else if (*q < *p) {
+					return false;
+				} else {
+					++p;
+					++q;
+				}
 			}
+			return *q != '\0';
 		}
-		return *q != '\0';
-	}
-};
-
+	};
+}
 
 #include <kerbal/config/compiler_id.hpp>
 #include <kerbal/config/compiler_private.hpp>
@@ -53,6 +55,7 @@ struct string_less
 #if TEST_CONSTEXPR
 KERBAL_CONSTEXPR14
 #endif
+static
 kerbal::container::static_vector<char[6], 10>
 get_ordered()
 {

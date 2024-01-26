@@ -23,20 +23,23 @@
 namespace kc = kerbal::container;
 
 
-struct Int
+namespace
 {
-	int x;
-
-	Int() : x(0) {}
-	Int(int x) : x(x) {}
-	~Int() {x = -1;}
-
-	friend std::ostream& operator<<(std::ostream & out, const Int & val)
+	struct Int
 	{
-		return out << val.x;
-	}
+		int x;
 
-};
+		Int() : x(0) {}
+		Int(int x) : x(x) {}
+		~Int() {x = -1;}
+
+		friend std::ostream& operator<<(std::ostream & out, const Int & val)
+		{
+			return out << val.x;
+		}
+
+	};
+}
 
 template <typename Iterator>
 void print(Iterator begin, Iterator end)

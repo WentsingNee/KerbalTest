@@ -21,6 +21,8 @@
 #include <string>
 #include <typeinfo>
 
+//TODO Global
+
 
 namespace ku = kerbal::utility;
 

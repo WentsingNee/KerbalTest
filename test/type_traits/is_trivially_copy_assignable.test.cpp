@@ -26,40 +26,45 @@ KERBAL_TEST_CASE(test_has_is_trivially_copy_assignable_support, "test has is_tri
 }
 
 
-struct TriviallyCopyAssignable
+namespace
 {
-		TriviallyCopyAssignable(const TriviallyCopyAssignable &);
+
+	struct TriviallyCopyAssignable
+	{
+			TriviallyCopyAssignable(const TriviallyCopyAssignable &);
 
 #if __cplusplus >= 201103L
-		TriviallyCopyAssignable(TriviallyCopyAssignable &&);
-		TriviallyCopyAssignable& operator=(const TriviallyCopyAssignable &) = default;
-		TriviallyCopyAssignable& operator=(TriviallyCopyAssignable &&);
+			TriviallyCopyAssignable(TriviallyCopyAssignable &&);
+			TriviallyCopyAssignable& operator=(const TriviallyCopyAssignable &) = default;
+			TriviallyCopyAssignable& operator=(TriviallyCopyAssignable &&);
 #endif
 
-};
+	};
 
 
-struct NonTriviallyCopyAssignable
-{
-		NonTriviallyCopyAssignable& operator=(const NonTriviallyCopyAssignable &);
-};
+	struct NonTriviallyCopyAssignable
+	{
+			NonTriviallyCopyAssignable& operator=(const NonTriviallyCopyAssignable &);
+	};
 
 
-struct PrivateCopyAssignable
-{
-	private:
-		PrivateCopyAssignable& operator=(const PrivateCopyAssignable &);
-};
+	struct PrivateCopyAssignable
+	{
+		private:
+			PrivateCopyAssignable& operator=(const PrivateCopyAssignable &);
+	};
 
 
 #if __cplusplus >= 201103L
 
-class DeleteCopyAssignable
-{
-		DeleteCopyAssignable& operator=(const DeleteCopyAssignable &) = delete;
-};
+	class DeleteCopyAssignable
+	{
+			DeleteCopyAssignable& operator=(const DeleteCopyAssignable &) = delete;
+	};
 
 #endif
+
+}
 
 
 #if KERBAL_HAS_IS_TRIVIALLY_COPY_ASSIGNABLE_SUPPORT

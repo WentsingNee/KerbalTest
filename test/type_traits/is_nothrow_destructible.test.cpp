@@ -41,37 +41,43 @@ KERBAL_TEST_CASE(test_has_is_nothrow_destructible_support, "test has is_nothrow_
 }
 
 
-struct NothrowDestructible
+namespace
 {
-		~NothrowDestructible() KERBAL_NOEXCEPT;
-};
+
+	struct NothrowDestructible
+	{
+			~NothrowDestructible() KERBAL_NOEXCEPT;
+	};
 
 
-struct ThrowDestructible
-{
+	struct ThrowDestructible
+	{
 #	if __cplusplus >= 201103L
-		~ThrowDestructible() noexcept(false);
+			~ThrowDestructible() noexcept(false);
 #	else
-		~ThrowDestructible() throw();
+			~ThrowDestructible() throw();
 #	endif
-};
+	};
 
 
-struct PrivateDestructible
-{
-	private:
-		~PrivateDestructible();
-};
+	struct PrivateDestructible
+	{
+		private:
+			~PrivateDestructible();
+	};
 
 
 #if __cplusplus >= 201103L
 
-class DeleteDestructible
-{
-		~DeleteDestructible() = delete;
-};
+	class DeleteDestructible
+	{
+			~DeleteDestructible() = delete;
+	};
 
 #endif
+
+}
+
 
 
 #if KERBAL_HAS_IS_NOTHROW_DESTRUCTIBLE_SUPPORT

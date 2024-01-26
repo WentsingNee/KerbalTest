@@ -17,9 +17,26 @@
 #include <ctime>
 
 
-struct Foo: kerbal::test::object_count<Foo>
+namespace
 {
-};
+
+	struct Foo: kerbal::test::object_count<Foo>
+	{
+	};
+
+	Foo get(int cond)
+	{
+		Foo a, b;
+
+		if (cond % 2) {
+			return a;
+		} else {
+			return b;
+		}
+	}
+
+}
+
 
 KERBAL_TEST_CASE(test_object_count, "test object_count")
 {
@@ -98,17 +115,6 @@ KERBAL_TEST_CASE(test_object_count_move, "test object_count (move)")
 
 #endif
 
-
-Foo get(int cond)
-{
-	Foo a, b;
-
-	if (cond % 2) {
-		return a;
-	} else {
-		return b;
-	}
-}
 
 KERBAL_TEST_CASE(test_object_count_fn, "test object_count (fn)")
 {

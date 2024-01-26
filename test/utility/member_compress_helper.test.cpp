@@ -13,9 +13,15 @@
 
 #include <kerbal/test/test.hpp>
 
-struct E
+
+namespace
 {
-};
+
+	struct E
+	{
+	};
+}
+
 
 KERBAL_TEST_CASE(test_member_compress_helper, "test member_compress_helper")
 {

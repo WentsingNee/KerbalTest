@@ -14,22 +14,24 @@
 #include <kerbal/compatibility/constexpr.hpp>
 #include <kerbal/compatibility/is_constant_evaluated.hpp>
 
+
 KERBAL_TEST_CASE(test_has_is_constant_evaluated_support, "test has is_constant_evaluated support")
 {
 	std::cout << "has is_constant_evaluated support: " << KERBAL_HAS_IS_CONSTANT_EVALUATED_SUPPORT << std::endl;
 }
 
+
 #if __cplusplus >= 201103L && KERBAL_HAS_IS_CONSTANT_EVALUATED_SUPPORT
 
 KERBAL_CONSTEXPR
-int f()
+static int f()
 {
 	return KERBAL_IS_CONSTANT_EVALUATED() ?
 		1 : 0;
 }
 
 constexpr
-int g()
+static int g()
 {
 	return f();
 }
@@ -44,5 +46,6 @@ KERBAL_TEST_CASE(test_is_constant_evaluated, "test is_constant_evaluated")
 }
 
 #endif
+
 
 KTEST_MAIN
