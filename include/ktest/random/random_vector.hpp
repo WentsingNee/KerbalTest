@@ -9,8 +9,8 @@
  *   all rights reserved
  */
 
-#ifndef KTEST_RANDOM_VECTOR_HPP
-#define KTEST_RANDOM_VECTOR_HPP
+#ifndef KTEST_RANDOM_RANDOM_VECTOR_HPP
+#define KTEST_RANDOM_RANDOM_VECTOR_HPP
 
 #include <kerbal/algorithm/modifier/iota.hpp>
 #include <kerbal/compatibility/constexpr.hpp>
@@ -67,4 +67,4 @@ namespace ktest
 
 } // namespace ktest
 
-#endif // KTEST_RANDOM_VECTOR_HPP
+#endif // KTEST_RANDOM_RANDOM_VECTOR_HPP
