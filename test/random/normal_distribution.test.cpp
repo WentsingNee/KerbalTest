@@ -23,9 +23,14 @@
 #endif
 
 
-double my_round(double x)
+namespace
 {
-	return int(x < 0 ? x - 0.5 : x + 0.5);
+
+	double my_round(double x)
+	{
+		return int(x < 0 ? x - 0.5 : x + 0.5);
+	}
+
 }
 
 

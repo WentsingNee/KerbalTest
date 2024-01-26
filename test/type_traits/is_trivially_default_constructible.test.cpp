@@ -26,32 +26,37 @@ KERBAL_TEST_CASE(test_has_is_trivially_default_constructible_support, "test has 
 }
 
 
-struct TriviallyDefaultConstructible
+namespace
 {
-};
+
+	struct TriviallyDefaultConstructible
+	{
+	};
 
 
-struct NonTriviallyDefaultConstructible
-{
-		~NonTriviallyDefaultConstructible();
-};
+	struct NonTriviallyDefaultConstructible
+	{
+			~NonTriviallyDefaultConstructible();
+	};
 
 
-struct PrivateDefaultConstructible
-{
-	private:
-		PrivateDefaultConstructible();
-};
+	struct PrivateDefaultConstructible
+	{
+		private:
+			PrivateDefaultConstructible();
+	};
 
 
 #if __cplusplus >= 201103L
 
-class DeleteDefaultConstructible
-{
-		DeleteDefaultConstructible() = delete;
-};
+	class DeleteDefaultConstructible
+	{
+			DeleteDefaultConstructible() = delete;
+	};
 
 #endif
+
+}
 
 
 #if KERBAL_HAS_IS_TRIVIALLY_DEFAULT_CONSTRUCTIBLE_SUPPORT

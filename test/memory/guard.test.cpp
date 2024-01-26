@@ -15,54 +15,59 @@
 #include <kerbal/test/test.hpp>
 #include <kerbal/test/object_count.hpp>
 
-struct A : kerbal::test::object_count<A>
+
+namespace
 {
-};
+	struct Foo : kerbal::test::object_count<Foo>
+	{
+	};
+}
+
 
 KERBAL_TEST_CASE(test_guard, "test guard<Tp>")
 {
 	using kerbal::memory::guard;
 
-	std::ptrdiff_t pre = A::get_count();
+	std::ptrdiff_t pre = Foo::get_count();
 	{
-		A * p = new A();
-		guard<A> gd(p);
-		KERBAL_TEST_CHECK(A::get_count() - pre == 1);
+		Foo * p = new Foo();
+		guard<Foo> gd(p);
+		KERBAL_TEST_CHECK(Foo::get_count() - pre == 1);
 	}
-	KERBAL_TEST_CHECK(A::get_count() - pre == 0);
+	KERBAL_TEST_CHECK(Foo::get_count() - pre == 0);
 }
 
 KERBAL_TEST_CASE(test_guard_work_on_array, "test guard<Tp[]>")
 {
 	using kerbal::memory::guard;
 
-	std::ptrdiff_t pre = A::get_count();
+	std::ptrdiff_t pre = Foo::get_count();
 	{
 		int n = 5;
-		A * p = new A[n];
-		guard<A[]> gd(p);
-		KERBAL_TEST_CHECK(A::get_count() - pre == n);
+		Foo * p = new Foo[n];
+		guard<Foo[]> gd(p);
+		KERBAL_TEST_CHECK(Foo::get_count() - pre == n);
 	}
-	KERBAL_TEST_CHECK(A::get_count() - pre == 0);
+	KERBAL_TEST_CHECK(Foo::get_count() - pre == 0);
 }
 
 KERBAL_TEST_CASE(test_guard_release, "test guard::release")
 {
 	using kerbal::memory::guard;
 
-	std::ptrdiff_t pre = A::get_count();
+	std::ptrdiff_t pre = Foo::get_count();
 	{
-		guard<A> gd(new A());
-		KERBAL_TEST_CHECK(A::get_count() - pre == 1);
+		guard<Foo> gd(new Foo());
+		KERBAL_TEST_CHECK(Foo::get_count() - pre == 1);
 
-		A * p = gd.release();
-		KERBAL_TEST_CHECK(A::get_count() - pre == 1);
+		Foo * p = gd.release();
+		KERBAL_TEST_CHECK(Foo::get_count() - pre == 1);
 
 		delete p;
-		KERBAL_TEST_CHECK(A::get_count() - pre == 0);
+		KERBAL_TEST_CHECK(Foo::get_count() - pre == 0);
 	}
 
-	KERBAL_TEST_CHECK(A::get_count() - pre == 0);
+	KERBAL_TEST_CHECK(Foo::get_count() - pre == 0);
 }
 
 KTEST_MAIN

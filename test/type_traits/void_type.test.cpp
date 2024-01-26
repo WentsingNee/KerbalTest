@@ -22,34 +22,44 @@
 #include <cstddef>
 
 
-struct FooNoTypedef
+namespace
 {
-};
 
-struct FooHasTypedef
-{
-		typedef int type;
-};
+	struct FooNoTypedef
+	{
+	};
 
-struct FooPrivateTypedef
-{
-	private:
-		typedef int type;
-};
+	struct FooHasTypedef
+	{
+			typedef int type;
+	};
+
+	struct FooPrivateTypedef
+	{
+		private:
+			typedef int type;
+	};
 
 
-template <typename T, typename = kerbal::type_traits::void_type<>::type>
-struct could_use_typedef :
+	template <typename T, typename = kerbal::type_traits::void_type<>::type>
+	struct could_use_typedef :
 		kerbal::type_traits::false_type
-{
-};
+	{
+	};
 
-template <typename T>
-struct could_use_typedef<T, typename kerbal::type_traits::void_type<
-		typename T::type
->::type> : kerbal::type_traits::true_type
-{
-};
+	template <typename T>
+	struct could_use_typedef<
+		T,
+		typename kerbal::type_traits::void_type<
+			typename T::type
+		>::type
+	> :
+		kerbal::type_traits::true_type
+	{
+	};
+
+}
+
 
 KERBAL_TEST_CASE(test_void_type_could_use_typedef, "test void_type could use typedef")
 {
@@ -71,37 +81,41 @@ KERBAL_TEST_CASE(test_void_type_could_use_typedef, "test void_type could use typ
 }
 
 
-struct FooNoField
+
+namespace
 {
-};
 
-struct FooHasField
-{
-		int data;
-};
+	struct FooNoField
+	{
+	};
 
-struct FooPrivateField
-{
-	private:
-		int data;
+	struct FooHasField
+	{
+			int data;
+	};
 
-	public:
-		// use private field to avoid warning
-		void f()
-		{
-			kerbal::utility::ignore_unused(data);
-		}
-};
+	struct FooPrivateField
+	{
+		private:
+			int data;
+
+		public:
+			// use private field to avoid warning
+			void f()
+			{
+				kerbal::utility::ignore_unused(data);
+			}
+	};
 
 
-template <typename T, typename = kerbal::type_traits::void_type<>::type>
-struct could_use_field :
+	template <typename T, typename = kerbal::type_traits::void_type<>::type>
+	struct could_use_field :
 		kerbal::type_traits::false_type
-{
-};
+	{
+	};
 
-template <typename T>
-struct could_use_field<T, typename kerbal::type_traits::void_type<
+	template <typename T>
+	struct could_use_field<T, typename kerbal::type_traits::void_type<
 #	if __cplusplus >= 201103L // compatible with msvc
 		decltype(
 			kerbal::utility::declval<T&>().data
@@ -115,9 +129,13 @@ struct could_use_field<T, typename kerbal::type_traits::void_type<
 			)
 		>
 #	endif
->::type> : kerbal::type_traits::true_type
-{
-};
+	>::type> :
+		kerbal::type_traits::true_type
+	{
+	};
+
+}
+
 
 KERBAL_TEST_CASE(test_void_type_could_use_field, "test void_type could use field")
 {
@@ -139,46 +157,52 @@ KERBAL_TEST_CASE(test_void_type_could_use_field, "test void_type could use field
 }
 
 
-struct FooNoMethod
+namespace
 {
-};
 
-struct FooHasMethod
-{
-		void f();
-};
+	struct FooNoMethod
+	{
+	};
 
-struct FooPrivateMethod
-{
-	private:
-		void f();
-};
+	struct FooHasMethod
+	{
+			void f();
+	};
+
+	struct FooPrivateMethod
+	{
+		private:
+			void f();
+	};
 
 
-template <typename T, typename = kerbal::type_traits::void_type<>::type>
-struct could_use_method :
-		kerbal::type_traits::false_type
-{
-};
+	template <typename T, typename = kerbal::type_traits::void_type<>::type>
+	struct could_use_method :
+			kerbal::type_traits::false_type
+	{
+	};
 
-template <typename T>
-struct could_use_method<T, typename kerbal::type_traits::void_type<
-#	if __cplusplus >= 201103L // compatible with msvc
-		decltype(
-			kerbal::utility::declval<T&>().f()
-		)
-#	else
-		kerbal::type_traits::integral_constant<
-			std::size_t,
-			sizeof(
-				kerbal::utility::declval<T&>().f(),
-				0
+	template <typename T>
+	struct could_use_method<T, typename kerbal::type_traits::void_type<
+	#	if __cplusplus >= 201103L // compatible with msvc
+			decltype(
+				kerbal::utility::declval<T&>().f()
 			)
-		>
-#	endif
->::type> : kerbal::type_traits::true_type
-{
-};
+	#	else
+			kerbal::type_traits::integral_constant<
+				std::size_t,
+				sizeof(
+					kerbal::utility::declval<T&>().f(),
+					0
+				)
+			>
+	#	endif
+	>::type> : kerbal::type_traits::true_type
+	{
+	};
+
+}
+
 
 KERBAL_TEST_CASE(test_void_type_could_use_method, "test void_type could use method")
 {

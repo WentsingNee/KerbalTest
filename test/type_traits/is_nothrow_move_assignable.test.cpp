@@ -28,40 +28,45 @@ KERBAL_TEST_CASE(test_has_is_nothrow_move_assignable_support, "test has is_nothr
 }
 
 
-struct NothrowMoveAssignable
+namespace
 {
-		NothrowMoveAssignable(const NothrowMoveAssignable &);
-		NothrowMoveAssignable& operator=(const NothrowMoveAssignable &);
+
+	struct NothrowMoveAssignable
+	{
+			NothrowMoveAssignable(const NothrowMoveAssignable &);
+			NothrowMoveAssignable& operator=(const NothrowMoveAssignable &);
 
 #if __cplusplus >= 201103L
-		NothrowMoveAssignable(NothrowMoveAssignable &&);
-		NothrowMoveAssignable& operator=(NothrowMoveAssignable &&) KERBAL_NOEXCEPT;
+			NothrowMoveAssignable(NothrowMoveAssignable &&);
+			NothrowMoveAssignable& operator=(NothrowMoveAssignable &&) KERBAL_NOEXCEPT;
 #endif
 
-};
+	};
 
 
-struct NonNothrowMoveAssignable
-{
-		NonNothrowMoveAssignable& operator=(NonNothrowMoveAssignable &&);
-};
+	struct NonNothrowMoveAssignable
+	{
+			NonNothrowMoveAssignable& operator=(NonNothrowMoveAssignable &&);
+	};
 
 
-struct PrivateMoveAssignable
-{
-	private:
-		PrivateMoveAssignable& operator=(PrivateMoveAssignable &&);
-};
+	struct PrivateMoveAssignable
+	{
+		private:
+			PrivateMoveAssignable& operator=(PrivateMoveAssignable &&);
+	};
 
 
 #if __cplusplus >= 201103L
 
-class DeleteMoveAssignable
-{
-		DeleteMoveAssignable& operator=(DeleteMoveAssignable &&) = delete;
-};
+	class DeleteMoveAssignable
+	{
+			DeleteMoveAssignable& operator=(DeleteMoveAssignable &&) = delete;
+	};
 
 #endif
+
+}
 
 
 #if KERBAL_HAS_IS_NOTHROW_MOVE_ASSIGNABLE_SUPPORT

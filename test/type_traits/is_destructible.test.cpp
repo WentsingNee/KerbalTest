@@ -40,21 +40,26 @@ KERBAL_TEST_CASE(test_has_is_destructible_support, "test has is_destructible sup
 }
 
 
-struct PrivateDestructible
+namespace
 {
-	private:
-		~PrivateDestructible();
-};
+
+	struct PrivateDestructible
+	{
+		private:
+			~PrivateDestructible();
+	};
 
 
 #if __cplusplus >= 201103L
 
-class DeleteDestructible
-{
-		~DeleteDestructible() = delete;
-};
+	class DeleteDestructible
+	{
+			~DeleteDestructible() = delete;
+	};
 
 #endif
+
+}
 
 
 #if KERBAL_HAS_IS_DESTRUCTIBLE_SUPPORT

@@ -17,29 +17,33 @@
 
 namespace kf = kerbal::function;
 
-struct Foo
+namespace
 {
+
+	struct functor_add_two
+	{
 		int operator()(int x, int y) const
 		{
 			return x + y;
 		}
-};
+	};
+
+	int function_f2i(float x)
+	{
+		return static_cast<int>(x);
+	}
+
+}
 
 KERBAL_TEST_CASE(test_function, "test function")
 {
-	kf::function<int(int, int)> fun = Foo{};
+	kf::function<int(int, int)> fun = functor_add_two{};
 	KERBAL_TEST_CHECK_EQUAL(fun(2, 3), 5);
-}
-
-
-int g(float x)
-{
-	return static_cast<int>(x);
 }
 
 KERBAL_TEST_CASE(test_function_construct_by_funptr, "test function::function(funptr)")
 {
-	kf::function<int(int)> fun = g;
+	kf::function<int(int)> fun = function_f2i;
 	KERBAL_TEST_CHECK_EQUAL(fun(2), 2);
 }
 

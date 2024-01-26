@@ -18,29 +18,35 @@
 #include <cstdio>
 
 
-KERBAL_CONSTEXPR14
-static const char * system_id()
+namespace
 {
 
-#ifndef KERBAL_SYSTEM
-	return "not defined";
-#elif KERBAL_SYSTEM == KERBAL_SYSTEM_FREESTANDING
-	return "freestanding";
-#elif KERBAL_SYSTEM == KERBAL_SYSTEM_WINDOWS
-	return "Windows";
-#elif KERBAL_SYSTEM == KERBAL_SYSTEM_LINUX
-	return "Linux";
-#elif KERBAL_SYSTEM == KERBAL_SYSTEM_APPLE
-	return "Apple";
-#elif KERBAL_SYSTEM == KERBAL_SYSTEM_ANDROID
-	return "Android";
-#elif KERBAL_SYSTEM == KERBAL_SYSTEM_WASM
-	return "Wasm";
-#else
-	return "else";
-#endif
+	KERBAL_CONSTEXPR14
+	const char * system_id()
+	{
+
+#	ifndef KERBAL_SYSTEM
+		return "not defined";
+#	elif KERBAL_SYSTEM == KERBAL_SYSTEM_FREESTANDING
+		return "freestanding";
+#	elif KERBAL_SYSTEM == KERBAL_SYSTEM_WINDOWS
+		return "Windows";
+#	elif KERBAL_SYSTEM == KERBAL_SYSTEM_LINUX
+		return "Linux";
+#	elif KERBAL_SYSTEM == KERBAL_SYSTEM_APPLE
+		return "Apple";
+#	elif KERBAL_SYSTEM == KERBAL_SYSTEM_ANDROID
+		return "Android";
+#	elif KERBAL_SYSTEM == KERBAL_SYSTEM_WASM
+		return "Wasm";
+#	else
+		return "else";
+#	endif
+
+	}
 
 }
+
 
 KERBAL_TEST_CASE(print_system_id, "print system id")
 {

@@ -30,9 +30,13 @@
 #include <algorithm>
 #include <deque>
 
-KERBAL_CONSTEXPR const int a[] = {1, 1, 2, 4, 4, 4, 7, 9, 9, 10, 10, 12, 15, 17, 17, 20};
-KERBAL_CONSTEXPR const int * a_begin = kerbal::container::begin(a);
-KERBAL_CONSTEXPR const int * a_end = kerbal::container::end(a);
+
+namespace
+{
+	KERBAL_CONSTEXPR const int a[] = {1, 1, 2, 4, 4, 4, 7, 9, 9, 10, 10, 12, 15, 17, 17, 20};
+	KERBAL_CONSTEXPR const int * a_begin = kerbal::container::begin(a);
+	KERBAL_CONSTEXPR const int * a_end = kerbal::container::end(a);
+}
 
 
 template <typename Container>

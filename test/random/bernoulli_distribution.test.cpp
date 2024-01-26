@@ -18,18 +18,24 @@
 #include <cstdio>
 
 
-std::pair<int, int> cnt(double p)
+namespace
 {
-	kerbal::random::mt19937 eg;
-	kerbal::random::bernoulli_distribution dis(p);
 
-	int cnt[2] = {0, 0};
+	std::pair<int, int> cnt(double p)
+	{
+		kerbal::random::mt19937 eg;
+		kerbal::random::bernoulli_distribution dis(p);
 
-	for (int i = 0; i < 10000000; ++i) {
-		cnt[dis(eg)]++;
+		int cnt[2] = {0, 0};
+
+		for (int i = 0; i < 10000000; ++i) {
+			cnt[dis(eg)]++;
+		}
+		return std::make_pair(cnt[0], cnt[1]);
 	}
-	return std::make_pair(cnt[0], cnt[1]);
+
 }
+
 
 KERBAL_TEST_CASE(test_bernoulli, "test bernoulli")
 {

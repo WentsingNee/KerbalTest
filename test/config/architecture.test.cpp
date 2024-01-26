@@ -18,29 +18,34 @@
 #include <cstdio>
 
 
-KERBAL_CONSTEXPR14
-static const char * architecture()
+namespace
 {
 
-#ifndef KERBAL_ARCHITECTURE
-	return "not defined";
-#elif KERBAL_ARCHITECTURE == KERBAL_ARCHITECTURE_UNKNOWN
-	return "unknown";
-#elif KERBAL_ARCHITECTURE == KERBAL_ARCHITECTURE_X86
-	return "x86";
-#elif KERBAL_ARCHITECTURE == KERBAL_ARCHITECTURE_AMD64
-	return "amd64";
-#elif KERBAL_ARCHITECTURE == KERBAL_ARCHITECTURE_ARM
-	return "arm";
-#elif KERBAL_ARCHITECTURE == KERBAL_ARCHITECTURE_AARCH64
-	return "aarch64";
-#elif KERBAL_ARCHITECTURE == KERBAL_ARCHITECTURE_WASM
-	return "wasm";
-#elif KERBAL_ARCHITECTURE == KERBAL_ARCHITECTURE_RISCV
-	return "riscv";
-#else
-	return "else";
+	KERBAL_CONSTEXPR14
+	const char * architecture()
+	{
+
+#	ifndef KERBAL_ARCHITECTURE
+		return "not defined";
+#	elif KERBAL_ARCHITECTURE == KERBAL_ARCHITECTURE_UNKNOWN
+		return "unknown";
+#	elif KERBAL_ARCHITECTURE == KERBAL_ARCHITECTURE_X86
+		return "x86";
+#	elif KERBAL_ARCHITECTURE == KERBAL_ARCHITECTURE_AMD64
+		return "amd64";
+#	elif KERBAL_ARCHITECTURE == KERBAL_ARCHITECTURE_ARM
+		return "arm";
+#	elif KERBAL_ARCHITECTURE == KERBAL_ARCHITECTURE_AARCH64
+		return "aarch64";
+#	elif KERBAL_ARCHITECTURE == KERBAL_ARCHITECTURE_WASM
+		return "wasm";
+#	elif KERBAL_ARCHITECTURE == KERBAL_ARCHITECTURE_RISCV
+		return "riscv";
+#	else
+		return "else";
 #endif
+
+	}
 
 }
 

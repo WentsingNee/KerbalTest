@@ -28,39 +28,44 @@ KERBAL_TEST_CASE(test_has_is_nothrow_move_constructible_support, "test has is_no
 }
 
 
-struct NothrowMoveConstructible
+namespace
 {
-		NothrowMoveConstructible& operator=(const NothrowMoveConstructible &);
+
+	struct NothrowMoveConstructible
+	{
+			NothrowMoveConstructible& operator=(const NothrowMoveConstructible &);
 
 #if __cplusplus >= 201103L
-		NothrowMoveConstructible(const NothrowMoveConstructible &);
-		NothrowMoveConstructible(NothrowMoveConstructible &&) KERBAL_NOEXCEPT;
-		NothrowMoveConstructible& operator=(NothrowMoveConstructible &&);
+			NothrowMoveConstructible(const NothrowMoveConstructible &);
+			NothrowMoveConstructible(NothrowMoveConstructible &&) KERBAL_NOEXCEPT;
+			NothrowMoveConstructible& operator=(NothrowMoveConstructible &&);
 #endif
-};
+	};
 
 
-struct NonNothrowMoveConstructible
-{
-		NonNothrowMoveConstructible(NonNothrowMoveConstructible &&);
-};
+	struct NonNothrowMoveConstructible
+	{
+			NonNothrowMoveConstructible(NonNothrowMoveConstructible &&);
+	};
 
 
-struct PrivateMoveConstructible
-{
-	private:
-		PrivateMoveConstructible(PrivateMoveConstructible &&);
-};
+	struct PrivateMoveConstructible
+	{
+		private:
+			PrivateMoveConstructible(PrivateMoveConstructible &&);
+	};
 
 
 #if __cplusplus >= 201103L
 
-class DeleteMoveConstructible
-{
-		DeleteMoveConstructible(DeleteMoveConstructible &&) = delete;
-};
+	class DeleteMoveConstructible
+	{
+			DeleteMoveConstructible(DeleteMoveConstructible &&) = delete;
+	};
 
 #endif
+
+}
 
 
 #if KERBAL_HAS_IS_NOTHROW_MOVE_CONSTRUCTIBLE_SUPPORT

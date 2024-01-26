@@ -26,40 +26,46 @@ KERBAL_TEST_CASE(test_has_is_nothrow_copy_assignable_support, "test has is_nothr
 }
 
 
-struct NothrowCopyAssignable
+
+namespace
 {
-		NothrowCopyAssignable(const NothrowCopyAssignable &);
-		NothrowCopyAssignable& operator=(const NothrowCopyAssignable &) KERBAL_NOEXCEPT;
+
+	struct NothrowCopyAssignable
+	{
+			NothrowCopyAssignable(const NothrowCopyAssignable &);
+			NothrowCopyAssignable& operator=(const NothrowCopyAssignable &) KERBAL_NOEXCEPT;
 
 #if __cplusplus >= 201103L
-		NothrowCopyAssignable(NothrowCopyAssignable &&);
-		NothrowCopyAssignable& operator=(NothrowCopyAssignable &&);
+			NothrowCopyAssignable(NothrowCopyAssignable &&);
+			NothrowCopyAssignable& operator=(NothrowCopyAssignable &&);
 #endif
 
-};
+	};
 
 
-struct NonNothrowCopyAssignable
-{
-		NonNothrowCopyAssignable& operator=(const NonNothrowCopyAssignable &);
-};
+	struct NonNothrowCopyAssignable
+	{
+			NonNothrowCopyAssignable& operator=(const NonNothrowCopyAssignable &);
+	};
 
 
-struct PrivateCopyAssignable
-{
-	private:
-		PrivateCopyAssignable& operator=(const PrivateCopyAssignable &);
-};
+	struct PrivateCopyAssignable
+	{
+		private:
+			PrivateCopyAssignable& operator=(const PrivateCopyAssignable &);
+	};
 
 
 #if __cplusplus >= 201103L
 
-class DeleteCopyAssignable
-{
-		DeleteCopyAssignable& operator=(const DeleteCopyAssignable &) = delete;
-};
+	class DeleteCopyAssignable
+	{
+			DeleteCopyAssignable& operator=(const DeleteCopyAssignable &) = delete;
+	};
 
 #endif
+
+}
 
 
 #if KERBAL_HAS_IS_NOTHROW_COPY_ASSIGNABLE_SUPPORT

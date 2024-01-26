@@ -15,25 +15,30 @@
 #include <kerbal/algorithm/sort/is_sorted.hpp>
 #include <kerbal/container/static_vector.hpp>
 
-struct string_less
-{
-	KERBAL_CONSTEXPR14
-	bool operator()(const char * p, const char * q) const
-	{
-		while (*p != '\0' && *q != '\0') {
-			if (*p < *q) {
-				return true;
-			} else if (*q < *p) {
-				return false;
-			} else {
-				++p;
-				++q;
-			}
-		}
-		return *q != '\0';
-	}
-};
 
+namespace
+{
+
+	struct string_less
+	{
+		KERBAL_CONSTEXPR14
+		bool operator()(const char * p, const char * q) const
+		{
+			while (*p != '\0' && *q != '\0') {
+				if (*p < *q) {
+					return true;
+				} else if (*q < *p) {
+					return false;
+				} else {
+					++p;
+					++q;
+				}
+			}
+			return *q != '\0';
+		}
+	};
+
+}
 
 #include <kerbal/config/compiler_id.hpp>
 #include <kerbal/config/compiler_private.hpp>
@@ -50,29 +55,34 @@ struct string_less
 #endif
 
 
-#if TEST_CONSTEXPR
-KERBAL_CONSTEXPR14
-#endif
-kerbal::container::static_vector<char[6], 10>
-get_ordered()
+namespace
 {
-	kerbal::container::static_priority_queue<char[6], 10, string_less> pq;
-	pq.push_unsafe("hello");
-	pq.push_unsafe("would");
-	pq.push_unsafe("world");
-	pq.push_unsafe("apple");
-	pq.push_unsafe("touch");
-	pq.push_unsafe("could");
-	pq.push_unsafe("maybe");
-	pq.push_unsafe("ruler");
 
-	kerbal::container::static_vector<char[6], 10> sv;
-	while (!pq.empty()) {
-		sv.push_back_unsafe(pq.top());
-		pq.pop_unsafe();
+#if TEST_CONSTEXPR
+	KERBAL_CONSTEXPR14
+#endif
+	kerbal::container::static_vector<char[6], 10>
+	get_ordered()
+	{
+		kerbal::container::static_priority_queue<char[6], 10, string_less> pq;
+		pq.push_unsafe("hello");
+		pq.push_unsafe("would");
+		pq.push_unsafe("world");
+		pq.push_unsafe("apple");
+		pq.push_unsafe("touch");
+		pq.push_unsafe("could");
+		pq.push_unsafe("maybe");
+		pq.push_unsafe("ruler");
+
+		kerbal::container::static_vector<char[6], 10> sv;
+		while (!pq.empty()) {
+			sv.push_back_unsafe(pq.top());
+			pq.pop_unsafe();
+		}
+
+		return sv;
 	}
 
-	return sv;
 }
 
 

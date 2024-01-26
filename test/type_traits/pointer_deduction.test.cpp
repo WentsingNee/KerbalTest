@@ -29,14 +29,20 @@
 #endif
 
 
-struct Foo
+namespace
 {
-	int x;
 
-	void f(int)
+	struct Foo
 	{
-	}
-};
+			int x;
+
+			void f(int)
+			{
+			}
+	};
+
+}
+
 
 KERBAL_TEST_CASE(test_is_pointer, "test is_pointer")
 {

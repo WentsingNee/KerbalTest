@@ -17,7 +17,11 @@
 #include <kerbal/container/vector.hpp>
 
 
-int arr[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+namespace
+{
+	int const arr[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+} // namespace
+
 
 template <typename container>
 KERBAL_TEMPLATE_TEST_CASE(test_distance_comp, "test distance compare")

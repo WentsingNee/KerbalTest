@@ -81,27 +81,32 @@ KERBAL_TEST_CASE(test_array_initializer_list_construct, "test array::array(initi
 
 #if __cplusplus >= 201103L
 
-struct Foo
+namespace
 {
-	Foo() = default;
 
-	static int cpy;
-	static int mov;
-
-	Foo(const Foo &)
+	struct Foo
 	{
-		++cpy;
-	}
+		Foo() = default;
 
-	Foo(Foo &&)
-	{
-		++mov;
-	}
+		static int cpy;
+		static int mov;
 
-};
+		Foo(const Foo &)
+		{
+			++cpy;
+		}
 
-int Foo::cpy = 0;
-int Foo::mov = 0;
+		Foo(Foo &&)
+		{
+			++mov;
+		}
+
+	};
+
+	int Foo::cpy = 0;
+	int Foo::mov = 0;
+
+}
 
 KERBAL_TEST_CASE(test_array_move_construct, "test array::array(array&&)")
 {

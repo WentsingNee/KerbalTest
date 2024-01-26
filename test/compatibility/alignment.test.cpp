@@ -41,33 +41,39 @@ KERBAL_TEST_CASE(check_alignof, "check alignof")
 #	warning "macro KERBAL_ALIGNAS is not supported"
 #else
 
-struct STRUCTURE
-{
-		char c;
-		int  i;
-		double d;
-};
 
-struct KERBAL_ALIGNAS(8) STRUCTURE_8
+namespace
 {
-		char c;
-		int  i;
-		double d;
-};
 
-struct KERBAL_ALIGNAS(16) STRUCTURE_16
-{
-		char c;
-		int  i;
-		double d;
-};
+	struct STRUCTURE
+	{
+			char c;
+			int i;
+			double d;
+	};
 
-struct KERBAL_ALIGNAS(32) STRUCTURE_32
-{
-		char c;
-		int  i;
-		double d;
-};
+	struct KERBAL_ALIGNAS(8) STRUCTURE_8
+	{
+			char c;
+			int i;
+			double d;
+	};
+
+	struct KERBAL_ALIGNAS(16) STRUCTURE_16
+	{
+			char c;
+			int i;
+			double d;
+	};
+
+	struct KERBAL_ALIGNAS(32) STRUCTURE_32
+	{
+			char c;
+			int i;
+			double d;
+	};
+
+}
 
 KERBAL_TEST_CASE(check_alignas, "check alignas")
 {

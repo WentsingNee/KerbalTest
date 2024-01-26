@@ -21,12 +21,15 @@
 #include <string>
 
 
-struct Info
+namespace
 {
+	struct allocation_info
+	{
 		char * p;
 		std::size_t size;
 		kerbal::memory::align_val_t align;
-};
+	};
+}
 
 
 template <typename T>
@@ -38,11 +41,11 @@ bool is_aligned_to(T * p, kerbal::memory::align_val_t align) KERBAL_NOEXCEPT
 
 KERBAL_TEST_CASE(test_over_aligned_new, "test over_aligned_new")
 {
-	kerbal::container::list<Info> l;
+	kerbal::container::list<allocation_info> l;
 	kerbal::memory::over_aligned_allocator<void> alloc;
 
 	for (int i = 0; i < 10; ++i) {
-		Info info;
+		allocation_info info;
 		info.size = 1024;
 		info.align = 512;
 		info.p = static_cast<char *>(alloc.allocate(info.size, kerbal::memory::align_val_t(info.align)));
@@ -51,11 +54,11 @@ KERBAL_TEST_CASE(test_over_aligned_new, "test over_aligned_new")
 		l.push_back(info);
 	}
 
-	typedef kerbal::container::list<Info>::iterator iterator;
+	typedef kerbal::container::list<allocation_info>::iterator iterator;
 	iterator it = l.begin();
 	iterator end = l.end();
 	while (it != end) {
-		Info info = *it;
+		allocation_info info = *it;
 		alloc.deallocate(info.p, info.size, kerbal::memory::align_val_t(info.align));
 		++it;
 	}

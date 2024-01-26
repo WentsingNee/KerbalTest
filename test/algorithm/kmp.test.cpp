@@ -64,43 +64,48 @@ KERBAL_TEST_CASE(test_kmp_longest_matched_suffix, "test kmp longest_matched_suff
 }
 
 
-template <typename Engine>
-std::string make_pattern(size_t len, Engine & eg)
+namespace
 {
-	kerbal::random::uniform_real_distribution<> dis('a', 'k' + 1);
 
-	std::string pattern;
+	template <typename Engine>
+	std::string make_pattern(size_t len, Engine & eg)
+	{
+		kerbal::random::uniform_real_distribution<> dis('a', 'k' + 1);
 
-	while (len--) {
-		pattern += static_cast<char>(dis(eg));
-	}
+		std::string pattern;
 
-	if (pattern.size() > 3 && kerbal::random::bernoulli_distribution(0.5)(eg)) {
-		pattern.erase(pattern.begin() + pattern.size() / 2, pattern.end());
-		std::string self(pattern);
-		pattern += self;
-	}
-
-	return pattern;
-}
-
-template <typename Engine>
-std::string make_host(const std::string & pattern, size_t n, Engine & eg)
-{
-	kerbal::random::uniform_real_distribution<> pattern_len_dis(1, 16);
-
-	std::string host;
-
-	for (size_t i = 0; i < n; ++i) {
-		if (kerbal::random::bernoulli_distribution(0.5)(eg)) {
-			std::size_t pattern_size = static_cast<std::size_t>(pattern_len_dis(eg));
-			host += make_pattern(pattern_size, eg);
-		} else {
-			host += pattern;
+		while (len--) {
+			pattern += static_cast<char>(dis(eg));
 		}
+
+		if (pattern.size() > 3 && kerbal::random::bernoulli_distribution(0.5)(eg)) {
+			pattern.erase(pattern.begin() + pattern.size() / 2, pattern.end());
+			std::string self(pattern);
+			pattern += self;
+		}
+
+		return pattern;
 	}
 
-	return host;
+	template <typename Engine>
+	std::string make_host(const std::string & pattern, size_t n, Engine & eg)
+	{
+		kerbal::random::uniform_real_distribution<> pattern_len_dis(1, 16);
+
+		std::string host;
+
+		for (size_t i = 0; i < n; ++i) {
+			if (kerbal::random::bernoulli_distribution(0.5)(eg)) {
+				std::size_t pattern_size = static_cast<std::size_t>(pattern_len_dis(eg));
+				host += make_pattern(pattern_size, eg);
+			} else {
+				host += pattern;
+			}
+		}
+
+		return host;
+	}
+
 }
 
 

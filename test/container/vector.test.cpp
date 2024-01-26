@@ -123,17 +123,25 @@ KERBAL_TEST_CASE(test_vector_noexcept, "test vector noexcept")
 # endif
 
 
-struct oc : public kerbal::test::object_count<oc>
+namespace
 {
-		int x;
 
-		oc() : x(0) {
-			std::cout << "dft" << std::endl;
-		}
-		explicit oc(int x) : x(x) {}
+	struct oc : public kerbal::test::object_count<oc>
+	{
+			int x;
 
-};
+			oc() : x(0)
+			{
+				std::cout << "dft" << std::endl;
+			}
 
+			explicit oc(int x) : x(x)
+			{
+			}
+
+	};
+
+}
 
 KERBAL_TEST_CASE(test_vector_i_def_cnstrct, "test vector<int>::vector")
 {

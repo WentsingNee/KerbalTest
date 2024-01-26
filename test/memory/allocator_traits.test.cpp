@@ -17,41 +17,46 @@
 #include <kerbal/numeric/numeric_limits.hpp>
 
 
-template <typename T>
-struct test_allocator_base
+namespace
 {
-	typedef T value_type;
 
-	value_type* allocate(std::size_t n)
+	template <typename T>
+	struct test_allocator_base
 	{
-		return ::operator new(n * sizeof(value_type));
-	}
+		typedef T value_type;
 
-	void deallocate(value_type * p, std::size_t n) KERBAL_NOEXCEPT
+		value_type* allocate(std::size_t n)
+		{
+			return ::operator new(n * sizeof(value_type));
+		}
+
+		void deallocate(value_type * p, std::size_t n) KERBAL_NOEXCEPT
+		{
+			::operator delete(p, n * sizeof(value_type));
+		}
+	};
+
+
+	template <typename T>
+	struct has_destroy : test_allocator_base<T>
 	{
-		::operator delete(p, n * sizeof(value_type));
-	}
-};
+		static void destroy(T * p) KERBAL_NOEXCEPT
+		{
+			kerbal::memory::destroy_at(p);
+		}
+	};
 
-
-template <typename T>
-struct has_destroy : test_allocator_base<T>
-{
-	static void destroy(T * p) KERBAL_NOEXCEPT
+	template <typename T>
+	struct inherit_destroy : has_destroy<T>
 	{
-		kerbal::memory::destroy_at(p);
-	}
-};
+	};
 
-template <typename T>
-struct inherit_destroy : has_destroy<T>
-{
-};
+	template <typename T>
+	struct doesnt_have_destroy : test_allocator_base<T>
+	{
+	};
 
-template <typename T>
-struct doesnt_have_destroy : test_allocator_base<T>
-{
-};
+}
 
 KERBAL_TEST_CASE(test_has_destroy, "test has_destroy")
 {
@@ -61,24 +66,29 @@ KERBAL_TEST_CASE(test_has_destroy, "test has_destroy")
 }
 
 
-template <typename T>
-struct has_max_size : test_allocator_base<T>
+namespace
 {
-	std::size_t max_size() const KERBAL_NOEXCEPT
+
+	template <typename T>
+	struct has_max_size : test_allocator_base<T>
 	{
-		return kerbal::numeric::numeric_limits<std::size_t>::MAX::value / sizeof(T);
-	}
-};
+		std::size_t max_size() const KERBAL_NOEXCEPT
+		{
+			return kerbal::numeric::numeric_limits<std::size_t>::MAX::value / sizeof(T);
+		}
+	};
 
-template <typename T>
-struct inherite_max_size : has_max_size<T>
-{
-};
+	template <typename T>
+	struct inherite_max_size : has_max_size<T>
+	{
+	};
 
-template <typename T>
-struct doesnt_have_max_size : test_allocator_base<T>
-{
-};
+	template <typename T>
+	struct doesnt_have_max_size : test_allocator_base<T>
+	{
+	};
+
+}
 
 KERBAL_TEST_CASE(test_has_max_size, "test has_max_size")
 {

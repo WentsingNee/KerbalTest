@@ -26,39 +26,44 @@ KERBAL_TEST_CASE(test_has_is_trivially_copy_constructible_support, "test has is_
 }
 
 
-struct TriviallyCopyConstructible
+namespace
 {
-		TriviallyCopyConstructible& operator=(const TriviallyCopyConstructible &);
+
+	struct TriviallyCopyConstructible
+	{
+			TriviallyCopyConstructible& operator=(const TriviallyCopyConstructible &);
 
 #if __cplusplus >= 201103L
-		TriviallyCopyConstructible(const TriviallyCopyConstructible &) = default;
-		TriviallyCopyConstructible(TriviallyCopyConstructible &&);
-		TriviallyCopyConstructible& operator=(TriviallyCopyConstructible &&);
+			TriviallyCopyConstructible(const TriviallyCopyConstructible &) = default;
+			TriviallyCopyConstructible(TriviallyCopyConstructible &&);
+			TriviallyCopyConstructible& operator=(TriviallyCopyConstructible &&);
 #endif
-};
+	};
 
 
-struct NonTriviallyCopyConstructible
-{
-		NonTriviallyCopyConstructible(const NonTriviallyCopyConstructible &);
-};
+	struct NonTriviallyCopyConstructible
+	{
+			NonTriviallyCopyConstructible(const NonTriviallyCopyConstructible &);
+	};
 
 
-struct PrivateCopyConstructible
-{
-	private:
-		PrivateCopyConstructible(const PrivateCopyConstructible &);
-};
+	struct PrivateCopyConstructible
+	{
+		private:
+			PrivateCopyConstructible(const PrivateCopyConstructible &);
+	};
 
 
 #if __cplusplus >= 201103L
 
-class DeleteCopyConstructible
-{
-		DeleteCopyConstructible(const DeleteCopyConstructible &) = delete;
-};
+	class DeleteCopyConstructible
+	{
+			DeleteCopyConstructible(const DeleteCopyConstructible &) = delete;
+	};
 
 #endif
+
+}
 
 
 #if KERBAL_HAS_IS_TRIVIALLY_COPY_CONSTRUCTIBLE_SUPPORT

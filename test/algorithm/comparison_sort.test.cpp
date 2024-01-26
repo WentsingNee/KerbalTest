@@ -36,12 +36,15 @@
 #include <string>
 
 
-template <typename Iterator, typename Compare>
-kerbal::container::vector<void (*)(Iterator, Iterator, Compare)>
-get_sorting_algos(std::forward_iterator_tag)
+namespace
 {
-	typedef void (* sorting_algo_t)(Iterator, Iterator, Compare);
-	static kerbal::container::vector<sorting_algo_t> v = KERBAL_ILIST(
+
+	template <typename Iterator, typename Compare>
+	kerbal::container::vector<void (*)(Iterator, Iterator, Compare)>
+	get_sorting_algos(std::forward_iterator_tag)
+	{
+		typedef void (* sorting_algo_t)(Iterator, Iterator, Compare);
+		static kerbal::container::vector<sorting_algo_t> v = KERBAL_ILIST(
 			&(kerbal::algorithm::bubble_sort<Iterator, Compare>),
 			&(kerbal::algorithm::flag_bubble_sort<Iterator, Compare>),
 			&(kerbal::algorithm::merge_sort<Iterator, Compare>),
@@ -49,43 +52,17 @@ get_sorting_algos(std::forward_iterator_tag)
 			&(kerbal::algorithm::selection_sort<Iterator, Compare>),
 			&(kerbal::algorithm::stable_sort<Iterator, Compare>),
 			&(kerbal::algorithm::sort<Iterator, Compare>)
-	);
+		);
 
-	return v;
-}
+		return v;
+	}
 
-template <typename Iterator, typename Compare>
-kerbal::container::vector<void (*)(Iterator, Iterator, Compare)>
-get_sorting_algos(std::bidirectional_iterator_tag)
-{
-	typedef void (* sorting_algo_t)(Iterator, Iterator, Compare);
-	static kerbal::container::vector<sorting_algo_t> v = KERBAL_ILIST(
-			&(kerbal::algorithm::bubble_sort<Iterator, Compare>),
-			&(kerbal::algorithm::flag_bubble_sort<Iterator, Compare>),
-			&(kerbal::algorithm::heap_sort<Iterator, Compare>),
-			&(kerbal::algorithm::insertion_sort<Iterator, Compare>),
-			&(kerbal::algorithm::directly_insertion_sort<Iterator, Compare>),
-			&(kerbal::algorithm::intro_sort<Iterator, Compare>),
-			&(kerbal::algorithm::nonrecursive_intro_sort<Iterator, Compare>),
-			&(kerbal::algorithm::merge_sort<Iterator, Compare>),
-			&(kerbal::algorithm::inplace_merge_sort<Iterator, Compare>),
-			&(kerbal::algorithm::quick_sort<Iterator, Compare>),
-			&(kerbal::algorithm::nonrecursive_qsort<Iterator, Compare>),
-			&(kerbal::algorithm::selection_sort<Iterator, Compare>),
-			&(kerbal::algorithm::shell_sort<Iterator, Compare>),
-			&(kerbal::algorithm::stable_sort<Iterator, Compare>),
-			&(kerbal::algorithm::sort<Iterator, Compare>)
-	);
-
-	return v;
-}
-
-template <typename Iterator, typename Compare>
-kerbal::container::vector<void (*)(Iterator, Iterator, Compare)>
-get_sorting_algos(std::random_access_iterator_tag)
-{
-	typedef void (* sorting_algo_t)(Iterator, Iterator, Compare);
-	static kerbal::container::vector<sorting_algo_t> v = KERBAL_ILIST(
+	template <typename Iterator, typename Compare>
+	kerbal::container::vector<void (*)(Iterator, Iterator, Compare)>
+	get_sorting_algos(std::bidirectional_iterator_tag)
+	{
+		typedef void (* sorting_algo_t)(Iterator, Iterator, Compare);
+		static kerbal::container::vector<sorting_algo_t> v = KERBAL_ILIST(
 			&(kerbal::algorithm::bubble_sort<Iterator, Compare>),
 			&(kerbal::algorithm::flag_bubble_sort<Iterator, Compare>),
 			&(kerbal::algorithm::heap_sort<Iterator, Compare>),
@@ -101,131 +78,163 @@ get_sorting_algos(std::random_access_iterator_tag)
 			&(kerbal::algorithm::shell_sort<Iterator, Compare>),
 			&(kerbal::algorithm::stable_sort<Iterator, Compare>),
 			&(kerbal::algorithm::sort<Iterator, Compare>)
-	);
+		);
 
-	return v;
-}
+		return v;
+	}
 
-template <typename Iterator, typename Compare>
-kerbal::container::vector<void (*)(Iterator, Iterator, Compare)>
-get_sorting_algos()
-{
-	return get_sorting_algos<Iterator, Compare>(typename kerbal::iterator::iterator_traits<Iterator>::iterator_category());
-}
+	template <typename Iterator, typename Compare>
+	kerbal::container::vector<void (*)(Iterator, Iterator, Compare)>
+	get_sorting_algos(std::random_access_iterator_tag)
+	{
+		typedef void (* sorting_algo_t)(Iterator, Iterator, Compare);
+		static kerbal::container::vector<sorting_algo_t> v = KERBAL_ILIST(
+			&(kerbal::algorithm::bubble_sort<Iterator, Compare>),
+			&(kerbal::algorithm::flag_bubble_sort<Iterator, Compare>),
+			&(kerbal::algorithm::heap_sort<Iterator, Compare>),
+			&(kerbal::algorithm::insertion_sort<Iterator, Compare>),
+			&(kerbal::algorithm::directly_insertion_sort<Iterator, Compare>),
+			&(kerbal::algorithm::intro_sort<Iterator, Compare>),
+			&(kerbal::algorithm::nonrecursive_intro_sort<Iterator, Compare>),
+			&(kerbal::algorithm::merge_sort<Iterator, Compare>),
+			&(kerbal::algorithm::inplace_merge_sort<Iterator, Compare>),
+			&(kerbal::algorithm::quick_sort<Iterator, Compare>),
+			&(kerbal::algorithm::nonrecursive_qsort<Iterator, Compare>),
+			&(kerbal::algorithm::selection_sort<Iterator, Compare>),
+			&(kerbal::algorithm::shell_sort<Iterator, Compare>),
+			&(kerbal::algorithm::stable_sort<Iterator, Compare>),
+			&(kerbal::algorithm::sort<Iterator, Compare>)
+		);
+
+		return v;
+	}
+
+	template <typename Iterator, typename Compare>
+	kerbal::container::vector<void (*)(Iterator, Iterator, Compare)>
+	get_sorting_algos()
+	{
+		return get_sorting_algos<Iterator, Compare>(typename kerbal::iterator::iterator_traits<Iterator>::iterator_category());
+	}
 
 
-template <typename T>
-kerbal::container::vector<T> get_random(size_t N, kerbal::random::mt19937 & eg)
-{
-	kerbal::container::vector<T> v(N);
-	eg.generate(v.begin(), v.end());
-	return v;
-}
+	template <typename T>
+	kerbal::container::vector<T> get_random(size_t N, kerbal::random::mt19937 & eg)
+	{
+		kerbal::container::vector<T> v(N);
+		eg.generate(v.begin(), v.end());
+		return v;
+	}
 
-kerbal::container::vector<std::string> get_random_string(size_t N, kerbal::random::mt19937 & eg)
-{
-	kerbal::container::vector<std::string> v(N); {
-		for (size_t i = 0; i < N; ++i) {
-			std::string s(100, ' ');
-			for (int j = 0; j < 100; ++j) {
-				s[j] = 'A' + (eg() % 26);
+	kerbal::container::vector<std::string> get_random_string(size_t N, kerbal::random::mt19937 & eg)
+	{
+		kerbal::container::vector<std::string> v(N); {
+			for (size_t i = 0; i < N; ++i) {
+				std::string s(100, ' ');
+				for (int j = 0; j < 100; ++j) {
+					s[j] = 'A' + (eg() % 26);
+				}
+				v[i] = kerbal::compatibility::to_xvalue(s);
 			}
-			v[i] = kerbal::compatibility::to_xvalue(s);
 		}
+		return v;
 	}
-	return v;
-}
 
-template <typename T, typename Compare>
-kerbal::container::vector<T> get_sorted(size_t N, kerbal::random::mt19937 & eg)
-{
-	kerbal::container::vector<T> v(get_random<T>(N, eg));
-	std::sort(v.begin(), v.end(), Compare());
-	return v;
-}
-
-template <typename T, typename Compare>
-kerbal::container::vector<T> get_reverse(size_t N, kerbal::random::mt19937 & eg)
-{
-	kerbal::container::vector<T> v(get_sorted<T, Compare>(N, eg));
-	std::reverse(v.begin(), v.end());
-	return v;
-}
-
-template <typename T>
-kerbal::container::vector<T> get_few_unique(size_t N, kerbal::random::mt19937 & eg)
-{
-	kerbal::container::vector<T> v(N);
-	for (size_t i = 0; i < N; ++i) {
-		v[i] = eg() % 100;
+	template <typename T, typename Compare>
+	kerbal::container::vector<T> get_sorted(size_t N, kerbal::random::mt19937 & eg)
+	{
+		kerbal::container::vector<T> v(get_random<T>(N, eg));
+		std::sort(v.begin(), v.end(), Compare());
+		return v;
 	}
-	return v;
-}
+
+	template <typename T, typename Compare>
+	kerbal::container::vector<T> get_reverse(size_t N, kerbal::random::mt19937 & eg)
+	{
+		kerbal::container::vector<T> v(get_sorted<T, Compare>(N, eg));
+		std::reverse(v.begin(), v.end());
+		return v;
+	}
+
+	template <typename T>
+	kerbal::container::vector<T> get_few_unique(size_t N, kerbal::random::mt19937 & eg)
+	{
+		kerbal::container::vector<T> v(N);
+		for (size_t i = 0; i < N; ++i) {
+			v[i] = eg() % 100;
+		}
+		return v;
+	}
 
 
-template <typename T>
-struct generators_factory
-{
-		typedef T value_type;
-		typedef kerbal::container::vector<value_type>(*generator_t)(size_t, kerbal::random::mt19937 &);
-		typedef kerbal::container::vector<generator_t> generator_list_t;
+	template <typename T>
+	struct generators_factory
+	{
+			typedef T value_type;
 
-		static generator_list_t const generators;
-};
+			typedef kerbal::container::vector<value_type>(* generator_t)(size_t, kerbal::random::mt19937 &);
 
-template <typename T>
-typename generators_factory<T>::generator_list_t const
-generators_factory<T>::generators = KERBAL_ILIST(
+			typedef kerbal::container::vector<generator_t> generator_list_t;
+
+			static generator_list_t const generators;
+	};
+
+	template <typename T>
+	typename generators_factory<T>::generator_list_t const
+		generators_factory<T>::generators = KERBAL_ILIST(
 		&(get_random<value_type>),
 		&(get_sorted<value_type, kerbal::compare::less<> >),
 		&(get_reverse<value_type, kerbal::compare::less<> >),
 		&(get_few_unique<value_type>)
-);
+	);
 
 
-template <>
-struct generators_factory<std::string>
-{
-		typedef std::string value_type;
-		typedef kerbal::container::vector<value_type>(*generator_t)(size_t, kerbal::random::mt19937 &);
-		typedef kerbal::container::vector<generator_t> generator_list_t;
+	template <>
+	struct generators_factory<std::string>
+	{
+			typedef std::string value_type;
 
-		static generator_list_t const generators;
-};
+			typedef kerbal::container::vector<value_type>(* generator_t)(size_t, kerbal::random::mt19937 &);
 
-generators_factory<std::string>::generator_list_t const
-generators_factory<std::string>::generators = KERBAL_ILIST(
+			typedef kerbal::container::vector<generator_t> generator_list_t;
+
+			static generator_list_t const generators;
+	};
+
+	generators_factory<std::string>::generator_list_t const
+		generators_factory<std::string>::generators = KERBAL_ILIST(
 		&(get_random_string)
-);
+	);
 
-struct customized_compare
-{
-		static bool is_even(int x)
-		{
-			if (x < 0) {
-				x = -x;
+	struct customized_compare
+	{
+			static bool is_even(int x)
+			{
+				if (x < 0) {
+					x = -x;
+				}
+				return x % 2 == 0;
 			}
-			return x % 2 == 0;
-		}
 
-		static bool is_odd(int x)
-		{
-			return !is_even(x);
-		}
-
-		bool operator()(int x, int y) const
-		{
-			if (is_odd(x) && is_odd(y)) {
-				return x < y;
-			} else if (is_even(x) && is_even(y)) {
-				return x > y;
-			} else if (is_odd(x) && is_even(y)) {
-				return true;
-			} else {
-				return false;
+			static bool is_odd(int x)
+			{
+				return !is_even(x);
 			}
-		}
-};
+
+			bool operator()(int x, int y) const
+			{
+				if (is_odd(x) && is_odd(y)) {
+					return x < y;
+				} else if (is_even(x) && is_even(y)) {
+					return x > y;
+				} else if (is_odd(x) && is_even(y)) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+	};
+
+}
 
 
 template <typename T, typename Compare, typename Container>

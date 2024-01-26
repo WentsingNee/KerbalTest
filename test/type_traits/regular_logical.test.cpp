@@ -23,13 +23,18 @@
 #endif
 
 
-struct T: kerbal::type_traits::true_type
+namespace
 {
-};
 
-struct F: kerbal::type_traits::false_type
-{
-};
+	struct T : kerbal::type_traits::true_type
+	{
+	};
+
+	struct F : kerbal::type_traits::false_type
+	{
+	};
+
+}
 
 
 KERBAL_TEST_CASE(test_negation, "test negation")

@@ -15,22 +15,28 @@
 #include <kerbal/compatibility/method_overload_tag.hpp>
 
 
-typedef char (*CHAR1) [1];
-typedef char (*CHAR2) [2];
-typedef char (*CHAR3) [3];
-typedef char (*CHAR4) [4];
-
-struct Foo
+namespace
 {
-		CHAR1 f() KERBAL_REFERENCE_OVERLOAD_TAG;
-		CHAR2 f() KERBAL_CONST_REFERENCE_OVERLOAD_TAG;
+
+	typedef char (*CHAR1) [1];
+	typedef char (*CHAR2) [2];
+	typedef char (*CHAR3) [3];
+	typedef char (*CHAR4) [4];
+
+	struct Foo
+	{
+			CHAR1 f() KERBAL_REFERENCE_OVERLOAD_TAG;
+			CHAR2 f() KERBAL_CONST_REFERENCE_OVERLOAD_TAG;
 
 #if __cplusplus >= 201103L
-		CHAR3 f() &&;
-		CHAR4 f() const &&;
+			CHAR3 f() &&;
+			CHAR4 f() const &&;
 #endif
 
-};
+	};
+
+}
+
 
 namespace ku = kerbal::utility;
 

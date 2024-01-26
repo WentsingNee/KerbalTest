@@ -20,45 +20,51 @@
 #include <cstddef>
 
 
-struct FooNoTypedef
+namespace
 {
-};
 
-struct FooHasTypedef
-{
-		typedef int type;
-};
+	struct FooNoTypedef
+	{
+	};
 
-struct FooPrivateTypedef
-{
-	private:
-		typedef int type;
-};
+	struct FooHasTypedef
+	{
+			typedef int type;
+	};
+
+	struct FooPrivateTypedef
+	{
+		private:
+			typedef int type;
+	};
 
 
-template <typename T>
-class could_use_typedef_helper
-{
-		template <typename T2>
-		static kerbal::type_traits::no_type test(...);
+	template <typename T>
+	class could_use_typedef_helper
+	{
+			template <typename T2>
+			static kerbal::type_traits::no_type test(...);
 
-		template <typename T2>
-		static kerbal::type_traits::yes_type test(char (*)[sizeof(
+			template <typename T2>
+			static kerbal::type_traits::yes_type test(char (*)[sizeof(
 				kerbal::utility::declval<typename T2::type>(),
 				0
-		)]);
+			)]);
 
-	public:
-		typedef kerbal::type_traits::bool_constant<
+		public:
+			typedef kerbal::type_traits::bool_constant<
 				sizeof(test<T>(NULL)) == sizeof(kerbal::type_traits::yes_type)
-		> type;
-};
+			> type;
+	};
 
-template <typename T>
-struct could_use_typedef :
+	template <typename T>
+	struct could_use_typedef :
 		could_use_typedef_helper<T>::type
-{
-};
+	{
+	};
+
+}
+
 
 KERBAL_TEST_CASE(test_yes_no_type_could_use_typedef, "test yes_no_type could use typedef")
 {
@@ -78,64 +84,71 @@ KERBAL_TEST_CASE(test_yes_no_type_could_use_typedef, "test yes_no_type could use
 }
 
 
-struct FooNoField
+
+namespace
 {
-};
 
-struct FooHasField
-{
-		int data;
-};
+	struct FooNoField
+	{
+	};
 
-struct FooPrivateField
-{
-	private:
-		int data;
+	struct FooHasField
+	{
+			int data;
+	};
 
-	public:
-		// use private field to avoid warning
-		void f()
-		{
-			kerbal::utility::ignore_unused(data);
-		}
-};
+	struct FooPrivateField
+	{
+		private:
+			int data;
+
+		public:
+			// use private field to avoid warning
+			void f()
+			{
+				kerbal::utility::ignore_unused(data);
+			}
+	};
 
 
-template <typename T>
-class could_use_field_helper
-{
-		template <typename T2>
-		static kerbal::type_traits::no_type test(...);
+	template <typename T>
+	class could_use_field_helper
+	{
+			template <typename T2>
+			static kerbal::type_traits::no_type test(...);
 
-#if KERBAL_COMPILER_ID != KERBAL_COMPILER_ID_MSVC // could not handle private member under msvc
+#	if KERBAL_COMPILER_ID != KERBAL_COMPILER_ID_MSVC // could not handle private member under msvc
 
-		template <typename T2>
-		static kerbal::type_traits::yes_type test(char (*)[sizeof(
+			template <typename T2>
+			static kerbal::type_traits::yes_type test(char (*)[sizeof(
 				kerbal::utility::declval<T2&>().data,
 				0
-		)]);
+			)]);
 
-#else
+#	else
 
-		template <typename T2>
-		static kerbal::type_traits::yes_type test(char *, decltype(
+			template <typename T2>
+			static kerbal::type_traits::yes_type test(char *, decltype(
 				kerbal::utility::declval<T2&>().data,
 				0
-		) = 0);
+			) = 0);
 
-#endif
+#	endif
 
-	public:
-		typedef kerbal::type_traits::bool_constant<
+		public:
+			typedef kerbal::type_traits::bool_constant<
 				sizeof(test<T>(NULL)) == sizeof(kerbal::type_traits::yes_type)
-		> type;
-};
+			> type;
+	};
 
-template <typename T>
-struct could_use_field :
-		could_use_field_helper<T>::type
-{
-};
+	template <typename T>
+	struct could_use_field :
+			could_use_field_helper<T>::type
+	{
+	};
+
+}
+
 
 KERBAL_TEST_CASE(test_yes_no_type_could_use_field, "test yes_no_type could use field")
 {
@@ -155,57 +168,63 @@ KERBAL_TEST_CASE(test_yes_no_type_could_use_field, "test yes_no_type could use f
 }
 
 
-struct FooNoMethod
+namespace
 {
-};
 
-struct FooHasMethod
-{
-		void f();
-};
+	struct FooNoMethod
+	{
+	};
 
-struct FooPrivateMethod
-{
-	private:
-		void f();
-};
+	struct FooHasMethod
+	{
+			void f();
+	};
+
+	struct FooPrivateMethod
+	{
+		private:
+			void f();
+	};
 
 
-template <typename T>
-class could_use_method_helper
-{
-		template <typename T2>
-		static kerbal::type_traits::no_type test(...);
+	template <typename T>
+	class could_use_method_helper
+	{
+			template <typename T2>
+			static kerbal::type_traits::no_type test(...);
 
-#if KERBAL_COMPILER_ID != KERBAL_COMPILER_ID_MSVC // could not handle private member under msvc
+#	if KERBAL_COMPILER_ID != KERBAL_COMPILER_ID_MSVC // could not handle private member under msvc
 
-		template <typename T2>
-		static kerbal::type_traits::yes_type test(char (*)[sizeof(
+			template <typename T2>
+			static kerbal::type_traits::yes_type test(char (*)[sizeof(
 				kerbal::utility::declval<T2&>().f(),
 				0
-		)]);
+			)]);
 
-#else
+#	else
 
-		template <typename T2>
-		static kerbal::type_traits::yes_type test(char *, decltype(
+			template <typename T2>
+			static kerbal::type_traits::yes_type test(char *, decltype(
 				kerbal::utility::declval<T2&>().f(),
 				0
-		) = 0);
+			) = 0);
 
-#endif
+#	endif
 
-	public:
-		typedef kerbal::type_traits::bool_constant<
+		public:
+			typedef kerbal::type_traits::bool_constant<
 				sizeof(test<T>(NULL)) == sizeof(kerbal::type_traits::yes_type)
-		> type;
-};
+			> type;
+	};
 
-template <typename T>
-struct could_use_method :
+	template <typename T>
+	struct could_use_method :
 		could_use_method_helper<T>::type
-{
-};
+	{
+	};
+
+}
+
 
 KERBAL_TEST_CASE(test_yes_no_type_could_use_method, "test yes_no_type could use method")
 {
