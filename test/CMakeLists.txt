@@ -28,12 +28,17 @@ add_custom_target(
 )
 
 
-function(add_ktest_utest_target_impl target target_src_file)
+function(add_ktest_utest_target target target_src_file)
     add_executable(${target} ${target_src_file})
     set_target_properties(${target}
             PROPERTIES ktest_category "utest"
     )
     add_kerbal_parent_target(${target})
+    set_property(
+            GLOBAL
+            APPEND
+            PROPERTY KTEST_UTEST_TARGETS_MANIFEST "${target}"
+    )
     ktest_basic_configuration(${target})
     set_target_properties(${target}
             PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/targets
@@ -93,11 +98,6 @@ function(add_ktest_utest_target_impl target target_src_file)
     add_kerbal_parent_target(${run_utest_target_name})
 endfunction()
 
-macro(add_ktest_utest_target target target_src_file)
-    add_ktest_utest_target_impl(${target} ${target_src_file})
-    list(APPEND utest_targets ${target})
-endmacro()
-
 
 function(add_ktest_utest_target_wih_ie target target_src_file ie)
     if (NOT KERBAL_SUPPORT_${ie})
@@ -127,7 +127,6 @@ foreach (file ${test_src_files})
     if (${KTEST_ENABLE_PRECOMPILE_HEADER})
         target_precompile_headers(${target} REUSE_FROM ktest_precompile_header)
     endif ()
-    set(utest_targets ${utest_targets} PARENT_SCOPE)
 endforeach ()
 
 message("\n")
@@ -148,7 +147,12 @@ endforeach()
 
 
 set(utest_targets_count 0)
-foreach (target ${utest_targets})
+get_property(
+        ktest_utest_targets_manifest
+        GLOBAL
+        PROPERTY KTEST_UTEST_TARGETS_MANIFEST
+)
+foreach (target ${ktest_utest_targets_manifest})
     message(VERBOSE "utest-target ${utest_targets_count}: ${target}")
     math(EXPR utest_targets_count "${utest_targets_count} + 1")
 endforeach ()

@@ -45,5 +45,3 @@ foreach (e ${try_test_guess_list})
     string(TOUPPER ${e} E)
     target_compile_definitions(utest.type_traits.${e}_guess PRIVATE KERBAL_HAS_${E}_SUPPORT=0)
 endforeach ()
-
-set(test_targets ${test_targets} PARENT_SCOPE)

@@ -22,5 +22,3 @@ set(
 foreach (ie ${kerbal_random_mt_supported_IEs})
     add_ktest_utest_target_wih_ie(utest.random.mersenne_twister_engine_${ie} ./mersenne_twister_engine.test.cpp ${ie})
 endforeach ()
-
-set(test_targets ${test_targets} PARENT_SCOPE)
