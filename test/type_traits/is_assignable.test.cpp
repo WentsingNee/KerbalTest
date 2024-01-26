@@ -27,26 +27,31 @@ KERBAL_TEST_CASE(test_has_is_assignable_support, "test has is_assignable support
 
 
 
-struct Foo
+namespace
 {
-};
+
+	struct Foo
+	{
+	};
 
 
-struct PrivateCopyAssignable
-{
-	private:
-		PrivateCopyAssignable& operator=(const PrivateCopyAssignable &);
-};
+	struct PrivateCopyAssignable
+	{
+		private:
+			PrivateCopyAssignable& operator=(const PrivateCopyAssignable &);
+	};
 
 
 #if __cplusplus >= 201103L
 
-class DeleteCopyAssignable
-{
-		DeleteCopyAssignable& operator=(const DeleteCopyAssignable &) = delete;
-};
+	class DeleteCopyAssignable
+	{
+			DeleteCopyAssignable& operator=(const DeleteCopyAssignable &) = delete;
+	};
 
 #endif
+
+}
 
 
 #if KERBAL_HAS_IS_ASSIGNABLE_SUPPORT

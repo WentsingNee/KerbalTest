@@ -172,35 +172,41 @@ KERBAL_TEMPLATE_TEST_CASE_INST(test_list_n_construct, "test list::list(n) mono a
 
 #if KERBAL_HAS_EXCEPTIONS_SUPPORT
 
-struct list_n_value_construct_except_helper:
-		kerbal::test::object_count<list_n_value_construct_except_helper>
+namespace
 {
-		typedef kerbal::test::object_count<list_n_value_construct_except_helper> object_count;
 
-		static void goo()
-		{
-			std::cout << object_count::get_count() << std::endl;
-			if (object_count::get_count() == 5) {
-				throw int(0);
+	struct list_n_value_construct_except_helper :
+		kerbal::test::object_count<list_n_value_construct_except_helper>
+	{
+			typedef kerbal::test::object_count<list_n_value_construct_except_helper> object_count;
+
+			static void goo()
+			{
+				std::cout << object_count::get_count() << std::endl;
+				if (object_count::get_count() == 5) {
+					throw int(0);
+				}
 			}
-		}
 
-		list_n_value_construct_except_helper()
-		{
-			goo();
-		}
+			list_n_value_construct_except_helper()
+			{
+				goo();
+			}
 
-		list_n_value_construct_except_helper(const list_n_value_construct_except_helper & src)
-				: object_count(static_cast<const object_count&>(src))
-		{
-			goo();
-		}
+			list_n_value_construct_except_helper(const list_n_value_construct_except_helper & src) :
+				object_count(static_cast<const object_count &>(src))
+			{
+				goo();
+			}
 
-		~list_n_value_construct_except_helper()
-		{
-			std::cout << "~" << object_count::get_count() << std::endl;
-		}
-};
+			~list_n_value_construct_except_helper()
+			{
+				std::cout << "~" << object_count::get_count() << std::endl;
+			}
+	};
+
+}
+
 
 template <typename Allocator>
 KERBAL_TEMPLATE_TEST_CASE(test_list_n_value_construct_exception, "test list::list(n, val) exception occurred")
@@ -837,28 +843,34 @@ KERBAL_TEST_CASE(test_list_clear, "test list::clear")
 }
 
 
+namespace
+{
+
 #if KERBAL_HAS_EXCEPTIONS_SUPPORT
 
-struct test_list_merge_may_throw_cmp
-{
-		bool operator()(int x, int y)
-		{
-			if (x > 65536) {
-				throw std::runtime_error("error");
+	struct test_list_merge_may_throw_cmp
+	{
+			bool operator()(int x, int y)
+			{
+				if (x > 65536) {
+					throw std::runtime_error("error");
+				}
+				return x < y;
 			}
-			return x < y;
-		}
-};
+	};
 
 #endif
 
-struct test_list_merge_nothrow_cmp
-{
-		bool operator()(int x, int y) KERBAL_NOEXCEPT
-		{
-			return x < y;
-		}
-};
+	struct test_list_merge_nothrow_cmp
+	{
+			bool operator()(int x, int y) KERBAL_NOEXCEPT
+			{
+				return x < y;
+			}
+	};
+
+}
+
 
 template <typename Comp>
 KERBAL_TEMPLATE_TEST_CASE(test_list_merge, "test list::merge")
@@ -924,23 +936,28 @@ KERBAL_TEMPLATE_TEST_CASE_INST(test_list_merge, "test list::merge(nothrow)", tes
 
 
 
-template <typename T, typename BinaryPredict>
-struct test_list_merge_is_stable_sort_helper
+namespace
 {
-		BinaryPredict cmp;
 
-		KERBAL_CONSTEXPR
-		test_list_merge_is_stable_sort_helper(const BinaryPredict & cmp) KERBAL_NOEXCEPT :
+	template <typename T, typename BinaryPredict>
+	struct test_list_merge_is_stable_sort_helper
+	{
+			BinaryPredict cmp;
+
+			KERBAL_CONSTEXPR
+			test_list_merge_is_stable_sort_helper(const BinaryPredict & cmp) KERBAL_NOEXCEPT :
 				cmp(cmp)
-		{
-		}
+			{
+			}
 
-		KERBAL_CONSTEXPR
-		bool operator()(const T * a, const T * b) const KERBAL_NOEXCEPT
-		{
-			return cmp(*a, *b);
-		}
-};
+			KERBAL_CONSTEXPR
+			bool operator()(const T * a, const T * b) const KERBAL_NOEXCEPT
+			{
+				return cmp(*a, *b);
+			}
+	};
+
+}
 
 
 KERBAL_TEST_CASE(test_list_merge_is_stable, "test list::merge is_stable")
@@ -1028,16 +1045,22 @@ KERBAL_TEST_CASE(test_list_merge_is_stable, "test list::merge is_stable")
 
 #if KERBAL_HAS_EXCEPTIONS_SUPPORT && KERBAL_ARCHITECTURE != KERBAL_ARCHITECTURE_AARCH64
 
-struct list_merge_throwable_compare
+namespace
 {
-		bool operator()(int lhs, int rhs)
-		{
-			if (lhs == 4 || rhs == 4) {
-				throw int(0);
+
+	struct list_merge_throwable_compare
+	{
+			bool operator()(int lhs, int rhs)
+			{
+				if (lhs == 4 || rhs == 4) {
+					throw int(0);
+				}
+				return lhs < rhs;
 			}
-			return lhs < rhs;
-		}
-};
+	};
+
+}
+
 
 KERBAL_TEST_CASE(test_list_merge_exception_occurred, "test list::merge exception occurred") // aarch64 failed in this case
 {
@@ -1079,14 +1102,19 @@ KERBAL_TEST_CASE(test_list_merge_exception_occurred, "test list::merge exception
 #endif // KERBAL_HAS_EXCEPTIONS_SUPPORT && KERBAL_ARCHITECTURE != KERBAL_ARCHITECTURE_AARCH64
 
 
-struct disable_list_radix_sort_cmp
+namespace
 {
-		KERBAL_CONSTEXPR
-		bool operator()(int x, int y) const KERBAL_NOEXCEPT
-		{
-			return x < y;
-		}
-};
+
+	struct disable_list_radix_sort_cmp
+	{
+			KERBAL_CONSTEXPR
+			bool operator()(int x, int y) const KERBAL_NOEXCEPT
+			{
+				return x < y;
+			}
+	};
+
+}
 
 template <typename Allocator>
 KERBAL_TEMPLATE_TEST_CASE(test_list_sort, "test list::sort")
@@ -1176,23 +1204,29 @@ KERBAL_TEMPLATE_TEST_CASE_INST(test_list_sort, "test list::sort fsn allocator", 
 KERBAL_TEMPLATE_TEST_CASE_INST(test_list_sort, "test list::sort mono allocator", kerbal::memory::monotonic_allocator<int> );
 
 
-template <typename T, typename BinaryPredict>
-struct list_radix_sort_is_stable_sort_helper
+namespace
 {
-		BinaryPredict cmp;
 
-		KERBAL_CONSTEXPR
-		list_radix_sort_is_stable_sort_helper(const BinaryPredict & cmp) KERBAL_NOEXCEPT :
+	template <typename T, typename BinaryPredict>
+	struct list_radix_sort_is_stable_sort_helper
+	{
+			BinaryPredict cmp;
+
+			KERBAL_CONSTEXPR
+			list_radix_sort_is_stable_sort_helper(const BinaryPredict & cmp) KERBAL_NOEXCEPT :
 				cmp(cmp)
-		{
-		}
+			{
+			}
 
-		KERBAL_CONSTEXPR
-		bool operator()(const T * a, const T * b) const KERBAL_NOEXCEPT
-		{
-			return cmp(*a, *b);
-		}
-};
+			KERBAL_CONSTEXPR
+			bool operator()(const T * a, const T * b) const KERBAL_NOEXCEPT
+			{
+				return cmp(*a, *b);
+			}
+	};
+
+}
+
 
 template <typename T, typename Order>
 KERBAL_TEMPLATE_TEST_CASE(test_list_radix_sort_is_stable, "test list::radix_sort is stable")
@@ -1309,31 +1343,36 @@ KERBAL_TEST_CASE(test_pmr_list, "test pmr::list")
 
 #if __cplusplus >= 201709L
 
-KERBAL_CONSTEXPR20
-int t(int n)
+namespace
 {
-	kerbal::container::list<int> l = {0, 1, 2};
-	l.clear();
 
-	l = {1, 2, 3};
-	l.clear();
+	KERBAL_CONSTEXPR20
+	int t(int n)
+	{
+		kerbal::container::list<int> l = {0, 1, 2};
+		l.clear();
 
-	for (int i = 0; i < n; ++i) {
-		l.push_back(i);
+		l = {1, 2, 3};
+		l.clear();
+
+		for (int i = 0; i < n; ++i) {
+			l.push_back(i);
+		}
+
+		for (int i = 0; i < n; ++i) {
+			l.push_front(i);
+		}
+
+		l.reverse();
+		l.sort();
+
+		int r = 0;
+		for (auto e : l) {
+			r += e;
+		}
+		return r;
 	}
 
-	for (int i = 0; i < n; ++i) {
-		l.push_front(i);
-	}
-
-	l.reverse();
-	l.sort();
-
-	int r = 0;
-	for (auto e : l) {
-		r += e;
-	}
-	return r;
 }
 
 KERBAL_TEST_CASE(test_list_under_constexpr_context, "test list under constexpr context")

@@ -18,25 +18,31 @@
 #include <cstdio>
 
 
-KERBAL_CONSTEXPR14
-static const char * cxx_stdlib()
+namespace
 {
 
-#ifndef KERBAL_CXX_STDLIB
-	return "not defined";
-#elif KERBAL_CXX_STDLIB == KERBAL_CXX_STDLIB_UNKNOWN
-	return "unknown";
-#elif KERBAL_CXX_STDLIB == KERBAL_CXX_STDLIB_LIBSTDCXX
-	return "libstdc++";
-#elif KERBAL_CXX_STDLIB == KERBAL_CXX_STDLIB_LIBCXX
-	return "libc++";
-#elif KERBAL_CXX_STDLIB == KERBAL_CXX_STDLIB_MSVC
-	return "MSVC STL";
-#else
-	return "else";
-#endif
+	KERBAL_CONSTEXPR14
+	const char * cxx_stdlib()
+	{
+
+#	ifndef KERBAL_CXX_STDLIB
+		return "not defined";
+#	elif KERBAL_CXX_STDLIB == KERBAL_CXX_STDLIB_UNKNOWN
+		return "unknown";
+#	elif KERBAL_CXX_STDLIB == KERBAL_CXX_STDLIB_LIBSTDCXX
+		return "libstdc++";
+#	elif KERBAL_CXX_STDLIB == KERBAL_CXX_STDLIB_LIBCXX
+		return "libc++";
+#	elif KERBAL_CXX_STDLIB == KERBAL_CXX_STDLIB_MSVC
+		return "MSVC STL";
+#	else
+		return "else";
+#	endif
+
+	}
 
 }
+
 
 KERBAL_TEST_CASE(print_cxx_stdlib, "print c++ stdlib")
 {

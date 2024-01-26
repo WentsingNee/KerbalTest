@@ -27,39 +27,44 @@
 #endif
 
 
-struct Foo
+namespace
 {
-		int x;
 
-		void f()
-		{
-		}
+	struct Foo
+	{
+			int x;
 
-		void cf() const
-		{
-		}
+			void f()
+			{
+			}
+
+			void cf() const
+			{
+			}
 
 #	if __cplusplus >= 201103L
 
-		void lref_f() &
-		{
-		}
+			void lref_f() &
+			{
+			}
 
-		void clref_f() const &
-		{
-		}
+			void clref_f() const &
+			{
+			}
 
-		void rref_f() &&
-		{
-		}
+			void rref_f() &&
+			{
+			}
 
-		void crref_f() const &&
-		{
-		}
+			void crref_f() const &&
+			{
+			}
 
 #	endif
 
-};
+	};
+
+}
 
 
 KERBAL_TEST_CASE(test_is_member_pointer, "test is_member_pointer")

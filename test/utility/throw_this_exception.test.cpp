@@ -15,9 +15,14 @@
 #include <kerbal/config/exceptions.hpp>
 
 
-class MyException: public kerbal::utility::throw_this_exception_helper<MyException>
+namespace
 {
-};
+
+	class MyException : public kerbal::utility::throw_this_exception_helper<MyException>
+	{
+	};
+
+}
 
 
 #if KERBAL_HAS_EXCEPTIONS_SUPPORT

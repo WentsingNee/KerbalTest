@@ -26,33 +26,38 @@ KERBAL_TEST_CASE(test_has_is_nothrow_default_constructible_support, "test has is
 }
 
 
-struct NothrowDefaultConstructible
+namespace
 {
-		NothrowDefaultConstructible() KERBAL_NOEXCEPT;
-};
+
+	struct NothrowDefaultConstructible
+	{
+			NothrowDefaultConstructible() KERBAL_NOEXCEPT;
+	};
 
 
-struct NonNothrowDefaultConstructible
-{
-		NonNothrowDefaultConstructible();
-};
+	struct NonNothrowDefaultConstructible
+	{
+			NonNothrowDefaultConstructible();
+	};
 
 
-struct PrivateDefaultConstructible
-{
-	private:
-		PrivateDefaultConstructible();
-};
+	struct PrivateDefaultConstructible
+	{
+		private:
+			PrivateDefaultConstructible();
+	};
 
 
 #if __cplusplus >= 201103L
 
-class DeleteDefaultConstructible
-{
-		DeleteDefaultConstructible() = delete;
-};
+	class DeleteDefaultConstructible
+	{
+			DeleteDefaultConstructible() = delete;
+	};
 
 #endif
+
+}
 
 
 #if KERBAL_HAS_IS_NOTHROW_DEFAULT_CONSTRUCTIBLE_SUPPORT

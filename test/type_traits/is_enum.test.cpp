@@ -35,18 +35,22 @@ KERBAL_TEST_CASE(test_has_is_enum_support, "test has is_enum support")
 }
 
 
-enum E
+namespace
 {
-};
+
+	enum E
+	{
+	};
 
 #if __cplusplus >= 201103L
 
-enum class SE
-{
-};
+	enum class SE
+	{
+	};
 
 #endif // if __cplusplus >= 201103L
 
+}
 
 
 #if KERBAL_HAS_IS_ENUM_SUPPORT

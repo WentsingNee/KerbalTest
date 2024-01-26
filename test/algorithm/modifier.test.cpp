@@ -265,14 +265,20 @@ KERBAL_TEMPLATE_TEST_CASE_INST(test_inplace_merge, "test inplace_merge(Fwd)", ke
 
 
 
-struct test_inplace_merge_is_stable_cmp
+namespace
 {
-		KERBAL_CONSTEXPR14
-		bool operator()(const std::pair<int, int> & a, const std::pair<int, int> & b) KERBAL_NOEXCEPT
-		{
-			return a.first < b.first;
-		}
-};
+
+	struct test_inplace_merge_is_stable_cmp
+	{
+			KERBAL_CONSTEXPR14
+			bool operator()(const std::pair<int, int> & a, const std::pair<int, int> & b) KERBAL_NOEXCEPT
+			{
+				return a.first < b.first;
+			}
+	};
+
+}
+
 
 template <typename Container>
 KERBAL_TEMPLATE_TEST_CASE(test_inplace_merge_is_stable, "test inplace_merge is stable")
@@ -379,12 +385,17 @@ KERBAL_TEMPLATE_TEST_CASE_INST(test_unique, "test unique (Bid)", kerbal::contain
 KERBAL_TEMPLATE_TEST_CASE_INST(test_unique, "test unique (Fwd)", kerbal::container::forward_list<int>)
 
 
-KERBAL_CONSTEXPR14
-bool abs_equal(int a, int b) KERBAL_NOEXCEPT
+namespace
 {
-	int abs_a = a < 0 ? -a : a;
-	int abs_b = b < 0 ? -b : b;
-	return abs_a == abs_b;
+
+	KERBAL_CONSTEXPR14
+	bool abs_equal(int a, int b) KERBAL_NOEXCEPT
+	{
+		int abs_a = a < 0 ? -a : a;
+		int abs_b = b < 0 ? -b : b;
+		return abs_a == abs_b;
+	}
+
 }
 
 KERBAL_TEST_CASE(test_unique_with_predict, "test unique with predict")

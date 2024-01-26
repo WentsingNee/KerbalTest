@@ -23,30 +23,36 @@
 namespace kc = kerbal::container;
 
 
-struct Int
+namespace
 {
-	int x;
 
-	Int() : x(0) {}
-	Int(int x) : x(x) {}
-	~Int() {x = -1;}
-
-	friend std::ostream& operator<<(std::ostream & out, const Int & val)
+	struct Int
 	{
-		return out << val.x;
+		int x;
+
+		Int() : x(0) {}
+		Int(int x) : x(x) {}
+		~Int() {x = -1;}
+
+		friend std::ostream& operator<<(std::ostream & out, const Int & val)
+		{
+			return out << val.x;
+		}
+
+	};
+
+	template <typename Iterator>
+	void print(Iterator begin, Iterator end)
+	{
+		while (begin != end) {
+			std::cout << begin->x << "   ";
+			begin++;
+		}
+		std::cout << std::endl;
 	}
 
-};
-
-template <typename Iterator>
-void print(Iterator begin, Iterator end)
-{
-	while (begin != end) {
-		std::cout << begin->x << "   ";
-		begin++;
-	}
-	std::cout << std::endl;
 }
+
 
 template <typename T>
 KERBAL_TEMPLATE_TEST_CASE(test_static_vector_default_construct, "test static_vector::static_vector()")
@@ -313,13 +319,19 @@ KERBAL_TEST_CASE(test_static_vector_str_aa_emplace_back, "test static_vector<str
 
 #include <kerbal/utility/integer_sequence.hpp>
 
-template <int ... Ints>
-KERBAL_CONSTEXPR14
-kc::static_vector<int, 10>
-get_sequence(kerbal::utility::integer_sequence<int, Ints...>)
+namespace
 {
-	return kc::static_vector<int, 10>{Ints...};
+
+	template <int ... Ints>
+	KERBAL_CONSTEXPR14
+	kc::static_vector<int, 10>
+	get_sequence(kerbal::utility::integer_sequence<int, Ints...>)
+	{
+		return kc::static_vector<int, 10>{Ints...};
+	}
+
 }
+
 
 KERBAL_TEST_CASE(test_static_vector_with_integer_sequence, "test static_vector with integer_sequence")
 {

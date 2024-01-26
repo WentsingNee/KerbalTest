@@ -20,36 +20,41 @@
 #include <iostream>
 
 
-template <std::size_t N, typename BlockType, typename Engine>
-void random_init(kerbal::bitset::static_bitset<N, BlockType> & bs, Engine & eg)
+namespace
 {
-	for (std::size_t i = 0; i < N; ++i) {
-		bs.set(i, static_cast<bool>(eg() % 2));
-	}
-}
 
-
-template <std::size_t N, typename BlockType>
-struct print_bs_f
-{
-		typedef kerbal::bitset::static_bitset<N, BlockType> static_bitset;
-
-		void operator()(std::size_t i, bool b) const
-		{
-			std::cout << b;
-			if (i % static_bitset::BITS_PER_BLOCK::value == static_bitset::BITS_PER_BLOCK::value - 1) {
-				std::cout << "  ";
-			} else if (i % CHAR_BIT == CHAR_BIT - 1) {
-				std::cout << '\'';
-			}
+	template <std::size_t N, typename BlockType, typename Engine>
+	void random_init(kerbal::bitset::static_bitset<N, BlockType> & bs, Engine & eg)
+	{
+		for (std::size_t i = 0; i < N; ++i) {
+			bs.set(i, static_cast<bool>(eg() % 2));
 		}
-};
+	}
 
-template <std::size_t N, typename BlockType>
-void print_bs(const kerbal::bitset::static_bitset<N, BlockType> & bs)
-{
-	print_bs_f<N, BlockType> f;
-	bs.for_each(f);
+
+	template <std::size_t N, typename BlockType>
+	struct print_bs_f
+	{
+			typedef kerbal::bitset::static_bitset<N, BlockType> static_bitset;
+
+			void operator()(std::size_t i, bool b) const
+			{
+				std::cout << b;
+				if (i % static_bitset::BITS_PER_BLOCK::value == static_bitset::BITS_PER_BLOCK::value - 1) {
+					std::cout << "  ";
+				} else if (i % CHAR_BIT == CHAR_BIT - 1) {
+					std::cout << '\'';
+				}
+			}
+	};
+
+	template <std::size_t N, typename BlockType>
+	void print_bs(const kerbal::bitset::static_bitset<N, BlockType> & bs)
+	{
+		print_bs_f<N, BlockType> f;
+		bs.for_each(f);
+	}
+
 }
 
 
@@ -189,23 +194,27 @@ INST(4 * CHAR_BIT * sizeof(unsigned long long) + 7, unsigned long long);
 
 
 
-struct fs_for_each_test_f
+namespace
 {
-		bool * bout;
 
-		KERBAL_CONSTEXPR
-		fs_for_each_test_f(bool * bout) KERBAL_NOEXCEPT
-				: bout(bout)
-		{
-		}
+	struct fs_for_each_test_f
+	{
+			bool * bout;
 
-		KERBAL_CONSTEXPR14
-		void operator()(std::size_t i, bool b) const KERBAL_NOEXCEPT
-		{
-			bout[i] = b;
-		}
-};
+			KERBAL_CONSTEXPR
+			fs_for_each_test_f(bool * bout) KERBAL_NOEXCEPT :
+				bout(bout)
+			{
+			}
 
+			KERBAL_CONSTEXPR14
+			void operator()(std::size_t i, bool b) const KERBAL_NOEXCEPT
+			{
+				bout[i] = b;
+			}
+	};
+
+}
 
 
 KERBAL_TEST_CASE(test_static_bitset_for_each, "test static_bitset::for_each")
@@ -294,16 +303,22 @@ INST(4 * CHAR_BIT * sizeof(unsigned long long) + 7, unsigned long long);
 
 
 
-template <std::size_t N, typename BlockType>
-bool static_bitset_any_impl_in_fool_way(const kerbal::bitset::static_bitset<N, BlockType> & bs)
+namespace
 {
-	for (size_t i = 0; i < N; ++i) {
-		if (bs.test(i) == true) {
-			return true;
+
+	template <std::size_t N, typename BlockType>
+	bool static_bitset_any_impl_in_fool_way(const kerbal::bitset::static_bitset<N, BlockType> & bs)
+	{
+		for (size_t i = 0; i < N; ++i) {
+			if (bs.test(i) == true) {
+				return true;
+			}
 		}
+		return false;
 	}
-	return false;
+
 }
+
 
 template <std::size_t N, typename BlockType>
 KERBAL_TEMPLATE_TEST_CASE(test_static_bitset_any, "test static_bitset::any")
@@ -381,27 +396,33 @@ INST(4 * CHAR_BIT * sizeof(unsigned long long) + 7, unsigned long long);
 
 
 
-template <std::size_t N, typename BlockType>
-kerbal::bitset::static_bitset<N, BlockType>
-static_bitset_left_shift_impl_in_fool_way(const kerbal::bitset::static_bitset<N, BlockType> & bs, std::size_t n)
+namespace
 {
-	kerbal::container::array<bool, N> bitarr(bs.bitarray());
 
-	if (n >= N) {
-		kerbal::algorithm::fill(bitarr.begin(), bitarr.end(), 0);
-	} else {
-		for (std::size_t i = 0; i < N - n; ++i) {
-			bitarr[i] = bitarr[i + n];
+	template <std::size_t N, typename BlockType>
+	kerbal::bitset::static_bitset<N, BlockType>
+	static_bitset_left_shift_impl_in_fool_way(const kerbal::bitset::static_bitset<N, BlockType> & bs, std::size_t n)
+	{
+		kerbal::container::array<bool, N> bitarr(bs.bitarray());
+
+		if (n >= N) {
+			kerbal::algorithm::fill(bitarr.begin(), bitarr.end(), 0);
+		} else {
+			for (std::size_t i = 0; i < N - n; ++i) {
+				bitarr[i] = bitarr[i + n];
+			}
+			kerbal::algorithm::fill(bitarr.nth(N - n), bitarr.end(), 0);
 		}
-		kerbal::algorithm::fill(bitarr.nth(N - n), bitarr.end(), 0);
+
+		kerbal::bitset::static_bitset<N, BlockType> ret;
+		for (std::size_t i = 0; i < N; ++i) {
+			ret.set(i, bitarr[i]);
+		}
+		return ret;
 	}
 
-	kerbal::bitset::static_bitset<N, BlockType> ret;
-	for (std::size_t i = 0; i < N; ++i) {
-		ret.set(i, bitarr[i]);
-	}
-	return ret;
 }
+
 
 
 template <std::size_t N, typename BlockType>
@@ -466,29 +487,33 @@ INST(4 * CHAR_BIT * sizeof(unsigned long long) + 7, unsigned long long);
 
 
 
-
-template <std::size_t N, typename BlockType>
-kerbal::bitset::static_bitset<N, BlockType>
-static_bitset_right_shift_impl_in_fool_way(const kerbal::bitset::static_bitset<N, BlockType> & bs, std::size_t n)
+namespace
 {
-	kerbal::container::array<bool, N> bitarr(bs.bitarray());
 
-	if (n >= N) {
-		kerbal::algorithm::fill(bitarr.begin(), bitarr.end(), 0);
-	} else {
-		std::size_t i = N - n;
-		while (i != 0) {
-			--i;
-			bitarr[i + n] = bitarr[i];
+	template <std::size_t N, typename BlockType>
+	kerbal::bitset::static_bitset<N, BlockType>
+	static_bitset_right_shift_impl_in_fool_way(const kerbal::bitset::static_bitset<N, BlockType> & bs, std::size_t n)
+	{
+		kerbal::container::array<bool, N> bitarr(bs.bitarray());
+
+		if (n >= N) {
+			kerbal::algorithm::fill(bitarr.begin(), bitarr.end(), 0);
+		} else {
+			std::size_t i = N - n;
+			while (i != 0) {
+				--i;
+				bitarr[i + n] = bitarr[i];
+			}
+			kerbal::algorithm::fill(bitarr.begin(), bitarr.nth(n), 0);
 		}
-		kerbal::algorithm::fill(bitarr.begin(), bitarr.nth(n), 0);
+
+		kerbal::bitset::static_bitset<N, BlockType> ret;
+		for (std::size_t i = 0; i < N; ++i) {
+			ret.set(i, bitarr[i]);
+		}
+		return ret;
 	}
 
-	kerbal::bitset::static_bitset<N, BlockType> ret;
-	for (std::size_t i = 0; i < N; ++i) {
-		ret.set(i, bitarr[i]);
-	}
-	return ret;
 }
 
 template <std::size_t N, typename BlockType>
@@ -533,21 +558,27 @@ INST(4 * CHAR_BIT * sizeof(unsigned long long) + 7, unsigned long long);
 
 
 
-template <std::size_t Left, std::size_t Len>
-struct static_bitset_subset_impl_in_fool_way
+namespace
 {
-		template <std::size_t N, typename BlockType>
-		static
-		kerbal::bitset::static_bitset<Len, BlockType>
-		f(const kerbal::bitset::static_bitset<N, BlockType> & bs)
-		{
-			kerbal::bitset::static_bitset<Len, BlockType> ret;
-			for (std::size_t i = 0; i < Len; ++i) {
-				ret.set(i, bs.test(Left + i));
+
+	template <std::size_t Left, std::size_t Len>
+	struct static_bitset_subset_impl_in_fool_way
+	{
+			template <std::size_t N, typename BlockType>
+			static
+			kerbal::bitset::static_bitset<Len, BlockType>
+			f(const kerbal::bitset::static_bitset<N, BlockType> & bs)
+			{
+				kerbal::bitset::static_bitset<Len, BlockType> ret;
+				for (std::size_t i = 0; i < Len; ++i) {
+					ret.set(i, bs.test(Left + i));
+				}
+				return ret;
 			}
-			return ret;
-		}
-};
+	};
+
+}
+
 
 template <std::size_t N, typename BlockType>
 KERBAL_TEMPLATE_TEST_CASE(test_static_bitset_subset, "test static_bitset::subset")

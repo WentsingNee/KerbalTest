@@ -18,13 +18,18 @@
 #include <kerbal/container/nonmember_container_access.hpp>
 #include <kerbal/type_traits/integral_constant.hpp>
 
-struct divisible_by_4
+
+namespace
 {
+	struct divisible_by_4
+	{
 		bool operator()(int x) const
 		{
 			return x % 4 == 0;
 		}
-};
+	};
+}
+
 
 KERBAL_TEST_CASE(test_stride_iterator, "test stride_iterator")
 {

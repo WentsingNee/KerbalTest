@@ -37,40 +37,46 @@
 
 namespace kc = kerbal::container;
 
-template <typename T, typename Compare, typename Allocator>
-void print_avl(const kc::avl_set<T, Compare, Allocator> & s)
+
+namespace
 {
-	std::cout << "{";
-	for (typename kc::avl_set<T>::iterator it = s.cbegin(); it != s.cend(); ++it) {
-		std::cout << *it << ", " << std::flush;
+
+	template <typename T, typename Compare, typename Allocator>
+	void print_avl(const kc::avl_set<T, Compare, Allocator> & s)
+	{
+		std::cout << "{";
+		for (typename kc::avl_set<T>::iterator it = s.cbegin(); it != s.cend(); ++it) {
+			std::cout << *it << ", " << std::flush;
+		}
+		std::cout << "}" << std::endl;
 	}
-	std::cout << "}" << std::endl;
-}
 
 
-static void print_avl_normal_result_if_wrong(kerbal::container::detail::avl_normal_result_t result)
-{
-	switch (result) {
-		case kerbal::container::detail::AVL_NORMAL_RESULT_CORRECT: {
-			break;
-		}
-		case kerbal::container::detail::AVL_NORMAL_RESULT_BST_INVALID: {
-			std::cout << "BST INVALID" << std::endl;
-			break;
-		}
-		case kerbal::container::detail::AVL_NORMAL_RESULT_BAD_PARENT: {
-			std::cout << "BAD PARENT" << std::endl;
-			break;
-		}
-		case kerbal::container::detail::AVL_NORMAL_RESULT_NOT_BALANCED: {
-			std::cout << "NOT BALANCED" << std::endl;
-			break;
-		}
-		case kerbal::container::detail::AVL_NORMAL_RESULT_DEPTH_CACHED_WRONG: {
-			std::cout << "DEPTH CACHED WRONG" << std::endl;
-			break;
+	void print_avl_normal_result_if_wrong(kerbal::container::detail::avl_normal_result_t result)
+	{
+		switch (result) {
+			case kerbal::container::detail::AVL_NORMAL_RESULT_CORRECT: {
+				break;
+			}
+			case kerbal::container::detail::AVL_NORMAL_RESULT_BST_INVALID: {
+				std::cout << "BST INVALID" << std::endl;
+				break;
+			}
+			case kerbal::container::detail::AVL_NORMAL_RESULT_BAD_PARENT: {
+				std::cout << "BAD PARENT" << std::endl;
+				break;
+			}
+			case kerbal::container::detail::AVL_NORMAL_RESULT_NOT_BALANCED: {
+				std::cout << "NOT BALANCED" << std::endl;
+				break;
+			}
+			case kerbal::container::detail::AVL_NORMAL_RESULT_DEPTH_CACHED_WRONG: {
+				std::cout << "DEPTH CACHED WRONG" << std::endl;
+				break;
+			}
 		}
 	}
+
 }
 
 

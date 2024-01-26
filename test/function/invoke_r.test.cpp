@@ -17,27 +17,33 @@
 namespace ku = kerbal::utility;
 
 
-int f()
+namespace
 {
-	return 1;
+
+	int f()
+	{
+		return 1;
+	}
+
+	struct Callable
+	{
+			int operator()(int & x, int y) const
+			{
+				return x + y;
+			}
+	};
+
+	struct Mem
+	{
+			int mem_obj;
+
+			int mem_fun()
+			{
+				return mem_obj;
+			}
+	};
+
 }
-
-struct Callable
-{
-	int operator()(int & x, int y) const
-	{
-		return x + y;
-	}
-};
-
-struct Mem
-{
-	int mem_obj;
-	int mem_fun()
-	{
-		return mem_obj;
-	}
-};
 
 
 KERBAL_TEST_CASE(test_invoke_r_fun, "test invoke_r function")

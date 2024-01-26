@@ -21,38 +21,43 @@
 
 using kerbal::container::static_ordered;
 
-struct Person
+
+namespace
 {
-	std::string name;
-	int age;
 
-	Person(const std::string & name = "", int age = 0)
-			: name(name), age(age)
+	struct Person
 	{
-	}
+			std::string name;
+			int age;
 
-};
+			Person(const std::string & name = "", int age = 0) :
+				name(name), age(age)
+			{
+			}
 
-struct Extract
-{
-	typedef std::string const & key_type;
+	};
 
-	key_type operator()(const Person & person) const
+	struct Extract
 	{
-		return person.name;
-	}
-};
+			typedef std::string const & key_type;
+
+			key_type operator()(const Person & person) const
+			{
+				return person.name;
+			}
+	};
 
 
-const Person arr[] = {
+	const Person arr[] = {
 		Person("Tom", 1),
 		Person("Jim", 2),
 		Person("Sam", 3),
 		Person("Jim", 4),
 		Person("Sally", 5),
 		Person("Ada", 6),
-};
+	};
 
+}
 
 KERBAL_TEST_CASE(test_static_ordered_insert, "test static_ordered::insert")
 {

@@ -102,27 +102,33 @@ KERBAL_TEST_CASE(test_tuple_piecewise_init, "test tuple piecewise init")
 #endif
 
 
-struct for_each_f
+namespace
 {
-		typedef kerbal::container::array<
+
+	struct for_each_f
+	{
+			typedef kerbal::container::array<
 				ku::tuple<int, int>,
 				3
-		> arr_t;
+			> arr_t;
 
-		int cnt;
-		arr_t * arr_p;
+			int cnt;
+			arr_t * arr_p;
 
-		for_each_f(arr_t * arr_p) KERBAL_NOEXCEPT:
+			for_each_f(arr_t * arr_p) KERBAL_NOEXCEPT :
 				cnt(0), arr_p(arr_p)
-		{
-		}
+			{
+			}
 
-		template <typename T, std::size_t N>
-		void operator()(kerbal::type_traits::integral_constant<std::size_t, N> i, T & val) KERBAL_NOEXCEPT
-		{
-			(*arr_p)[i] = ku::make_tuple(cnt++, static_cast<int>(val));
-		}
-};
+			template <typename T, std::size_t N>
+			void operator()(kerbal::type_traits::integral_constant<std::size_t, N> i, T & val) KERBAL_NOEXCEPT
+			{
+				(*arr_p)[i] = ku::make_tuple(cnt++, static_cast<int>(val));
+			}
+	};
+
+}
+
 
 KERBAL_TEST_CASE(test_tuple_for_each, "test tuple::for_each")
 {
@@ -267,13 +273,18 @@ KERBAL_TEST_CASE(test_tie, "test tie")
 
 #if __cplusplus >= 201103L && KERBAL_HAS_EXCEPTIONS_SUPPORT
 
-struct Foo
+namespace
 {
-	Foo();
-	Foo(int) noexcept;
-	Foo(const Foo &);
-	Foo(Foo &&) noexcept;
-};
+
+	struct Foo
+	{
+			Foo();
+			Foo(int) noexcept;
+			Foo(const Foo &);
+			Foo(Foo &&) noexcept;
+	};
+
+}
 
 #include <kerbal/type_traits/tribool_constant.hpp>
 

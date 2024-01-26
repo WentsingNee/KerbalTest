@@ -28,32 +28,37 @@ KERBAL_TEST_CASE(test_has_is_trivially_move_assignable_support, "test has is_tri
 }
 
 
-struct TriviallyMoveAssignable
+namespace
 {
-		TriviallyMoveAssignable(const TriviallyMoveAssignable &);
-		TriviallyMoveAssignable(TriviallyMoveAssignable &&);
-		TriviallyMoveAssignable& operator=(const TriviallyMoveAssignable &);
-		TriviallyMoveAssignable& operator=(TriviallyMoveAssignable &&) = default;
-};
+
+	struct TriviallyMoveAssignable
+	{
+			TriviallyMoveAssignable(const TriviallyMoveAssignable &);
+			TriviallyMoveAssignable(TriviallyMoveAssignable &&);
+			TriviallyMoveAssignable& operator=(const TriviallyMoveAssignable &);
+			TriviallyMoveAssignable& operator=(TriviallyMoveAssignable &&) = default;
+	};
 
 
-struct NonTriviallyMoveAssignable
-{
-		NonTriviallyMoveAssignable& operator=(NonTriviallyMoveAssignable &&);
-};
+	struct NonTriviallyMoveAssignable
+	{
+			NonTriviallyMoveAssignable& operator=(NonTriviallyMoveAssignable &&);
+	};
 
 
-struct PrivateMoveAssignable
-{
-	private:
-		PrivateMoveAssignable& operator=(PrivateMoveAssignable &&);
-};
+	struct PrivateMoveAssignable
+	{
+		private:
+			PrivateMoveAssignable& operator=(PrivateMoveAssignable &&);
+	};
 
 
-class DeleteMoveAssignable
-{
-		DeleteMoveAssignable& operator=(DeleteMoveAssignable &&) = delete;
-};
+	class DeleteMoveAssignable
+	{
+			DeleteMoveAssignable& operator=(DeleteMoveAssignable &&) = delete;
+	};
+
+}
 
 
 #if KERBAL_HAS_IS_TRIVIALLY_MOVE_ASSIGNABLE_SUPPORT

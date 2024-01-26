@@ -28,32 +28,37 @@ KERBAL_TEST_CASE(test_has_is_trivially_move_constructible_support, "test has is_
 }
 
 
-struct TriviallyMoveConstructible
+namespace
 {
-		TriviallyMoveConstructible& operator=(const TriviallyMoveConstructible &);
-		TriviallyMoveConstructible(const TriviallyMoveConstructible &);
-		TriviallyMoveConstructible(TriviallyMoveConstructible &&) = default;
-		TriviallyMoveConstructible& operator=(TriviallyMoveConstructible &&);
-};
+
+	struct TriviallyMoveConstructible
+	{
+			TriviallyMoveConstructible& operator=(const TriviallyMoveConstructible &);
+			TriviallyMoveConstructible(const TriviallyMoveConstructible &);
+			TriviallyMoveConstructible(TriviallyMoveConstructible &&) = default;
+			TriviallyMoveConstructible& operator=(TriviallyMoveConstructible &&);
+	};
 
 
-struct NonTriviallyMoveConstructible
-{
-		NonTriviallyMoveConstructible(NonTriviallyMoveConstructible &&);
-};
+	struct NonTriviallyMoveConstructible
+	{
+			NonTriviallyMoveConstructible(NonTriviallyMoveConstructible &&);
+	};
 
 
-struct PrivateMoveConstructible
-{
-	private:
-		PrivateMoveConstructible(PrivateMoveConstructible &&);
-};
+	struct PrivateMoveConstructible
+	{
+		private:
+			PrivateMoveConstructible(PrivateMoveConstructible &&);
+	};
 
 
-class DeleteMoveConstructible
-{
-		DeleteMoveConstructible(DeleteMoveConstructible &&) = delete;
-};
+	class DeleteMoveConstructible
+	{
+			DeleteMoveConstructible(DeleteMoveConstructible &&) = delete;
+	};
+
+}
 
 
 #if KERBAL_HAS_IS_TRIVIALLY_MOVE_CONSTRUCTIBLE_SUPPORT

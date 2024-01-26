@@ -19,22 +19,28 @@
 #include <kerbal/container/nonmember_container_access.hpp>
 
 
-template <std::size_t N>
-struct Array
+namespace
 {
-		int inner[N];
-		
-		template <std::size_t ... Ins>
-		Array(const int (&a) [N], kerbal::utility::integer_sequence<std::size_t, Ins...>) :
-				inner{a[Ins]...}
-		{
-		}
 
-		Array(const int (&a) [N]) :
+	template <std::size_t N>
+	struct Array
+	{
+			int inner[N];
+
+			template <std::size_t ... Ins>
+			Array(const int (& a)[N], kerbal::utility::integer_sequence<std::size_t, Ins...>) :
+				inner{a[Ins]...}
+			{
+			}
+
+			Array(const int (& a)[N]) :
 				Array(a, kerbal::utility::make_index_sequence<N>())
-		{
-		}
-};
+			{
+			}
+	};
+
+}
+
 
 
 KERBAL_TEST_CASE(test_integer_sequence, "test integer_sequence")

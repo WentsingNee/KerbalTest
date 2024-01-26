@@ -20,7 +20,12 @@
 
 #include <deque>
 
-int arr[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+
+namespace
+{
+	int const arr[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+} // namespace
+
 
 template <typename Container>
 KERBAL_TEMPLATE_TEST_CASE(test_midden_iterator, "test midden_iterator")

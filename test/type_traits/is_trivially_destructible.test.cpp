@@ -26,32 +26,37 @@ KERBAL_TEST_CASE(test_has_is_trivially_destructible_support, "test has is_trivia
 }
 
 
-struct TriviallyDestructible
+namespace
 {
-};
+
+	struct TriviallyDestructible
+	{
+	};
 
 
-struct NonTriviallyDestructible
-{
-		~NonTriviallyDestructible();
-};
+	struct NonTriviallyDestructible
+	{
+			~NonTriviallyDestructible();
+	};
 
 
-struct PrivateDestructible
-{
-	private:
-		~PrivateDestructible();
-};
+	struct PrivateDestructible
+	{
+		private:
+			~PrivateDestructible();
+	};
 
 
 #if __cplusplus >= 201103L
 
-class DeleteDestructible
-{
-		~DeleteDestructible() = delete;
-};
+	class DeleteDestructible
+	{
+			~DeleteDestructible() = delete;
+	};
 
 #endif
+
+}
 
 
 #if KERBAL_HAS_IS_TRIVIALLY_DESTRUCTIBLE_SUPPORT

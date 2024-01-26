@@ -17,13 +17,17 @@
 
 namespace ko = kerbal::optional;
 
-struct Foo
+
+namespace
 {
+	struct Foo
+	{
 		int x;
 
 		KERBAL_CONSTEXPR
 		Foo(int x) : x(x) {}
-};
+	};
+}
 
 
 template <typename T>

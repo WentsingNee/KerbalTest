@@ -26,45 +26,51 @@
 namespace kf = kerbal::function;
 
 
-enum test_lr_result
+namespace
 {
-		test_l,
-		test_r,
-};
 
-template <typename T>
-KERBAL_CONSTEXPR
-test_lr_result test_lr(T &&) KERBAL_NOEXCEPT
-{
-	return
-		kerbal::type_traits::is_lvalue_reference<T>::value ?
-		test_l :
-		test_r;
-}
+	enum test_lr_result
+	{
+			test_l,
+			test_r,
+	};
 
-KERBAL_CONSTEXPR14
-void do_nothing() KERBAL_NOEXCEPT
-{
-}
+	template <typename T>
+	KERBAL_CONSTEXPR
+	test_lr_result test_lr(T &&) KERBAL_NOEXCEPT
+	{
+		return
+			kerbal::type_traits::is_lvalue_reference<T>::value ?
+			test_l :
+			test_r;
+	}
+
+	KERBAL_CONSTEXPR14
+	void do_nothing() KERBAL_NOEXCEPT
+	{
+	}
 
 
 #if KERBAL_HAS_EXCEPTIONS_SUPPORT
 
-void throw_something(int x)
-{
-	if (x < 0) {
-		throw int(3);
+	void throw_something(int x)
+	{
+		if (x < 0) {
+			throw int(3);
+		}
 	}
-}
 
 #endif
 
 
-KERBAL_CONSTEXPR14
-int add_to(int & x, int y) KERBAL_NOEXCEPT
-{
-	return x += y;
+	KERBAL_CONSTEXPR14
+	int add_to(int & x, int y) KERBAL_NOEXCEPT
+	{
+		return x += y;
+	}
+
 }
+
 
 KERBAL_TEST_CASE(test_invoke_function, "test invoke function")
 {
@@ -92,14 +98,20 @@ KERBAL_TEST_CASE(test_invoke_function, "test invoke function")
 }
 
 
-struct callable
+namespace
 {
-		KERBAL_CONSTEXPR
-		int operator()(int x, int y) const KERBAL_NOEXCEPT
-		{
-			return x + y;
-		}
-};
+
+	struct callable
+	{
+			KERBAL_CONSTEXPR
+			int operator()(int x, int y) const KERBAL_NOEXCEPT
+			{
+				return x + y;
+			}
+	};
+
+}
+
 
 KERBAL_TEST_CASE(test_invoke_callable, "test invoke callable")
 {
@@ -111,18 +123,23 @@ KERBAL_TEST_CASE(test_invoke_callable, "test invoke callable")
 
 
 
-struct simple_pair
+namespace
 {
-		int first;
-		char second;
 
-		KERBAL_CONSTEXPR
-		simple_pair(int first, char second) KERBAL_NOEXCEPT :
+	struct simple_pair
+	{
+			int first;
+			char second;
+
+			KERBAL_CONSTEXPR
+			simple_pair(int first, char second) KERBAL_NOEXCEPT :
 				first(first), second(second)
-		{
-		}
+			{
+			}
 
-};
+	};
+
+}
 
 
 KERBAL_TEST_CASE(test_invoke_mem_obj, "test invoke mem_obj")
@@ -198,37 +215,42 @@ KERBAL_TEST_CASE(test_invoke_mem_obj, "test invoke mem_obj")
 }
 
 
-struct pair_ic : kerbal::utility::compressed_pair<int, char>
+namespace
 {
-	private:
-		typedef kerbal::utility::compressed_pair<int, char> super;
 
-	public:
-		pair_ic(int i, char c) :
+	struct pair_ic : kerbal::utility::compressed_pair<int, char>
+	{
+		private:
+			typedef kerbal::utility::compressed_pair<int, char> super;
+
+		public:
+			pair_ic(int i, char c) :
 				super(i, c)
-		{
-		}
+			{
+			}
 
-		int & first() KERBAL_NOEXCEPT
-		{
-			return super::first();
-		}
+			int & first() KERBAL_NOEXCEPT
+			{
+				return super::first();
+			}
 
-		const int & cfirst() const KERBAL_NOEXCEPT
-		{
-			return super::first();
-		}
+			const int & cfirst() const KERBAL_NOEXCEPT
+			{
+				return super::first();
+			}
 
 #	if __cplusplus >= 201103L
 
-		int && rfirst() && KERBAL_NOEXCEPT
-		{
-			return kerbal::compatibility::move(*this).super::first();
-		}
+			int && rfirst() && KERBAL_NOEXCEPT
+			{
+				return kerbal::compatibility::move(*this).super::first();
+			}
 
 #	endif
 
-};
+	};
+
+}
 
 
 KERBAL_TEST_CASE(test_invoke_mem_fun, "test invoke mem_fun")
