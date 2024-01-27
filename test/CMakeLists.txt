@@ -73,13 +73,28 @@ function(add_ktest_utest_target target target_src_file)
     endif ()
 
     set(run_utest_target_name "run_${target}")
-    add_custom_target(${run_utest_target_name}
-            COMMAND ${KTEST_RUN_UTEST_INVOKER} ${path} ${run_utest_args} > test_output/${target}.out.txt
-            COMMAND ${CMAKE_COMMAND} -E cat test_output/${target}.out.txt
-            WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
-            COMMENT "Running utest target ${target}"
-            DEPENDS ${target} run_utest_make_test_output_dir
-    )
+    if (CMAKE_CXX_PLATFORM_ID MATCHES "Windows")
+        add_custom_target(${run_utest_target_name}
+                COMMAND ${KTEST_RUN_UTEST_INVOKER} ${path} ${run_utest_args} > test_output/${target}.out.txt
+                COMMAND ${CMAKE_COMMAND} -E cat test_output/${target}.out.txt
+                WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
+                COMMENT "Running utest target ${target}"
+                DEPENDS ${target} run_utest_make_test_output_dir
+        )
+    else ()
+        set(run_utest_script_dir "run_utest_script")
+        configure_file(
+                "${PROJECT_SOURCE_DIR}/cmake/run_utest.sh"
+                ${run_utest_script_dir}/${run_utest_target_name}.sh
+                USE_SOURCE_PERMISSIONS
+                @ONLY
+        )
+        add_custom_target(${run_utest_target_name}
+                COMMAND ${run_utest_script_dir}/${run_utest_target_name}.sh
+                COMMENT "Running utest target ${target}"
+                DEPENDS ${target}
+        )
+    endif ()
     set_target_properties("${run_utest_target_name}"
             PROPERTIES ktest_category "run_utest"
     )
