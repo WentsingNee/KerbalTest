@@ -56,7 +56,7 @@ function(add_ktest_utest_target target target_src_file)
     # run_utest_target
     get_target_property(path ${target} RUNTIME_OUTPUT_DIRECTORY)
     if (NOT path)
-        message(FATAL_ERROR "failed to get property RUNTIME_OUTPUT_DIRECTORY")
+        set(path "${CMAKE_CURRENT_BINARY_DIR}")
     endif ()
     get_target_property(target_output_name ${target} RUNTIME_OUTPUT_NAME)
     if (NOT target_output_name)
