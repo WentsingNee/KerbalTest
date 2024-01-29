@@ -73,7 +73,7 @@ function(add_ktest_utest_target target target_src_file)
     endif ()
 
     set(run_utest_target_name "run_${target}")
-    if (CMAKE_CXX_PLATFORM_ID MATCHES "Windows")
+    if (CMAKE_CXX_PLATFORM_ID MATCHES "Windows" OR CMAKE_CXX_PLATFORM_ID MATCHES "Darwin")
         add_custom_target(${run_utest_target_name}
                 COMMAND ${KTEST_RUN_UTEST_INVOKER} ${path} ${run_utest_args} > test_output/${target}.out.txt
                 COMMAND ${CMAKE_COMMAND} -E cat test_output/${target}.out.txt
