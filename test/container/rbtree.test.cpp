@@ -51,6 +51,16 @@ static void print_rb_normal_result_if_wrong(kc::detail::rb_normal_result_t resul
 }
 
 
+const char * color_str(kerbal::container::detail::rb_color_t color)
+{
+	if (color == kerbal::container::detail::BLACK::value) {
+		return "BLACK";
+	} else {
+		return "RED";
+	}
+}
+
+
 
 #include <ktest/random/random_vector.hpp>
 
@@ -168,9 +178,45 @@ void g()
 	}
 }
 
+
+KERBAL_TEST_CASE(test_rb_erase, "test rb::erase")
+{
+	kerbal::container::vector<int> d = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+	kc::detail::rb_type_only<int> s;
+
+	for (std::size_t i = 0; i < d.size(); ++i) {
+		s.emplace(d[i]);
+	}
+	s.inorder([](int member, auto color) {
+		std::cout << member << ", ";
+	});
+	std::cout << std::endl;
+	s.preorder([](int member, auto color) {
+		std::cout << member << ", " <<  color_str(color) << ", ";
+	});
+	std::cout << std::endl;
+
+	s.erase(s.find(7));
+	s.inorder([](int member, auto color) {
+		std::cout << member << ", ";
+	});
+	std::cout << std::endl;
+	s.preorder([](int member, auto color) {
+		std::cout << member << ", " <<  color_str(color) << ", ";
+	});
+	std::cout << std::endl;
+
+	kc::detail::rb_type_only<int>::rb_normal_result_t normal_result = s.rb_normal();
+	KERBAL_TEST_CHECK(normal_result == kc::detail::RB_NORMAL_RESULT_CORRECT);
+	print_rb_normal_result_if_wrong(normal_result);
+
+}
+
+
 int main(int argc, char * argv[])
 {
-	g();
-	// return kerbal::test::run_all_test_case(argc, argv);
-	return 0;
+	// g();
+	// e();
+	// kerbal::test::run_all_test_case(argc, argv);
+	kerbal::test::run_test_case(1, argc, argv);
 }
