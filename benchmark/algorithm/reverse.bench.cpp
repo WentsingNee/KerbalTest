@@ -10,37 +10,37 @@
  */
 
 #if TEST == 0
-#include <kerbal/algorithm/modifier.hpp>
+#	include <kerbal/algorithm/modifier/reverse.hpp>
 #else
 #	include <algorithm>
 #endif
 
+#include <ktest/random/random_vector.hpp>
+
+#include <kerbal/container/vector.hpp>
 #include <kerbal/random/mersenne_twister_engine.hpp>
 #include <kerbal/test/runtime_timer.hpp>
 
+#include <cstdio>
 #include <iostream>
-#include <vector>
 
 
 int main()
 {
 	typedef kerbal::type_traits::integral_constant<size_t, 1024 * 1024> N;
 
-	typedef unsigned int T;
+	typedef signed int T;
 	kerbal::random::mt19937 eg;
-
-	std::vector<T> v(N::value); {
-		eg.generate_n(v.data(), N::value);
-	}
+	kerbal::container::vector<T> v = ktest::get_random_vec_i(N::value, eg);
 
 
 	typedef kerbal::type_traits::integral_constant<size_t, 4 * 1024> LOOP_EXECUTE_TIMES;
 
 	{
 #if TEST == 0
-		std::cout << "kerbal::algorithm::reverse" << std::endl;
+		std::printf("kerbal::algorithm::reverse\n");
 #else
-		std::cout << "std::reverse" << std::endl;
+		std::printf("std::reverse\n");
 #endif
 
 		kerbal::test::runtime_timer t;

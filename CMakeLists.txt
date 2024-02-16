@@ -165,7 +165,7 @@ function(ktest_basic_configuration target)
     # wasm
     if (KERBAL_WASM)
         target_compile_options(${target} PUBLIC -fexceptions)
-        if (ktest_category STREQUAL "utest")
+        if (ktest_category STREQUAL "utest" OR ktest_category STREQUAL "bench")
             target_link_options(${target} PUBLIC -fexceptions)
         endif ()
     endif ()
