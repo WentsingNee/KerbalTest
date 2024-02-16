@@ -176,7 +176,7 @@ function(ktest_basic_configuration target)
     # wasm
     if (CMAKE_SYSTEM_NAME MATCHES Emscripten)
         target_compile_options(${target} PUBLIC -fexceptions)
-        if (ktest_category STREQUAL "utest")
+        if (ktest_category STREQUAL "utest" OR ktest_category STREQUAL "bench")
             target_link_options(${target} PUBLIC -sALLOW_MEMORY_GROWTH)
             target_link_options(${target} PUBLIC -fexceptions)
         endif ()
