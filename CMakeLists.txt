@@ -122,7 +122,7 @@ function(ktest_basic_configuration target)
     # libc++
     if (KTEST_USE_LIBCXX)
         target_compile_options(${target} PUBLIC -stdlib=libc++)
-        if (ktest_category STREQUAL "utest")
+        if (ktest_category STREQUAL "bench" OR ktest_category STREQUAL "utest")
             target_link_libraries(
                     ${target} PUBLIC
                     ${KTEST_LIB_CPP}
@@ -134,7 +134,7 @@ function(ktest_basic_configuration target)
 
     # sanitize
     if (KTEST_ENABLE_SANITIZE)
-        if (ktest_category STREQUAL "utest")
+        if (ktest_category STREQUAL "bench" OR ktest_category STREQUAL "utest")
             if (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
                 target_compile_options(${target} PUBLIC /fsanitize=address)
             else ()
@@ -156,7 +156,7 @@ function(ktest_basic_configuration target)
     # gcov
     if (KTEST_ENABLE_GCOV)
         target_compile_options(${target} PUBLIC --coverage)
-        if (ktest_category STREQUAL "utest")
+        if (ktest_category STREQUAL "bench" OR ktest_category STREQUAL "utest")
             target_link_options(${target} PUBLIC --coverage)
         endif ()
     endif ()
@@ -165,7 +165,7 @@ function(ktest_basic_configuration target)
     # wasm
     if (KERBAL_WASM)
         target_compile_options(${target} PUBLIC -fexceptions)
-        if (ktest_category STREQUAL "utest" OR ktest_category STREQUAL "bench")
+        if (ktest_category STREQUAL "bench" OR ktest_category STREQUAL "utest")
             target_link_options(${target} PUBLIC -fexceptions)
         endif ()
     endif ()
