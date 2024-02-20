@@ -29,9 +29,15 @@ int main()
 {
 	typedef kerbal::type_traits::integral_constant<size_t, 1024 * 1024> N;
 
-	typedef signed int T;
+	// typedef char T;
+	typedef short T;
+	// typedef signed int T;
+	// typedef long long T;
 	kerbal::random::mt19937 eg;
-	kerbal::container::vector<T> v = ktest::get_random_vec_i(N::value, eg);
+	kerbal::container::vector<T> v(N::value);
+	{
+		eg.generate_n(&v[0], N::value);
+	}
 
 
 	typedef kerbal::type_traits::integral_constant<size_t, 4 * 1024> LOOP_EXECUTE_TIMES;
@@ -46,9 +52,9 @@ int main()
 		kerbal::test::runtime_timer t;
 		for (size_t i = 0; i < LOOP_EXECUTE_TIMES::value; ++i) {
 #if TEST == 0
-			kerbal::algorithm::reverse(v.begin(), v.end());
+			kerbal::algorithm::reverse(&*v.begin(), &*v.end());
 #else
-			std::reverse(v.begin(), v.end());
+			std::reverse(&*v.begin(), &*v.end());
 #endif
 		}
 		std::cout << t.count() << std::endl;

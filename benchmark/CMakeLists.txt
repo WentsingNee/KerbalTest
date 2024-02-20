@@ -30,6 +30,20 @@ function(add_ktest_bench_target target target_src_file)
     )
 
     # run_bench_target
+    get_target_property(path ${target} RUNTIME_OUTPUT_DIRECTORY)
+    if (NOT path)
+        set(path "${CMAKE_CURRENT_BINARY_DIR}")
+    endif ()
+    get_target_property(target_output_name ${target} RUNTIME_OUTPUT_NAME)
+    if (NOT target_output_name)
+        set(target_output_name "${target}${CMAKE_EXECUTABLE_SUFFIX}")
+    endif ()
+    if (CMAKE_GENERATOR MATCHES "Visual Studio")
+        file(RELATIVE_PATH path ${PROJECT_BINARY_DIR} "${path}/$<CONFIG>/${target_output_name}")
+    else()
+        file(RELATIVE_PATH path ${PROJECT_BINARY_DIR} "${path}/${target_output_name}")
+    endif ()
+
     set(run_bench_target_name "run_${target}")
     add_custom_target(${run_bench_target_name}
             COMMAND ${path} ${run_bench_args} #> test_output/${target}.out.txt
@@ -43,21 +57,16 @@ endfunction()
 
 
 function(add_ktest_bench_target_wih_ie target target_src_file ie)
-    if (NOT KERBAL_SUPPORT_${ie})
-        message(WARNING "Compiler doesn't support ${ie}")
-        return()
-    endif ()
-    set(target_name_with_ie ${target}.${ie})
-    add_ktest_bench_target(${target_name_with_ie} ${target_src_file})
-    target_compile_options(${target_name_with_ie} PUBLIC ${KERBAL_TEST_FLAGS_${ie}})
+    add_ktest_bench_target(${target} ${target_src_file})
+    target_compile_options(${target} PUBLIC ${KERBAL_TEST_FLAGS_${ie}})
 endfunction()
 
 
 
 set(instructs sse sse2 avx avx2 avx512f neon sve)
 
-foreach (instruct ${instructs})
-    if (NOT KERBAL_SUPPORT_${instruct})
+foreach (ie ${instructs})
+    if (NOT KERBAL_SUPPORT_${ie})
         continue()
     endif ()
 
@@ -65,34 +74,30 @@ foreach (instruct ${instructs})
     set(target_prefix bench.algorithm.find)
     set(src_file algorithm/find.bench.cpp)
 
-    set(target ${target_prefix}.k)
-    add_ktest_bench_target_wih_ie(${target} ${src_file} ${instruct})
-    set(target ${target_prefix}.k.${instruct})
-    target_compile_definitions(${target} PUBLIC TEST=0)
-    set_target_properties(${target} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ./find)
+    set(target_name_with_ie ${target_prefix}.k.${ie})
+    add_ktest_bench_target_wih_ie(${target_name_with_ie} ${src_file} ${ie})
+    target_compile_definitions(${target_name_with_ie} PUBLIC TEST=0)
+    set_target_properties(${target_name_with_ie} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ./find)
 
-    set(target ${target_prefix}.s)
-    add_ktest_bench_target_wih_ie(${target} ${src_file} ${instruct})
-    set(target ${target_prefix}.s.${instruct})
-    target_compile_definitions(${target} PUBLIC TEST=1)
-    set_target_properties(${target} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ./find)
+    set(target_name_with_ie ${target_prefix}.s.${ie})
+    add_ktest_bench_target_wih_ie(${target_name_with_ie} ${src_file} ${ie})
+    target_compile_definitions(${target_name_with_ie} PUBLIC TEST=1)
+    set_target_properties(${target_name_with_ie} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ./find)
 
 
 
     set(target_prefix bench.algorithm.reverse)
     set(src_file algorithm/reverse.bench.cpp)
 
-    set(target ${target_prefix}.k)
-    add_ktest_bench_target_wih_ie(${target} ${src_file} ${instruct})
-    set(target ${target_prefix}.k.${instruct})
-    target_compile_definitions(${target} PUBLIC TEST=0)
-    set_target_properties(${target} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ./reverse)
+    set(target_name_with_ie ${target_prefix}.k.${ie})
+    add_ktest_bench_target_wih_ie(${target_name_with_ie} ${src_file} ${ie})
+    target_compile_definitions(${target_name_with_ie} PUBLIC TEST=0)
+    set_target_properties(${target_name_with_ie} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ./reverse)
 
-    set(target ${target_prefix}.s)
-    add_ktest_bench_target_wih_ie(${target} ${src_file} ${instruct})
-    set(target ${target_prefix}.s.${instruct})
-    target_compile_definitions(${target} PUBLIC TEST=1)
-    set_target_properties(${target} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ./reverse)
+    set(target_name_with_ie ${target_prefix}.s.${ie})
+    add_ktest_bench_target_wih_ie(${target_name_with_ie} ${src_file} ${ie})
+    target_compile_definitions(${target_name_with_ie} PUBLIC TEST=1)
+    set_target_properties(${target_name_with_ie} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ./reverse)
 endforeach ()
 
 
