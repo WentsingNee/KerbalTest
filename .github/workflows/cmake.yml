@@ -77,6 +77,9 @@ jobs:
     continue-on-error: true
 
     steps:
+      - name: Show CMake Version
+        run: cmake --version
+
       - name: Show Generator Support
         run: cmake --help
 
