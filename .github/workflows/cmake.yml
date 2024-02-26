@@ -99,6 +99,23 @@ jobs:
       - name: Show Generator Support
         run: cmake --help
 
+      - name: Cache Source Directory
+        uses: actions/cache@v4
+        with:
+          path: |
+            ${{github.workspace}}/Kerbal
+            ${{github.workspace}}/KerbalTest
+          key: KerbalBuildTest_source_cache-${{github.run_id}}
+          restore-keys: KerbalBuildTest_source_cache
+
+      - name: Cache Build Directory
+        uses: actions/cache@v4
+        with:
+          path: |
+            ${{github.workspace}}/KerbalTest-build
+          key: KerbalBuildTest_build_cache-${{matrix.os}}-${{matrix.compiler}}-${{matrix.cxx_standard}}-${{github.run_id}}
+          restore-keys: KerbalBuildTest_build_cache-${{matrix.os}}-${{matrix.compiler}}-${{matrix.cxx_standard}}
+
       - name: Clone Kerbal
         uses: actions/checkout@v4
         with:
