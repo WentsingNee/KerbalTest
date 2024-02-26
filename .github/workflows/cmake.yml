@@ -77,7 +77,8 @@ jobs:
     continue-on-error: true
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Show Generator Support
+        run: cmake --help
 
       - name: Clone Kerbal
         run: git clone --depth=1 --branch=${{env.KERBAL_BRANCH}} https://github.com/WentsingNee/Kerbal.git
@@ -91,14 +92,11 @@ jobs:
 
           cmake --build ${{github.workspace}}/Kerbal/build --target install
 
+      - name: Clone KerbalTest
+        uses: actions/checkout@v3
 
-      - name: Show Generator Support
-        run: cmake --help
-
-      - name: Configure CMake
+      - name: Configure KerbalTest
         if: matrix.compiler != 'msvc'
-        # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
-        # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
         run: >
           cmake
           -B ${{github.workspace}}/build
@@ -110,7 +108,7 @@ jobs:
           -DKTEST_ENABLE_PRECOMPILE_HEADER=OFF
           -DKTEST_CI="github"
 
-      - name: Configure CMake (MSVC)
+      - name: Configure KerbalTest (MSVC)
         if: matrix.compiler == 'msvc'
         run: >
           cmake
