@@ -35,7 +35,9 @@ struct Person
 
 struct Extract
 {
-	const std::string& operator()(const Person & person) const
+	typedef std::string const & key_type;
+
+	key_type operator()(const Person & person) const
 	{
 		return person.name;
 	}
@@ -54,7 +56,7 @@ const Person arr[] = {
 
 KERBAL_TEST_CASE(test_static_ordered_insert, "test static_ordered::insert")
 {
-	static_ordered<Person, 10, std::string, kerbal::compare::greater<>, Extract> o;
+	static_ordered<Person, 10, Extract, kerbal::compare::greater<> > o;
 
 	for (size_t i = 0; i < kerbal::container::size(arr); ++i) {
 		o.insert(arr[i]);
@@ -71,7 +73,7 @@ KERBAL_TEST_CASE(test_static_ordered_insert, "test static_ordered::insert")
 
 KERBAL_TEST_CASE(test_static_ordered_unique_insert, "test static_ordered::unique_insert")
 {
-	static_ordered<Person, 10, std::string, kerbal::compare::greater<>, Extract> o;
+	static_ordered<Person, 10, Extract, kerbal::compare::greater<> > o;
 
 	for (size_t i = 0; i < kerbal::container::size(arr); ++i) {
 		o.unique_insert(arr[i]);

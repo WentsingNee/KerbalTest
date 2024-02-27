@@ -20,8 +20,8 @@ struct cmp_fnptr
 		typedef bool(*type)(const T&, const T&);
 };
 
-template class kc::flat_ordered<int, int, cmp_fnptr<int>::type>;
-template kc::flat_ordered<int, int, cmp_fnptr<int>::type>::flat_ordered(const_pointer, const_pointer, int);
+template class kc::flat_ordered<int, kc::identity_extractor<int>, cmp_fnptr<int>::type>;
+template kc::flat_ordered<int, kc::identity_extractor<int>, cmp_fnptr<int>::type>::flat_ordered(const_pointer, const_pointer, int);
 
 
 
