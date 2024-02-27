@@ -74,7 +74,7 @@ KERBAL_TEST_CASE(test_static_ordered_unique_insert, "test static_ordered::unique
 	static_ordered<Person, 10, std::string, kerbal::compare::greater<>, Extract> o;
 
 	for (size_t i = 0; i < kerbal::container::size(arr); ++i) {
-		o.try_insert(arr[i]);
+		o.unique_insert(arr[i]);
 	}
 
 	kerbal::container::static_vector<Person, 10> v
