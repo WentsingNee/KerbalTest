@@ -198,10 +198,13 @@ jobs:
         include:
           - os: ubuntu-latest
             cpack_generators: "DEB;STGZ;TGZ;ZIP;"
+            platform: "ubuntu"
           - os: windows-latest
             cpack_generators: "NuGet;WIX;"
+            platform: "windows"
           - os: macos-latest
-            cpack_generators: "Bundle;DragNDrop;"
+            cpack_generators: "DragNDrop;"
+            platform: "macos"
 
     runs-on: ${{matrix.os}}
     needs: build
@@ -234,4 +237,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Kerbal ${{matrix.os}}
-          path: ${{github.workspace}}/Kerbal-pack/packages
+          path: ${{github.platform}}/Kerbal-pack/packages
