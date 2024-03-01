@@ -207,6 +207,9 @@ jobs:
     needs: build
 
     steps:
+      - name: Show CPack Generator Support
+        run: cpack --help
+
       - name: Clone Kerbal
         uses: actions/checkout@v4
         with:
@@ -220,14 +223,15 @@ jobs:
           cmake
           -S ${{github.workspace}}/Kerbal/
           -B ${{github.workspace}}/Kerbal-pack/
-          -DCMAKE_BUILD_TYPE=Release -DCPACK_OUTPUT_FILE_PREFIX=packages -DKERBAL_INSTALL_GDB_PRETTY_PRINTER=ON
+          -DCMAKE_BUILD_TYPE=Release -DCPACK_OUTPUT_FILE_PREFIX=packages
+          -DCPACK_BUNDLE_NAME="Kerbal"
 
           cd ${{github.workspace}}/Kerbal-pack/
 
           cpack -G "${{matrix.cpack_generators}}"
 
       - name: Upload Package
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Kerbal ${{matrix.os}}
           path: ${{github.workspace}}/Kerbal-pack/packages
