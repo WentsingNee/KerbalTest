@@ -37,7 +37,7 @@ endif ()
 
 option(KERBAL_TEST_ENABLE_COROUTINE "enable coroutine" ON)
 
-if (KERBAL_TEST_ENABLE_COROUTINE)
+if (KTEST_ENABLE_COROUTINE)
     include(cmake/coroutine.cmake)
 endif ()
 
