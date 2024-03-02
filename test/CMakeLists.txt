@@ -115,7 +115,7 @@ endfunction()
 
 
 file(GLOB_RECURSE test_src_files RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "*")
-foreach (file ${test_src_files})
+foreach (file IN LISTS test_src_files)
     if (NOT file MATCHES "(.+)\\.test\\.cpp$")
         string(APPEND ignored_utest_src_files "${CMAKE_CURRENT_SOURCE_DIR}/${file}:0\n")
         continue()
@@ -138,7 +138,7 @@ endif ()
 
 
 file(GLOB children RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "*")
-foreach (child ${children})
+foreach (child IN LISTS children)
     if (IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/${child}" AND EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${child}/CMakeLists.txt")
         message("child  ${child}")
         add_subdirectory(${child})
@@ -152,7 +152,7 @@ get_property(
         GLOBAL
         PROPERTY KTEST_UTEST_TARGETS_MANIFEST
 )
-foreach (target ${ktest_utest_targets_manifest})
+foreach (target IN LISTS ktest_utest_targets_manifest)
     message(VERBOSE "utest-target ${utest_targets_count}: ${target}")
     math(EXPR utest_targets_count "${utest_targets_count} + 1")
 endforeach ()

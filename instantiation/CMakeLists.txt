@@ -17,7 +17,7 @@ endfunction()
 
 
 file(GLOB_RECURSE test_src_files RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "*")
-foreach (file ${test_src_files})
+foreach (file IN LISTS test_src_files)
     if (NOT file MATCHES "(.+)\\.inst\\.cpp$")
         string(APPEND ignored_inst_src_files "${CMAKE_CURRENT_SOURCE_DIR}/${file}:0\n")
         continue()
@@ -43,7 +43,7 @@ get_property(
         GLOBAL
         PROPERTY KTEST_INST_TARGETS_MANIFEST
 )
-foreach (target ${ktest_inst_targets_manifest})
+foreach (target IN LISTS ktest_inst_targets_manifest)
     message(VERBOSE "inst-target ${inst_targets_count}: ${target}")
     math(EXPR inst_targets_count "${inst_targets_count} + 1")
 endforeach ()

@@ -9,8 +9,7 @@
 #   all rights reserved
 #
 
-set(
-        kerbal_random_mt_supported_IEs
+foreach (ie IN ITEMS
         avx512f
         avx2
         sse4.1
@@ -18,7 +17,5 @@ set(
         sve
         neon
 )
-
-foreach (ie ${kerbal_random_mt_supported_IEs})
     add_ktest_utest_target_wih_ie(utest.random.mersenne_twister_engine_${ie} ./mersenne_twister_engine.test.cpp ${ie})
 endforeach ()

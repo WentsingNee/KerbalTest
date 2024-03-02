@@ -9,7 +9,7 @@
 #   all rights reserved
 #
 
-set(try_test_guess_list
+foreach (e IN ITEMS
         is_enum
 
         is_assignable
@@ -39,8 +39,6 @@ set(try_test_guess_list
         is_trivially_move_assignable
         is_trivially_move_constructible
 )
-
-foreach (e ${try_test_guess_list})
     add_ktest_utest_target(utest.type_traits.${e}_guess ${e}.test.cpp)
     string(TOUPPER ${e} E)
     target_compile_definitions(utest.type_traits.${e}_guess PRIVATE KERBAL_HAS_${E}_SUPPORT=0)
