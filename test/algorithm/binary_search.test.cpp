@@ -151,12 +151,12 @@ KERBAL_TEMPLATE_TEST_CASE(test_equal_range, "test equal_range")
 	iterator range_end(l.end());
 
 	for (int i = 0; i <= 22; ++i) {
-		std::pair<iterator, iterator> eqr_std(std::equal_range(range_begin, range_end, i));
-		std::pair<iterator, iterator> eqr_ker(kerbal::algorithm::equal_range(range_begin, range_end, i));
-		KERBAL_TEST_CHECK_EQUAL(kerbal::iterator::distance(range_begin, eqr_std.first),
-								kerbal::iterator::distance(range_begin, eqr_ker.first));
-		KERBAL_TEST_CHECK_EQUAL(kerbal::iterator::distance(range_begin, eqr_std.second),
-								kerbal::iterator::distance(range_begin, eqr_ker.second));
+		kerbal::utility::compressed_pair<iterator, iterator> eqr_std(std::equal_range(range_begin, range_end, i));
+		kerbal::utility::compressed_pair<iterator, iterator> eqr_ker(kerbal::algorithm::equal_range(range_begin, range_end, i));
+		KERBAL_TEST_CHECK_EQUAL(kerbal::iterator::distance(range_begin, eqr_std.first()),
+								kerbal::iterator::distance(range_begin, eqr_ker.first()));
+		KERBAL_TEST_CHECK_EQUAL(kerbal::iterator::distance(range_begin, eqr_std.second()),
+								kerbal::iterator::distance(range_begin, eqr_ker.second()));
 	}
 }
 
