@@ -60,26 +60,26 @@ template RasIter<int>::type kerbal::algorithm::upper_bound_backward(RasIter<int>
 template BdrIter<int>::type kerbal::algorithm::upper_bound_backward(BdrIter<int>::type, BdrIter<int>::type, const int&, cmp_fnptr<int>::type);
 
 
-template std::pair<CtgIter<int>::type, CtgIter<int>::type> kerbal::algorithm::equal_range(CtgIter<int>::type, CtgIter<int>::type, int const&, cmp_fnptr<int>::type);
-template std::pair<RasIter<int>::type, RasIter<int>::type> kerbal::algorithm::equal_range(RasIter<int>::type, RasIter<int>::type, int const&, cmp_fnptr<int>::type);
-template std::pair<BdrIter<int>::type, BdrIter<int>::type> kerbal::algorithm::equal_range(BdrIter<int>::type, BdrIter<int>::type, int const&, cmp_fnptr<int>::type);
-template std::pair<FwlIter<int>::type, FwlIter<int>::type> kerbal::algorithm::equal_range(FwlIter<int>::type, FwlIter<int>::type, int const&, cmp_fnptr<int>::type);
-template std::pair<FwdIter<int>::type, FwdIter<int>::type> kerbal::algorithm::equal_range(FwdIter<int>::type, FwdIter<int>::type, int const&, cmp_fnptr<int>::type);
+template kerbal::utility::compressed_pair<CtgIter<int>::type, CtgIter<int>::type> kerbal::algorithm::equal_range(CtgIter<int>::type, CtgIter<int>::type, int const&, cmp_fnptr<int>::type);
+template kerbal::utility::compressed_pair<RasIter<int>::type, RasIter<int>::type> kerbal::algorithm::equal_range(RasIter<int>::type, RasIter<int>::type, int const&, cmp_fnptr<int>::type);
+template kerbal::utility::compressed_pair<BdrIter<int>::type, BdrIter<int>::type> kerbal::algorithm::equal_range(BdrIter<int>::type, BdrIter<int>::type, int const&, cmp_fnptr<int>::type);
+template kerbal::utility::compressed_pair<FwlIter<int>::type, FwlIter<int>::type> kerbal::algorithm::equal_range(FwlIter<int>::type, FwlIter<int>::type, int const&, cmp_fnptr<int>::type);
+template kerbal::utility::compressed_pair<FwdIter<int>::type, FwdIter<int>::type> kerbal::algorithm::equal_range(FwdIter<int>::type, FwdIter<int>::type, int const&, cmp_fnptr<int>::type);
 
 
-template std::pair<CtgIter<std::string>::type, CtgIter<std::string>::type>
+template kerbal::utility::compressed_pair<CtgIter<std::string>::type, CtgIter<std::string>::type>
 kerbal::algorithm::equal_range(CtgIter<std::string>::type, CtgIter<std::string>::type, const char * const &);
 
-template std::pair<RasIter<std::string>::type, RasIter<std::string>::type>
+template kerbal::utility::compressed_pair<RasIter<std::string>::type, RasIter<std::string>::type>
 kerbal::algorithm::equal_range(RasIter<std::string>::type, RasIter<std::string>::type, const char * const &);
 
-template std::pair<BdrIter<std::string>::type, BdrIter<std::string>::type>
+template kerbal::utility::compressed_pair<BdrIter<std::string>::type, BdrIter<std::string>::type>
 kerbal::algorithm::equal_range(BdrIter<std::string>::type, BdrIter<std::string>::type, const char * const &);
 
-template std::pair<FwlIter<std::string>::type, FwlIter<std::string>::type>
+template kerbal::utility::compressed_pair<FwlIter<std::string>::type, FwlIter<std::string>::type>
 kerbal::algorithm::equal_range(FwlIter<std::string>::type, FwlIter<std::string>::type, const char * const &);
 
-template std::pair<FwdIter<std::string>::type, FwdIter<std::string>::type>
+template kerbal::utility::compressed_pair<FwdIter<std::string>::type, FwdIter<std::string>::type>
 kerbal::algorithm::equal_range(FwdIter<std::string>::type, FwdIter<std::string>::type, const char * const &);
 
 
