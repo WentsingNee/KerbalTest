@@ -19,6 +19,7 @@
 
 #include <string>
 
+
 KERBAL_TEST_CASE(test_reference_wrapper, "test reference_wrapper")
 {
 	using kerbal::utility::reference_wrapper;
@@ -36,10 +37,30 @@ KERBAL_TEST_CASE(test_reference_wrapper_copyassign, "test reference_wrapper::ope
 
 	int x = 5, y = 6;
 	reference_wrapper<int> refx(x), refy(y);
-	
+
 	refx = refy;
 	KERBAL_TEST_CHECK(x == 5);
 	KERBAL_TEST_CHECK(refx == 6);
+
+}
+
+
+KERBAL_TEST_CASE(test_reference_wrapper_cast_to_ref, "test reference_wrapper::operator T&()")
+{
+	using kerbal::utility::reference_wrapper;
+
+	int x = 5;
+	{
+		reference_wrapper<int> refx(x);
+		int & rx = refx;
+		KERBAL_TEST_CHECK(&rx == &x);
+	}
+
+	{
+		reference_wrapper<const int> refx(x);
+		const int & rx = refx;
+		KERBAL_TEST_CHECK(&rx == &x);
+	}
 
 }
 
@@ -50,7 +71,7 @@ KERBAL_TEST_CASE(test_reference_wrapper_assign_val, "test reference_wrapper.get(
 
 	int x = 5;
 	reference_wrapper<int> refx(x);
-	
+
 	refx.get() = 7;
 	KERBAL_TEST_CHECK(x == 7);
 	KERBAL_TEST_CHECK(refx == 7);
@@ -61,7 +82,7 @@ KERBAL_TEST_CASE(test_reference_wrapper_assign_val, "test reference_wrapper.get(
 KERBAL_TEST_CASE(test_sort_list, "test sort list")
 {
 	using kerbal::utility::reference_wrapper;
-	
+
 	kerbal::container::single_list<int> l; {
 		for (int i = 0; i < 10; ++i) {
 			l.push_front(i);
