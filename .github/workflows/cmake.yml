@@ -201,7 +201,7 @@ jobs:
             cpack_generators: "DEB;STGZ;TGZ;ZIP;"
             platform: "ubuntu"
           - os: windows-latest
-            cpack_generators: "ZIP;NuGet;WIX;"
+            cpack_generators: "ZIP;NuGet;NSIS;"
             platform: "windows"
           - os: macos-latest
             cpack_generators: "DragNDrop;"
