@@ -211,7 +211,7 @@ jobs:
     needs: build
 
     steps:
-      - name: Show CPack Generator Support
+      - name: Show CPack Generators Support
         run: cpack --help
 
       - name: Clone Kerbal
@@ -237,5 +237,5 @@ jobs:
       - name: Upload Package
         uses: actions/upload-artifact@v4
         with:
-          name: Kerbal ${{matrix.platform}}
+          name: Kerbal-${{matrix.platform}}
           path: ${{github.workspace}}/Kerbal-pack/packages
