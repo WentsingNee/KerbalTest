@@ -16,6 +16,7 @@
 #include <kerbal/container/array.hpp>
 #include <kerbal/type_traits/integral_constant.hpp>
 #include <kerbal/utility/ignore_unused.hpp>
+#include <kerbal/utility/reference_wrapper.hpp>
 
 
 namespace ku = kerbal::utility;
@@ -71,6 +72,31 @@ KERBAL_TEST_CASE(test_tuple_partially_init, "test tuple partially init")
 	KERBAL_TEST_CHECK(&t.get<1>() == &x);
 	KERBAL_TEST_CHECK(t.get<2>() == "abc");
 
+}
+
+KERBAL_TEST_CASE(test_tuple_piecewise_init, "test tuple piecewise init")
+{
+	int i = 0;
+	kerbal::container::vector<int> t0(3, 4);
+	ku::tuple<int, int> t3(5, 6);
+
+	ku::tuple<
+		kerbal::container::vector<int>,
+		int,
+		ku::reference_wrapper<int>,
+		ku::tuple<int, int>
+	> t(
+		ku::piecewise_construct_t(),
+		ku::make_tuple(3, 4),
+		ku::make_tuple(4),
+		ku::tuple<int&>(i),
+		ku::make_tuple(5, 6)
+	);
+
+	KERBAL_TEST_CHECK(t.get<0>() == t0);
+	KERBAL_TEST_CHECK(t.get<1>() == 4);
+	KERBAL_TEST_CHECK(&t.get<2>().get() == &i);
+	KERBAL_TEST_CHECK(t.get<3>() == t3);
 }
 
 #endif
