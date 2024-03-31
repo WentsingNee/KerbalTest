@@ -148,6 +148,53 @@ KERBAL_TEST_CASE(test_invoke_mem_obj, "test invoke mem_obj")
 #	endif
 
 	}
+
+	{
+		simple_pair p(2, 3);
+		KERBAL_TEST_CHECK(&kf::invoke(&simple_pair::first, &p) == &p.first);
+
+		kf::invoke(&simple_pair::first, &p) = 7;
+		KERBAL_TEST_CHECK(p.first == 7);
+
+#	if __cplusplus && KERBAL_HAS_EXCEPTIONS_SUPPORT
+		KERBAL_TEST_CHECK_STATIC(noexcept(kf::invoke(&simple_pair::first, &p)));
+#	endif
+
+	}
+	{
+		const simple_pair p(2, 3);
+		KERBAL_TEST_CHECK(&kf::invoke(&simple_pair::first, &p) == &p.first);
+
+#	if __cplusplus && KERBAL_HAS_EXCEPTIONS_SUPPORT
+		KERBAL_TEST_CHECK_STATIC(noexcept(kf::invoke(&simple_pair::first, &p)));
+#	endif
+
+	}
+
+	{
+		simple_pair p(2, 3);
+		KERBAL_TEST_CHECK(&kf::invoke(&simple_pair::first, kerbal::utility::ref(p)) == &p.first);
+		KERBAL_TEST_CHECK(&kf::invoke(&simple_pair::first, kerbal::utility::cref(p)) == &p.first);
+
+		kf::invoke(&simple_pair::first, kerbal::utility::ref(p)) = 7;
+		KERBAL_TEST_CHECK(p.first == 7);
+
+#	if __cplusplus && KERBAL_HAS_EXCEPTIONS_SUPPORT
+		KERBAL_TEST_CHECK_STATIC(noexcept(kf::invoke(&simple_pair::first, kerbal::utility::ref(p))));
+#	endif
+
+	}
+	{
+		const simple_pair p(2, 3);
+		KERBAL_TEST_CHECK(&kf::invoke(&simple_pair::first, kerbal::utility::ref(p)) == &p.first);
+		KERBAL_TEST_CHECK(&kf::invoke(&simple_pair::first, kerbal::utility::cref(p)) == &p.first);
+
+#	if __cplusplus && KERBAL_HAS_EXCEPTIONS_SUPPORT
+		KERBAL_TEST_CHECK_STATIC(noexcept(kf::invoke(&simple_pair::first, kerbal::utility::ref(p))));
+#	endif
+
+	}
+
 }
 
 
@@ -188,14 +235,14 @@ KERBAL_TEST_CASE(test_invoke_mem_fun, "test invoke mem_fun")
 {
 	{
 		pair_ic p(2, 3);
-		KERBAL_TEST_CHECK(kf::invoke(&pair_ic::first, p) == p.first());
+		KERBAL_TEST_CHECK(&kf::invoke(&pair_ic::first, p) == &p.first());
 
 		kf::invoke(&pair_ic::first, p) = 7;
 		KERBAL_TEST_CHECK(p.first() == 7);
 	}
 	{
 		const pair_ic p(2, 3);
-		KERBAL_TEST_CHECK(kf::invoke(&pair_ic::cfirst, p) == p.cfirst());
+		KERBAL_TEST_CHECK(&kf::invoke(&pair_ic::cfirst, p) == &p.cfirst());
 	}
 
 #if __cplusplus >= 201103L && KERBAL_COMPILER_ID != KERBAL_COMPILER_ID_MSVC // msvc2017 bug
@@ -213,6 +260,33 @@ KERBAL_TEST_CASE(test_invoke_mem_fun, "test invoke mem_fun")
 	}
 
 #endif
+
+	{
+		pair_ic p(2, 3);
+		KERBAL_TEST_CHECK(&kf::invoke(&pair_ic::first, &p) == &p.first());
+
+		kf::invoke(&pair_ic::first, &p) = 7;
+		KERBAL_TEST_CHECK(p.first() == 7);
+	}
+	{
+		const pair_ic p(2, 3);
+		KERBAL_TEST_CHECK(&kf::invoke(&pair_ic::cfirst, &p) == &p.cfirst());
+	}
+
+
+	{
+		pair_ic p(2, 3);
+		KERBAL_TEST_CHECK(&kf::invoke(&pair_ic::first, kerbal::utility::ref(p)) == &p.first());
+		KERBAL_TEST_CHECK(&kf::invoke(&pair_ic::cfirst, kerbal::utility::cref(p)) == &p.first());
+
+		kf::invoke(&pair_ic::first, &p) = 7;
+		KERBAL_TEST_CHECK(p.first() == 7);
+	}
+	{
+		const pair_ic p(2, 3);
+		KERBAL_TEST_CHECK(&kf::invoke(&pair_ic::cfirst, kerbal::utility::ref(p)) == &p.cfirst());
+		KERBAL_TEST_CHECK(&kf::invoke(&pair_ic::cfirst, kerbal::utility::cref(p)) == &p.cfirst());
+	}
 
 }
 
