@@ -14,8 +14,6 @@
 #include <kerbal/test/test.hpp>
 #include <kerbal/random/mersenne_twister_engine.hpp>
 
-#include <ctime>
-
 
 struct Foo: kerbal::test::object_count<Foo>
 {
@@ -112,7 +110,7 @@ Foo get(int cond)
 
 KERBAL_TEST_CASE(test_object_count_fn, "test object_count (fn)")
 {
-	kerbal::random::mt19937 eg(static_cast<kerbal::compatibility::uint32_t>(std::time(NULL)));
+	kerbal::random::mt19937 eg;
 
 	Foo::counting_type cnt = Foo::get_count();
 

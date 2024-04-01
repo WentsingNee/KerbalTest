@@ -22,7 +22,6 @@
 #include <kerbal/random/mersenne_twister_engine.hpp>
 #include <kerbal/type_traits/integral_constant.hpp>
 
-#include <ctime>
 #include <set>
 
 
@@ -30,9 +29,7 @@ KERBAL_TEST_CASE(test_flat_set_range_constructor, "test flat_set::flat_set(itera
 {
 	typedef kerbal::type_traits::integral_constant<int, 5000> N;
 
-	kerbal::random::mt19937 outer_eg(static_cast<kerbal::compatibility::uint32_t>(std::time(NULL))); {
-		outer_eg.discard(100);
-	}
+	kerbal::random::mt19937 outer_eg;
 
 	kerbal::random::mt19937::result_type
 			seeds[] = {0, 1, 2, 3, outer_eg(), outer_eg(), outer_eg(), outer_eg(), outer_eg()};
@@ -63,9 +60,7 @@ KERBAL_TEST_CASE(test_flat_set_insert, "test flat_set::insert)")
 {
 	typedef kerbal::type_traits::integral_constant<int, 5000> N;
 
-	kerbal::random::mt19937 outer_eg(static_cast<kerbal::compatibility::uint32_t>(std::time(NULL))); {
-		outer_eg.discard(100);
-	}
+	kerbal::random::mt19937 outer_eg;
 
 	kerbal::random::mt19937::result_type
 			seeds[] = {0, 1, 2, 3, outer_eg(), outer_eg(), outer_eg(), outer_eg(), outer_eg()};
@@ -105,9 +100,7 @@ KERBAL_TEST_CASE(test_flat_set_erase, "test flat_set::erase)")
 {
 	typedef kerbal::type_traits::integral_constant<int, 5000> N;
 
-	kerbal::random::mt19937 outer_eg(static_cast<kerbal::compatibility::uint32_t>(std::time(NULL))); {
-		outer_eg.discard(100);
-	}
+	kerbal::random::mt19937 outer_eg;
 
 	kerbal::random::mt19937::result_type
 			seeds[] = {0, 1, 2, 3, outer_eg(), outer_eg(), outer_eg(), outer_eg(), outer_eg()};
@@ -144,9 +137,7 @@ KERBAL_TEST_CASE(test_flat_multiset_erase, "test flat_multiset::erase)")
 {
 	typedef kerbal::type_traits::integral_constant<int, 5000> N;
 
-	kerbal::random::mt19937 outer_eg(static_cast<kerbal::compatibility::uint32_t>(std::time(NULL))); {
-		outer_eg.discard(100);
-	}
+	kerbal::random::mt19937 outer_eg;
 
 	kerbal::random::mt19937::result_type
 			seeds[] = {0, 1, 2, 3, outer_eg(), outer_eg(), outer_eg(), outer_eg(), outer_eg()};
