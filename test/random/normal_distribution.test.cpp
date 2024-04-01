@@ -35,15 +35,16 @@ KERBAL_TEMPLATE_TEST_CASE(test_normal_distribution, "test normal_distribution")
 {
 	Eg eg;
 
-	float args[][2] = {
-			{250.0, 10.0},
-			{0.0, 10.0},
-			{0.0, 1.0},
+	float means[] = {
+			250.0, 0.0, 0.0,
+	};
+	float stds[] = {
+			10.0, 10.0, 1.0,
 	};
 
-	for (std::size_t tcase = 0; tcase < kerbal::container::size(args); ++tcase) {
-		float mean = args[tcase][0];
-		float stddev = args[tcase][1];
+	for (std::size_t tcase = 0; tcase < kerbal::container::size(means); ++tcase) {
+		float mean = means[tcase];
+		float stddev = stds[tcase];
 
 		std::cout << "mean = " << mean << ", stddev = " << stddev;
 		std::cout << "\n" << std::endl;
