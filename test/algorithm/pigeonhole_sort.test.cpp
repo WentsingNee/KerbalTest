@@ -16,7 +16,7 @@
 #include <kerbal/compare/basic_compare.hpp>
 #include <kerbal/compare/sequence_compare.hpp>
 #include <kerbal/container/nonmember_container_access.hpp>
-#include <kerbal/container/array.hpp>
+#include <kerbal/container/vector.hpp>
 #include <kerbal/random/mersenne_twister_engine.hpp>
 #include <kerbal/type_traits/integral_constant.hpp>
 
@@ -30,9 +30,9 @@ struct test_suite
 		{
 			using namespace kerbal::algorithm;
 			typedef kerbal::type_traits::integral_constant<size_t, 300000> N;
-			typedef kerbal::container::array<value_type, N::value> container_type;
+			typedef kerbal::container::vector<value_type> container_type;
 
-			container_type v; {
+			container_type v(N::value); {
 				for (N::value_type i = 0; i < N::value; ++i) {
 					if (kerbal::type_traits::is_same<value_type, bool>::value) {
 						v[i] = eg() % 2;

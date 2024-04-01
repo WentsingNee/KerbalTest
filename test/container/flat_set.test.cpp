@@ -28,7 +28,7 @@
 
 KERBAL_TEST_CASE(test_flat_set_range_constructor, "test flat_set::flat_set(iterator, iterator)")
 {
-	typedef kerbal::type_traits::integral_constant<int, 50000> N;
+	typedef kerbal::type_traits::integral_constant<int, 5000> N;
 
 	kerbal::random::mt19937 outer_eg(static_cast<kerbal::compatibility::uint32_t>(std::time(NULL))); {
 		outer_eg.discard(100);

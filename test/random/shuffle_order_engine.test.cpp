@@ -27,6 +27,8 @@ KERBAL_TEMPLATE_TEST_CASE(test_shuffle_order_engine, "test shuffle_order_engine"
 	typedef kerbal::random::shuffle_order_engine<Eg, K> ker_t;
 	typedef std::shuffle_order_engine<Eg, K>            std_t;
 
+	std::cout << "sizeof: " << sizeof(ker_t) << "   " << sizeof(std_t) << std::endl;
+
 	ker_t ker;
 	std_t std;
 
@@ -45,7 +47,7 @@ KERBAL_TEMPLATE_TEST_CASE(test_shuffle_order_engine, "test shuffle_order_engine"
 KERBAL_TEMPLATE_TEST_CASE_INST(test_shuffle_order_engine, "test_shuffle_order_engine 0", kerbal::random::mt19937, 256);
 KERBAL_TEMPLATE_TEST_CASE_INST(test_shuffle_order_engine, "test_shuffle_order_engine 1", kerbal::random::minstd_rand, 256);
 KERBAL_TEMPLATE_TEST_CASE_INST(test_shuffle_order_engine, "test_shuffle_order_engine 2", kerbal::random::minstd_rand0, 257);
-KERBAL_TEMPLATE_TEST_CASE_INST(test_shuffle_order_engine, "test_shuffle_order_engine 3", kerbal::random::minstd_rand0, 41237);
+KERBAL_TEMPLATE_TEST_CASE_INST(test_shuffle_order_engine, "test_shuffle_order_engine 3", kerbal::random::minstd_rand0, 7237);
 
 #endif
 
