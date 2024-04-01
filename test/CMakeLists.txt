@@ -69,33 +69,57 @@ function(add_ktest_utest_target target target_src_file)
     endif ()
 
     if ((DEFINED KTEST_CI) AND (NOT KTEST_CI STREQUAL ""))
-        set(run_utest_args "--run_in_ci")
+        list(APPEND run_utest_args "--run_in_ci")
     endif ()
 
-    set(run_utest_target_name "run_${target}")
-    add_custom_target(${run_utest_target_name}
-            COMMAND ${KTEST_RUN_UTEST_INVOKER} ${path} ${run_utest_args} > test_output/${target}.out.txt
-            COMMAND ${CMAKE_COMMAND} -E cat test_output/${target}.out.txt
-            WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
-            COMMENT "Running utest target ${target}"
-            DEPENDS ${target} run_utest_make_test_output_dir
-    )
-    set_target_properties("${run_utest_target_name}"
-            PROPERTIES ktest_category "run_utest"
-    )
+    set(run_utest_args_with_escape "")
+    foreach (arg IN LISTS run_utest_args)
+        set(run_utest_args_with_escape "${run_utest_args_with_escape}${arg}\;")
+    endforeach ()
 
-    if (KTEST_ENABLE_SANITIZE AND CMAKE_CXX_COMPILER MATCHES "MSVC")
-        if (NOT TARGET copy_sanitize_dll_before_run_utest)
-            add_custom_target(
-                    copy_sanitize_dll_before_run_utest
-                    COMMAND ${CMAKE_COMMAND} -E copy ${KTEST_LIB_ASAN_DLL} ${PROJECT_BINARY_DIR}/targets
-                    WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
-            )
+    foreach (run_modified IN ITEMS True False)
+        if (run_modified)
+            set(run_utest_target_name "runm_${target}")
+            set(hash_file "${PROJECT_BINARY_DIR}/runm_utest_hash/${target}")
+            set(ktest_category "runm_utest")
+        else ()
+            set(run_utest_target_name "run_${target}")
+            set(hash_file "")
+            set(ktest_category "run_utest")
         endif ()
-        add_dependencies(${run_utest_target_name} copy_sanitize_dll_before_run_utest)
-    endif ()
 
-    add_kerbal_parent_target(${run_utest_target_name})
+        add_custom_target(
+                ${run_utest_target_name}
+                COMMAND
+                    "${CMAKE_COMMAND}"
+                    -DCMAKE_MODULE_PATH="${CMAKE_MODULE_PATH}"
+                    -DKTEST_RUN_UTEST_INVOKER="${KTEST_RUN_UTEST_INVOKER}"
+                    -DTARGET="${target}"
+                    -DPATH="${path}"
+                    -DHASH_FILE="${hash_file}"
+                    -DRUN_UTEST_ARGS="${run_utest_args_with_escape}"
+                    -DPROJECT_BINARY_DIR="${PROJECT_BINARY_DIR}"
+                    -P "${PROJECT_SOURCE_DIR}/cmake/run_utest.cmake"
+                WORKING_DIRECTORY "${PROJECT_BINARY_DIR}"
+                DEPENDS ${target} run_utest_make_test_output_dir
+        )
+        set_target_properties("${run_utest_target_name}"
+                PROPERTIES ktest_category "${ktest_category}"
+        )
+
+        if (KTEST_ENABLE_SANITIZE AND CMAKE_CXX_COMPILER MATCHES "MSVC")
+            if (NOT TARGET copy_sanitize_dll_before_run_utest)
+                add_custom_target(
+                        copy_sanitize_dll_before_run_utest
+                        COMMAND ${CMAKE_COMMAND} -E copy ${KTEST_LIB_ASAN_DLL} ${PROJECT_BINARY_DIR}/targets
+                        WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
+                )
+            endif ()
+            add_dependencies(${run_utest_target_name} copy_sanitize_dll_before_run_utest)
+        endif ()
+
+        add_kerbal_parent_target(${run_utest_target_name})
+    endforeach ()
 endfunction()
 
 
