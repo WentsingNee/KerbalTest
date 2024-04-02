@@ -143,13 +143,26 @@ kerbal::container::vector<T> get_reverse(size_t N, kerbal::random::mt19937 & eg)
 
 struct customized_compare
 {
+		static bool is_even(int x)
+		{
+			if (x < 0) {
+				x = -x;
+			}
+			return x % 2 == 0;
+		}
+
+		static bool is_odd(int x)
+		{
+			return !is_even(x);
+		}
+
 		bool operator()(int x, int y) const
 		{
-			if (x % 2 == 1 && y % 2 == 1) {
+			if (is_odd(x) && is_odd(y)) {
 				return x < y;
-			} else if (x % 2 == 0 && y % 2 == 0) {
+			} else if (is_even(x) && is_even(y)) {
 				return x > y;
-			} else if (x % 2 == 1 && y % 2 == 0) {
+			} else if (is_odd(x) && is_even(y)) {
 				return true;
 			} else {
 				return false;
