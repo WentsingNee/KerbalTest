@@ -115,8 +115,15 @@ function(ktest_basic_configuration target)
 
     target_compile_definitions(${target} PUBLIC KERBAL_TYPE_TRAITS_DEBUG_WARNING=1)
 
-    target_include_directories(${target} PUBLIC "${PROJECT_SOURCE_DIR}/include")
     target_link_libraries(${target} PUBLIC Kerbal::kerbal)
+
+    # test/include
+    if (
+        (ktest_category STREQUAL "instantiation") OR
+        (ktest_category STREQUAL "utest")
+    )
+        target_include_directories(${target} PUBLIC "${PROJECT_SOURCE_DIR}/include")
+    endif ()
 
 
     # libc++
