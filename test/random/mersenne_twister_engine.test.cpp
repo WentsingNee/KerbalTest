@@ -138,7 +138,7 @@ KERBAL_TEMPLATE_TEST_CASE(test_mersenne_with_std, "test mersenne with std")
 
 	int seeds[] = {23, 3, 31, 313, 34153, 546};
 	int discard_times[] = {0, 10, 55, 465, 84465};
-	int Ns[] = {0, 10, 55, 465, 4286, 84465};
+	int Ns[] = {1, 10, 16, 55, 64, 465, 4286, 84465};
 
 	for (std::size_t tcase1 = 0; tcase1 < kerbal::container::size(seeds); ++tcase1) {
 		for (std::size_t tcase2 = 0; tcase2 < kerbal::container::size(discard_times); ++tcase2) {
