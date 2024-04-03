@@ -2,7 +2,7 @@
 include(${PROJECT_SOURCE_DIR}/cmake/add_kerbal_parent_target.cmake)
 
 
-if (${KERBAL_WASM})
+if (KERBAL_WASM)
     if (NOT DEFINED KTEST_WASM_RUN_UTEST_INVOKER)
         message(STATUS "Finding node")
         find_program(KTEST_WASM_RUN_UTEST_INVOKER "node" REQUIRED)
@@ -12,11 +12,11 @@ endif ()
 
 
 if (NOT DEFINED KTEST_RUN_UTEST_INVOKER)
-    if (${KERBAL_WASM})
+    if (KERBAL_WASM)
         if (NOT DEFINED KTEST_WASM_RUN_UTEST_INVOKER)
             message(FATAL_ERROR "Neither KTEST_RUN_UTEST_INVOKER nor KTEST_WASM_RUN_UTEST_INVOKER is defined")
         endif ()
-        set (KTEST_RUN_UTEST_INVOKER "${KTEST_WASM_RUN_UTEST_INVOKER}")
+        set(KTEST_RUN_UTEST_INVOKER "${KTEST_WASM_RUN_UTEST_INVOKER}")
     endif ()
 endif ()
 
@@ -68,8 +68,8 @@ function(add_ktest_utest_target target target_src_file)
         file(RELATIVE_PATH path ${PROJECT_BINARY_DIR} "${path}/${target_output_name}")
     endif ()
 
-    if (NOT ${KTEST_CI} STREQUAL "")
-        set (run_utest_args "--run_in_ci")
+    if ((DEFINED KTEST_CI) AND (NOT KTEST_CI STREQUAL ""))
+        set(run_utest_args "--run_in_ci")
     endif ()
 
     set(run_utest_target_name "run_${target}")
@@ -84,7 +84,7 @@ function(add_ktest_utest_target target target_src_file)
             PROPERTIES ktest_category "run_utest"
     )
 
-    if (${KTEST_ENABLE_SANITIZE} AND ${CMAKE_CXX_COMPILER} MATCHES "MSVC")
+    if (KTEST_ENABLE_SANITIZE AND CMAKE_CXX_COMPILER MATCHES "MSVC")
         if (NOT TARGET copy_sanitize_dll_before_run_utest)
             add_custom_target(
                     copy_sanitize_dll_before_run_utest
@@ -124,7 +124,7 @@ foreach (file IN LISTS test_src_files)
     string(PREPEND target "utest.")
     message(VERBOSE "	add: ${target}  <=  ${CMAKE_CURRENT_SOURCE_DIR}/${file}")
     add_ktest_utest_target(${target} ${CMAKE_CURRENT_SOURCE_DIR}/${file})
-    if (${KTEST_ENABLE_PRECOMPILE_HEADER})
+    if (KTEST_ENABLE_PRECOMPILE_HEADER)
         target_precompile_headers(${target} REUSE_FROM ktest_precompile_header)
     endif ()
 endforeach ()
