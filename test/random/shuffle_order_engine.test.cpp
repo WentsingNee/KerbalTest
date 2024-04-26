@@ -18,6 +18,7 @@
 
 #if __cplusplus >= 201103L
 
+#include <iostream>
 #include <random>
 
 
