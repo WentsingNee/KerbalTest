@@ -49,6 +49,21 @@ KERBAL_TEMPLATE_TEST_CASE_INST(test_countl_zero, "test countl_zero", unsigned lo
 KERBAL_TEMPLATE_TEST_CASE_INST(test_countl_zero, "test countl_zero", unsigned long long)
 
 
+#include <kerbal/algorithm/sort/intro_sort.hpp>
+
+KERBAL_TEST_CASE(test, "test")
+{
+	for (unsigned int x = 0; x < 100; ++x) {
+		int a = kerbal::numeric::countl_zero(x);
+		a = sizeof(x) * CHAR_BIT - a;
+
+		int b = kerbal::algorithm::detail::lg(x);
+
+		std::cout << x << "   " << a << "   " << b << std::endl;
+	}
+}
+
+
 int main(int argc, char * argv[])
 {
 	kerbal::test::run_all_test_case(argc, argv);
