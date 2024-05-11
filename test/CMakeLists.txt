@@ -21,13 +21,6 @@ if (NOT DEFINED KTEST_RUN_UTEST_INVOKER)
 endif ()
 
 
-add_custom_target(
-        run_utest_make_test_output_dir
-        COMMAND ${CMAKE_COMMAND} -E make_directory test_output
-        WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
-)
-
-
 function(add_ktest_utest_target target target_src_file)
     add_executable(${target} ${target_src_file})
     set_target_properties(${target}
@@ -67,6 +60,11 @@ function(add_ktest_utest_target target target_src_file)
     else()
         file(RELATIVE_PATH path ${PROJECT_BINARY_DIR} "${path}/${target_output_name}")
     endif ()
+    if (CMAKE_CONFIGURATION_TYPES)
+        set(output_file "test_output/$<CONFIG>/${target}.out.txt")
+    else()
+        set(output_file "test_output/${target}.out.txt")
+    endif ()
 
     if ((DEFINED KTEST_CI) AND (NOT KTEST_CI STREQUAL ""))
         list(APPEND run_utest_args "--run_in_ci")
@@ -96,12 +94,13 @@ function(add_ktest_utest_target target target_src_file)
                     -DKTEST_RUN_UTEST_INVOKER="${KTEST_RUN_UTEST_INVOKER}"
                     -DTARGET="${target}"
                     -DPATH="${path}"
+                    -DOUTPUT_FILE="${output_file}"
                     -DHASH_FILE="${hash_file}"
                     -DRUN_UTEST_ARGS="${run_utest_args_with_escape}"
                     -DPROJECT_BINARY_DIR="${PROJECT_BINARY_DIR}"
                     -P "${PROJECT_SOURCE_DIR}/cmake/run_utest.cmake"
                 WORKING_DIRECTORY "${PROJECT_BINARY_DIR}"
-                DEPENDS ${target} run_utest_make_test_output_dir
+                DEPENDS ${target}
         )
         set_target_properties("${run_utest_target_name}"
                 PROPERTIES ktest_category "${ktest_category}"

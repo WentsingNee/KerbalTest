@@ -17,8 +17,9 @@ include(Kerbal/list_ext)
 ##
 # CACHED_HASH_FILE_PATH one, optional
 # RUN_UTEST_ARGS  multi
-function(run_utest target path)
-    kerbal_sublist("${ARGV}" 2 -1 ARGV)
+function(run_utest target path output_file)
+    message(STATUS "output_file: ${output_file}")
+    kerbal_sublist("${ARGV}" 3 -1 ARGV)
     cmake_parse_arguments(
             ""
             ""
@@ -46,15 +47,17 @@ function(run_utest target path)
             endif ()
         endif ()
     endif ()
+    get_filename_component(test_output_dir "${output_file}" DIRECTORY)
+    file(MAKE_DIRECTORY "${test_output_dir}")
     execute_process(
             COMMAND ${KTEST_RUN_UTEST_INVOKER} ${path} ${run_utest_args}
             WORKING_DIRECTORY "${PROJECT_BINARY_DIR}"
             RESULT_VARIABLE run_utest_exit_value
-            OUTPUT_FILE "test_output/${target}.out.txt"
+            OUTPUT_FILE "${output_file}"
             COMMAND_ECHO STDOUT
     )
     execute_process(
-            COMMAND ${CMAKE_COMMAND} -E cat test_output/${target}.out.txt
+            COMMAND ${CMAKE_COMMAND} -E cat "${output_file}"
     )
     if (NOT run_utest_exit_value EQUAL 0)
         message(FATAL_ERROR "target: ${target} exit with value: ${run_utest_exit_value}")
@@ -66,7 +69,7 @@ endfunction()
 
 
 run_utest(
-        "${TARGET}" "${PATH}"
+        "${TARGET}" "${PATH}" "${OUTPUT_FILE}"
         CACHED_HASH_FILE_PATH "${HASH_FILE}"
         RUN_UTEST_ARGS "${RUN_UTEST_ARGS}"
 )
