@@ -170,7 +170,7 @@ function(ktest_basic_configuration target)
 
 
     # wasm
-    if (KERBAL_WASM)
+    if (CMAKE_SYSTEM_NAME MATCHES Emscripten)
         target_compile_options(${target} PUBLIC -fexceptions)
         if (ktest_category STREQUAL "utest")
             target_link_options(${target} PUBLIC -sALLOW_MEMORY_GROWTH)

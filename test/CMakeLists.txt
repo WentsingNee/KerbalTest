@@ -2,7 +2,7 @@
 include(${PROJECT_SOURCE_DIR}/cmake/add_kerbal_parent_target.cmake)
 
 
-if (KERBAL_WASM)
+if (CMAKE_SYSTEM_NAME MATCHES Emscripten)
     if (NOT DEFINED KTEST_WASM_RUN_UTEST_INVOKER)
         message(STATUS "Finding node")
         find_program(KTEST_WASM_RUN_UTEST_INVOKER "node" REQUIRED)
@@ -12,7 +12,7 @@ endif ()
 
 
 if (NOT DEFINED KTEST_RUN_UTEST_INVOKER)
-    if (KERBAL_WASM)
+    if (CMAKE_SYSTEM_NAME MATCHES Emscripten)
         if (NOT DEFINED KTEST_WASM_RUN_UTEST_INVOKER)
             message(FATAL_ERROR "Neither KTEST_RUN_UTEST_INVOKER nor KTEST_WASM_RUN_UTEST_INVOKER is defined")
         endif ()
@@ -36,7 +36,7 @@ function(add_ktest_utest_target target target_src_file)
     set_target_properties(${target}
             PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/targets
     )
-    if (KERBAL_WASM)
+    if (CMAKE_SYSTEM_NAME MATCHES Emscripten)
         set_target_properties(${target}
                 PROPERTIES RUNTIME_OUTPUT_NAME ${target}.js
         )
