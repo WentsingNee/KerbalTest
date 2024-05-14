@@ -73,9 +73,9 @@ template class kc::hash_table<std::string, kc::identity_extractor<std::string>, 
 
 
 
-template class kc::hash_table<int[2], kc::identity_extractor<int[2]>, hash_array<int> >;
-
-template class kc::hash_table<std::string[2], kc::identity_extractor<std::string[2]>, hash_array<std::string, hash_std_string> >;
+//template class kc::hash_table<int[2], kc::identity_extractor<int[2]>, hash_array<int> >;
+//
+//template class kc::hash_table<std::string[2], kc::identity_extractor<std::string[2]>, hash_array<std::string, hash_std_string> >;
 
 
 namespace
