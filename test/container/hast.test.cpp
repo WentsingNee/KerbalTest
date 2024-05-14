@@ -69,6 +69,45 @@ KERBAL_TEST_CASE(test_hash_table_insert, "test hash_table::insert")
 	KERBAL_TEST_CHECK(hash_table_ordered == source_ordered);
 }
 
+#include <kerbal/container/avl_set.hpp>
+#include <algorithm>
+
+KERBAL_TEST_CASE(test_hash_table_erase, "test hash_table::erase")
+{
+	typedef kerbal::type_traits::integral_constant<std::size_t, 10 * 1024> N;
+	kerbal::random::mt19937 eg;
+	kerbal::container::vector<int> data = ktest::get_random_vec_i_mod(N::value, eg, 6 * 1024);
+
+	kerbal::container::hash_table<int> kht;
+	{
+//		kht.max_load_factor(10);
+//		kht.reserve(1000);
+		kht.insert_unique(data.cbegin(), data.cend());
+	}
+
+	kerbal::container::avl_set<int> avl_set(data.cbegin(), data.cend());
+
+	std::shuffle(data.begin(), data.end(), eg);
+
+	for (std::size_t i = 0; i < data.size(); ++i) {
+		int removed = data[i];
+		kht.erase(kht.find(removed));
+		avl_set.erase(avl_set.find(removed));
+
+		{
+			kerbal::container::vector<int> ordered(kht.cbegin(), kht.cend());
+			kerbal::algorithm::sort(ordered.begin(), ordered.end());
+			KERBAL_TEST_CHECK(
+				kerbal::compare::sequence_equal_to(
+					ordered.cbegin(), ordered.cend(),
+					avl_set.cbegin(), avl_set.cend()
+				)
+			);
+		}
+	}
+
+}
+
 
 #include <kerbal/test/runtime_timer.hpp>
 #include <kerbal/container/avl_set.hpp>
@@ -79,7 +118,7 @@ KERBAL_TEST_CASE(test_hash_table_insert, "test hash_table::insert")
 
 KERBAL_TEST_CASE(bench_hash_table, "bench hash_table")
 {
-	typedef kerbal::type_traits::integral_constant<std::size_t, 1 * 1024 * 1024> N;
+	typedef kerbal::type_traits::integral_constant<std::size_t, 4 * 1024 * 1024> N;
 	kerbal::random::mt19937 eg;
 	// kerbal::container::vector<int> data = ktest::get_random_vec_i_mod(N::value, eg, 10 * 1024);
 	kerbal::container::vector<int> data = ktest::get_random_vec_i(N::value, eg);
@@ -89,8 +128,8 @@ KERBAL_TEST_CASE(bench_hash_table, "bench hash_table")
 				kerbal::container::identity_extractor<int>,
 				kerbal::hash::hash<int>,
 				kerbal::compare::equal_to<>,
-				kerbal::memory::fixed_size_node_allocator<int>
-				// std::allocator<int>
+//				kerbal::memory::fixed_size_node_allocator<int>
+				std::allocator<int>
 	> kht;
 	sht.reserve(N::value);
 	kht.reserve(N::value);
@@ -98,6 +137,19 @@ KERBAL_TEST_CASE(bench_hash_table, "bench hash_table")
 	std::set<int> kavl;
 
 	std::cout << "hash_table node size: " << kerbal::container::hash_table_node_size<int>::value << std::endl;
+
+	{
+		{
+			kerbal::test::runtime_timer t;
+			kavl.insert(data.cbegin(), data.cend());
+			std::cout << t.count() << std::endl;
+		}
+		{
+			kerbal::test::runtime_timer t;
+			kavl.clear();
+			std::cout << t.count() << std::endl;
+		}
+	}
 
 	{
 		{
@@ -125,18 +177,6 @@ KERBAL_TEST_CASE(bench_hash_table, "bench hash_table")
 		}
 	}
 
-	{
-		{
-			kerbal::test::runtime_timer t;
-			kavl.insert(data.cbegin(), data.cend());
-			std::cout << t.count() << std::endl;
-		}
-		{
-			kerbal::test::runtime_timer t;
-			kavl.clear();
-			std::cout << t.count() << std::endl;
-		}
-	}
 }
 
 #endif
@@ -195,4 +235,5 @@ KERBAL_TEST_CASE(test_hash_table_constexpr, "test hash_table constexpr")
 int main(int argc, char * argv[])
 {
 	kerbal::test::run_all_test_case(argc, argv);
+//	kerbal::test::run_test_case(1, argc, argv);
 }
