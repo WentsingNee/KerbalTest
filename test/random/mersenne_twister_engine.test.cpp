@@ -234,7 +234,7 @@ bool is_run_in_ci(int argc, char * argv[])
 int main(int argc, char * argv[])
 {
 	if (is_run_in_ci(argc, argv)) {
-#if __AVX512F__ || __AVX2__
+#if __AVX512F__ || __AVX2__ || __ARM_FEATURE_SVE
 		return 0;
 #endif
 	}
