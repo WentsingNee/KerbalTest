@@ -56,19 +56,19 @@ template class kc::list<int>;
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::list<int>::list(const_pointer, const_pointer, int);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::list<int>::list(const_iterator, const_iterator, int);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::list<int>::list(const_reverse_iterator, const_reverse_iterator, int);
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::list<int>::list(const_pointer, const_pointer, const allocator_type&, int);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::list<int>::list(const_iterator, const_iterator, const allocator_type&, int);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::list<int>::list(const_reverse_iterator, const_reverse_iterator, const allocator_type&, int);
 
 #if __cplusplus < 201103L
@@ -166,19 +166,19 @@ template class kc::list<std::string>;
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::list<std::string>::list(const_pointer, const_pointer, int);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::list<std::string>::list(const_iterator, const_iterator, int);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::list<std::string>::list(const_reverse_iterator, const_reverse_iterator, int);
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::list<std::string>::list(const_pointer, const_pointer, const allocator_type&, int);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::list<std::string>::list(const_iterator, const_iterator, const allocator_type&, int);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::list<std::string>::list(const_reverse_iterator, const_reverse_iterator, const allocator_type&, int);
 
 #if __cplusplus < 201103L
@@ -278,19 +278,19 @@ template class kc::list<int[8]>;
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::list<int[8]>::list(const_pointer, const_pointer, int);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::list<int[8]>::list(const_iterator, const_iterator, int);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::list<int[8]>::list(const_reverse_iterator, const_reverse_iterator, int);
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::list<int[8]>::list(const_pointer, const_pointer, const allocator_type&, int);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::list<int[8]>::list(const_iterator, const_iterator, const allocator_type&, int);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::list<int[8]>::list(const_reverse_iterator, const_reverse_iterator, const allocator_type&, int);
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
@@ -374,18 +374,20 @@ template class kc::list<kc::list<int> >;
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::list<kc::list<int> >::list(const_pointer, const_pointer, int);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::list<kc::list<int> >::list(const_iterator, const_iterator, int);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::list<kc::list<int> >::list(const_reverse_iterator, const_reverse_iterator, int);
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::list<kc::list<int> >::list(const_pointer, const_pointer, const allocator_type&, int);
 
-template kc::list<kc::list<int> >::list(const_iterator, const_iterator, const allocator_type&, int);
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+kc::list<kc::list<int> >::list(const_iterator, const_iterator, const allocator_type&, int);
 
-template kc::list<kc::list<int> >::list(const_reverse_iterator, const_reverse_iterator, const allocator_type&, int);
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+kc::list<kc::list<int> >::list(const_reverse_iterator, const_reverse_iterator, const allocator_type&, int);
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
 void kc::list<kc::list<int> >::assign(const_pointer, const_pointer);
@@ -474,19 +476,19 @@ template class kc::list<int, palloc<int> >;
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::list<int, palloc<int> >::list(const_pointer, const_pointer, int);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::list<int, palloc<int> >::list(const_iterator, const_iterator, int);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::list<int, palloc<int> >::list(const_reverse_iterator, const_reverse_iterator, int);
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::list<int, palloc<int> >::list(const_pointer, const_pointer, const allocator_type&, int);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::list<int, palloc<int> >::list(const_iterator, const_iterator, const allocator_type&, int);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::list<int, palloc<int> >::list(const_reverse_iterator, const_reverse_iterator, const allocator_type&, int);
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR20

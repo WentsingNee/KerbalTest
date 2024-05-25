@@ -28,13 +28,13 @@ namespace kc = kerbal::container;
 
 template class kc::avl_map<int, std::string>;
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::avl_map<int, std::string>::avl_map(const_pointer, const_pointer);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::avl_map<int, std::string>::avl_map(const_iterator, const_iterator);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::avl_map<int, std::string>::avl_map(const_reverse_iterator, const_reverse_iterator);
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
@@ -90,13 +90,13 @@ template class kc::avl_map<std::string, int, cmp_func<std::string>::type>;
 
 template class kc::avl_map<std::string, int>;
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::avl_map<std::string, int>::avl_map(const_pointer, const_pointer);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::avl_map<std::string, int>::avl_map(const_iterator, const_iterator);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::avl_map<std::string, int>::avl_map(const_reverse_iterator, const_reverse_iterator);
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR20

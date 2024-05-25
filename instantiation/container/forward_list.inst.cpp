@@ -56,13 +56,13 @@ template class kc::forward_list<int>;
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::forward_list<int>::forward_list(const_pointer, const_pointer, int);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::forward_list<int>::forward_list(const_iterator, const_iterator, int);
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::forward_list<int>::forward_list(const_pointer, const_pointer, const allocator_type&, int);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::forward_list<int>::forward_list(const_iterator, const_iterator, const allocator_type&, int);
 
 #if __cplusplus < 201103L
@@ -153,13 +153,13 @@ template class kc::forward_list<std::string>;
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::forward_list<std::string>::forward_list(const_pointer, const_pointer, int);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::forward_list<std::string>::forward_list(const_iterator, const_iterator, int);
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::forward_list<std::string>::forward_list(const_pointer, const_pointer, const allocator_type&, int);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::forward_list<std::string>::forward_list(const_iterator, const_iterator, const allocator_type&, int);
 
 #if __cplusplus < 201103L
@@ -252,7 +252,7 @@ template class kc::forward_list<int[8]>;
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::forward_list<int[8]>::forward_list(const_pointer, const_pointer, int);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::forward_list<int[8]>::forward_list(const_iterator, const_iterator, int);
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
@@ -341,7 +341,7 @@ kc::forward_list<kc::forward_list<int> >::forward_list(const_iterator, const_ite
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::forward_list<kc::forward_list<int> >::forward_list(const_pointer, const_pointer, const allocator_type&, int);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::forward_list<kc::forward_list<int> >::forward_list(const_iterator, const_iterator, const allocator_type&, int);
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
@@ -424,13 +424,13 @@ template class kc::forward_list<int, palloc<int> >;
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::forward_list<int, palloc<int> >::forward_list(const_pointer, const_pointer, int);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::forward_list<int, palloc<int> >::forward_list(const_iterator, const_iterator, int);
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::forward_list<int, palloc<int> >::forward_list(const_pointer, const_pointer, const allocator_type&, int);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::forward_list<int, palloc<int> >::forward_list(const_iterator, const_iterator, const allocator_type&, int);
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR20

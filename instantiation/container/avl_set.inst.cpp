@@ -28,13 +28,13 @@ namespace kc = kerbal::container;
 
 template class kc::avl_set<int>;
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::avl_set<int>::avl_set(const_pointer, const_pointer);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::avl_set<int>::avl_set(const_iterator, const_iterator);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::avl_set<int>::avl_set(const_reverse_iterator, const_reverse_iterator);
 
 #if __cplusplus < 201103L
@@ -108,13 +108,13 @@ template class kc::avl_set<int, cmp_func<int>::type>;
 
 template class kc::avl_set<std::string>;
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::avl_set<std::string>::avl_set(const_pointer, const_pointer);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::avl_set<std::string>::avl_set(const_iterator, const_iterator);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::avl_set<std::string>::avl_set(const_reverse_iterator, const_reverse_iterator);
 
 #if __cplusplus < 201103L
@@ -192,13 +192,13 @@ void kc::avl_set<std::string>::merge(avl_set &);
 
 template class kc::avl_set<int[2]>;
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::avl_set<int[2]>::avl_set(const_pointer, const_pointer);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::avl_set<int[2]>::avl_set(const_iterator, const_iterator);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::avl_set<int[2]>::avl_set(const_reverse_iterator, const_reverse_iterator);
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR20

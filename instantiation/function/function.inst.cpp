@@ -39,10 +39,10 @@ class kf::basic_function<int()>;
 template
 class kf::basic_function<bool(int, int)>;
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kf::basic_function<bool(int, int)>::basic_function(bool(*)(int, int));
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kf::basic_function<bool(int, int)>::basic_function(MyLess const &);
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR20

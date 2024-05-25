@@ -43,10 +43,18 @@ struct cmp_nothrow
 template class kc::detail::sl_type_only<int>;
 
 template class kc::single_list<int>;
-template kc::single_list<int>::single_list(pointer, pointer, int);
-template kc::single_list<int>::single_list(const_iterator, const_iterator, int);
-template kc::single_list<int>::single_list(pointer, pointer, const allocator_type&, int);
-template kc::single_list<int>::single_list(const_iterator, const_iterator, const allocator_type&, int);
+
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+kc::single_list<int>::single_list(pointer, pointer, int);
+
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+kc::single_list<int>::single_list(const_iterator, const_iterator, int);
+
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+kc::single_list<int>::single_list(pointer, pointer, const allocator_type&, int);
+
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+kc::single_list<int>::single_list(const_iterator, const_iterator, const allocator_type&, int);
 
 #if __cplusplus < 201103L
 template
@@ -103,10 +111,18 @@ bool operator>=(const kc::single_list<int> &, const kc::single_list<int> &);
 template class kc::detail::sl_type_only<std::string>;
 
 template class kc::single_list<std::string>;
-template kc::single_list<std::string>::single_list(pointer, pointer, int);
-template kc::single_list<std::string>::single_list(const_iterator, const_iterator, int);
-template kc::single_list<std::string>::single_list(pointer, pointer, const allocator_type&, int);
-template kc::single_list<std::string>::single_list(const_iterator, const_iterator, const allocator_type&, int);
+
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+kc::single_list<std::string>::single_list(pointer, pointer, int);
+
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+kc::single_list<std::string>::single_list(const_iterator, const_iterator, int);
+
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+kc::single_list<std::string>::single_list(pointer, pointer, const allocator_type&, int);
+
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+kc::single_list<std::string>::single_list(const_iterator, const_iterator, const allocator_type&, int);
 
 #if __cplusplus < 201103L
 template
@@ -165,10 +181,18 @@ bool operator>=(const kc::single_list<std::string> &, const kc::single_list<std:
 template class kc::detail::sl_type_only<int[8]>;
 
 template class kc::single_list<int[8]>;
-template kc::single_list<int[8]>::single_list(pointer, pointer, int);
-template kc::single_list<int[8]>::single_list(const_iterator, const_iterator, int);
-template kc::single_list<int[8]>::single_list(pointer, pointer, const allocator_type&, int);
-template kc::single_list<int[8]>::single_list(const_iterator, const_iterator, const allocator_type&, int);
+
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+kc::single_list<int[8]>::single_list(pointer, pointer, int);
+
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+kc::single_list<int[8]>::single_list(const_iterator, const_iterator, int);
+
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+kc::single_list<int[8]>::single_list(pointer, pointer, const allocator_type&, int);
+
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+kc::single_list<int[8]>::single_list(const_iterator, const_iterator, const allocator_type&, int);
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
 void kc::single_list<int[8]>::assign(pointer, pointer);
@@ -211,10 +235,18 @@ kc::single_list<int[8]> operator+(kc::single_list<int[8]> &&, kc::single_list<in
 template class kc::detail::sl_type_only<kc::single_list<int> >;
 
 template class kc::single_list<kc::single_list<int> >;
-template kc::single_list<kc::single_list<int> >::single_list(pointer, pointer, int);
-template kc::single_list<kc::single_list<int> >::single_list(const_iterator, const_iterator, int);
-template kc::single_list<kc::single_list<int> >::single_list(pointer, pointer, const allocator_type&, int);
-template kc::single_list<kc::single_list<int> >::single_list(const_iterator, const_iterator, const allocator_type&, int);
+
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+kc::single_list<kc::single_list<int> >::single_list(pointer, pointer, int);
+
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+kc::single_list<kc::single_list<int> >::single_list(const_iterator, const_iterator, int);
+
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+kc::single_list<kc::single_list<int> >::single_list(pointer, pointer, const allocator_type&, int);
+
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+kc::single_list<kc::single_list<int> >::single_list(const_iterator, const_iterator, const allocator_type&, int);
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
 void kc::single_list<kc::single_list<int> >::assign(pointer, pointer);
@@ -272,10 +304,18 @@ bool operator>=(const kc::single_list<kc::single_list<int> > &, const kc::single
 template <typename T> using palloc = std::pmr::polymorphic_allocator<T>;
 
 template class kc::single_list<int, palloc<int> >;
-template kc::single_list<int, palloc<int> >::single_list(pointer, pointer, int);
-template kc::single_list<int, palloc<int> >::single_list(const_iterator, const_iterator, int);
-template kc::single_list<int, palloc<int> >::single_list(pointer, pointer, const allocator_type&, int);
-template kc::single_list<int, palloc<int> >::single_list(const_iterator, const_iterator, const allocator_type&, int);
+
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+kc::single_list<int, palloc<int> >::single_list(pointer, pointer, int);
+
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+kc::single_list<int, palloc<int> >::single_list(const_iterator, const_iterator, int);
+
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+kc::single_list<int, palloc<int> >::single_list(pointer, pointer, const allocator_type&, int);
+
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+kc::single_list<int, palloc<int> >::single_list(const_iterator, const_iterator, const allocator_type&, int);
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
 void kc::single_list<int, palloc<int> >::assign(pointer, pointer);

@@ -9,6 +9,8 @@
  *   all rights reserved
  */
 
+#include <ktest/compatibility/msvc_tmpinst_constexpr.hpp>
+
 #include <kerbal/memory/unique_ptr.hpp>
 
 
@@ -22,7 +24,8 @@ template class km::unique_ptr<const int>;
 
 #if __cplusplus >= 201103L
 
-template km::unique_ptr<const int>::unique_ptr(km::unique_ptr<int> &&, int) KERBAL_CONDITIONAL_NOEXCEPT(true);
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+km::unique_ptr<const int>::unique_ptr(km::unique_ptr<int> &&, int) KERBAL_CONDITIONAL_NOEXCEPT(true);
 
 #endif
 

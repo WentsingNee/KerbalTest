@@ -91,13 +91,13 @@ kc::vector<int>::insert(const_iterator, const kerbal::assign::assign_list<int> &
 
 template class kc::vector<std::string>;
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::vector<std::string>::vector(const_iterator, const_iterator, int);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::vector<std::string>::vector(const_reverse_iterator, const_reverse_iterator, int);
 
-template
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::vector<std::string>::vector(input_iterator<std::string>::type, input_iterator<std::string>::type, int);
 
 #if __cplusplus < 201103L
@@ -240,17 +240,17 @@ template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::vector<int, palloc<int> >::iterator
 kc::vector<int, palloc<int> >::emplace(const_iterator, const_reference);
 
-//kc::vector<int, palloc<int> >
-//operator+(const kc::vector<int, palloc<int> > &, const kc::vector<int, palloc<int> > &);
-//
-//#if __cplusplus >= 201103L
-//kc::vector<int, palloc<int> >
-//operator+(kc::vector<int, palloc<int> > &&, const kc::vector<int, palloc<int> > &);
-//kc::vector<int, palloc<int> >
-//operator+(const kc::vector<int, palloc<int> > &, kc::vector<int, palloc<int> > &&);
-//kc::vector<int, palloc<int> >
-//operator+(kc::vector<int, palloc<int> > &&, kc::vector<int, palloc<int> > &&);
-//#endif
+kc::vector<int, palloc<int> >
+operator+(const kc::vector<int, palloc<int> > &, const kc::vector<int, palloc<int> > &);
+
+#if __cplusplus >= 201103L
+kc::vector<int, palloc<int> >
+operator+(kc::vector<int, palloc<int> > &&, const kc::vector<int, palloc<int> > &);
+kc::vector<int, palloc<int> >
+operator+(const kc::vector<int, palloc<int> > &, kc::vector<int, palloc<int> > &&);
+kc::vector<int, palloc<int> >
+operator+(kc::vector<int, palloc<int> > &&, kc::vector<int, palloc<int> > &&);
+#endif
 
 bool operator==(const kc::vector<int, palloc<int> > &, const kc::vector<int, palloc<int> > &);
 bool operator!=(const kc::vector<int, palloc<int> > &, const kc::vector<int, palloc<int> > &);
