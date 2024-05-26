@@ -52,7 +52,7 @@ struct ThrowDestructible
 #	if __cplusplus >= 201103L
 		~ThrowDestructible() noexcept(false);
 #	else
-		~ThrowDestructible() throw();
+		~ThrowDestructible() throw(int);
 #	endif
 };
 
