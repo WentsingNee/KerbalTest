@@ -14,16 +14,16 @@
 #include <kerbal/test/test.hpp>
 #include <kerbal/container/nonmember_container_access.hpp>
 
-unsigned int murMurHash(const void *key, int len, const int seed = 97)
+
+unsigned int murMurHash(const void * key, int len, const int seed = 97)
 {
 	const unsigned int m = 0x5bd1e995;
 	const int r = 24;
 
 	unsigned int h = seed ^ len;
 	// Mix 4 bytes at a time into the hash
-	const unsigned char *data = (const unsigned char *)key;
-	while(len >= 4)
-	{
+	const unsigned char * data = (const unsigned char *) key;
+	while (len >= 4) {
 		unsigned int k = *(unsigned int *)data;
 		k *= m;
 		k ^= k >> r;
@@ -34,8 +34,7 @@ unsigned int murMurHash(const void *key, int len, const int seed = 97)
 		len -= 4;
 	}
 	// Handle the last few bytes of the input array
-	switch(len)
-	{
+	switch (len) {
 		case 3: h ^= data[2] << 16;
 		case 2: h ^= data[1] << 8;
 		case 1: h ^= data[0];

@@ -39,7 +39,7 @@ enum E
 {
 };
 
-#if  __cplusplus >= 201103L
+#if __cplusplus >= 201103L
 
 enum class SE
 {
@@ -64,7 +64,7 @@ KERBAL_TEST_CASE(test_is_enum, "test is_enum")
 	CHECK_IS_ENUM(const volatile E, true);
 	CHECK_IS_ENUM(E&, false);
 
-#if  __cplusplus >= 201103L
+#if __cplusplus >= 201103L
 	CHECK_IS_ENUM(SE, true);
 	CHECK_IS_ENUM(const SE, true);
 	CHECK_IS_ENUM(const volatile SE, true);
