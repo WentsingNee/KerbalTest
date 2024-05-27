@@ -51,7 +51,7 @@ struct could_use_typedef<T, typename kerbal::type_traits::void_type<
 {
 };
 
-KERBAL_TEST_CASE(test_yes_no_type_could_use_typedef, "test yes_no_type could use typedef")
+KERBAL_TEST_CASE(test_void_type_could_use_typedef, "test void_type could use typedef")
 {
 	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_typedef<FooNoTypedef>::value, false);
 	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_typedef<FooHasTypedef>::value, true);
@@ -119,7 +119,7 @@ struct could_use_field<T, typename kerbal::type_traits::void_type<
 {
 };
 
-KERBAL_TEST_CASE(test_yes_no_type_could_use_field, "test yes_no_type could use field")
+KERBAL_TEST_CASE(test_void_type_could_use_field, "test void_type could use field")
 {
 	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<FooNoField>::value, false);
 	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<FooHasField>::value, true);
@@ -180,7 +180,7 @@ struct could_use_method<T, typename kerbal::type_traits::void_type<
 {
 };
 
-KERBAL_TEST_CASE(test_yes_no_type_could_use_method, "test yes_no_type could use method")
+KERBAL_TEST_CASE(test_void_type_could_use_method, "test void_type could use method")
 {
 	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_method<FooNoMethod>::value, false);
 	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_method<FooHasMethod>::value, true);
