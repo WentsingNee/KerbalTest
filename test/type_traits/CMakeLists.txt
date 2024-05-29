@@ -41,5 +41,5 @@ foreach (e IN ITEMS
 )
     add_ktest_utest_target(utest.type_traits.${e}_guess ${e}.test.cpp)
     string(TOUPPER ${e} E)
-    target_compile_definitions(utest.type_traits.${e}_guess PRIVATE KERBAL_HAS_${E}_SUPPORT=0)
+    target_compile_definitions(utest.type_traits.${e}_guess PRIVATE KERBAL_SUPPORTS_${E}=0)
 endforeach ()

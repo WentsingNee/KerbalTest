@@ -26,7 +26,7 @@
 KERBAL_TEST_CASE(test_has_is_enum_support, "test has is_enum support")
 {
 
-#if KERBAL_HAS_IS_ENUM_SUPPORT
+#if KERBAL_SUPPORTS_IS_ENUM
 	std::cout << "kerbal::type_traits::is_enum is supported!" << std::endl;
 #else
 	std::cout << "kerbal::type_traits::is_enum is not supported!" << std::endl;
@@ -49,7 +49,7 @@ enum class SE
 
 
 
-#if KERBAL_HAS_IS_ENUM_SUPPORT
+#if KERBAL_SUPPORTS_IS_ENUM
 
 KERBAL_TEST_CASE(test_is_enum, "test is_enum")
 {
@@ -73,7 +73,7 @@ KERBAL_TEST_CASE(test_is_enum, "test is_enum")
 
 }
 
-#endif // KERBAL_HAS_IS_ENUM_SUPPORT
+#endif // KERBAL_SUPPORTS_IS_ENUM
 
 
 #include <ktest/test/try_test_check.hpp>

@@ -17,7 +17,7 @@
 KERBAL_TEST_CASE(test_has_is_assignable_support, "test has is_assignable support")
 {
 
-#if KERBAL_HAS_IS_ASSIGNABLE_SUPPORT
+#if KERBAL_SUPPORTS_IS_ASSIGNABLE
 	std::cout << "kerbal::type_traits::is_assignable is supported!" << std::endl;
 #else
 	std::cout << "kerbal::type_traits::is_assignable is not supported!" << std::endl;
@@ -49,7 +49,7 @@ class DeleteCopyAssignable
 #endif
 
 
-#if KERBAL_HAS_IS_ASSIGNABLE_SUPPORT
+#if KERBAL_SUPPORTS_IS_ASSIGNABLE
 
 KERBAL_TEST_CASE(test_is_assignable, "test is_assignable")
 {

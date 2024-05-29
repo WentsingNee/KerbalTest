@@ -37,7 +37,7 @@
 #endif
 
 
-# if __cplusplus >= 201103L && KERBAL_HAS_EXCEPTIONS_SUPPORT
+# if __cplusplus >= 201103L && KERBAL_SUPPORTS_EXCEPTIONS
 
 KERBAL_TEST_CASE(test_forward_list_noexcept, "test forward_list noexcept")
 {

@@ -44,7 +44,7 @@
 #include <list>
 
 
-# if __cplusplus >= 201103L && KERBAL_HAS_EXCEPTIONS_SUPPORT
+# if __cplusplus >= 201103L && KERBAL_SUPPORTS_EXCEPTIONS
 
 KERBAL_TEST_CASE(test_list_noexcept, "test list noexcept")
 {
@@ -170,7 +170,7 @@ KERBAL_TEMPLATE_TEST_CASE_INST(test_list_n_construct, "test list::list(n) fsn al
 KERBAL_TEMPLATE_TEST_CASE_INST(test_list_n_construct, "test list::list(n) mono allocator", kerbal::memory::monotonic_allocator<int> );
 
 
-#if KERBAL_HAS_EXCEPTIONS_SUPPORT
+#if KERBAL_SUPPORTS_EXCEPTIONS
 
 struct list_n_value_construct_except_helper:
 		kerbal::test::object_count<list_n_value_construct_except_helper>
@@ -837,7 +837,7 @@ KERBAL_TEST_CASE(test_list_clear, "test list::clear")
 }
 
 
-#if KERBAL_HAS_EXCEPTIONS_SUPPORT
+#if KERBAL_SUPPORTS_EXCEPTIONS
 
 struct test_list_merge_may_throw_cmp
 {
@@ -916,7 +916,7 @@ KERBAL_TEMPLATE_TEST_CASE(test_list_merge, "test list::merge")
 
 }
 
-#if KERBAL_HAS_EXCEPTIONS_SUPPORT
+#if KERBAL_SUPPORTS_EXCEPTIONS
 KERBAL_TEMPLATE_TEST_CASE_INST(test_list_merge, "test list::merge(may_throw)", test_list_merge_may_throw_cmp);
 #endif
 
@@ -1026,7 +1026,7 @@ KERBAL_TEST_CASE(test_list_merge_is_stable, "test list::merge is_stable")
 }
 
 
-#if KERBAL_HAS_EXCEPTIONS_SUPPORT && KERBAL_ARCHITECTURE != KERBAL_ARCHITECTURE_AARCH64
+#if KERBAL_SUPPORTS_EXCEPTIONS && KERBAL_ARCHITECTURE != KERBAL_ARCHITECTURE_AARCH64
 
 struct list_merge_throwable_compare
 {
@@ -1076,7 +1076,7 @@ KERBAL_TEST_CASE(test_list_merge_exception_occurred, "test list::merge exception
 
 }
 
-#endif // KERBAL_HAS_EXCEPTIONS_SUPPORT && KERBAL_ARCHITECTURE != KERBAL_ARCHITECTURE_AARCH64
+#endif // KERBAL_SUPPORTS_EXCEPTIONS && KERBAL_ARCHITECTURE != KERBAL_ARCHITECTURE_AARCH64
 
 
 struct disable_list_radix_sort_cmp

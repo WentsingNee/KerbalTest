@@ -19,7 +19,7 @@
 KERBAL_TEST_CASE(test_has_is_trivially_move_constructible_support, "test has is_trivially_move_constructible support")
 {
 
-#if KERBAL_HAS_IS_TRIVIALLY_MOVE_CONSTRUCTIBLE_SUPPORT
+#if KERBAL_SUPPORTS_IS_TRIVIALLY_MOVE_CONSTRUCTIBLE
 	std::cout << "kerbal::type_traits::is_trivially_move_constructible is supported!" << std::endl;
 #else
 	std::cout << "kerbal::type_traits::is_trivially_move_constructible is not supported!" << std::endl;
@@ -56,7 +56,7 @@ class DeleteMoveConstructible
 };
 
 
-#if KERBAL_HAS_IS_TRIVIALLY_MOVE_CONSTRUCTIBLE_SUPPORT
+#if KERBAL_SUPPORTS_IS_TRIVIALLY_MOVE_CONSTRUCTIBLE
 
 KERBAL_TEST_CASE(test_is_trivially_move_constructible, "test is_trivially_move_constructible")
 {

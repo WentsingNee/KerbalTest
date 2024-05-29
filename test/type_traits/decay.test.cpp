@@ -98,7 +98,7 @@ KERBAL_TEST_CASE(test_decay, "test decay")
 	AFTER_DECAY_IS(void(&)(int, double),      void(*)(int, double));
 	AFTER_DECAY_IS(void(&)(int, double, ...), void(*)(int, double, ...));
 
-#if KERBAL_HAS_CV_QUALIFIED_FUNCTION_SUPPORT
+#if KERBAL_SUPPORTS_CV_QUALIFIED_FUNCTION
 	AFTER_DECAY_IS(void(int) const,                 void(int) const);
 	AFTER_DECAY_IS(void(int) volatile,              void(int) volatile);
 	AFTER_DECAY_IS(void(int) const volatile,        void(int) const volatile);

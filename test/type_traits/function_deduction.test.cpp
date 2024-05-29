@@ -39,7 +39,7 @@ KERBAL_TEST_CASE(test_is_function, "test is_function")
 	CHECK_IS_FUNCTION(int(double),           true);
 	CHECK_IS_FUNCTION(int(double, ...),      true);
 
-# if KERBAL_HAS_CV_QUALIFIED_FUNCTION_SUPPORT
+# if KERBAL_SUPPORTS_CV_QUALIFIED_FUNCTION
 
 	CHECK_IS_FUNCTION(int() const,           true);
 	CHECK_IS_FUNCTION(int() volatile ,       true);
@@ -55,7 +55,7 @@ KERBAL_TEST_CASE(test_is_function, "test is_function")
 	CHECK_IS_FUNCTION(int(double, ...) volatile ,       true);
 	CHECK_IS_FUNCTION(int(double, ...) const volatile , true);
 
-# endif // KERBAL_HAS_CV_QUALIFIED_FUNCTION_SUPPORT
+# endif // KERBAL_SUPPORTS_CV_QUALIFIED_FUNCTION
 
 # if __cplusplus >= 201103L
 

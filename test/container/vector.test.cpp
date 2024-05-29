@@ -33,7 +33,7 @@
 #include <sstream>
 
 
-# if __cplusplus >= 201103L && KERBAL_HAS_EXCEPTIONS_SUPPORT
+# if __cplusplus >= 201103L && KERBAL_SUPPORTS_EXCEPTIONS
 
 KERBAL_TEST_CASE(test_vector_noexcept, "test vector noexcept")
 {

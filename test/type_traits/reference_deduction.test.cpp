@@ -54,7 +54,7 @@ KERBAL_TEST_CASE(test_is_referencable, "test is_referencable")
 
 	CHECK_IS_REFERENCABLE(int[],                       true);
 
-#if KERBAL_HAS_CV_QUALIFIED_FUNCTION_SUPPORT
+#if KERBAL_SUPPORTS_CV_QUALIFIED_FUNCTION
 	CHECK_IS_REFERENCABLE(void(),                      true);
 	CHECK_IS_REFERENCABLE(void() const,                false);
 	CHECK_IS_REFERENCABLE(void() volatile,             false);
@@ -266,7 +266,7 @@ KERBAL_TEST_CASE(test_add_lvalue_reference, "test add_lvalue_reference")
 	AFTER_ADD_LVALUE_REFERENCE_IS(int(),                         int(&)());
 	AFTER_ADD_LVALUE_REFERENCE_IS(int(...),                      int(&)(...));
 
-#if KERBAL_HAS_CV_QUALIFIED_FUNCTION_SUPPORT
+#if KERBAL_SUPPORTS_CV_QUALIFIED_FUNCTION
 	AFTER_ADD_LVALUE_REFERENCE_IS(int() const,                   int() const);
 	AFTER_ADD_LVALUE_REFERENCE_IS(int(...) const,                int(...) const);
 	AFTER_ADD_LVALUE_REFERENCE_IS(int() volatile,                int() volatile);
@@ -351,7 +351,7 @@ KERBAL_TEST_CASE(test_add_rvalue_reference, "test add_rvalue_reference")
 
 	AFTER_ADD_RVALUE_REFERENCE_IS(int(),                         int(&&)());
 	AFTER_ADD_RVALUE_REFERENCE_IS(int(...),                      int(&&)(...));
-#if KERBAL_HAS_CV_QUALIFIED_FUNCTION_SUPPORT
+#if KERBAL_SUPPORTS_CV_QUALIFIED_FUNCTION
 	AFTER_ADD_RVALUE_REFERENCE_IS(int() const,                   int() const);
 	AFTER_ADD_RVALUE_REFERENCE_IS(int(...) const,                int(...) const);
 	AFTER_ADD_RVALUE_REFERENCE_IS(int() volatile,                int() volatile);
@@ -449,7 +449,7 @@ KERBAL_TEST_CASE(test_add_const_lvalue_reference, "test add_const_lvalue_referen
 
 	AFTER_ADD_CONST_LVALUE_REFERENCE_IS(int(),                         int(&)());
 	AFTER_ADD_CONST_LVALUE_REFERENCE_IS(int(...),                      int(&)(...));
-#if KERBAL_HAS_CV_QUALIFIED_FUNCTION_SUPPORT
+#if KERBAL_SUPPORTS_CV_QUALIFIED_FUNCTION
 	AFTER_ADD_CONST_LVALUE_REFERENCE_IS(int() const,                   int() const);
 	AFTER_ADD_CONST_LVALUE_REFERENCE_IS(int(...) const,                int(...) const);
 	AFTER_ADD_CONST_LVALUE_REFERENCE_IS(int() volatile,                int() volatile);
@@ -534,7 +534,7 @@ KERBAL_TEST_CASE(test_add_const_rvalue_reference, "test add_const_rvalue_referen
 
 	AFTER_ADD_CONST_RVALUE_REFERENCE_IS(int(),                         int(&&)());
 	AFTER_ADD_CONST_RVALUE_REFERENCE_IS(int(...),                      int(&&)(...));
-#if KERBAL_HAS_CV_QUALIFIED_FUNCTION_SUPPORT
+#if KERBAL_SUPPORTS_CV_QUALIFIED_FUNCTION
 	AFTER_ADD_CONST_RVALUE_REFERENCE_IS(int() const,                   int() const);
 	AFTER_ADD_CONST_RVALUE_REFERENCE_IS(int(...) const,                int(...) const);
 	AFTER_ADD_CONST_RVALUE_REFERENCE_IS(int() volatile,                int() volatile);

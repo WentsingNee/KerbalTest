@@ -270,7 +270,7 @@ KERBAL_TEST_CASE(test_any_cast_by_ref_const_any, "test any_cast by ref, const an
 }
 
 
-#if KERBAL_HAS_EXCEPTIONS_SUPPORT
+#if KERBAL_SUPPORTS_EXCEPTIONS
 
 KERBAL_TEST_CASE(test_bad_any_cast, "test bad_any_cast")
 {

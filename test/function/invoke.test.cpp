@@ -48,7 +48,7 @@ void do_nothing() KERBAL_NOEXCEPT
 }
 
 
-#if KERBAL_HAS_EXCEPTIONS_SUPPORT
+#if KERBAL_SUPPORTS_EXCEPTIONS
 
 void throw_something(int x)
 {
@@ -71,14 +71,14 @@ KERBAL_TEST_CASE(test_invoke_function, "test invoke function")
 	{
 		kf::invoke(do_nothing);
 
-#	if __cplusplus >= 201703L && KERBAL_HAS_EXCEPTIONS_SUPPORT
+#	if __cplusplus >= 201703L && KERBAL_SUPPORTS_EXCEPTIONS
 		KERBAL_TEST_CHECK_STATIC(noexcept(kf::invoke(do_nothing))); // function pointer supports noexcept qualifier over C++17
 #	endif
 
 	}
 	{
 
-#	if __cplusplus >= 201103L && KERBAL_HAS_EXCEPTIONS_SUPPORT
+#	if __cplusplus >= 201103L && KERBAL_SUPPORTS_EXCEPTIONS
 		KERBAL_TEST_CHECK_STATIC(!noexcept(kf::invoke(throw_something, 3)));
 #	endif
 
@@ -134,7 +134,7 @@ KERBAL_TEST_CASE(test_invoke_mem_obj, "test invoke mem_obj")
 		kf::invoke(&simple_pair::first, p) = 7;
 		KERBAL_TEST_CHECK(p.first == 7);
 
-#	if __cplusplus && KERBAL_HAS_EXCEPTIONS_SUPPORT
+#	if __cplusplus && KERBAL_SUPPORTS_EXCEPTIONS
 		KERBAL_TEST_CHECK_STATIC(noexcept(kf::invoke(&simple_pair::first, p)));
 #	endif
 
@@ -143,7 +143,7 @@ KERBAL_TEST_CASE(test_invoke_mem_obj, "test invoke mem_obj")
 		const simple_pair p(2, 3);
 		KERBAL_TEST_CHECK(&kf::invoke(&simple_pair::first, p) == &p.first);
 
-#	if __cplusplus && KERBAL_HAS_EXCEPTIONS_SUPPORT
+#	if __cplusplus && KERBAL_SUPPORTS_EXCEPTIONS
 		KERBAL_TEST_CHECK_STATIC(noexcept(kf::invoke(&simple_pair::first, p)));
 #	endif
 
@@ -156,7 +156,7 @@ KERBAL_TEST_CASE(test_invoke_mem_obj, "test invoke mem_obj")
 		kf::invoke(&simple_pair::first, &p) = 7;
 		KERBAL_TEST_CHECK(p.first == 7);
 
-#	if __cplusplus && KERBAL_HAS_EXCEPTIONS_SUPPORT
+#	if __cplusplus && KERBAL_SUPPORTS_EXCEPTIONS
 		KERBAL_TEST_CHECK_STATIC(noexcept(kf::invoke(&simple_pair::first, &p)));
 #	endif
 
@@ -165,7 +165,7 @@ KERBAL_TEST_CASE(test_invoke_mem_obj, "test invoke mem_obj")
 		const simple_pair p(2, 3);
 		KERBAL_TEST_CHECK(&kf::invoke(&simple_pair::first, &p) == &p.first);
 
-#	if __cplusplus && KERBAL_HAS_EXCEPTIONS_SUPPORT
+#	if __cplusplus && KERBAL_SUPPORTS_EXCEPTIONS
 		KERBAL_TEST_CHECK_STATIC(noexcept(kf::invoke(&simple_pair::first, &p)));
 #	endif
 
@@ -179,7 +179,7 @@ KERBAL_TEST_CASE(test_invoke_mem_obj, "test invoke mem_obj")
 		kf::invoke(&simple_pair::first, kerbal::utility::ref(p)) = 7;
 		KERBAL_TEST_CHECK(p.first == 7);
 
-#	if __cplusplus && KERBAL_HAS_EXCEPTIONS_SUPPORT
+#	if __cplusplus && KERBAL_SUPPORTS_EXCEPTIONS
 		KERBAL_TEST_CHECK_STATIC(noexcept(kf::invoke(&simple_pair::first, kerbal::utility::ref(p))));
 #	endif
 
@@ -189,7 +189,7 @@ KERBAL_TEST_CASE(test_invoke_mem_obj, "test invoke mem_obj")
 		KERBAL_TEST_CHECK(&kf::invoke(&simple_pair::first, kerbal::utility::ref(p)) == &p.first);
 		KERBAL_TEST_CHECK(&kf::invoke(&simple_pair::first, kerbal::utility::cref(p)) == &p.first);
 
-#	if __cplusplus && KERBAL_HAS_EXCEPTIONS_SUPPORT
+#	if __cplusplus && KERBAL_SUPPORTS_EXCEPTIONS
 		KERBAL_TEST_CHECK_STATIC(noexcept(kf::invoke(&simple_pair::first, kerbal::utility::ref(p))));
 #	endif
 

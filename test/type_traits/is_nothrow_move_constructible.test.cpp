@@ -19,7 +19,7 @@
 KERBAL_TEST_CASE(test_has_is_nothrow_move_constructible_support, "test has is_nothrow_move_constructible support")
 {
 
-#if KERBAL_HAS_IS_NOTHROW_MOVE_CONSTRUCTIBLE_SUPPORT
+#if KERBAL_SUPPORTS_IS_NOTHROW_MOVE_CONSTRUCTIBLE
 	std::cout << "kerbal::type_traits::is_nothrow_move_constructible is supported!" << std::endl;
 #else
 	std::cout << "kerbal::type_traits::is_nothrow_move_constructible is not supported!" << std::endl;
@@ -63,7 +63,7 @@ class DeleteMoveConstructible
 #endif
 
 
-#if KERBAL_HAS_IS_NOTHROW_MOVE_CONSTRUCTIBLE_SUPPORT
+#if KERBAL_SUPPORTS_IS_NOTHROW_MOVE_CONSTRUCTIBLE
 
 KERBAL_TEST_CASE(test_is_nothrow_move_constructible, "test is_nothrow_move_constructible")
 {
