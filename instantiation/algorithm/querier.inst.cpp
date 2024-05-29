@@ -83,21 +83,3 @@ template RasIter<int>::type kerbal::algorithm::adjacent_find(RasIter<int>::type,
 template BdrIter<int>::type kerbal::algorithm::adjacent_find(BdrIter<int>::type, BdrIter<int>::type, bool(*)(const int&, const int&));
 template FwlIter<int>::type kerbal::algorithm::adjacent_find(FwlIter<int>::type, FwlIter<int>::type, bool(*)(const int&, const int&));
 template FwdIter<int>::type kerbal::algorithm::adjacent_find(FwdIter<int>::type, FwdIter<int>::type, bool(*)(const int&, const int&));
-
-template CtgIter<int>::type kerbal::algorithm::min_element(CtgIter<int>::type, CtgIter<int>::type, bool(*)(const int&, const int&));
-template RasIter<int>::type kerbal::algorithm::min_element(RasIter<int>::type, RasIter<int>::type, bool(*)(const int&, const int&));
-template BdrIter<int>::type kerbal::algorithm::min_element(BdrIter<int>::type, BdrIter<int>::type, bool(*)(const int&, const int&));
-template FwlIter<int>::type kerbal::algorithm::min_element(FwlIter<int>::type, FwlIter<int>::type, bool(*)(const int&, const int&));
-template FwdIter<int>::type kerbal::algorithm::min_element(FwdIter<int>::type, FwdIter<int>::type, bool(*)(const int&, const int&));
-
-template CtgIter<int>::type kerbal::algorithm::max_element(CtgIter<int>::type, CtgIter<int>::type, bool(*)(const int&, const int&));
-template RasIter<int>::type kerbal::algorithm::max_element(RasIter<int>::type, RasIter<int>::type, bool(*)(const int&, const int&));
-template BdrIter<int>::type kerbal::algorithm::max_element(BdrIter<int>::type, BdrIter<int>::type, bool(*)(const int&, const int&));
-template FwlIter<int>::type kerbal::algorithm::max_element(FwlIter<int>::type, FwlIter<int>::type, bool(*)(const int&, const int&));
-template FwdIter<int>::type kerbal::algorithm::max_element(FwdIter<int>::type, FwdIter<int>::type, bool(*)(const int&, const int&));
-
-template std::pair<CtgIter<int>::type, CtgIter<int>::type> kerbal::algorithm::minmax_element(CtgIter<int>::type, CtgIter<int>::type, bool(*)(const int&, const int&));
-template std::pair<RasIter<int>::type, RasIter<int>::type> kerbal::algorithm::minmax_element(RasIter<int>::type, RasIter<int>::type, bool(*)(const int&, const int&));
-template std::pair<BdrIter<int>::type, BdrIter<int>::type> kerbal::algorithm::minmax_element(BdrIter<int>::type, BdrIter<int>::type, bool(*)(const int&, const int&));
-template std::pair<FwlIter<int>::type, FwlIter<int>::type> kerbal::algorithm::minmax_element(FwlIter<int>::type, FwlIter<int>::type, bool(*)(const int&, const int&));
-template std::pair<FwdIter<int>::type, FwdIter<int>::type> kerbal::algorithm::minmax_element(FwdIter<int>::type, FwdIter<int>::type, bool(*)(const int&, const int&));
