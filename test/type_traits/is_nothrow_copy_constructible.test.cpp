@@ -17,7 +17,7 @@
 KERBAL_TEST_CASE(test_has_is_nothrow_copy_constructible_support, "test has is_nothrow_copy_constructible support")
 {
 
-#if KERBAL_HAS_IS_NOTHROW_COPY_CONSTRUCTIBLE_SUPPORT
+#if KERBAL_SUPPORTS_IS_NOTHROW_COPY_CONSTRUCTIBLE
 	std::cout << "kerbal::type_traits::is_nothrow_copy_constructible is supported!" << std::endl;
 #else
 	std::cout << "kerbal::type_traits::is_nothrow_copy_constructible is not supported!" << std::endl;
@@ -61,7 +61,7 @@ class DeleteCopyConstructible
 #endif
 
 
-#if KERBAL_HAS_IS_NOTHROW_COPY_CONSTRUCTIBLE_SUPPORT
+#if KERBAL_SUPPORTS_IS_NOTHROW_COPY_CONSTRUCTIBLE
 
 KERBAL_TEST_CASE(test_is_nothrow_copy_constructible, "test is_nothrow_copy_constructible")
 {

@@ -17,7 +17,7 @@
 KERBAL_TEST_CASE(test_has_is_constructible_support, "test has is_constructible support")
 {
 
-#if KERBAL_HAS_IS_CONSTRUCTIBLE_SUPPORT
+#if KERBAL_SUPPORTS_IS_CONSTRUCTIBLE
 	std::cout << "kerbal::type_traits::is_constructible is supported!" << std::endl;
 #else
 	std::cout << "kerbal::type_traits::is_constructible is not supported!" << std::endl;
@@ -54,7 +54,7 @@ struct PrivateDerived : private Base
 
 
 
-#if KERBAL_HAS_IS_CONSTRUCTIBLE_SUPPORT
+#if KERBAL_SUPPORTS_IS_CONSTRUCTIBLE
 
 KERBAL_TEST_CASE(test_is_constructible, "test is_constructible")
 {

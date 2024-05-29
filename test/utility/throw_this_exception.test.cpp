@@ -20,7 +20,7 @@ class MyException: public kerbal::utility::throw_this_exception_helper<MyExcepti
 };
 
 
-#if KERBAL_HAS_EXCEPTIONS_SUPPORT
+#if KERBAL_SUPPORTS_EXCEPTIONS
 
 KERBAL_TEST_CASE(test_throw_this_exception, "test throw_this_exception")
 {

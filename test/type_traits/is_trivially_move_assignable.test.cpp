@@ -19,7 +19,7 @@
 KERBAL_TEST_CASE(test_has_is_trivially_move_assignable_support, "test has is_trivially_move_assignable support")
 {
 
-#if KERBAL_HAS_IS_TRIVIALLY_MOVE_ASSIGNABLE_SUPPORT
+#if KERBAL_SUPPORTS_IS_TRIVIALLY_MOVE_ASSIGNABLE
 	std::cout << "kerbal::type_traits::is_trivially_move_assignable is supported!" << std::endl;
 #else
 	std::cout << "kerbal::type_traits::is_trivially_move_assignable is not supported!" << std::endl;
@@ -56,7 +56,7 @@ class DeleteMoveAssignable
 };
 
 
-#if KERBAL_HAS_IS_TRIVIALLY_MOVE_ASSIGNABLE_SUPPORT
+#if KERBAL_SUPPORTS_IS_TRIVIALLY_MOVE_ASSIGNABLE
 
 KERBAL_TEST_CASE(test_is_trivially_move_assignable, "test is_trivially_move_assignable")
 {

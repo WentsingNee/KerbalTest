@@ -17,7 +17,7 @@
 KERBAL_TEST_CASE(test_has_is_trivially_destructible_support, "test has is_trivially_destructible support")
 {
 
-#if KERBAL_HAS_IS_TRIVIALLY_DESTRUCTIBLE_SUPPORT
+#if KERBAL_SUPPORTS_IS_TRIVIALLY_DESTRUCTIBLE
 	std::cout << "kerbal::type_traits::is_trivially_destructible is supported!" << std::endl;
 #else
 	std::cout << "kerbal::type_traits::is_trivially_destructible is not supported!" << std::endl;
@@ -54,7 +54,7 @@ class DeleteDestructible
 #endif
 
 
-#if KERBAL_HAS_IS_TRIVIALLY_DESTRUCTIBLE_SUPPORT
+#if KERBAL_SUPPORTS_IS_TRIVIALLY_DESTRUCTIBLE
 
 KERBAL_TEST_CASE(test_is_trivially_destructible, "test is_trivially_destructible")
 {

@@ -17,7 +17,7 @@
 KERBAL_TEST_CASE(test_has_is_nothrow_copy_assignable_support, "test has is_nothrow_copy_assignable support")
 {
 
-#if KERBAL_HAS_IS_NOTHROW_COPY_ASSIGNABLE_SUPPORT
+#if KERBAL_SUPPORTS_IS_NOTHROW_COPY_ASSIGNABLE
 	std::cout << "kerbal::type_traits::is_nothrow_copy_assignable is supported!" << std::endl;
 #else
 	std::cout << "kerbal::type_traits::is_nothrow_copy_assignable is not supported!" << std::endl;
@@ -62,7 +62,7 @@ class DeleteCopyAssignable
 #endif
 
 
-#if KERBAL_HAS_IS_NOTHROW_COPY_ASSIGNABLE_SUPPORT
+#if KERBAL_SUPPORTS_IS_NOTHROW_COPY_ASSIGNABLE
 
 KERBAL_TEST_CASE(test_is_nothrow_copy_assignable, "test is_nothrow_copy_assignable")
 {

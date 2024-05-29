@@ -16,10 +16,10 @@
 
 KERBAL_TEST_CASE(test_has_is_constant_evaluated_support, "test has is_constant_evaluated support")
 {
-	std::cout << "has is_constant_evaluated support: " << KERBAL_HAS_IS_CONSTANT_EVALUATED_SUPPORT << std::endl;
+	std::cout << "has is_constant_evaluated support: " << KERBAL_SUPPORTS_IS_CONSTANT_EVALUATED << std::endl;
 }
 
-#if __cplusplus >= 201103L && KERBAL_HAS_IS_CONSTANT_EVALUATED_SUPPORT
+#if __cplusplus >= 201103L && KERBAL_SUPPORTS_IS_CONSTANT_EVALUATED
 
 KERBAL_CONSTEXPR
 int f()

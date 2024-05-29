@@ -32,7 +32,7 @@
 KERBAL_TEST_CASE(test_has_is_nothrow_destructible_support, "test has is_nothrow_destructible support")
 {
 
-#if KERBAL_HAS_IS_ENUM_SUPPORT
+#if KERBAL_SUPPORTS_IS_ENUM
 	std::cout << "kerbal::type_traits::is_nothrow_destructible is supported!" << std::endl;
 #else
 	std::cout << "kerbal::type_traits::is_nothrow_destructible is not supported!" << std::endl;
@@ -74,7 +74,7 @@ class DeleteDestructible
 #endif
 
 
-#if KERBAL_HAS_IS_NOTHROW_DESTRUCTIBLE_SUPPORT
+#if KERBAL_SUPPORTS_IS_NOTHROW_DESTRUCTIBLE
 
 KERBAL_TEST_CASE(test_is_nothrow_destructible, "test is_nothrow_destructible")
 {

@@ -32,7 +32,7 @@
 #include <list>
 
 
-# if __cplusplus >= 201103L && KERBAL_HAS_EXCEPTIONS_SUPPORT
+# if __cplusplus >= 201103L && KERBAL_SUPPORTS_EXCEPTIONS
 
 KERBAL_TEST_CASE(test_single_list_noexcept, "test singlie_list noexcept")
 {

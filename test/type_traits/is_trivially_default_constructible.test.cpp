@@ -17,7 +17,7 @@
 KERBAL_TEST_CASE(test_has_is_trivially_default_constructible_support, "test has is_trivially_default_constructible support")
 {
 
-#if KERBAL_HAS_IS_TRIVIALLY_DEFAULT_CONSTRUCTIBLE_SUPPORT
+#if KERBAL_SUPPORTS_IS_TRIVIALLY_DEFAULT_CONSTRUCTIBLE
 	std::cout << "kerbal::type_traits::is_trivially_default_constructible is supported!" << std::endl;
 #else
 	std::cout << "kerbal::type_traits::is_trivially_default_constructible is not supported!" << std::endl;
@@ -54,7 +54,7 @@ class DeleteDefaultConstructible
 #endif
 
 
-#if KERBAL_HAS_IS_TRIVIALLY_DEFAULT_CONSTRUCTIBLE_SUPPORT
+#if KERBAL_SUPPORTS_IS_TRIVIALLY_DEFAULT_CONSTRUCTIBLE
 
 KERBAL_TEST_CASE(test_is_trivially_default_constructible, "test is_trivially_default_constructible")
 {

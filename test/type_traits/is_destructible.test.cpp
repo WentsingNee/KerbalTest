@@ -31,7 +31,7 @@
 KERBAL_TEST_CASE(test_has_is_destructible_support, "test has is_destructible support")
 {
 
-#if KERBAL_HAS_IS_DESTRUCTIBLE_SUPPORT
+#if KERBAL_SUPPORTS_IS_DESTRUCTIBLE
 	std::cout << "kerbal::type_traits::is_destructible is supported!" << std::endl;
 #else
 	std::cout << "kerbal::type_traits::is_destructible is not supported!" << std::endl;
@@ -57,7 +57,7 @@ class DeleteDestructible
 #endif
 
 
-#if KERBAL_HAS_IS_DESTRUCTIBLE_SUPPORT
+#if KERBAL_SUPPORTS_IS_DESTRUCTIBLE
 
 KERBAL_TEST_CASE(test_is_destructible, "test is_destructible")
 {

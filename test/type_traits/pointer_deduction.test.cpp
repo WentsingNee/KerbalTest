@@ -290,7 +290,7 @@ KERBAL_TEST_CASE(test_add_pointer, "test add_pointer")
 	AFTER_ADD_POINTER_IS(int(**&)(int) noexcept, int(***)(int) noexcept);
 #endif
 
-#if KERBAL_HAS_CV_QUALIFIED_FUNCTION_SUPPORT
+#if KERBAL_SUPPORTS_CV_QUALIFIED_FUNCTION
 	AFTER_ADD_POINTER_IS(int(int) const,                int(int) const);
 	AFTER_ADD_POINTER_IS(int(int) volatile,             int(int) volatile);
 	AFTER_ADD_POINTER_IS(int(int) const volatile,       int(int) const volatile);

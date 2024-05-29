@@ -265,7 +265,7 @@ KERBAL_TEST_CASE(test_tie, "test tie")
 }
 
 
-#if __cplusplus >= 201103L && KERBAL_HAS_EXCEPTIONS_SUPPORT
+#if __cplusplus >= 201103L && KERBAL_SUPPORTS_EXCEPTIONS
 
 struct Foo
 {
