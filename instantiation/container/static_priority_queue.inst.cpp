@@ -9,6 +9,16 @@
  *   all rights reserved
  */
 
+#include <ktest/compatibility/msvc_tmpinst_constexpr.hpp>
+
 #include <kerbal/container/static_priority_queue.hpp>
 
-template class kerbal::container::static_priority_queue<int, 16>;
+namespace kc = kerbal::container;
+
+template class kc::static_priority_queue<int, 16>;
+
+template KERBAL_MSVC_TMPINST_CONSTEXPR14
+void kc::static_priority_queue<int, 16>::emplace_unsafe(int const &);
+
+template KERBAL_MSVC_TMPINST_CONSTEXPR20
+void kc::static_priority_queue<int, 16>::emplace(int const &);
