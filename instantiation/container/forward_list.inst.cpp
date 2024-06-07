@@ -112,7 +112,7 @@ kc::forward_list<int>::remove_if(unary_predict<value_type>);
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::forward_list<int>::size_type
-kc::forward_list<int>::unique(const_iterator, const_iterator, cmp_may_throw<value_type>);
+kc::forward_list<int>::unique_after(const_iterator, const_iterator, cmp_may_throw<value_type>);
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::forward_list<int>::size_type
@@ -213,7 +213,7 @@ kc::forward_list<std::string>::remove_if(unary_predict<value_type>);
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::forward_list<std::string>::size_type
-kc::forward_list<std::string>::unique(const_iterator, const_iterator, cmp_may_throw<value_type>);
+kc::forward_list<std::string>::unique_after(const_iterator, const_iterator, cmp_may_throw<value_type>);
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::forward_list<std::string>::size_type
@@ -303,7 +303,7 @@ kc::forward_list<int[8]>::remove_if(unary_predict<value_type>);
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::forward_list<int[8]>::size_type
-kc::forward_list<int[8]>::unique(const_iterator, const_iterator, cmp_may_throw<value_type>);
+kc::forward_list<int[8]>::unique_after(const_iterator, const_iterator, cmp_may_throw<value_type>);
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::forward_list<int[8]>::size_type
@@ -386,7 +386,7 @@ kc::forward_list<kc::forward_list<int> >::remove_if(unary_predict<value_type>);
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::forward_list<kc::forward_list<int> >::size_type
-kc::forward_list<kc::forward_list<int> >::unique(const_iterator, const_iterator, cmp_may_throw<value_type>);
+kc::forward_list<kc::forward_list<int> >::unique_after(const_iterator, const_iterator, cmp_may_throw<value_type>);
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::forward_list<kc::forward_list<int> >::size_type
@@ -475,7 +475,7 @@ kc::forward_list<int, palloc<int> >::remove_if(unary_predict<value_type>);
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::forward_list<int, palloc<int> >::size_type
-kc::forward_list<int, palloc<int> >::unique(const_iterator, const_iterator, cmp_may_throw<value_type>);
+kc::forward_list<int, palloc<int> >::unique_after(const_iterator, const_iterator, cmp_may_throw<value_type>);
 
 template KERBAL_MSVC_TMPINST_CONSTEXPR20
 kc::forward_list<int, palloc<int> >::size_type
