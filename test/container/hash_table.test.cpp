@@ -16,7 +16,9 @@
 #include <kerbal/test/test.hpp>
 #include <kerbal/algorithm/modifier/unique.hpp>
 #include <kerbal/algorithm/sort.hpp>
+#include <kerbal/compare/sequence_compare.hpp>
 #include <kerbal/container/avl_set.hpp>
+#include <kerbal/container/flat_multiset.hpp>
 #include <kerbal/container/nonmember_container_access.hpp>
 #include <kerbal/container/vector.hpp>
 #include <kerbal/random/mersenne_twister_engine.hpp>
@@ -133,6 +135,48 @@ KERBAL_TEST_CASE(test_hash_table_erase, "test hash_table::erase")
 
 }
 
+
+KERBAL_TEST_CASE(test_hash_table_mixed, "test hash_table::mixed")
+{
+	kerbal::random::mt19937 eg;
+
+	kerbal::container::hash_table<int> ht;
+	kerbal::container::avl_ordered<int, kerbal::container::identity_extractor<int> > bs;
+
+	for (int i = 0; i < 4 * 1024 * 1024; ++i) {
+		int op = eg() % 100;
+
+		if (0 <= op && op < 40) {
+			int e = eg() % 10000;
+			ht.insert(e);
+			bs.insert(e);
+		} else if (40 <= op && op < 60) {
+			int e = eg() % 10000;
+			ht.insert_unique(e);
+			bs.insert_unique(e);
+		} else if (60 <= op && op < 75) {
+			int e = eg() % 10000;
+			ht.erase(ht.find(e));
+			bs.erase(bs.find(e));
+		} else if (75 <= op && op < 99) {
+			int e = eg() % 10000;
+			std::size_t res_ht = ht.erase(e);
+			std::size_t res_bs = bs.erase(e);
+			KERBAL_TEST_CHECK_EQUAL(res_ht, res_bs);
+		} else {
+			ht.clear();
+			bs.clear();
+		}
+
+		kerbal::container::flat_multiset<int> ht_sorted(ht.cbegin(), ht.cend());
+		KERBAL_TEST_CHECK(
+			kerbal::compare::sequence_equal_to(
+				ht_sorted.cbegin(), ht_sorted.cend(),
+				bs.cbegin(), bs.cend()
+			)
+		);
+	}
+}
 
 
 #include <kerbal/test/runtime_timer.hpp>
