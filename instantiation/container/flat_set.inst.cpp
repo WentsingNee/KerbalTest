@@ -21,6 +21,29 @@ struct cmp_fnptr
 		typedef bool(*type)(const T&, const T&);
 };
 
+
+/*
+template class
+kerbal::container::detail::flat_ordered_base<
+	int,
+	kerbal::container::identity_extractor<int>,
+	kerbal::compare::less<int>,
+	kerbal::container::vector<int>
+>;
+*/
+
+template class
+kerbal::container::detail::flat_set_base<
+	kerbal::container::flat_ordered<int, kerbal::container::identity_extractor<int> >
+>;
+
+template class
+kerbal::container::detail::flat_multiset_base<
+	kerbal::container::flat_ordered<int, kerbal::container::identity_extractor<int> >
+>;
+
+
+
 template class kc::flat_set<int, cmp_fnptr<int>::type>;
 template class kc::flat_multiset<int, cmp_fnptr<int>::type>;
 template kc::flat_set<int, cmp_fnptr<int>::type>::flat_set(const_pointer, const_pointer, int);
