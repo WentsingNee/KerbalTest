@@ -21,6 +21,42 @@ struct cmp_fnptr
 		typedef bool(* type)(const T &, const T &);
 };
 
+template <typename T>
+struct FO
+{
+	typedef kc::flat_ordered<
+		T,
+		kc::identity_extractor<T>,
+		typename cmp_fnptr<T>::type
+	> type;
+};
+
+
+
+template class
+kc::detail::flat_ordered_base<
+	int,
+	kc::identity_extractor<int>,
+	cmp_fnptr<int>::type,
+	kc::vector<int>
+>;
+
+template class
+kc::detail::flat_set_common_base<
+	FO<int>::type
+>;
+
+template class
+kc::detail::flat_set_base<
+	FO<int>::type
+>;
+
+template class
+kc::detail::flat_multiset_base<
+	FO<int>::type
+>;
+
+
 
 template class
 kc::flat_set<int, cmp_fnptr<int>::type>;
@@ -38,6 +74,23 @@ flat_multiset(const_pointer, const_pointer, int);
 
 
 #include <string>
+
+
+template class
+kc::detail::flat_set_common_base<
+	FO<std::string>::type
+>;
+
+template class
+kc::detail::flat_set_base<
+	FO<std::string>::type
+>;
+
+template class
+kc::detail::flat_multiset_base<
+	FO<std::string>::type
+>;
+
 
 template class
 kc::flat_set<std::string, cmp_fnptr<std::string>::type>;
