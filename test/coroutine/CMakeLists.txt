@@ -10,13 +10,16 @@
 #
 
 function(ktest_add_coroutine_target target target_src_file)
-    if (NOT KTEST_SUPPORT_COROUTINE)
+    if (NOT KERBAL_SUPPORT_COROUTINE)
         message(WARNING "${target} has been ignored because compiler doesn't support coroutine")
         return()
     endif ()
     add_ktest_utest_target(${target} ${target_src_file})
-    target_compile_options(${target} PUBLIC ${KTEST_FLAG_COROUTINE})
-    message(STATUS "target ${target} with coroutine flag: ${KTEST_FLAG_COROUTINE}")
+    kerbal_target_with_coroutine(
+            TARGET ${target}
+            SCOPE PUBLIC
+            MODE REQUIRED
+    )
 #    target_link_libraries(${target}
 #        INTERFACE
 #            kerbal-coroutine
@@ -24,7 +27,7 @@ function(ktest_add_coroutine_target target target_src_file)
 endfunction()
 
 
-if (KTEST_ENABLE_COROUTINE)
+if (KERBAL_SUPPORT_COROUTINE)
     ktest_add_coroutine_target(test.coroutine.generator    ./generator.test.noauto.cpp)
     ktest_add_coroutine_target(test.coroutine.lazy         ./lazy.test.noauto.cpp)
     ktest_add_coroutine_target(test.coroutine.task         ./task.test.noauto.cpp)
