@@ -35,10 +35,11 @@ endif ()
 
 # coroutine
 
-option(KERBAL_TEST_ENABLE_COROUTINE "enable coroutine" ON)
+option(KTEST_ENABLE_COROUTINE "enable coroutine" ON)
 
 if (KTEST_ENABLE_COROUTINE)
-    include(cmake/coroutine.cmake)
+    include(Kerbal/coroutine)
+    kerbal_coroutine_required()
 endif ()
 
 
