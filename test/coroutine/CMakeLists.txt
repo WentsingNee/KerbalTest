@@ -15,19 +15,11 @@ function(ktest_add_coroutine_target target target_src_file)
         return()
     endif ()
     add_ktest_utest_target(${target} ${target_src_file})
-    kerbal_target_with_coroutine(
-            TARGET ${target}
-            SCOPE PUBLIC
-            MODE REQUIRED
-    )
-#    target_link_libraries(${target}
-#        INTERFACE
-#            kerbal-coroutine
-#    )
+    target_link_libraries(${target} PUBLIC Kerbal::kerbal-coroutine)
 endfunction()
 
 
-if (KERBAL_SUPPORT_COROUTINE)
+if (KTEST_ENABLE_COROUTINE)
     ktest_add_coroutine_target(test.coroutine.generator    ./generator.test.noauto.cpp)
     ktest_add_coroutine_target(test.coroutine.lazy         ./lazy.test.noauto.cpp)
     ktest_add_coroutine_target(test.coroutine.task         ./task.test.noauto.cpp)
