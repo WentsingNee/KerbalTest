@@ -37,11 +37,6 @@ endif ()
 
 option(KTEST_ENABLE_COROUTINE "enable coroutine" ON)
 
-if (KTEST_ENABLE_COROUTINE)
-    include(Kerbal/coroutine)
-    kerbal_coroutine_required()
-endif ()
-
 
 # libc++
 
