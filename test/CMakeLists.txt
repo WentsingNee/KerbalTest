@@ -33,6 +33,12 @@ function(add_ktest_utest_target target target_src_file)
             PROPERTY KTEST_UTEST_TARGETS_MANIFEST "${target}"
     )
     ktest_basic_configuration(${target})
+    if (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
+        if (target MATCHES "utest.type_traits")
+            target_compile_options(${target} PRIVATE /wd4180)
+            # Disable warning C4180, qualifier applied to function type has no meaning; ignored
+        endif ()
+    endif ()
     set_target_properties(${target}
             PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/targets
     )
