@@ -59,10 +59,10 @@ KERBAL_TEST_CASE(test_forward_list_noexcept, "test forward_list noexcept")
 
 		ci a, b;
 
-		TRY_TEST_CHECK_WEAK(tribool_true, noexcept(a.assign(kerbal::compatibility::move(b))));
-		TRY_TEST_CHECK_WEAK(tribool_true, noexcept(a.swap(b)));
-		TRY_TEST_CHECK_WEAK(tribool_true, noexcept(kerbal::algorithm::swap(a, b)));
-		TRY_TEST_CHECK_WEAK(tribool_true, noexcept(std::swap(a, b)));
+		TRY_TEST_CHECK_WEAK(tribool_true, +noexcept(a.assign(kerbal::compatibility::move(b))));
+		TRY_TEST_CHECK_WEAK(tribool_true, +noexcept(a.swap(b)));
+		TRY_TEST_CHECK_WEAK(tribool_true, +noexcept(kerbal::algorithm::swap(a, b)));
+		TRY_TEST_CHECK_WEAK(tribool_true, +noexcept(std::swap(a, b)));
 	}
 
 	{
@@ -75,10 +75,10 @@ KERBAL_TEST_CASE(test_forward_list_noexcept, "test forward_list noexcept")
 
 		cs a, b;
 
-		TRY_TEST_CHECK_WEAK(tribool_true, noexcept(a.assign(kerbal::compatibility::move(b))));
-		TRY_TEST_CHECK_WEAK(tribool_true, noexcept(a.swap(b)));
-		TRY_TEST_CHECK_WEAK(tribool_true, noexcept(kerbal::algorithm::swap(a, b)));
-		TRY_TEST_CHECK_WEAK(tribool_true, noexcept(std::swap(a, b)));
+		TRY_TEST_CHECK_WEAK(tribool_true, +noexcept(a.assign(kerbal::compatibility::move(b))));
+		TRY_TEST_CHECK_WEAK(tribool_true, +noexcept(a.swap(b)));
+		TRY_TEST_CHECK_WEAK(tribool_true, +noexcept(kerbal::algorithm::swap(a, b)));
+		TRY_TEST_CHECK_WEAK(tribool_true, +noexcept(std::swap(a, b)));
 	}
 
 #if TEST_PMR_CONTAINER
