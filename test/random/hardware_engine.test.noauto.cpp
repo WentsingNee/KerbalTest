@@ -17,16 +17,17 @@
 #include <cstddef>
 
 
-#if KERBAL_HAS_SUPPORT_OF_RANDOM_HARDWARE_ENGINE_UINT64_T
-
-KERBAL_TEST_CASE(test_hardware_engine_u64, "test hardware_engine<u64>")
+template <typename T>
+KERBAL_TEMPLATE_TEST_CASE(test_hardware_engine, "test hardware_engine")
 {
-	kerbal::random::hardware_engine<kerbal::compatibility::uint64_t> eg;
+	typedef T result_type;
+
+	kerbal::random::hardware_engine<result_type> eg;
 
 	typedef kerbal::type_traits::integral_constant<std::size_t, 50000> N;
 	unsigned long total;
 
-	unsigned int a[N::value];
+	result_type a[N::value];
 	{
 		kerbal::test::runtime_timer t;
 		eg.generate_n(a, N::value);
@@ -41,6 +42,16 @@ KERBAL_TEST_CASE(test_hardware_engine_u64, "test hardware_engine<u64>")
 	std::cout << (total * 1000 * 1000.0 / N::value) << " ns/one" << std::endl;
 }
 
+#if KERBAL_HAS_SUPPORT_OF_RANDOM_HARDWARE_ENGINE_UINT16_T
+KERBAL_TEMPLATE_TEST_CASE_INST(test_hardware_engine, "test hardware_engine<u16>", kerbal::compatibility::uint16_t)
+#endif
+
+#if KERBAL_HAS_SUPPORT_OF_RANDOM_HARDWARE_ENGINE_UINT32_T
+KERBAL_TEMPLATE_TEST_CASE_INST(test_hardware_engine, "test hardware_engine<u32>", kerbal::compatibility::uint32_t)
+#endif
+
+#if KERBAL_HAS_SUPPORT_OF_RANDOM_HARDWARE_ENGINE_UINT64_T
+KERBAL_TEMPLATE_TEST_CASE_INST(test_hardware_engine, "test hardware_engine<u64>", kerbal::compatibility::uint64_t)
 #endif
 
 
