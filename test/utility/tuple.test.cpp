@@ -65,8 +65,12 @@ KERBAL_TEST_CASE(test_tuple_arg_cnstrct, "test tuple arg construct")
 KERBAL_TEST_CASE(test_tuple_partially_init, "test tuple partially init")
 {
 	int x = 2333;
-	ku::tuple<char, int&, std::string, int> t(ku::tuple_partially_init_t(),
-											'c', x, std::string("abc"));
+	ku::tuple<char, int &, std::string, int> t(
+		ku::tuple_partially_init_t(),
+		'c',
+		x,
+		std::string("abc")
+	);
 
 	KERBAL_TEST_CHECK(t.get<0>() == 'c');
 	KERBAL_TEST_CHECK(&t.get<1>() == &x);
@@ -105,15 +109,15 @@ KERBAL_TEST_CASE(test_tuple_piecewise_init, "test tuple piecewise init")
 struct for_each_f
 {
 		typedef kerbal::container::array<
-				ku::tuple<int, int>,
-				3
+			ku::tuple<int, int>,
+			3
 		> arr_t;
 
 		int cnt;
 		arr_t * arr_p;
 
 		for_each_f(arr_t * arr_p) KERBAL_NOEXCEPT:
-				cnt(0), arr_p(arr_p)
+			cnt(0), arr_p(arr_p)
 		{
 		}
 
@@ -132,8 +136,8 @@ KERBAL_TEST_CASE(test_tuple_for_each, "test tuple::for_each")
 
 	ku::tuple<char, short, int> tup(c, s, i);
 	kerbal::container::array<
-			ku::tuple<int, int>,
-			3
+		ku::tuple<int, int>,
+		3
 	> arr;
 	tup.for_each(for_each_f(&arr));
 
@@ -181,10 +185,10 @@ KERBAL_TEST_CASE(test_tuple_reverse, "test tuple::reverse")
 		typedef decltype(tup.reverse()) tupr_t;
 
 		KERBAL_TEST_CHECK_STATIC((
-				kerbal::type_traits::is_same<
-						tupr_t,
-						ku::tuple<>
-				>::value
+			kerbal::type_traits::is_same<
+				tupr_t,
+				ku::tuple<>
+			>::value
 		));
 #	endif
 
@@ -203,24 +207,24 @@ KERBAL_TEST_CASE(test_tuple_reverse, "test tuple::reverse")
 		typedef decltype(tup.reverse()) tupr_t;
 
 		KERBAL_TEST_CHECK_STATIC((
-				kerbal::type_traits::is_same<
-					tupr_t::value_type<0>::type,
-					int
-				>::value
+			kerbal::type_traits::is_same<
+				tupr_t::value_type<0>::type,
+				int
+			>::value
 		));
 
 		KERBAL_TEST_CHECK_STATIC((
-				kerbal::type_traits::is_same<
-					tupr_t::value_type<1>::type,
-					short
-				>::value
+			kerbal::type_traits::is_same<
+				tupr_t::value_type<1>::type,
+				short
+			>::value
 		));
 
 		KERBAL_TEST_CHECK_STATIC((
-				kerbal::type_traits::is_same<
-					tupr_t::value_type<2>::type,
-					char
-				>::value
+			kerbal::type_traits::is_same<
+				tupr_t::value_type<2>::type,
+				char
+			>::value
 		));
 #	endif
 
@@ -269,10 +273,10 @@ KERBAL_TEST_CASE(test_tie, "test tie")
 
 struct Foo
 {
-	Foo();
-	Foo(int) noexcept;
-	Foo(const Foo &);
-	Foo(Foo &&) noexcept;
+		Foo();
+		Foo(int) noexcept;
+		Foo(const Foo &);
+		Foo(Foo &&) noexcept;
 };
 
 #include <kerbal/type_traits/tribool_constant.hpp>

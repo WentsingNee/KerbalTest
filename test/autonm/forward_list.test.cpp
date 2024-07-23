@@ -33,10 +33,14 @@ KERBAL_TEST_CASE(test_autonm_forward_list_insert, "test autonm::forward_list::in
 		l.push_front(node[i]);
 	}
 
-	KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(
-			l.cbegin(), l.cend(),
-			kerbal::container::crbegin(r), kerbal::container::crend(r)
-	));
+	KERBAL_TEST_CHECK(
+		kerbal::compare::sequence_equal_to(
+			l.cbegin(),
+			l.cend(),
+			kerbal::container::crbegin(r),
+			kerbal::container::crend(r)
+		)
+	);
 
 }
 
@@ -59,10 +63,14 @@ KERBAL_TEST_CASE(test_autonm_forward_list_batch_insert, "test autonm::forward_li
 	autonm_list::iterator ret = l.insert_after(l.cbefore_begin(), node, node + N::value);
 
 	KERBAL_TEST_CHECK(*ret == r[N::value - 1]);
-	KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(
-			l.cbegin(), l.cend(),
-			kerbal::container::cbegin(r), kerbal::container::cend(r)
-	));
+	KERBAL_TEST_CHECK(
+		kerbal::compare::sequence_equal_to(
+			l.cbegin(),
+			l.cend(),
+			kerbal::container::cbegin(r),
+			kerbal::container::cend(r)
+		)
+	);
 
 }
 

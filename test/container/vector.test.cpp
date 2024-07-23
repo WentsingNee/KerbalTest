@@ -127,10 +127,14 @@ struct oc : public kerbal::test::object_count<oc>
 {
 		int x;
 
-		oc() : x(0) {
+		oc() : x(0)
+		{
 			std::cout << "dft" << std::endl;
 		}
-		explicit oc(int x) : x(x) {}
+
+		explicit oc(int x) : x(x)
+		{
+		}
 
 };
 
@@ -166,10 +170,12 @@ KERBAL_TEST_CASE(test_vector_assign_fwd_range, "test vector::assign(FwdIter, Fwd
 		kerbal::container::vector<int> v(N::value + 32);
 		KERBAL_TEST_CHECK(N::value <= v.size());
 		v.assign(a + 0, a + N::value);
-		KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(
+		KERBAL_TEST_CHECK(
+			kerbal::compare::sequence_equal_to(
 				a + 0, a + N::value,
 				v.cbegin(), v.cend()
-		));
+			)
+		);
 		KERBAL_TEST_CHECK(v.size() == N::value);
 	}
 
@@ -180,10 +186,12 @@ KERBAL_TEST_CASE(test_vector_assign_fwd_range, "test vector::assign(FwdIter, Fwd
 		KERBAL_TEST_CHECK(N::value > v.size());
 		KERBAL_TEST_CHECK(N::value <= v.capacity());
 		v.assign(a, a + N::value);
-		KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(
+		KERBAL_TEST_CHECK(
+			kerbal::compare::sequence_equal_to(
 				a + 0, a + N::value,
 				v.cbegin(), v.cend()
-		));
+			)
+		);
 		KERBAL_TEST_CHECK(v.size() == N::value);
 		KERBAL_TEST_CHECK(v.capacity() >= N::value);
 	}
@@ -195,10 +203,12 @@ KERBAL_TEST_CASE(test_vector_assign_fwd_range, "test vector::assign(FwdIter, Fwd
 		KERBAL_TEST_CHECK(N::value > v.capacity());
 		KERBAL_TEST_CHECK(v.size() == 0);
 		v.assign(a, a + N::value);
-		KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(
+		KERBAL_TEST_CHECK(
+			kerbal::compare::sequence_equal_to(
 				a + 0, a + N::value,
 				v.cbegin(), v.cend()
-		));
+			)
+		);
 		KERBAL_TEST_CHECK(v.size() == N::value);
 		KERBAL_TEST_CHECK(v.capacity() >= N::value);
 	}
@@ -210,10 +220,12 @@ KERBAL_TEST_CASE(test_vector_assign_fwd_range, "test vector::assign(FwdIter, Fwd
 		KERBAL_TEST_CHECK(N::value > v.capacity());
 		KERBAL_TEST_CHECK(v.size() != 0);
 		v.assign(a, a + N::value);
-		KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(
+		KERBAL_TEST_CHECK(
+			kerbal::compare::sequence_equal_to(
 				a + 0, a + N::value,
 				v.cbegin(), v.cend()
-		));
+			)
+		);
 		KERBAL_TEST_CHECK(v.size() == N::value);
 		KERBAL_TEST_CHECK(v.capacity() >= N::value);
 	}
@@ -284,16 +296,20 @@ KERBAL_TEST_CASE(test_vector_i_emplace, "test vector<int>::emplace")
 		std::size_t idx = eg() % v.size();
 		v.emplace(v.nth(idx), i);
 		vs.insert(kerbal::container::nth(vs, idx), i);
-		KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(
+		KERBAL_TEST_CHECK(
+			kerbal::compare::sequence_equal_to(
 				v.cbegin(), v.cend(),
 				vs.begin(), vs.end()
-		));
+			)
+		);
 	}
 
-	KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(
+	KERBAL_TEST_CHECK(
+		kerbal::compare::sequence_equal_to(
 			v.cbegin(), v.cend(),
 			vs.begin(), vs.end()
-	));
+		)
+	);
 
 	KERBAL_TEST_CHECK(v.size() == N::value);
 	KERBAL_TEST_CHECK(v.capacity() >= N::value);
@@ -359,10 +375,10 @@ KERBAL_TEST_CASE(test_vector_insert_input_iterator, "test vector<s>::insert(inpu
 
 	typedef std::istream_iterator<std::string> ii;
 	KERBAL_TEST_CHECK_STATIC((
-			kerbal::type_traits::is_same<
-					kerbal::iterator::iterator_traits<ii>::iterator_category,
-					std::input_iterator_tag
-			>::value
+		kerbal::type_traits::is_same<
+			kerbal::iterator::iterator_traits<ii>::iterator_category,
+			std::input_iterator_tag
+		>::value
 	));
 
 	{

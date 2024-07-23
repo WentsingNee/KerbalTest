@@ -19,17 +19,18 @@
 
 #include <string>
 
+
 using kerbal::container::static_ordered;
 
 struct Person
 {
-	std::string name;
-	int age;
+		std::string name;
+		int age;
 
-	Person(const std::string & name = "", int age = 0)
-			: name(name), age(age)
-	{
-	}
+		Person(const std::string & name = "", int age = 0) :
+			name(name), age(age)
+		{
+		}
 
 };
 
@@ -45,12 +46,12 @@ struct Extract
 
 
 const Person arr[] = {
-		Person("Tom", 1),
-		Person("Jim", 2),
-		Person("Sam", 3),
-		Person("Jim", 4),
-		Person("Sally", 5),
-		Person("Ada", 6),
+	Person("Tom", 1),
+	Person("Jim", 2),
+	Person("Sam", 3),
+	Person("Jim", 4),
+	Person("Sally", 5),
+	Person("Ada", 6),
 };
 
 
@@ -62,12 +63,20 @@ KERBAL_TEST_CASE(test_static_ordered_insert, "test static_ordered::insert")
 		o.insert(arr[i]);
 	}
 
-	kerbal::container::static_vector<Person, 10> v
-			(kerbal::container::cbegin(arr), kerbal::container::cend(arr));
+	kerbal::container::static_vector<Person, 10> v(
+		kerbal::container::cbegin(arr),
+		kerbal::container::cend(arr)
+	);
 
 	kerbal::algorithm::sort(v.begin(), v.end(), o.value_comp());
 
-	KERBAL_TEST_CHECK_EQUAL(kerbal::algorithm::is_sorted(v.begin(), v.end(), o.value_comp()), true);
+	KERBAL_TEST_CHECK_EQUAL(
+		kerbal::algorithm::is_sorted(
+			v.begin(), v.end(),
+			o.value_comp()
+		),
+		true
+	);
 }
 
 
@@ -79,12 +88,20 @@ KERBAL_TEST_CASE(test_static_ordered_unique_insert, "test static_ordered::unique
 		o.unique_insert(arr[i]);
 	}
 
-	kerbal::container::static_vector<Person, 10> v
-			(kerbal::container::cbegin(arr), kerbal::container::cend(arr));
+	kerbal::container::static_vector<Person, 10> v(
+		kerbal::container::cbegin(arr),
+		kerbal::container::cend(arr)
+	);
 
 	kerbal::algorithm::sort(v.begin(), v.end(), o.value_comp());
 
-	KERBAL_TEST_CHECK_EQUAL(kerbal::algorithm::is_sorted(v.begin(), v.end(), o.value_comp()), true);
+	KERBAL_TEST_CHECK_EQUAL(
+		kerbal::algorithm::is_sorted(
+			v.begin(), v.end(),
+			o.value_comp()
+		),
+		true
+	);
 }
 
 

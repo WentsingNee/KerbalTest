@@ -48,17 +48,23 @@ KERBAL_TEMPLATE_TEST_CASE(test_copy, "test copy")
 
 	int a[N::value]; {
 		kerbal::algorithm::iota(
-				kerbal::container::begin(a), kerbal::container::end(a), 0);
+			kerbal::container::begin(a),
+			kerbal::container::end(a),
+			0
+		);
 	}
 
 	Container c(kerbal::container::cbegin(a), kerbal::container::cend(a));
 	kerbal::algorithm::copy(c.begin(), c.end(), a);
 
 	KERBAL_TEST_CHECK(
-			kerbal::compare::sequence_equal_to(
-					c.begin(), c.end(),
-					kerbal::container::cbegin(a), kerbal::container::cend(a)
-	));
+		kerbal::compare::sequence_equal_to(
+			c.begin(),
+			c.end(),
+			kerbal::container::cbegin(a),
+			kerbal::container::cend(a)
+		)
+	);
 }
 
 KERBAL_TEMPLATE_TEST_CASE_INST(test_copy, "test copy(Ctg + 0)", kerbal::container::vector<int>, 0);
@@ -84,17 +90,23 @@ KERBAL_TEMPLATE_TEST_CASE(test_reverse_copy, "test reverse_copy")
 
 	int a[N::value]; {
 		kerbal::algorithm::iota(
-				kerbal::container::begin(a), kerbal::container::end(a), 0);
+			kerbal::container::begin(a),
+			kerbal::container::end(a),
+			0
+		);
 	}
 
 	Container c(kerbal::container::cbegin(a), kerbal::container::cend(a));
 	kerbal::algorithm::reverse_copy(c.begin(), c.end(), a);
 
 	KERBAL_TEST_CHECK(
-			kerbal::compare::sequence_equal_to(
-					c.rbegin(), c.rend(),
-					kerbal::container::cbegin(a), kerbal::container::cend(a)
-			));
+		kerbal::compare::sequence_equal_to(
+			c.rbegin(),
+			c.rend(),
+			kerbal::container::cbegin(a),
+			kerbal::container::cend(a)
+		)
+	);
 }
 
 KERBAL_TEMPLATE_TEST_CASE_INST(test_reverse_copy, "test reverse_copy(Ctg + 0)", kerbal::container::vector<int>, 0);
@@ -118,17 +130,23 @@ KERBAL_TEMPLATE_TEST_CASE(test_reverse, "test reverse")
 
 	int a[N::value]; {
 		kerbal::algorithm::iota(
-				kerbal::container::begin(a), kerbal::container::end(a), 0);
+			kerbal::container::begin(a),
+			kerbal::container::end(a),
+			0
+		);
 	}
 
 	Container c(kerbal::container::cbegin(a), kerbal::container::cend(a));
 	kerbal::algorithm::reverse(c.begin(), c.end());
 
 	KERBAL_TEST_CHECK(
-			kerbal::compare::sequence_equal_to(
-					c.rbegin(), c.rend(),
-					kerbal::container::cbegin(a), kerbal::container::cend(a)
-	));
+		kerbal::compare::sequence_equal_to(
+			c.rbegin(),
+			c.rend(),
+			kerbal::container::cbegin(a),
+			kerbal::container::cend(a)
+		)
+	);
 }
 
 KERBAL_TEMPLATE_TEST_CASE_INST(test_reverse, "test reverse(Ctg + 0)", kerbal::container::vector<int>, 0);
@@ -158,13 +176,13 @@ KERBAL_TEMPLATE_TEST_CASE(test_rotate, "test rotate")
 {
 	typedef typename Container::iterator iterator;
 	std::pair<std::size_t, std::size_t> test_data[] = {
-			std::pair<std::size_t, std::size_t>(0, 0),
-			std::pair<std::size_t, std::size_t>(0, 10),
-			std::pair<std::size_t, std::size_t>(10, 0),
-			std::pair<std::size_t, std::size_t>(1, 16),
-			std::pair<std::size_t, std::size_t>(16, 1),
-			std::pair<std::size_t, std::size_t>(10, 7),
-			std::pair<std::size_t, std::size_t>(21349, 321357),
+		std::pair<std::size_t, std::size_t>(0, 0),
+		std::pair<std::size_t, std::size_t>(0, 10),
+		std::pair<std::size_t, std::size_t>(10, 0),
+		std::pair<std::size_t, std::size_t>(1, 16),
+		std::pair<std::size_t, std::size_t>(16, 1),
+		std::pair<std::size_t, std::size_t>(10, 7),
+		std::pair<std::size_t, std::size_t>(21349, 321357),
 	};
 
 	for (std::size_t tcase = 0; tcase < kerbal::container::size(test_data); ++tcase) {
@@ -182,19 +200,24 @@ KERBAL_TEMPLATE_TEST_CASE(test_rotate, "test rotate")
 
 		Container cresult(len);
 		{
-			kerbal::algorithm::rotate_copy(first0, mid0, last0, kerbal::container::begin(cresult));
+			kerbal::algorithm::rotate_copy(
+				first0, mid0, last0,
+				kerbal::container::begin(cresult)
+			);
 		}
 
 		{
 			Container c(c0);
-			iterator ret(kerbal::algorithm::rotate(
+			iterator ret(
+				kerbal::algorithm::rotate(
 					kerbal::container::begin(c),
 					kerbal::container::nth(c, len1),
 					kerbal::container::end(c)
-			));
+				)
+			);
 
 			KERBAL_TEST_CHECK(
-					kerbal::compare::sequence_equal_to(cresult, c)
+				kerbal::compare::sequence_equal_to(cresult, c)
 			);
 			KERBAL_TEST_CHECK(
 				(std::size_t)(kerbal::container::index_of(c, ret)) == len2
@@ -216,13 +239,13 @@ KERBAL_TEMPLATE_TEST_CASE(test_inplace_merge, "test inplace_merge")
 	typedef typename Container::iterator iterator;
 
 	std::pair<std::size_t, std::size_t> MN[] = {
-			std::pair<std::size_t, std::size_t>(100, 100),
-			std::pair<std::size_t, std::size_t>(1200, 100),
-			std::pair<std::size_t, std::size_t>(100, 1),
-			std::pair<std::size_t, std::size_t>(1, 100),
-			std::pair<std::size_t, std::size_t>(100, 0),
-			std::pair<std::size_t, std::size_t>(0, 100),
-			std::pair<std::size_t, std::size_t>(0, 0),
+		std::pair<std::size_t, std::size_t>(100, 100),
+		std::pair<std::size_t, std::size_t>(1200, 100),
+		std::pair<std::size_t, std::size_t>(100, 1),
+		std::pair<std::size_t, std::size_t>(1, 100),
+		std::pair<std::size_t, std::size_t>(100, 0),
+		std::pair<std::size_t, std::size_t>(0, 100),
+		std::pair<std::size_t, std::size_t>(0, 0),
 	};
 
 	for (std::size_t tcase = 0; tcase < kerbal::container::size(MN); ++tcase) {
@@ -245,14 +268,21 @@ KERBAL_TEMPLATE_TEST_CASE(test_inplace_merge, "test inplace_merge")
 		}
 
 		kerbal::container::vector<value_type> v;
-		kerbal::algorithm::merge(first0, mid0, mid0, last0, std::back_inserter(v), kerbal::compare::less<>());
+		kerbal::algorithm::merge(
+			first0, mid0,
+			mid0, last0,
+			std::back_inserter(v),
+			kerbal::compare::less<>()
+		);
 
 		kerbal::algorithm::inplace_merge(first0, mid0, last0);
 
 		KERBAL_TEST_CHECK(
 			kerbal::compare::sequence_equal_to(
-				first0, last0,
-				kerbal::container::cbegin(v), kerbal::container::cend(v)
+				first0,
+				last0,
+				kerbal::container::cbegin(v),
+				kerbal::container::cend(v)
 			)
 		);
 	}
@@ -281,10 +311,10 @@ KERBAL_TEMPLATE_TEST_CASE(test_inplace_merge_is_stable, "test inplace_merge is s
 	typedef typename Container::value_type value_type;
 
 	std::pair<std::size_t, std::size_t> MN[] = {
-			std::pair<std::size_t, std::size_t>(100, 100),
-			std::pair<std::size_t, std::size_t>(1200, 100),
-			std::pair<std::size_t, std::size_t>(100, 1),
-			std::pair<std::size_t, std::size_t>(1, 100),
+		std::pair<std::size_t, std::size_t>(100, 100),
+		std::pair<std::size_t, std::size_t>(1200, 100),
+		std::pair<std::size_t, std::size_t>(100, 1),
+		std::pair<std::size_t, std::size_t>(1, 100),
 	};
 
 	for (std::size_t tcase = 0; tcase < kerbal::container::size(MN); ++tcase) {
@@ -310,9 +340,17 @@ KERBAL_TEMPLATE_TEST_CASE(test_inplace_merge_is_stable, "test inplace_merge is s
 		}
 
 		kerbal::container::vector<value_type> v;
-		kerbal::algorithm::merge(first0, mid0, mid0, last0, std::back_inserter(v), test_inplace_merge_is_stable_cmp());
+		kerbal::algorithm::merge(
+			first0, mid0,
+			mid0, last0,
+			std::back_inserter(v),
+			test_inplace_merge_is_stable_cmp()
+		);
 
-		kerbal::algorithm::inplace_merge(first0, mid0, last0, test_inplace_merge_is_stable_cmp());
+		kerbal::algorithm::inplace_merge(
+			first0, mid0, last0,
+			test_inplace_merge_is_stable_cmp()
+		);
 
 		KERBAL_TEST_CHECK(
 			kerbal::compare::sequence_equal_to(
@@ -339,35 +377,49 @@ KERBAL_TEMPLATE_TEST_CASE(test_unique, "test unique")
 	{ // empty
 		Container a;
 
-		iterator e(kerbal::algorithm::unique(kerbal::container::begin(a), kerbal::container::end(a)));
+		iterator e(
+			kerbal::algorithm::unique(
+				kerbal::container::begin(a),
+				kerbal::container::end(a)
+			)
+		);
 
 		KERBAL_TEST_CHECK(
 			kerbal::compare::sequence_equal_to(
-				kerbal::container::begin(a), e,
-				kerbal::container::cbegin(a), kerbal::container::cend(a)
+				kerbal::container::begin(a),
+				e,
+				kerbal::container::cbegin(a),
+				kerbal::container::cend(a)
 			)
 		);
 
 	}
 
 	Container a[] = {
-			KERBAL_ILIST(1),
-			KERBAL_ILIST(1, 1, 1, 1, 1, 1),
-			KERBAL_ILIST(1, 1, 2, 3, 3, 3, 3, 3, 4, 4, 5, 2, 2),
+		KERBAL_ILIST(1),
+		KERBAL_ILIST(1, 1, 1, 1, 1, 1),
+		KERBAL_ILIST(1, 1, 2, 3, 3, 3, 3, 3, 4, 4, 5, 2, 2),
 	};
 	Container r[] = {
-			KERBAL_ILIST(1),
-			KERBAL_ILIST(1),
-			KERBAL_ILIST(1, 2, 3, 4, 5, 2),
+		KERBAL_ILIST(1),
+		KERBAL_ILIST(1),
+		KERBAL_ILIST(1, 2, 3, 4, 5, 2),
 	};
 
 	for (std::size_t tcase = 0; tcase < kerbal::container::size(a); ++tcase) {
-		iterator e(kerbal::algorithm::unique(kerbal::container::begin(a[tcase]), kerbal::container::end(a[tcase])));
+		iterator e(
+			kerbal::algorithm::unique(
+				kerbal::container::begin(a[tcase]),
+				kerbal::container::end(a[tcase])
+			)
+		);
 
 		KERBAL_TEST_CHECK(
 			kerbal::compare::sequence_equal_to(
-				kerbal::container::begin(a[tcase]), e,
-				kerbal::container::cbegin(r[tcase]), kerbal::container::cend(r[tcase])
+				kerbal::container::begin(a[tcase]),
+				e,
+				kerbal::container::cbegin(r[tcase]),
+				kerbal::container::cend(r[tcase])
 			)
 		);
 	}
@@ -394,12 +446,20 @@ KERBAL_TEST_CASE(test_unique_with_predict, "test unique with predict")
 	int a[] = {1, 1, 2, -3, 3, 3, -3, 3, 4, -4, 5, -2, -2};
 	const int r[] = {1, 2, 3, 4, 5, 2};
 
-	iterator e(kerbal::algorithm::unique(kerbal::container::begin(a), kerbal::container::end(a), abs_equal));
+	iterator e(
+		kerbal::algorithm::unique(
+			kerbal::container::begin(a),
+			kerbal::container::end(a),
+			abs_equal
+		)
+	);
 
 	KERBAL_TEST_CHECK(
 		kerbal::compare::sequence_equal_to(
-			kerbal::container::begin(a), e,
-			kerbal::container::cbegin(r), kerbal::container::cend(r),
+			kerbal::container::begin(a),
+			e,
+			kerbal::container::cbegin(r),
+			kerbal::container::cend(r),
 			abs_equal
 		)
 	);

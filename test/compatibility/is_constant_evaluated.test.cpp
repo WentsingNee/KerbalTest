@@ -14,6 +14,7 @@
 #include <kerbal/compatibility/constexpr.hpp>
 #include <kerbal/compatibility/is_constant_evaluated.hpp>
 
+
 KERBAL_TEST_CASE(test_has_is_constant_evaluated_support, "test has is_constant_evaluated support")
 {
 	std::cout << "has is_constant_evaluated support: " << KERBAL_HAS_IS_CONSTANT_EVALUATED_SUPPORT << std::endl;

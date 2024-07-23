@@ -50,8 +50,8 @@ KERBAL_TEST_CASE(test_invoke_r_callable, "test invoke_r callable")
 	Callable c;
 	int t = 3;
 	KERBAL_TEST_CHECK(
-			kerbal::function::invoke_r<double>(c, ku::ref(t), 4) ==
-			c(t, 4)
+		kerbal::function::invoke_r<double>(c, ku::ref(t), 4) ==
+		c(t, 4)
 	);
 }
 

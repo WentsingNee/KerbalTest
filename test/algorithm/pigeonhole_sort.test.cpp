@@ -49,7 +49,11 @@ struct test_suite
 
 			typename container_type::iterator begin2(kerbal::container::begin(v2));
 			typename container_type::iterator end2(kerbal::container::end(v2));
-			typedef typename kerbal::type_traits::conditional<Order::value, kerbal::compare::greater<>, kerbal::compare::less<> >::type compare;
+			typedef typename kerbal::type_traits::conditional<
+				Order::value,
+				kerbal::compare::greater<>,
+				kerbal::compare::less<>
+			>::type compare;
 			kerbal::algorithm::sort(begin2, end2, compare());
 
 			return (kerbal::compare::sequence_equal_to(begin, end, begin2, end2));

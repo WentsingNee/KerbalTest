@@ -28,33 +28,41 @@ KERBAL_TEST_CASE(test_avl_map_CTAD, "test avl_map CTAD")
 	{
 		kc::avl_map<int, int> m(pii, pii + 1);
 		KERBAL_TEST_CHECK_STATIC((
-			kerbal::type_traits::is_same<decltype(m),
+			kerbal::type_traits::is_same<
+				decltype(m),
 				kc::avl_map<int, int>
-			>::value));
+			>::value
+		));
 	}
 
 	{
 		kc::avl_map m(pkii, pkii + 1);
 		KERBAL_TEST_CHECK_STATIC((
-			kerbal::type_traits::is_same<decltype(m),
+			kerbal::type_traits::is_same<
+				decltype(m),
 				kc::avl_map<int, int>
-			>::value));
+			>::value
+		));
 	}
 
 	{
 		kc::avl_map m(piki, piki + 1);
 		KERBAL_TEST_CHECK_STATIC((
-			kerbal::type_traits::is_same<decltype(m),
+			kerbal::type_traits::is_same<
+				decltype(m),
 				kc::avl_map<int, const int>
-			>::value));
+			>::value
+		));
 	}
 
 	{
 		kc::avl_map m(pkiki, pkiki + 1);
 		KERBAL_TEST_CHECK_STATIC((
-			kerbal::type_traits::is_same<decltype(m),
+			kerbal::type_traits::is_same<
+				decltype(m),
 				kc::avl_map<int, const int>
-			>::value));
+			>::value
+		));
 	}
 
 
@@ -63,9 +71,11 @@ KERBAL_TEST_CASE(test_avl_map_CTAD, "test avl_map CTAD")
 				kc::map_data{1, 2},
 		};
 		KERBAL_TEST_CHECK_STATIC((
-			kerbal::type_traits::is_same<decltype(m),
+			kerbal::type_traits::is_same<
+				decltype(m),
 				kc::avl_map<int, int>
-			>::value));
+			>::value
+		));
 	}
 
 }

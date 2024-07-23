@@ -24,18 +24,28 @@ KERBAL_TEST_CASE(test_reverse_iterator_inplace, "test reverse_iterator(inplace)"
 
 	typedef int container[10];
 	container v;
-	kerbal::algorithm::iota(kerbal::container::begin(v), kerbal::container::end(v), 0);
+	kerbal::algorithm::iota(
+		kerbal::container::begin(v),
+		kerbal::container::end(v),
+		0
+	);
 
 	container vr;
-	kerbal::algorithm::reverse_copy(kerbal::container::begin(v), kerbal::container::end(v), kerbal::container::begin(vr));
+	kerbal::algorithm::reverse_copy(
+		kerbal::container::begin(v),
+		kerbal::container::end(v),
+		kerbal::container::begin(vr)
+	);
 
 	KERBAL_TEST_CHECK_EQUAL(
-			kerbal::compare::sequence_equal_to(
-				kerbal::iterator::make_reverse_iterator(kerbal::container::end(v)),
-				kerbal::iterator::make_reverse_iterator(kerbal::container::begin(v)),
-				kerbal::container::begin(vr),
-				kerbal::container::end(vr)
-			), true);
+		kerbal::compare::sequence_equal_to(
+			kerbal::iterator::make_reverse_iterator(kerbal::container::end(v)),
+			kerbal::iterator::make_reverse_iterator(kerbal::container::begin(v)),
+			kerbal::container::begin(vr),
+			kerbal::container::end(vr)
+		),
+		true
+	);
 }
 
 KERBAL_TEST_CASE(test_reverse_iterator_non_inplace, "test reverse_iterator(non-inplace)")
@@ -44,19 +54,29 @@ KERBAL_TEST_CASE(test_reverse_iterator_non_inplace, "test reverse_iterator(non-i
 	typedef kerbal::container::list<int> container;
 	container l;
 	l.resize(10);
-	kerbal::algorithm::iota(kerbal::container::begin(l), kerbal::container::end(l), 0);
+	kerbal::algorithm::iota(
+		kerbal::container::begin(l),
+		kerbal::container::end(l),
+		0
+	);
 
 	container lr;
 	lr.resize(10);
-	kerbal::algorithm::reverse_copy(kerbal::container::begin(l), kerbal::container::end(l), kerbal::container::begin(lr));
+	kerbal::algorithm::reverse_copy(
+		kerbal::container::begin(l),
+		kerbal::container::end(l),
+		kerbal::container::begin(lr)
+	);
 
 	KERBAL_TEST_CHECK_EQUAL(
-			kerbal::compare::sequence_equal_to(
-					kerbal::iterator::make_reverse_iterator(kerbal::container::end(l)),
-					kerbal::iterator::make_reverse_iterator(kerbal::container::begin(l)),
-					kerbal::container::begin(lr),
-					kerbal::container::end(lr)
-			), true);
+		kerbal::compare::sequence_equal_to(
+			kerbal::iterator::make_reverse_iterator(kerbal::container::end(l)),
+			kerbal::iterator::make_reverse_iterator(kerbal::container::begin(l)),
+			kerbal::container::begin(lr),
+			kerbal::container::end(lr)
+		),
+		true
+	);
 }
 
 int main(int argc, char * argv[])

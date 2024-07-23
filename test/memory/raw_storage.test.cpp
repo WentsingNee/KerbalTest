@@ -40,7 +40,8 @@ KERBAL_TEST_CASE(test_raw_storage_non_copy_assignable, "test rawst non copy_assi
 {
 	using namespace kerbal::type_traits;
 
-#define TRY_TEST_CHECK_WEAK_(Ans, Type) TRY_TEST_CHECK_WEAK(Ans, kerbal::type_traits::try_test_is_copy_assignable<kerbal::memory::raw_storage<Type> >::value)
+#define TRY_TEST_CHECK_WEAK_(Ans, Type) \
+	TRY_TEST_CHECK_WEAK(Ans, kerbal::type_traits::try_test_is_copy_assignable<kerbal::memory::raw_storage<Type> >::value)
 
 	TRY_TEST_CHECK_WEAK_(tribool_false, int);
 	TRY_TEST_CHECK_WEAK_(tribool_false, int[4]);
@@ -57,7 +58,8 @@ KERBAL_TEST_CASE(test_raw_storage_trivially_destructible, "test rawst trivially_
 {
 	using namespace kerbal::type_traits;
 
-#define TRY_TEST_CHECK_WEAK_(Ans, Type) TRY_TEST_CHECK_WEAK(Ans, kerbal::type_traits::try_test_is_trivially_destructible<kerbal::memory::raw_storage<Type> >::value)
+#define TRY_TEST_CHECK_WEAK_(Ans, Type) \
+	TRY_TEST_CHECK_WEAK(Ans, kerbal::type_traits::try_test_is_trivially_destructible<kerbal::memory::raw_storage<Type> >::value)
 
 	TRY_TEST_CHECK_WEAK_(tribool_true, int);
 	TRY_TEST_CHECK_WEAK_(tribool_true, int[4]);

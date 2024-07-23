@@ -194,8 +194,8 @@ struct fs_for_each_test_f
 		bool * bout;
 
 		KERBAL_CONSTEXPR
-		fs_for_each_test_f(bool * bout) KERBAL_NOEXCEPT
-				: bout(bout)
+		fs_for_each_test_f(bool * bout) KERBAL_NOEXCEPT :
+			bout(bout)
 		{
 		}
 
@@ -220,10 +220,14 @@ KERBAL_TEST_CASE(test_static_bitset_for_each, "test static_bitset::for_each")
 	bool bout[N::value];
 	bs.for_each(fs_for_each_test_f(bout));
 
-	KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(
-			ba.cbegin(), ba.cend(),
-			bout, bout + N::value
-	));
+	KERBAL_TEST_CHECK(
+		kerbal::compare::sequence_equal_to(
+			ba.cbegin(),
+			ba.cend(),
+			bout,
+			bout + N::value
+		)
+	);
 }
 
 
@@ -360,7 +364,10 @@ KERBAL_TEMPLATE_TEST_CASE(test_static_bitset_count, "test static_bitset::count")
 		random_init(bs, eg);
 
 		kerbal::container::array<bool, N> bitarr(bs.bitarray());
-		KERBAL_TEST_CHECK_EQUAL(bs.count(), kerbal::algorithm::count(bitarr.cbegin(), bitarr.cend(), true));
+		KERBAL_TEST_CHECK_EQUAL(
+			bs.count(),
+			kerbal::algorithm::count(bitarr.cbegin(), bitarr.cend(), true)
+		);
 	}
 
 }

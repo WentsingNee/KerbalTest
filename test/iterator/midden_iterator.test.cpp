@@ -20,6 +20,7 @@
 
 #include <deque>
 
+
 int arr[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 
 template <typename Container>
@@ -29,14 +30,23 @@ KERBAL_TEMPLATE_TEST_CASE(test_midden_iterator, "test midden_iterator")
 	typedef typename container::iterator iterator;
 	typedef typename container::size_type size_type;
 	{
-		container c(kerbal::container::begin(arr), kerbal::container::end(arr));
+		container c(
+			kerbal::container::begin(arr),
+			kerbal::container::end(arr)
+		);
 		iterator mid(kerbal::iterator::midden_iterator(c.begin(), c.end()));
-		KERBAL_TEST_CHECK_EQUAL(static_cast<size_type>(kerbal::iterator::distance(c.begin(), mid)), c.size() / 2);
+		KERBAL_TEST_CHECK_EQUAL(
+			static_cast<size_type>(kerbal::iterator::distance(c.begin(), mid)),
+			c.size() / 2
+		);
 	}
 	{
 		container c(kerbal::container::begin(arr), kerbal::container::end(arr) - 1);
 		iterator mid(kerbal::iterator::midden_iterator(c.begin(), c.end()));
-		KERBAL_TEST_CHECK_EQUAL(static_cast<size_type>(kerbal::iterator::distance(c.begin(), mid)), c.size() / 2);
+		KERBAL_TEST_CHECK_EQUAL(
+			static_cast<size_type>(kerbal::iterator::distance(c.begin(), mid)),
+			c.size() / 2
+		);
 	}
 }
 

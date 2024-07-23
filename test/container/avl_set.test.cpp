@@ -191,13 +191,13 @@ KERBAL_TEMPLATE_TEST_CASE(test_avl_set_copy_assign, "test avl_set::operator=(con
 {
 	typedef std::pair<std::size_t, std::size_t> pair_set_size_t;
 	pair_set_size_t sizes[] = {
-			pair_set_size_t(0, 0),
-			pair_set_size_t(0, 10),
-			pair_set_size_t(10, 20),
-			pair_set_size_t(10, 2000),
-			pair_set_size_t(2000, 10),
-			pair_set_size_t(20, 10),
-			pair_set_size_t(10, 0),
+		pair_set_size_t(0, 0),
+		pair_set_size_t(0, 10),
+		pair_set_size_t(10, 20),
+		pair_set_size_t(10, 2000),
+		pair_set_size_t(2000, 10),
+		pair_set_size_t(20, 10),
+		pair_set_size_t(10, 0),
 	};
 
 	kerbal::random::mt19937 eg;
@@ -207,17 +207,17 @@ KERBAL_TEMPLATE_TEST_CASE(test_avl_set_copy_assign, "test avl_set::operator=(con
 		std::size_t tsize = sizes[tcase].second;
 
 		kerbal::container::vector<int> sdata[] = {
-				ktest::get_iota(ssize, 0),
-				ktest::get_riota(ssize, 0),
-				ktest::get_random_vec_i(ssize, eg),
-				ktest::get_random_vec_i_mod(ssize, eg, 7),
+			ktest::get_iota(ssize, 0),
+			ktest::get_riota(ssize, 0),
+			ktest::get_random_vec_i(ssize, eg),
+			ktest::get_random_vec_i_mod(ssize, eg, 7),
 		};
 
 		kerbal::container::vector<int> tdata[] = {
-				ktest::get_iota(tsize, 0),
-				ktest::get_riota(tsize, 0),
-				ktest::get_random_vec_i(tsize, eg),
-				ktest::get_random_vec_i_mod(tsize, eg, 7),
+			ktest::get_iota(tsize, 0),
+			ktest::get_riota(tsize, 0),
+			ktest::get_random_vec_i(tsize, eg),
+			ktest::get_random_vec_i_mod(tsize, eg, 7),
 		};
 
 		for (std::size_t dcase = 0; dcase < kc::size(sdata); ++dcase) {
@@ -256,13 +256,13 @@ KERBAL_TEMPLATE_TEST_CASE(test_avl_set_move_assign, "test avl_set::operator=(avl
 {
 	typedef std::pair<std::size_t, std::size_t> pair_set_size_t;
 	pair_set_size_t sizes[] = {
-			pair_set_size_t(0, 0),
-			pair_set_size_t(0, 10),
-			pair_set_size_t(10, 20),
-			pair_set_size_t(10, 2000),
-			pair_set_size_t(2000, 10),
-			pair_set_size_t(20, 10),
-			pair_set_size_t(10, 0),
+		pair_set_size_t(0, 0),
+		pair_set_size_t(0, 10),
+		pair_set_size_t(10, 20),
+		pair_set_size_t(10, 2000),
+		pair_set_size_t(2000, 10),
+		pair_set_size_t(20, 10),
+		pair_set_size_t(10, 0),
 	};
 
 	kerbal::random::mt19937 eg;
@@ -272,17 +272,17 @@ KERBAL_TEMPLATE_TEST_CASE(test_avl_set_move_assign, "test avl_set::operator=(avl
 		std::size_t tsize = sizes[tcase].second;
 
 		kerbal::container::vector<int> sdata[] = {
-				ktest::get_iota(ssize, 0),
-				ktest::get_riota(ssize, 0),
-				ktest::get_random_vec_i(ssize, eg),
-				ktest::get_random_vec_i_mod(ssize, eg, 7),
+			ktest::get_iota(ssize, 0),
+			ktest::get_riota(ssize, 0),
+			ktest::get_random_vec_i(ssize, eg),
+			ktest::get_random_vec_i_mod(ssize, eg, 7),
 		};
 
 		kerbal::container::vector<int> tdata[] = {
-				ktest::get_iota(tsize, 0),
-				ktest::get_riota(tsize, 0),
-				ktest::get_random_vec_i(tsize, eg),
-				ktest::get_random_vec_i_mod(tsize, eg, 7),
+			ktest::get_iota(tsize, 0),
+			ktest::get_riota(tsize, 0),
+			ktest::get_random_vec_i(tsize, eg),
+			ktest::get_random_vec_i_mod(tsize, eg, 7),
 		};
 
 		for (std::size_t dcase = 0; dcase < kc::size(sdata); ++dcase) {
@@ -332,10 +332,10 @@ KERBAL_TEMPLATE_TEST_CASE(test_avl_set_emplace, "test avl_set::emplace")
 		std::size_t size = sizes[tcase];
 
 		kerbal::container::vector<int> data[] = {
-				ktest::get_iota(size, 0),
-				ktest::get_riota(size, 0),
-				ktest::get_random_vec_i(size, eg),
-				ktest::get_random_vec_i_mod(size, eg, 7),
+			ktest::get_iota(size, 0),
+			ktest::get_riota(size, 0),
+			ktest::get_random_vec_i(size, eg),
+			ktest::get_random_vec_i_mod(size, eg, 7),
 		};
 
 		for (std::size_t dcase = 0; dcase < kc::size(data); ++dcase) {
@@ -435,10 +435,10 @@ KERBAL_TEMPLATE_TEST_CASE(test_avl_set_swap, "test avl_set::swap")
 
 	typedef std::pair<std::size_t, std::size_t> pair_set_size_t;
 	pair_set_size_t sizes[] = {
-			pair_set_size_t(0, 0),
-			pair_set_size_t(0, 10),
-			pair_set_size_t(10, 20),
-			pair_set_size_t(10, 0),
+		pair_set_size_t(0, 0),
+		pair_set_size_t(0, 10),
+		pair_set_size_t(10, 20),
+		pair_set_size_t(10, 0),
 	};
 
 	kerbal::random::mt19937 eg;
@@ -511,7 +511,8 @@ KERBAL_TEST_CASE(test_avl_set_CTAD, "test avl_set CTAD")
 			kerbal::type_traits::is_same<
 				decltype(s),
 				kc::avl_set<int>
-			>::value));
+			>::value
+		));
 	}
 	{
 		kc::avl_set s(s0.cbegin(), s0.cend(), kerbal::compare::greater<void>());
@@ -519,7 +520,8 @@ KERBAL_TEST_CASE(test_avl_set_CTAD, "test avl_set CTAD")
 			kerbal::type_traits::is_same<
 				decltype(s),
 				kc::avl_set<int, kerbal::compare::greater<void> >
-			>::value));
+			>::value
+		));
 	}
 	{
 		kc::avl_set s(s0.cbegin(), s0.cend(), std::allocator<int>());
@@ -527,7 +529,8 @@ KERBAL_TEST_CASE(test_avl_set_CTAD, "test avl_set CTAD")
 			kerbal::type_traits::is_same<
 				decltype(s),
 				kc::avl_set<int, kerbal::compare::binary_type_less<void, void>, std::allocator<int> >
-			>::value));
+			>::value
+		));
 	}
 	{
 		kc::avl_set s(s0.cbegin(), s0.cend(), kerbal::compare::greater<void>(), std::allocator<int>());
@@ -535,7 +538,8 @@ KERBAL_TEST_CASE(test_avl_set_CTAD, "test avl_set CTAD")
 			kerbal::type_traits::is_same<
 				decltype(s),
 				kc::avl_set<int, kerbal::compare::greater<void>, std::allocator<int> >
-			>::value));
+			>::value
+		));
 	}
 
 
@@ -547,7 +551,8 @@ KERBAL_TEST_CASE(test_avl_set_CTAD, "test avl_set CTAD")
 			kerbal::type_traits::is_same<
 				decltype(s),
 				kc::avl_set<int>
-			>::value));
+			>::value
+		));
 	}
 	{
 		kc::avl_set s(ilist, kerbal::compare::greater<void>());
@@ -555,7 +560,8 @@ KERBAL_TEST_CASE(test_avl_set_CTAD, "test avl_set CTAD")
 			kerbal::type_traits::is_same<
 				decltype(s),
 				kc::avl_set<int, kerbal::compare::greater<void> >
-			>::value));
+			>::value
+		));
 	}
 	{
 		kc::avl_set s(ilist, std::allocator<int>());
@@ -563,7 +569,8 @@ KERBAL_TEST_CASE(test_avl_set_CTAD, "test avl_set CTAD")
 			kerbal::type_traits::is_same<
 				decltype(s),
 				kc::avl_set<int, kerbal::compare::binary_type_less<void, void>, std::allocator<int> >
-			>::value));
+			>::value
+		));
 	}
 	{
 		kc::avl_set s(ilist, kerbal::compare::greater<void>(), std::allocator<int>());
@@ -571,7 +578,8 @@ KERBAL_TEST_CASE(test_avl_set_CTAD, "test avl_set CTAD")
 			kerbal::type_traits::is_same<
 				decltype(s),
 				kc::avl_set<int, kerbal::compare::greater<void>, std::allocator<int> >
-			>::value));
+			>::value
+		));
 	}
 
 }

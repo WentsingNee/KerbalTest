@@ -118,7 +118,7 @@ struct simple_pair
 
 		KERBAL_CONSTEXPR
 		simple_pair(int first, char second) KERBAL_NOEXCEPT :
-				first(first), second(second)
+			first(first), second(second)
 		{
 		}
 
@@ -205,7 +205,7 @@ struct pair_ic : kerbal::utility::compressed_pair<int, char>
 
 	public:
 		pair_ic(int i, char c) :
-				super(i, c)
+			super(i, c)
 		{
 		}
 
@@ -249,14 +249,12 @@ KERBAL_TEST_CASE(test_invoke_mem_fun, "test invoke mem_fun")
 
 	{
 		pair_ic p(2, 3);
-		KERBAL_TEST_CHECK_STATIC(
-				(
-					kerbal::type_traits::is_same<
-						decltype(kf::invoke(&pair_ic::rfirst, kerbal::compatibility::move(p))),
-						int&&
-					>::value
-				)
-		);
+		KERBAL_TEST_CHECK_STATIC((
+			kerbal::type_traits::is_same<
+				decltype(kf::invoke(&pair_ic::rfirst, kerbal::compatibility::move(p))),
+				int &&
+			>::value
+		));
 	}
 
 #endif

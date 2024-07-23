@@ -22,31 +22,31 @@ namespace
 
 	struct Foo : kerbal::test::object_count<Foo>
 	{
-		int x;
-		kerbal::container::vector<int> vfoo;
+			int x;
+			kerbal::container::vector<int> vfoo;
 
-		Foo() : x(0), vfoo(4)
-		{
-		}
+			Foo() : x(0), vfoo(4)
+			{
+			}
 
-		explicit Foo(int x) : x(x), vfoo(4)
-		{
-		}
+			explicit Foo(int x) : x(x), vfoo(4)
+			{
+			}
 
-		virtual ~Foo()
-		{
-		}
+			virtual ~Foo()
+			{
+			}
 
-		virtual char get() const
-		{
-			return 'f';
-		}
+			virtual char get() const
+			{
+				return 'f';
+			}
 	};
 
 
 	struct Goo :
-			public Foo,
-			private kerbal::test::object_count<Goo>
+		public Foo,
+		private kerbal::test::object_count<Goo>
 	{
 		kerbal::container::vector<int> vgoo;
 
@@ -61,7 +61,8 @@ namespace
 
 		typedef kerbal::test::object_count<Goo>::counting_type counting_type;
 
-		static counting_type get_count()
+		static
+		counting_type get_count()
 		{
 			return kerbal::test::object_count<Goo>::get_count();
 		}

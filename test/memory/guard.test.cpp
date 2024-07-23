@@ -15,9 +15,11 @@
 #include <kerbal/test/test.hpp>
 #include <kerbal/test/object_count.hpp>
 
+
 struct A : kerbal::test::object_count<A>
 {
 };
+
 
 KERBAL_TEST_CASE(test_guard, "test guard<Tp>")
 {

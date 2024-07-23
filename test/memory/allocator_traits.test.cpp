@@ -20,27 +20,27 @@
 template <typename T>
 struct test_allocator_base
 {
-	typedef T value_type;
+		typedef T value_type;
 
-	value_type* allocate(std::size_t n)
-	{
-		return ::operator new(n * sizeof(value_type));
-	}
+		value_type * allocate(std::size_t n)
+		{
+			return ::operator new(n * sizeof(value_type));
+		}
 
-	void deallocate(value_type * p, std::size_t n) KERBAL_NOEXCEPT
-	{
-		::operator delete(p, n * sizeof(value_type));
-	}
+		void deallocate(value_type * p, std::size_t n) KERBAL_NOEXCEPT
+		{
+			::operator delete(p, n * sizeof(value_type));
+		}
 };
 
 
 template <typename T>
 struct has_destroy : test_allocator_base<T>
 {
-	static void destroy(T * p) KERBAL_NOEXCEPT
-	{
-		kerbal::memory::destroy_at(p);
-	}
+		static void destroy(T * p) KERBAL_NOEXCEPT
+		{
+			kerbal::memory::destroy_at(p);
+		}
 };
 
 template <typename T>
@@ -53,6 +53,7 @@ struct doesnt_have_destroy : test_allocator_base<T>
 {
 };
 
+
 KERBAL_TEST_CASE(test_has_destroy, "test has_destroy")
 {
 	KERBAL_TEST_CHECK_EQUAL_STATIC((kerbal::memory::allocator_has_destroy<has_destroy<int>, int>::value), true);
@@ -64,10 +65,10 @@ KERBAL_TEST_CASE(test_has_destroy, "test has_destroy")
 template <typename T>
 struct has_max_size : test_allocator_base<T>
 {
-	std::size_t max_size() const KERBAL_NOEXCEPT
-	{
-		return kerbal::numeric::numeric_limits<std::size_t>::MAX::value / sizeof(T);
-	}
+		std::size_t max_size() const KERBAL_NOEXCEPT
+		{
+			return kerbal::numeric::numeric_limits<std::size_t>::MAX::value / sizeof(T);
+		}
 };
 
 template <typename T>
@@ -79,6 +80,7 @@ template <typename T>
 struct doesnt_have_max_size : test_allocator_base<T>
 {
 };
+
 
 KERBAL_TEST_CASE(test_has_max_size, "test has_max_size")
 {

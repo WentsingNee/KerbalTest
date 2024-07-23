@@ -18,6 +18,7 @@
 
 #include <string>
 
+
 #if __cplusplus >= 201703L
 
 #include <type_traits>
@@ -73,9 +74,14 @@ KERBAL_TEST_CASE(test_array_initializer_list_construct, "test array::array(initi
 	int a[] = {0, 9, 8, 7, 3};
 	kerbal::container::array<int, 5> arr = KERBAL_ILIST(0, 9, 8, 7, 3);
 
-	KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(
-		kerbal::container::cbegin(a), kerbal::container::cend(a),
-		kerbal::container::begin(arr), kerbal::container::end(arr)));
+	KERBAL_TEST_CHECK(
+		kerbal::compare::sequence_equal_to(
+			kerbal::container::cbegin(a),
+			kerbal::container::cend(a),
+			kerbal::container::begin(arr),
+			kerbal::container::end(arr)
+		)
+	);
 }
 
 

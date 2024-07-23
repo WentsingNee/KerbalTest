@@ -34,10 +34,14 @@ KERBAL_TEST_CASE(test_autonm_list_push_back, "test autonm_list::push_back")
 		l.insert(l.cbegin(), node, node + 10);
 
 		int r[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
-		KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(
-				l.cbegin(), l.cend(),
-				kerbal::container::cbegin(r), kerbal::container::cend(r)
-		));
+		KERBAL_TEST_CHECK(
+			kerbal::compare::sequence_equal_to(
+				l.cbegin(),
+				l.cend(),
+				kerbal::container::cbegin(r),
+				kerbal::container::cend(r)
+			)
+		);
 	}
 
 	{
@@ -51,10 +55,12 @@ KERBAL_TEST_CASE(test_autonm_list_push_back, "test autonm_list::push_back")
 		}
 
 		int r[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
-		KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(
+		KERBAL_TEST_CHECK(
+			kerbal::compare::sequence_equal_to(
 				l.cbegin(), l.cend(),
 				kerbal::container::cbegin(r), kerbal::container::cend(r)
-		));
+			)
+		);
 	}
 
 }
@@ -78,10 +84,14 @@ KERBAL_TEST_CASE(test_autonm_list_range_insert, "test autonm_list::range_insert"
 	autonm_list::iterator ret = l.insert(l.cbegin(), node, node + N::value);
 
 	KERBAL_TEST_CHECK(*ret == r[0]);
-	KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(
-			l.cbegin(), l.cend(),
-			kerbal::container::cbegin(r), kerbal::container::cend(r)
-	));
+	KERBAL_TEST_CHECK(
+		kerbal::compare::sequence_equal_to(
+			l.cbegin(),
+			l.cend(),
+			kerbal::container::cbegin(r),
+			kerbal::container::cend(r)
+		)
+	);
 
 }
 
@@ -107,10 +117,14 @@ KERBAL_TEST_CASE(test_autonm_list_move_construct, "test autonm_list::autonm_list
 		autonm_list l2(kerbal::compatibility::move(l));
 
 		int r[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
-		KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(
-				l2.cbegin(), l2.cend(),
-				kerbal::container::cbegin(r), kerbal::container::cend(r)
-		));
+		KERBAL_TEST_CHECK(
+			kerbal::compare::sequence_equal_to(
+				l2.cbegin(),
+				l2.cend(),
+				kerbal::container::cbegin(r),
+				kerbal::container::cend(r)
+			)
+		);
 
 		KERBAL_TEST_CHECK(l.empty());
 	}
@@ -147,10 +161,14 @@ KERBAL_TEST_CASE(test_autonm_list_move_assign, "test autonm_list::operator=(auto
 
 
 		int r[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
-		KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(
-				l2.cbegin(), l2.cend(),
-				kerbal::container::cbegin(r), kerbal::container::cend(r)
-		));
+		KERBAL_TEST_CHECK(
+			kerbal::compare::sequence_equal_to(
+				l2.cbegin(),
+				l2.cend(),
+				kerbal::container::cbegin(r),
+				kerbal::container::cend(r)
+			)
+		);
 
 		KERBAL_TEST_CHECK(l.empty());
 	}

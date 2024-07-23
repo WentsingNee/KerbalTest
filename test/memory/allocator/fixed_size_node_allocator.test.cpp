@@ -171,10 +171,12 @@ KERBAL_TEST_CASE(test_fixed_size_node_allocator_rebind, "test fixed_size_node_al
 	typedef km::fixed_size_node_allocator<int, km::default_allocator<int> > ai;
 	typedef km::fixed_size_node_allocator<float, km::default_allocator<float> > af;
 
-	KERBAL_TEST_CHECK_STATIC((kerbal::type_traits::is_same<
-	 		ai::rebind<float>::other,
+	KERBAL_TEST_CHECK_STATIC((
+		kerbal::type_traits::is_same<
+			ai::rebind<float>::other,
 			af
-	>::value));
+		>::value
+	));
 }
 
 

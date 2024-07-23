@@ -15,9 +15,10 @@
 #include <kerbal/random/mersenne_twister_engine.hpp>
 
 
-struct Foo: kerbal::test::object_count<Foo>
+struct Foo : kerbal::test::object_count<Foo>
 {
 };
+
 
 KERBAL_TEST_CASE(test_object_count, "test object_count")
 {
@@ -49,14 +50,14 @@ KERBAL_TEST_CASE(test_object_count_on_heap, "test object_count on heap")
 
 	Foo::counting_type cnt = Foo::get_count();
 	{
-		Foo *a = new Foo;
+		Foo * a = new Foo;
 		KERBAL_TEST_CHECK_EQUAL(Foo::get_count() - cnt, 1);
 		delete a;
 
-		Foo *b = new Foo[233];
+		Foo * b = new Foo[233];
 		KERBAL_TEST_CHECK_EQUAL(Foo::get_count() - cnt, 233);
 
-		Foo *c = new Foo(b[0]);
+		Foo * c = new Foo(b[0]);
 		KERBAL_TEST_CHECK_EQUAL(Foo::get_count() - cnt, 234);
 
 		*c = b[1];
