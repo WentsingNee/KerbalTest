@@ -13,34 +13,71 @@
 
 #if __cplusplus >= 201103L
 
+#include <ktest/utility/dref_testsuit.hpp>
+
 #include <kerbal/utility/forward.hpp>
 #include <kerbal/compatibility/move.hpp>
 
-KERBAL_CONSTEXPR
-char f(const int & x)
-{
-	return 'l';
-}
 
+template <typename T>
 KERBAL_CONSTEXPR
-char f(int && x)
+std::size_t f_wrapper(T && x)
 {
-	return 'r';
+	return sizeof(*kerbal::utility::forward<T>(x).f());
 }
 
 template <typename T>
 KERBAL_CONSTEXPR
-char g(T && x)
+std::size_t sf_wrapper(T && x)
 {
-	return f(kerbal::utility::forward<T>(x));
+	using TS = ktest::dref_testsuit;
+
+	return sizeof(*TS::sf(kerbal::utility::forward<T>(x)));
 }
+
 
 KERBAL_TEST_CASE(test_forward, "test forward")
 {
-	int x;
+	using TS = ktest::dref_testsuit;
 
-	KERBAL_TEST_CHECK_EQUAL_STATIC(g(x), 'l');
-	KERBAL_TEST_CHECK_EQUAL_STATIC(g(kerbal::compatibility::move(x)), 'r');
+	TS ts;
+
+	KERBAL_TEST_CHECK_EQUAL_STATIC(
+		f_wrapper(ts),
+		1u
+	);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(
+		f_wrapper(static_cast<TS const &>(ts)),
+		2u
+	);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(
+		f_wrapper(static_cast<TS &&>(ts)),
+		3u
+	);
+#if KERBAL_HAS_CONST_RVALUE_REFERENCE_MEMBER_SUPPORT
+	KERBAL_TEST_CHECK_EQUAL_STATIC(
+		f_wrapper(static_cast<TS const &&>(ts)),
+		4u
+	);
+#endif
+
+
+	KERBAL_TEST_CHECK_EQUAL_STATIC(
+		sf_wrapper(ts),
+		1u
+	);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(
+		sf_wrapper(static_cast<TS const &>(ts)),
+		2u
+	);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(
+		sf_wrapper(static_cast<TS &&>(ts)),
+		3u
+	);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(
+		sf_wrapper(static_cast<TS const &&>(ts)),
+		4u
+	);
 
 }
 

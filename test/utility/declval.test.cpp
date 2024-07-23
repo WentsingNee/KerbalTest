@@ -9,50 +9,77 @@
  *   all rights reserved
  */
 
+#include <ktest/utility/dref_testsuit.hpp>
+
 #include <kerbal/utility/declval.hpp>
 
 #include <kerbal/test/test.hpp>
-#include <kerbal/compatibility/method_overload_tag.hpp>
 
-
-typedef char (*CHAR1) [1];
-typedef char (*CHAR2) [2];
-typedef char (*CHAR3) [3];
-typedef char (*CHAR4) [4];
-
-struct Foo
-{
-		CHAR1 f() KERBAL_REFERENCE_OVERLOAD_TAG;
-		CHAR2 f() KERBAL_CONST_REFERENCE_OVERLOAD_TAG;
-
-#if __cplusplus >= 201103L
-		CHAR3 f() &&;
-		CHAR4 f() const &&;
-#endif
-
-};
-
-namespace ku = kerbal::utility;
 
 KERBAL_TEST_CASE(test_declval, "test declval")
 {
-	KERBAL_TEST_CHECK_STATIC(sizeof(*(ku::declval<Foo&>().f())) == sizeof(char[1]));
-	KERBAL_TEST_CHECK_STATIC(sizeof(*(ku::declval<const Foo&>().f())) == sizeof(char[2]));
-}
+	typedef ktest::dref_testsuit TS;
+
+	KERBAL_TEST_CHECK_EQUAL_STATIC(
+		sizeof(*(kerbal::utility::declval<TS &>().f())),
+		sizeof(char[1])
+	);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(
+		sizeof(*(TS::sf(kerbal::utility::declval<TS &>()))),
+		sizeof(char[1])
+	);
+
+	KERBAL_TEST_CHECK_EQUAL_STATIC(
+		sizeof(*(kerbal::utility::declval<const TS &>().f())),
+		sizeof(char[2])
+	);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(
+		sizeof(*(TS::sf(kerbal::utility::declval<const TS &>()))),
+		sizeof(char[2])
+	);
 
 #if __cplusplus >= 201103L
 
-KERBAL_TEST_CASE(test_declval_rvalue, "test declval rvalue")
-{
-	KERBAL_TEST_CHECK_STATIC(sizeof(*(ku::declval<Foo&&>().f())) == sizeof(char[3]));
+	KERBAL_TEST_CHECK_EQUAL_STATIC(
+		sizeof(*(kerbal::utility::declval<TS &&>().f())),
+		sizeof(char[3])
+	);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(
+		sizeof(*(TS::sf(kerbal::utility::declval<TS &&>()))),
+		sizeof(char[3])
+	);
 
 #if KERBAL_HAS_CONST_RVALUE_REFERENCE_MEMBER_SUPPORT
-	KERBAL_TEST_CHECK_STATIC(sizeof(*(ku::declval<const Foo&&>().f())) == sizeof(char[4]));
+	KERBAL_TEST_CHECK_EQUAL_STATIC(
+		sizeof(*(kerbal::utility::declval<const TS &&>().f())),
+		sizeof(char[4])
+	);
+#endif
+	KERBAL_TEST_CHECK_EQUAL_STATIC(
+		sizeof(*(TS::sf(kerbal::utility::declval<const TS &&>()))),
+		sizeof(char[4])
+	);
+
 #endif
 
 }
 
-#endif
+
+KERBAL_TEST_CASE(test_declthis, "test declthis")
+{
+	typedef ktest::dref_testsuit TS;
+
+	KERBAL_TEST_CHECK_EQUAL_STATIC(
+		sizeof(*(kerbal::utility::declthis<TS>()->f())),
+		sizeof(char[1])
+	);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(
+		sizeof(*(kerbal::utility::declthis<const TS>()->f())),
+		sizeof(char[2])
+	);
+
+}
+
 
 int main(int argc, char * argv[])
 {
