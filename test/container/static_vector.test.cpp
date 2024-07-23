@@ -25,16 +25,26 @@ namespace kc = kerbal::container;
 
 struct Int
 {
-	int x;
+		int x;
 
-	Int() : x(0) {}
-	Int(int x) : x(x) {}
-	~Int() {x = -1;}
+		Int() : x(0)
+		{
+		}
 
-	friend std::ostream& operator<<(std::ostream & out, const Int & val)
-	{
-		return out << val.x;
-	}
+		Int(int x) : x(x)
+		{
+		}
+
+		~Int()
+		{
+			x = -1;
+		}
+
+		friend
+		std::ostream & operator<<(std::ostream & out, const Int & val)
+		{
+			return out << val.x;
+		}
 
 };
 
@@ -129,12 +139,12 @@ KERBAL_TEST_CASE(test_static_vector_range_erase, "test static_vector::erase(cons
 	typedef std::pair<std::size_t, std::size_t> range_t;
 
 	const range_t ranges[] = {
-			range_t(0, 0),
-			range_t(0, 10),
-			range_t(10, 20),
-			range_t(0, 45),
-			range_t(7, 45),
-			range_t(37, 45),
+		range_t(0, 0),
+		range_t(0, 10),
+		range_t(10, 20),
+		range_t(0, 45),
+		range_t(7, 45),
+		range_t(37, 45),
 	};
 
 	for (std::size_t tcase = 0; tcase < kerbal::container::size(ranges); ++tcase) {
@@ -170,11 +180,11 @@ KERBAL_TEST_CASE(test_static_vector_swap, "test static_vector::swap()")
 	typedef std::pair<std::size_t, std::size_t> len_t;
 
 	const len_t lens[] = {
-			len_t(0, 10),
-			len_t(10, 0),
-			len_t(5, 5),
-			len_t(5, 10),
-			len_t(10, 5),
+		len_t(0, 10),
+		len_t(10, 0),
+		len_t(5, 5),
+		len_t(5, 10),
+		len_t(10, 5),
 	};
 
 	for (std::size_t tcase = 0; tcase < kerbal::container::size(lens); ++tcase) {
@@ -213,9 +223,7 @@ KERBAL_TEST_CASE(test_static_vector_ia_emplace_back, "test static_vector<int[]>:
 		typedef kerbal::type_traits::integral_constant<size_t, 5> Extent;
 		typedef kerbal::type_traits::integral_constant<size_t, 10> Size;
 
-		kc::static_vector<int[Extent::value], Size::value> sv;
-
-		{
+		kc::static_vector<int[Extent::value], Size::value> sv; {
 			for (Size::value_type i = 0; i < Size::value / 2; ++i) {
 				sv.emplace_back();
 			}
@@ -227,10 +235,10 @@ KERBAL_TEST_CASE(test_static_vector_ia_emplace_back, "test static_vector<int[]>:
 		typedef kerbal::type_traits::integral_constant<size_t, 3> Extent1;
 		typedef kerbal::type_traits::integral_constant<size_t, 5> Size;
 
-		kc::static_vector<int[Extent0::value][Extent1::value], Size::value> sv;
-
-		for (int i = 0; i < 4; ++i) {
-			sv.emplace_back();
+		kc::static_vector<int[Extent0::value][Extent1::value], Size::value> sv; {
+			for (int i = 0; i < 4; ++i) {
+				sv.emplace_back();
+			}
 		}
 
 	}
@@ -327,7 +335,9 @@ KERBAL_TEST_CASE(test_static_vector_with_integer_sequence, "test static_vector w
 	KERBAL_CONSTEXPR14 kc::static_vector<int, 10> svr = {0, 1, 2, 3, 4};
 
 	KERBAL_TEST_CHECK_EQUAL_STATIC(
-			kerbal::compare::sequence_equal_to(sv, svr), true);
+		kerbal::compare::sequence_equal_to(sv, svr),
+		true
+	);
 
 }
 

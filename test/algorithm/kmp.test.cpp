@@ -33,21 +33,21 @@ KERBAL_TEST_CASE(test_kmp_longest_matched_suffix, "test kmp longest_matched_suff
 	typedef kerbal::type_traits::integral_constant<size_t, 20> MAX_STRING_LEN;
 
 	const char s[][MAX_STRING_LEN::value] = {
-			"aaaaa",
-			"ababab",
-			"abacabab",
-			"aaabaaaaab",
-			"abcabcd",
-			"abcabd",
+		"aaaaa",
+		"ababab",
+		"abacabab",
+		"aaabaaaaab",
+		"abcabcd",
+		"abcabd",
 	};
 
 	const kerbal::container::static_vector<std::size_t, MAX_STRING_LEN::value + 1> next_ans[] = {
-			KERBAL_ILIST(0, 0, 1, 2, 3, 4),
-			KERBAL_ILIST(0, 0, 0, 1, 2, 3, 4),
-			KERBAL_ILIST(0, 0, 0, 1, 0, 1, 2, 3, 2),
-			KERBAL_ILIST(0, 0, 1, 2, 0, 1, 2, 3, 3, 3, 4),
-			KERBAL_ILIST(0, 0, 0, 0, 1, 2, 3, 0),
-			KERBAL_ILIST(0, 0, 0, 0, 1, 2, 0),
+		KERBAL_ILIST(0, 0, 1, 2, 3, 4),
+		KERBAL_ILIST(0, 0, 0, 1, 2, 3, 4),
+		KERBAL_ILIST(0, 0, 0, 1, 0, 1, 2, 3, 2),
+		KERBAL_ILIST(0, 0, 1, 2, 0, 1, 2, 3, 3, 3, 4),
+		KERBAL_ILIST(0, 0, 0, 0, 1, 2, 3, 0),
+		KERBAL_ILIST(0, 0, 0, 0, 1, 2, 0),
 	};
 
 	for (size_t i = 0; i < kerbal::container::size(s); ++i) {
@@ -56,9 +56,12 @@ KERBAL_TEST_CASE(test_kmp_longest_matched_suffix, "test kmp longest_matched_suff
 		kerbal::algorithm::longest_matched_suffix_prefix(s[i], s[i] + strlen(s[i]), next);
 
 		KERBAL_TEST_CHECK(
-				kerbal::compare::sequence_equal_to(
-						kerbal::container::begin(next), kerbal::container::begin(next) + next_ans[i].size(),
-						kerbal::container::begin(next_ans[i]), kerbal::container::end(next_ans[i]))
+			kerbal::compare::sequence_equal_to(
+				kerbal::container::begin(next),
+				kerbal::container::begin(next) + next_ans[i].size(),
+				kerbal::container::begin(next_ans[i]),
+				kerbal::container::end(next_ans[i])
+			)
 		);
 	}
 }
@@ -118,7 +121,13 @@ KERBAL_TEST_CASE(test_kmp_auto, "test kmp auto")
 			if (pos == std::string::npos) {
 				pos = host.size();
 			}
-			std::string::size_type pos_kmp(kerbal::algorithm::kmp(host.begin() + start_pos, host.end(), pattern.begin(), pattern.end()) - host.begin());
+			std::string::size_type pos_kmp(
+				kerbal::algorithm::kmp(
+					host.begin() + start_pos,
+					host.end(), pattern.begin(),
+					pattern.end()
+				) - host.begin()
+			);
 
 			KERBAL_TEST_CHECK(pos == pos_kmp);
 		}
@@ -151,9 +160,12 @@ KERBAL_TEST_CASE(test_kmp_visually, "test kmp visually")
 				break;
 			}
 
-			KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(
+			KERBAL_TEST_CHECK(
+				kerbal::compare::sequence_equal_to(
 					it_find, it_find + pattern.length(),
-					pattern.begin(), pattern.end()));
+					pattern.begin(), pattern.end()
+				)
+			);
 
 			{
 				std::string::const_iterator it(host.begin());

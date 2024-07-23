@@ -29,46 +29,46 @@ KERBAL_TEMPLATE_TEST_CASE(test_includes, "test includes")
 	typedef std::pair<sequence_t, sequence_t> test_data_t;
 
 	test_data_t test_cases[] = {
-			test_data_t(
-					KERBAL_ILIST(),
-					KERBAL_ILIST()
-			),
-			test_data_t(
-					KERBAL_ILIST(),
-					KERBAL_ILIST(1, 2, 3)
-			),
-			test_data_t(
-					KERBAL_ILIST(1, 2, 3),
-					KERBAL_ILIST()
-			),
-			test_data_t(
-					KERBAL_ILIST(1, 2, 3),
-					KERBAL_ILIST(1, 2, 3)
-			),
-			test_data_t(
-					KERBAL_ILIST(1, 2, 3, 4),
-					KERBAL_ILIST(1, 2, 3)
-			),
-			test_data_t(
-					KERBAL_ILIST(1, 2, 3),
-					KERBAL_ILIST(1, 2, 3, 4)
-			),
-			test_data_t(
-					KERBAL_ILIST(   2, 3, 4),
-					KERBAL_ILIST(1, 2, 3, 4)
-			),
-			test_data_t(
-					KERBAL_ILIST(1, 2, 3, 4),
-					KERBAL_ILIST(   2, 3, 4)
-			),
-			test_data_t(
-					KERBAL_ILIST(1, 2,    4),
-					KERBAL_ILIST(   2, 3, 4)
-			),
-			test_data_t(
-					KERBAL_ILIST(1, 2, 2, 3),
-					KERBAL_ILIST(   2, 2, 3, 4)
-			),
+		test_data_t(
+			KERBAL_ILIST(),
+			KERBAL_ILIST()
+		),
+		test_data_t(
+			KERBAL_ILIST(),
+			KERBAL_ILIST(1, 2, 3)
+		),
+		test_data_t(
+			KERBAL_ILIST(1, 2, 3),
+			KERBAL_ILIST()
+		),
+		test_data_t(
+			KERBAL_ILIST(1, 2, 3),
+			KERBAL_ILIST(1, 2, 3)
+		),
+		test_data_t(
+			KERBAL_ILIST(1, 2, 3, 4),
+			KERBAL_ILIST(1, 2, 3)
+		),
+		test_data_t(
+			KERBAL_ILIST(1, 2, 3),
+			KERBAL_ILIST(1, 2, 3, 4)
+		),
+		test_data_t(
+			KERBAL_ILIST(   2, 3, 4),
+			KERBAL_ILIST(1, 2, 3, 4)
+		),
+		test_data_t(
+			KERBAL_ILIST(1, 2, 3, 4),
+			KERBAL_ILIST(   2, 3, 4)
+		),
+		test_data_t(
+			KERBAL_ILIST(1, 2,    4),
+			KERBAL_ILIST(   2, 3, 4)
+		),
+		test_data_t(
+			KERBAL_ILIST(1, 2, 2, 3),
+			KERBAL_ILIST(   2, 2, 3, 4)
+		),
 	};
 
 	for (std::size_t i = 0; i < kerbal::container::size(test_cases); ++i) {
@@ -78,14 +78,14 @@ KERBAL_TEMPLATE_TEST_CASE(test_includes, "test includes")
 		Container c2(kerbal::container::cbegin(test_data.second), kerbal::container::cend(test_data.second));
 
 		KERBAL_TEST_CHECK_EQUAL(
-				kerbal::algorithm::includes(
-						kerbal::container::cbegin(c1), kerbal::container::cend(c1),
-						kerbal::container::cbegin(c2), kerbal::container::cend(c2)
-				),
-				std::includes(
-						kerbal::container::cbegin(c1), kerbal::container::cend(c1),
-						kerbal::container::cbegin(c2), kerbal::container::cend(c2)
-				)
+			kerbal::algorithm::includes(
+				kerbal::container::cbegin(c1), kerbal::container::cend(c1),
+				kerbal::container::cbegin(c2), kerbal::container::cend(c2)
+			),
+			std::includes(
+				kerbal::container::cbegin(c1), kerbal::container::cend(c1),
+				kerbal::container::cbegin(c2), kerbal::container::cend(c2)
+			)
 		);
 	}
 

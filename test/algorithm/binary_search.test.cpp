@@ -47,15 +47,20 @@ KERBAL_TEMPLATE_TEST_CASE(test_lower_bound, "test lower_bound")
 	for (int i = 0; i <= 22; ++i) {
 		iterator lb_std(std::lower_bound(range_begin, range_end, i));
 		iterator lb_ker(kerbal::algorithm::lower_bound(range_begin, range_end, i));
-		KERBAL_TEST_CHECK_EQUAL(kerbal::iterator::distance(range_begin, lb_std),
-								kerbal::iterator::distance(range_begin, lb_ker));
+		KERBAL_TEST_CHECK_EQUAL(
+			kerbal::iterator::distance(range_begin, lb_std),
+			kerbal::iterator::distance(range_begin, lb_ker)
+		);
 
 		iterator hint(range_begin);
 		for (size_t j = 0; j <= kerbal::container::size(a); ++j) {
 			iterator lb_hint(
-					kerbal::algorithm::lower_bound_hint(range_begin, range_end, i, hint));
-			KERBAL_TEST_CHECK_EQUAL(kerbal::iterator::distance(range_begin, lb_std),
-									kerbal::iterator::distance(range_begin, lb_hint));
+				kerbal::algorithm::lower_bound_hint(range_begin, range_end, i, hint)
+			);
+			KERBAL_TEST_CHECK_EQUAL(
+				kerbal::iterator::distance(range_begin, lb_std),
+				kerbal::iterator::distance(range_begin, lb_hint)
+			);
 			if (j != kerbal::container::size(a)) {
 				++hint;
 			}
@@ -82,8 +87,10 @@ KERBAL_TEMPLATE_TEST_CASE(test_lower_bound_backward, "test lower_bound_backward"
 	for (int i = 0; i <= 22; ++i) {
 		iterator lb_std(std::lower_bound(range_begin, range_end, i));
 		iterator lb_backward(kerbal::algorithm::lower_bound_backward(range_begin, range_end, i));
-		KERBAL_TEST_CHECK_EQUAL(kerbal::iterator::distance(range_begin, lb_std),
-								kerbal::iterator::distance(range_begin, lb_backward));
+		KERBAL_TEST_CHECK_EQUAL(
+			kerbal::iterator::distance(range_begin, lb_std),
+			kerbal::iterator::distance(range_begin, lb_backward)
+		);
 	}
 }
 
@@ -104,15 +111,20 @@ KERBAL_TEMPLATE_TEST_CASE(test_upper_bound, "test upper_bound")
 	for (int i = 0; i <= 22; ++i) {
 		iterator ub_std(std::upper_bound(range_begin, range_end, i));
 		iterator ub_ker(kerbal::algorithm::upper_bound(range_begin, range_end, i));
-		KERBAL_TEST_CHECK_EQUAL(kerbal::iterator::distance(range_begin, ub_std),
-								kerbal::iterator::distance(range_begin, ub_ker));
+		KERBAL_TEST_CHECK_EQUAL(
+			kerbal::iterator::distance(range_begin, ub_std),
+			kerbal::iterator::distance(range_begin, ub_ker)
+		);
 
 		iterator hint(range_begin);
 		for (size_t j = 0; j <= kerbal::container::size(a); ++j) {
 			iterator ub_hint(
-					kerbal::algorithm::upper_bound_hint(range_begin, range_end, i, hint));
-			KERBAL_TEST_CHECK_EQUAL(kerbal::iterator::distance(range_begin, ub_std),
-									kerbal::iterator::distance(range_begin, ub_hint));
+				kerbal::algorithm::upper_bound_hint(range_begin, range_end, i, hint)
+			);
+			KERBAL_TEST_CHECK_EQUAL(
+				kerbal::iterator::distance(range_begin, ub_std),
+				kerbal::iterator::distance(range_begin, ub_hint)
+			);
 			if (j != kerbal::container::size(a)) {
 				++hint;
 			}
@@ -139,8 +151,10 @@ KERBAL_TEMPLATE_TEST_CASE(test_upper_bound_backward, "test upper_bound_backward"
 	for (int i = 0; i <= 22; ++i) {
 		iterator ub_std(std::upper_bound(range_begin, range_end, i));
 		iterator ub_backward(kerbal::algorithm::upper_bound_backward(range_begin, range_end, i));
-		KERBAL_TEST_CHECK_EQUAL(kerbal::iterator::distance(range_begin, ub_std),
-								kerbal::iterator::distance(range_begin, ub_backward));
+		KERBAL_TEST_CHECK_EQUAL(
+			kerbal::iterator::distance(range_begin, ub_std),
+			kerbal::iterator::distance(range_begin, ub_backward)
+		);
 	}
 }
 
@@ -159,12 +173,20 @@ KERBAL_TEMPLATE_TEST_CASE(test_equal_range, "test equal_range")
 	iterator range_end(l.end());
 
 	for (int i = 0; i <= 22; ++i) {
-		kerbal::utility::compressed_pair<iterator, iterator> eqr_std(std::equal_range(range_begin, range_end, i));
-		kerbal::utility::compressed_pair<iterator, iterator> eqr_ker(kerbal::algorithm::equal_range(range_begin, range_end, i));
-		KERBAL_TEST_CHECK_EQUAL(kerbal::iterator::distance(range_begin, eqr_std.first()),
-								kerbal::iterator::distance(range_begin, eqr_ker.first()));
-		KERBAL_TEST_CHECK_EQUAL(kerbal::iterator::distance(range_begin, eqr_std.second()),
-								kerbal::iterator::distance(range_begin, eqr_ker.second()));
+		kerbal::utility::compressed_pair<iterator, iterator> eqr_std(
+			std::equal_range(range_begin, range_end, i)
+		);
+		kerbal::utility::compressed_pair<iterator, iterator> eqr_ker(
+			kerbal::algorithm::equal_range(range_begin, range_end, i)
+		);
+		KERBAL_TEST_CHECK_EQUAL(
+			kerbal::iterator::distance(range_begin, eqr_std.first()),
+			kerbal::iterator::distance(range_begin, eqr_ker.first())
+		);
+		KERBAL_TEST_CHECK_EQUAL(
+			kerbal::iterator::distance(range_begin, eqr_std.second()),
+			kerbal::iterator::distance(range_begin, eqr_ker.second())
+		);
 	}
 }
 

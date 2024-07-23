@@ -26,6 +26,7 @@
 #	include <string_view>
 #endif
 
+
 KERBAL_TEST_CASE(test_iterator_tratis, "test iterator_traits)")
 {
 
@@ -40,7 +41,7 @@ KERBAL_TEST_CASE(test_iterator_tratis, "test iterator_traits)")
 
 KERBAL_TEST_CASE(test_is_contiguous_iterator, "test is_contiguous_iterator)")
 {
-	std::cout << kerbal::iterator::is_contiguous_iterator<int*>::value << std::endl;
+	std::cout << kerbal::iterator::is_contiguous_iterator<int *>::value << std::endl;
 	std::cout << kerbal::iterator::is_contiguous_iterator<std::string::iterator>::value << std::endl;
 	std::cout << kerbal::iterator::is_contiguous_iterator<std::vector<int>::iterator>::value << std::endl;
 

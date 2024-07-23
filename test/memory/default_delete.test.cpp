@@ -14,9 +14,11 @@
 #include <kerbal/test/test.hpp>
 #include <kerbal/test/object_count.hpp>
 
+
 struct Foo : kerbal::test::object_count<Foo>
 {
 };
+
 
 KERBAL_TEST_CASE(test_default_delete, "test default_delete<Tp>")
 {

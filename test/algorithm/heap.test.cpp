@@ -19,6 +19,7 @@
 
 #include <deque>
 
+
 template <typename Container>
 KERBAL_TEMPLATE_TEST_CASE(test_push_heap, "test push_heap")
 {
@@ -27,9 +28,9 @@ KERBAL_TEMPLATE_TEST_CASE(test_push_heap, "test push_heap")
 	typedef typename Container::iterator iterator;
 
 	typedef typename kerbal::type_traits::conditional<
-			kerbal::iterator::is_random_access_compatible_iterator<iterator>::value,
-			kerbal::type_traits::integral_constant<size_t, 10000>,
-			kerbal::type_traits::integral_constant<size_t, 2500>
+		kerbal::iterator::is_random_access_compatible_iterator<iterator>::value,
+		kerbal::type_traits::integral_constant<size_t, 10000>,
+		kerbal::type_traits::integral_constant<size_t, 2500>
 	>::type N;
 
 	for (int i = 0; i < 25; ++i) {
@@ -61,9 +62,9 @@ KERBAL_TEMPLATE_TEST_CASE(test_make_heap, "test make_heap")
 	typedef typename Container::iterator iterator;
 
 	typedef typename kerbal::type_traits::conditional<
-			kerbal::iterator::is_random_access_compatible_iterator<iterator>::value,
-			kerbal::type_traits::integral_constant<size_t, 100000>,
-			kerbal::type_traits::integral_constant<size_t, 5000>
+		kerbal::iterator::is_random_access_compatible_iterator<iterator>::value,
+		kerbal::type_traits::integral_constant<size_t, 100000>,
+		kerbal::type_traits::integral_constant<size_t, 5000>
 	>::type N;
 
 	for (int i = 0; i < 100; ++i) {
@@ -92,9 +93,9 @@ KERBAL_TEMPLATE_TEST_CASE(test_pop_heap, "test pop_heap")
 	typedef typename Container::iterator iterator;
 
 	typedef typename kerbal::type_traits::conditional<
-			kerbal::iterator::is_random_access_compatible_iterator<iterator>::value,
-			kerbal::type_traits::integral_constant<size_t, 10000>,
-			kerbal::type_traits::integral_constant<size_t, 25>
+		kerbal::iterator::is_random_access_compatible_iterator<iterator>::value,
+		kerbal::type_traits::integral_constant<size_t, 10000>,
+		kerbal::type_traits::integral_constant<size_t, 25>
 	>::type N;
 
 	for (int i = 0; i < 25; ++i) {
@@ -104,16 +105,26 @@ KERBAL_TEMPLATE_TEST_CASE(test_pop_heap, "test pop_heap")
 			}
 		}
 
-		kerbal::algorithm::make_heap(kerbal::container::begin(v),
-									kerbal::container::end(v));
-		KERBAL_TEST_CHECK(kerbal::algorithm::is_heap(kerbal::container::begin(v),
-													kerbal::container::end(v)));
+		kerbal::algorithm::make_heap(
+			kerbal::container::begin(v),
+			kerbal::container::end(v)
+		);
+		KERBAL_TEST_CHECK(
+			kerbal::algorithm::is_heap(
+				kerbal::container::begin(v),
+				kerbal::container::end(v)
+			)
+		);
 
 		for (typename N::value_type j = 0; j < N::value; ++j) {
 			iterator end(kerbal::iterator::prev(kerbal::container::end(v), j));
 			kerbal::algorithm::pop_heap(kerbal::container::begin(v), end);
-			KERBAL_TEST_CHECK(kerbal::algorithm::is_heap(
-				kerbal::container::begin(v), kerbal::iterator::prev(end)));
+			KERBAL_TEST_CHECK(
+				kerbal::algorithm::is_heap(
+					kerbal::container::begin(v),
+					kerbal::iterator::prev(end)
+				)
+			);
 		}
 	}
 }

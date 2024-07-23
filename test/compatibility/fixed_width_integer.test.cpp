@@ -14,6 +14,7 @@
 #include <kerbal/test/test.hpp>
 #include <climits>
 
+
 KERBAL_TEST_CASE(check_width, "check width")
 {
 	KERBAL_TEST_CHECK_EQUAL_STATIC(sizeof(kerbal::compatibility::int8_t) * CHAR_BIT, 8u);

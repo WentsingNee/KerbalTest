@@ -64,8 +64,9 @@ KERBAL_TEST_CASE(test_flat_set_insert, "test flat_set::insert)")
 
 	kerbal::random::mt19937 outer_eg;
 
-	kerbal::random::mt19937::result_type
-			seeds[] = {0, 1, 2, 3, outer_eg(), outer_eg(), outer_eg(), outer_eg(), outer_eg()};
+	kerbal::random::mt19937::result_type seeds[] = {
+		0, 1, 2, 3, outer_eg(), outer_eg(), outer_eg(), outer_eg(), outer_eg()
+	};
 	for (size_t j = 0; j < kerbal::container::size(seeds); ++j) {
 		printf("seeds: %d\n", seeds[j]);
 
@@ -104,8 +105,9 @@ KERBAL_TEST_CASE(test_flat_set_erase, "test flat_set::erase)")
 
 	kerbal::random::mt19937 outer_eg;
 
-	kerbal::random::mt19937::result_type
-			seeds[] = {0, 1, 2, 3, outer_eg(), outer_eg(), outer_eg(), outer_eg(), outer_eg()};
+	kerbal::random::mt19937::result_type seeds[] = {
+		0, 1, 2, 3, outer_eg(), outer_eg(), outer_eg(), outer_eg(), outer_eg()
+	};
 	for (size_t j = 0; j < kerbal::container::size(seeds); ++j) {
 		printf("seeds: %d\n", seeds[j]);
 
@@ -141,8 +143,9 @@ KERBAL_TEST_CASE(test_flat_multiset_erase, "test flat_multiset::erase)")
 
 	kerbal::random::mt19937 outer_eg;
 
-	kerbal::random::mt19937::result_type
-			seeds[] = {0, 1, 2, 3, outer_eg(), outer_eg(), outer_eg(), outer_eg(), outer_eg()};
+	kerbal::random::mt19937::result_type seeds[] = {
+		0, 1, 2, 3, outer_eg(), outer_eg(), outer_eg(), outer_eg(), outer_eg()
+	};
 	for (size_t j = 0; j < kerbal::container::size(seeds); ++j) {
 		printf("seeds: %d\n", seeds[j]);
 

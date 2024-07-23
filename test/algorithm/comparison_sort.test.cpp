@@ -176,10 +176,10 @@ struct generators_factory
 template <typename T>
 typename generators_factory<T>::generator_list_t const
 generators_factory<T>::generators = KERBAL_ILIST(
-		&(get_random<value_type>),
-		&(get_sorted<value_type, kerbal::compare::less<> >),
-		&(get_reverse<value_type, kerbal::compare::less<> >),
-		&(get_few_unique<value_type>)
+	&(get_random<value_type>),
+	&(get_sorted<value_type, kerbal::compare::less<> >),
+	&(get_reverse<value_type, kerbal::compare::less<> >),
+	&(get_few_unique<value_type>)
 );
 
 
@@ -195,7 +195,7 @@ struct generators_factory<std::string>
 
 generators_factory<std::string>::generator_list_t const
 generators_factory<std::string>::generators = KERBAL_ILIST(
-		&(get_random_string)
+	&(get_random_string)
 );
 
 struct customized_compare

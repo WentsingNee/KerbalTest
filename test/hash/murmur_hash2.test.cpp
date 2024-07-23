@@ -55,7 +55,10 @@ KERBAL_TEST_CASE(test_murmur_hash2, "test murmur_hash2")
 	for (int seed = 0; seed < 10; ++seed) {
 		for (size_t i = 0; i < kerbal::container::size(s); ++i) {
 			kerbal::hash::murmur_hash2_context ctx(seed);
-			KERBAL_TEST_CHECK_EQUAL(ctx.digest(s, s + i), murMurHash(s, static_cast<int>(i), seed));
+			KERBAL_TEST_CHECK_EQUAL(
+				ctx.digest(s, s + i),
+				murMurHash(s, static_cast<int>(i), seed)
+			);
 		}
 	}
 

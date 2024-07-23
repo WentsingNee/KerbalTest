@@ -92,9 +92,12 @@ KERBAL_TEST_CASE(test_sort_list, "test sort list")
 
 	kerbal::container::vector<reference_wrapper<const int> > rv(l.cbegin(), l.cend());
 
-	KERBAL_TEST_CHECK(kerbal::compare::sequence_equal_to(
+	KERBAL_TEST_CHECK(
+		kerbal::compare::sequence_equal_to(
 			l.cbegin(), l.cend(),
-			rv.cbegin(), rv.cend()));
+			rv.cbegin(), rv.cend()
+		)
+	);
 
 	kerbal::algorithm::intro_sort(rv.begin(), rv.end());
 

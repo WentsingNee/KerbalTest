@@ -70,13 +70,15 @@ struct KERBAL_ALIGNAS(Align) Foo
 
 		static kerbal::memory::over_aligned_allocator<> alloc;
 
-		static void * operator new(std::size_t size)
+		static
+		void * operator new(std::size_t size)
 		{
 			std::printf("afoo: %zu\n", size);
 			return alloc.allocate(size, kerbal::memory::align_val_t(KERBAL_ALIGNOF(Foo)));
 		}
 
-		static void operator delete(void * p, std::size_t size) KERBAL_NOEXCEPT
+		static
+		void operator delete(void * p, std::size_t size) KERBAL_NOEXCEPT
 		{
 			std::printf("dfoo: %zu\n", size);
 			alloc.deallocate(p, size, kerbal::memory::align_val_t(KERBAL_ALIGNOF(Foo)));

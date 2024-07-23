@@ -39,7 +39,11 @@ KERBAL_TEMPLATE_TEST_CASE(test_sha1, "test sha1")
 	unsigned char buf[1][BUFSIZE];
 
 	{
-		kerbal::algorithm::iota(kerbal::container::begin(buf[0]), kerbal::container::end(buf[0]), 0);
+		kerbal::algorithm::iota(
+			kerbal::container::begin(buf[0]),
+			kerbal::container::end(buf[0]),
+			0
+		);
 	}
 
 	std::string result[] = {
@@ -94,27 +98,33 @@ KERBAL_TEST_CASE(test_sha1_constexpr, "test sha1 constexpr")
 
 	struct helper
 	{
-		static
-		constexpr auto compute()
-		{
-			// when use `kerbal::container::array` to prepare input data, the constexpr test will fail under vs2017
-			constexpr std::size_t size = 1024;
-			kerbal::compatibility::uint8_t data[size] = {};
-			kerbal::algorithm::fill(data, data + size, 'a');
+			static
+			constexpr auto compute()
+			{
+				// when use `kerbal::container::array` to prepare input data, the constexpr test will fail under vs2017
+				constexpr std::size_t size = 1024;
+				kerbal::compatibility::uint8_t data[size] = {};
+				kerbal::algorithm::fill(data, data + size, 'a');
 
-			SHA1_context<SHA1_policy::fast> ctx;
-			for (int i = 0; i < 4; ++i) {
-				ctx.update(data, data + size);
+				SHA1_context<SHA1_policy::fast> ctx;
+				for (int i = 0; i < 4; ++i) {
+					ctx.update(data, data + size);
+				}
+				return ctx.digest();
 			}
-			return ctx.digest();
-		}
 
 	};
 
 	constexpr auto r = helper::compute();
 	constexpr const char s[] = "8c51fb6a0b587ec95ca74acfa43df7539b486297";
 	std::string rs = r;
-	KERBAL_TEST_CHECK_EQUAL(kerbal::compare::sequence_equal_to(s, s + 40, rs.begin(), rs.end()), true);
+	KERBAL_TEST_CHECK_EQUAL(
+		kerbal::compare::sequence_equal_to(
+			s, s + 40,
+			rs.begin(), rs.end()
+		),
+		true
+	);
 
 }
 
