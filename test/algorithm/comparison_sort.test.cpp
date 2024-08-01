@@ -9,7 +9,17 @@
  *   all rights reserved
  */
 
-#include <kerbal/algorithm/sort.hpp>
+#include <kerbal/algorithm/sort/bubble_sort.hpp>
+#include <kerbal/algorithm/sort/heap_sort.hpp>
+#include <kerbal/algorithm/sort/insertion_sort.hpp>
+#include <kerbal/algorithm/sort/intro_sort.hpp>
+#include <kerbal/algorithm/sort/inplace_merge_sort.hpp>
+#include <kerbal/algorithm/sort/merge_sort.hpp>
+#include <kerbal/algorithm/sort/quick_sort.hpp>
+#include <kerbal/algorithm/sort/selection_sort.hpp>
+#include <kerbal/algorithm/sort/shell_sort.hpp>
+#include <kerbal/algorithm/sort/sort.hpp>
+#include <kerbal/algorithm/sort/stable_sort.hpp>
 
 #include <kerbal/test/test.hpp>
 #include <kerbal/compare/basic_compare.hpp>

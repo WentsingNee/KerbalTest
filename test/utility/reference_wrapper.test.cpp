@@ -12,7 +12,8 @@
 #include <kerbal/utility/reference_wrapper.hpp>
 
 #include <kerbal/test/test.hpp>
-#include <kerbal/algorithm/sort.hpp>
+#include <kerbal/algorithm/sort/intro_sort.hpp>
+#include <kerbal/algorithm/sort/is_sorted.hpp>
 #include <kerbal/compare/sequence_compare.hpp>
 #include <kerbal/container/single_list.hpp>
 #include <kerbal/container/vector.hpp>

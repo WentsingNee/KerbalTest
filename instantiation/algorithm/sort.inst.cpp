@@ -11,7 +11,20 @@
 
 #include <ktest/iterator/iterators.hpp>
 
-#include <kerbal/algorithm/sort.hpp>
+#include <kerbal/algorithm/sort/bubble_sort.hpp>
+#include <kerbal/algorithm/sort/heap_sort.hpp>
+#include <kerbal/algorithm/sort/insertion_sort.hpp>
+#include <kerbal/algorithm/sort/intro_sort.hpp>
+#include <kerbal/algorithm/sort/inplace_merge_sort.hpp>
+#include <kerbal/algorithm/sort/merge_sort.hpp>
+#include <kerbal/algorithm/sort/pigeonhole_sort.hpp>
+#include <kerbal/algorithm/sort/quick_sort.hpp>
+#include <kerbal/algorithm/sort/radix_sort.hpp>
+#include <kerbal/algorithm/sort/selection_sort.hpp>
+#include <kerbal/algorithm/sort/shell_sort.hpp>
+#include <kerbal/algorithm/sort/sort.hpp>
+#include <kerbal/algorithm/sort/stable_sort.hpp>
+
 
 template <typename T>
 struct cmp_fnptr
@@ -112,9 +125,9 @@ template void kerbal::algorithm::selection_sort(BdrIter<int>::type, BdrIter<int>
 template void kerbal::algorithm::selection_sort(FwlIter<int>::type, FwlIter<int>::type, cmp_fnptr<int>::type);
 template void kerbal::algorithm::selection_sort(FwdIter<int>::type, FwdIter<int>::type, cmp_fnptr<int>::type);
 
-//template void kerbal::algorithm::shell_sort(CtgIter<int>::type, CtgIter<int>::type, cmp_fnptr<int>::type);
-//template void kerbal::algorithm::shell_sort(RasIter<int>::type, RasIter<int>::type, cmp_fnptr<int>::type);
-//template void kerbal::algorithm::shell_sort(BdrIter<int>::type, BdrIter<int>::type, cmp_fnptr<int>::type);
+template void kerbal::algorithm::shell_sort(CtgIter<int>::type, CtgIter<int>::type, cmp_fnptr<int>::type);
+template void kerbal::algorithm::shell_sort(RasIter<int>::type, RasIter<int>::type, cmp_fnptr<int>::type);
+template void kerbal::algorithm::shell_sort(BdrIter<int>::type, BdrIter<int>::type, cmp_fnptr<int>::type);
 
 template void kerbal::algorithm::stable_sort(CtgIter<int>::type, CtgIter<int>::type, cmp_fnptr<int>::type);
 template void kerbal::algorithm::stable_sort(RasIter<int>::type, RasIter<int>::type, cmp_fnptr<int>::type);

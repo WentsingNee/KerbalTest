@@ -11,7 +11,18 @@
 
 #include <ktest/iterator/iterators.hpp>
 
-#include <kerbal/algorithm/querier.hpp>
+#include <kerbal/algorithm/querier/find.hpp>
+#include <kerbal/algorithm/querier/find_if.hpp>
+#include <kerbal/algorithm/querier/find_if_not.hpp>
+#include <kerbal/algorithm/querier/all_of.hpp>
+#include <kerbal/algorithm/querier/any_of.hpp>
+#include <kerbal/algorithm/querier/none_of.hpp>
+#include <kerbal/algorithm/querier/for_each.hpp>
+#include <kerbal/algorithm/querier/rfor_each.hpp>
+#include <kerbal/algorithm/querier/count.hpp>
+#include <kerbal/algorithm/querier/count_if.hpp>
+#include <kerbal/algorithm/querier/find_first_of.hpp>
+#include <kerbal/algorithm/querier/adjacent_find.hpp>
 
 
 template CtgIter<int>::type kerbal::algorithm::find_if(CtgIter<int>::type, CtgIter<int>::type, bool(*)(const int&));

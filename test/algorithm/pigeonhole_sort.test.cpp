@@ -9,10 +9,10 @@
  *   all rights reserved
  */
 
-#include <kerbal/algorithm/sort.hpp>
+#include <kerbal/algorithm/sort/pigeonhole_sort.hpp>
 
 #include <kerbal/test/test.hpp>
-#include <kerbal/algorithm/sort.hpp>
+#include <kerbal/algorithm/sort/sort.hpp>
 #include <kerbal/compare/basic_compare.hpp>
 #include <kerbal/compare/sequence_compare.hpp>
 #include <kerbal/container/nonmember_container_access.hpp>

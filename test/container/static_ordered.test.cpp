@@ -12,7 +12,7 @@
 #include <kerbal/container/static_ordered.hpp>
 
 #include <kerbal/test/test.hpp>
-#include <kerbal/algorithm/sort.hpp>
+#include <kerbal/algorithm/sort/is_sorted.hpp>
 #include <kerbal/compare/basic_compare.hpp>
 #include <kerbal/container/nonmember_container_access.hpp>
 #include <kerbal/container/static_vector.hpp>
