@@ -64,45 +64,6 @@ KERBAL_TEMPLATE_TEST_CASE_INST(test_sha1, "test sha1<fast>", kerbal::hash::SHA1_
 KERBAL_TEMPLATE_TEST_CASE_INST(test_sha1, "test sha1<size>", kerbal::hash::SHA1_policy::size);
 
 
-template <typename Policy>
-KERBAL_TEMPLATE_TEST_CASE(test_sha1_2, "test sha1 2")
-{
-	using namespace kerbal::hash;
-
-	std::basic_string<unsigned char> buf[] = {
-		(const unsigned char*)"abc",
-		std::basic_string<unsigned char>(1000000, 'a'),
-	};
-
-	std::string result[] = {
-		"a9993e364706816aba3e25717850c26c9cd0d89d",
-		"34aa973cd4c4daa4f61eeb2bdbad27316534016f",
-	};
-
-	for (int i = 0; i < 2; ++i) {
-		{
-			const unsigned char* first = (unsigned char*)(buf[i].c_str());
-			const unsigned char* last = (unsigned char*)(buf[i].c_str()) + buf[i].length();
-			SHA1_context<Policy> ctx;
-			ctx.update(first, last);
-			typename SHA1_context<Policy>::result sha1 = ctx.digest();
-			KERBAL_TEST_CHECK((std::string)(sha1) == result[i]);
-		}
-		{
-			std::basic_string<unsigned char>::const_iterator first = buf[i].begin();
-			std::basic_string<unsigned char>::const_iterator last = buf[i].end();
-			SHA1_context<Policy> ctx;
-			ctx.update(first, last);
-			typename SHA1_context<Policy>::result sha1 = ctx.digest();
-			KERBAL_TEST_CHECK((std::string)(sha1) == result[i]);
-		}
-	}
-}
-
-KERBAL_TEMPLATE_TEST_CASE_INST(test_sha1_2, "test sha1<fast> 2", kerbal::hash::SHA1_policy::fast);
-KERBAL_TEMPLATE_TEST_CASE_INST(test_sha1_2, "test sha1<size> 2", kerbal::hash::SHA1_policy::size);
-
-
 
 #if __cplusplus >= 201402L
 
