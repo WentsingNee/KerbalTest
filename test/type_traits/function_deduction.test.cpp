@@ -79,9 +79,9 @@ KERBAL_TEST_CASE(test_is_function, "test is_function")
 
 	struct X
 	{
-		void operator()()
-		{
-		}
+			void operator()()
+			{
+			}
 	};
 
 	struct Y
@@ -128,6 +128,7 @@ KERBAL_TEST_CASE(test_is_function, "test is_function")
 # endif
 
 }
+
 
 int main(int argc, char * argv[])
 {

@@ -107,8 +107,11 @@ KERBAL_TEST_CASE(test_try_test_is_constructible, "test try_test_is_constructible
 {
 	using namespace kerbal::type_traits;
 
-#define TRY_TEST_CHECK_STRONG_(Ans, ...) TRY_TEST_CHECK_STRONG(Ans, (kerbal::type_traits::try_test_is_constructible<__VA_ARGS__>::value))
-#define TRY_TEST_CHECK_WEAK_(Ans, ...) TRY_TEST_CHECK_WEAK(Ans, (kerbal::type_traits::try_test_is_constructible<__VA_ARGS__>::value))
+#define TRY_TEST_CHECK_STRONG_(Ans, ...) \
+	TRY_TEST_CHECK_STRONG(Ans, (kerbal::type_traits::try_test_is_constructible<__VA_ARGS__>::value))
+
+#define TRY_TEST_CHECK_WEAK_(Ans, ...) \
+	TRY_TEST_CHECK_WEAK(Ans, (kerbal::type_traits::try_test_is_constructible<__VA_ARGS__>::value))
 
 	TRY_TEST_CHECK_WEAK_(tribool_false, void);
 	TRY_TEST_CHECK_WEAK_(tribool_true, int);

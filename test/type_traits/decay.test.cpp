@@ -27,11 +27,11 @@
 
 struct Foo
 {
-	int x;
+		int x;
 
-	void f(int)
-	{
-	}
+		void f(int)
+		{
+		}
 };
 
 
@@ -108,7 +108,6 @@ KERBAL_TEST_CASE(test_decay, "test decay")
 	AFTER_DECAY_IS(void (Foo::*)(int),  void (Foo::*)(int));
 
 }
-
 
 
 int main(int argc, char * argv[])

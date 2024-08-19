@@ -102,8 +102,11 @@ KERBAL_TEST_CASE(test_try_test_is_destructible, "test try_test_is_destructible")
 {
 	using namespace kerbal::type_traits;
 
-#define TRY_TEST_CHECK_STRONG_(Ans, Type) TRY_TEST_CHECK_STRONG(Ans, kerbal::type_traits::try_test_is_destructible<Type>::value)
-#define TRY_TEST_CHECK_WEAK_(Ans, Type) TRY_TEST_CHECK_WEAK(Ans, kerbal::type_traits::try_test_is_destructible<Type>::value)
+#define TRY_TEST_CHECK_STRONG_(Ans, Type) \
+	TRY_TEST_CHECK_STRONG(Ans, kerbal::type_traits::try_test_is_destructible<Type>::value)
+
+#define TRY_TEST_CHECK_WEAK_(Ans, Type) \
+	TRY_TEST_CHECK_WEAK(Ans, kerbal::type_traits::try_test_is_destructible<Type>::value)
 
 	TRY_TEST_CHECK_STRONG_(tribool_false, void);
 	TRY_TEST_CHECK_STRONG_(tribool_true, int);

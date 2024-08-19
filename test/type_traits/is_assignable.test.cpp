@@ -125,8 +125,11 @@ KERBAL_TEST_CASE(test_try_test_is_assignable, "test try_test_is_assignable")
 {
 	using namespace kerbal::type_traits;
 
-#define TRY_TEST_CHECK_STRONG_(Ans, Left, Right) TRY_TEST_CHECK_STRONG(Ans, (kerbal::type_traits::try_test_is_assignable<Left, Right>::value))
-#define TRY_TEST_CHECK_WEAK_(Ans, Left, Right) TRY_TEST_CHECK_WEAK(Ans, (kerbal::type_traits::try_test_is_assignable<Left, Right>::value))
+#define TRY_TEST_CHECK_STRONG_(Ans, Left, Right) \
+	TRY_TEST_CHECK_STRONG(Ans, (kerbal::type_traits::try_test_is_assignable<Left, Right>::value))
+
+#define TRY_TEST_CHECK_WEAK_(Ans, Left, Right) \
+	TRY_TEST_CHECK_WEAK(Ans, (kerbal::type_traits::try_test_is_assignable<Left, Right>::value))
 
 	TRY_TEST_CHECK_WEAK_(tribool_false, void, void);
 	TRY_TEST_CHECK_WEAK_(tribool_false, int, int);
@@ -184,7 +187,6 @@ KERBAL_TEST_CASE(test_try_test_is_assignable, "test try_test_is_assignable")
 #undef TRY_TEST_CHECK_WEAK_
 
 }
-
 
 
 int main(int argc, char * argv[])
