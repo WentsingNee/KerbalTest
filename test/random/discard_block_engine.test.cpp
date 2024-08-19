@@ -60,11 +60,11 @@ KERBAL_TEMPLATE_TEST_CASE(test_discard_block_engine_discard, "test discard_block
 	typedef kerbal::random::discard_block_engine<Eg, P, R> ker_t;
 
 	unsigned long long times[] = {
-			50 * 1000 * 1000,
-			53214635,
-			4325643,
-			0,
-			1,
+		50 * 1000 * 1000,
+		53214635,
+		4325643,
+		0,
+		1,
 	};
 
 	ker_t ker0;

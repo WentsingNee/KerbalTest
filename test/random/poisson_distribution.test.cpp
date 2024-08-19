@@ -29,7 +29,7 @@ KERBAL_TEMPLATE_TEST_CASE(test_poisson_distribution, "test poisson_distribution"
 	Eg eg;
 
 	int means[] = {
-			1, 2, 5, 10, 20, 100
+		1, 2, 5, 10, 20, 100
 	};
 
 	for (std::size_t tcase = 0; tcase < kerbal::container::size(means); ++tcase) {
@@ -63,7 +63,7 @@ KERBAL_TEST_CASE(cmp_with_std_poisson_distribution_bar, "compare with std::poiss
 	kerbal::random::mt19937 eg[2];
 
 	int means[] = {
-			1, 2, 5, 10, 20, 100
+		1, 2, 5, 10, 20, 100
 	};
 
 	for (std::size_t tcase = 0; tcase < kerbal::container::size(means); ++tcase) {

@@ -15,7 +15,8 @@
 #include <kerbal/random/mersenne_twister_engine.hpp>
 
 
-struct Foo : kerbal::test::object_count<Foo>
+struct Foo :
+	kerbal::test::object_count<Foo>
 {
 };
 

@@ -17,6 +17,7 @@
 
 #include <cstdio>
 
+
 kerbal::random::mt19937 eg;
 
 std::pair<int, int> cnt(double p)
@@ -30,6 +31,7 @@ std::pair<int, int> cnt(double p)
 	}
 	return std::make_pair(cnt[0], cnt[1]);
 }
+
 
 KERBAL_TEST_CASE(test_bernoulli, "test bernoulli")
 {

@@ -35,10 +35,10 @@ KERBAL_TEMPLATE_TEST_CASE(test_normal_distribution, "test normal_distribution")
 	Eg eg;
 
 	float means[] = {
-			250.0, 0.0, 0.0,
+		250.0, 0.0, 0.0,
 	};
 	float stds[] = {
-			10.0, 10.0, 1.0,
+		10.0, 10.0, 1.0,
 	};
 
 	for (std::size_t tcase = 0; tcase < kerbal::container::size(means); ++tcase) {
@@ -73,9 +73,9 @@ KERBAL_TEST_CASE(cmp_with_std_normal_distribution_bar, "compare with std::normal
 	kerbal::random::mt19937 eg[2];
 
 	float args[][2] = {
-			{250.0f, 10.0f},
-			{0.0f, 10.0f},
-			{0.0f, 1.0f},
+		{250.0f, 10.0f},
+		{0.0f, 10.0f},
+		{0.0f, 1.0f},
 	};
 
 	for (std::size_t tcase = 0; tcase < kerbal::container::size(args); ++tcase) {

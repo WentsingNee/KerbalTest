@@ -29,7 +29,7 @@ KERBAL_TEMPLATE_TEST_CASE(test_geometric_distribution, "test geometric_distribut
 	Eg eg;
 
 	double ps[] = {
-			0.1, 0.2, 0.5, 0.9
+		0.1, 0.2, 0.5, 0.9
 	};
 
 	for (std::size_t tcase = 0; tcase < kerbal::container::size(ps); ++tcase) {
@@ -63,7 +63,7 @@ KERBAL_TEST_CASE(cmp_with_std_geometric_distribution_bar, "compare with std::geo
 	kerbal::random::mt19937 eg[2];
 
 	double ps[] = {
-			0.1, 0.2, 0.5, 0.9
+		0.1, 0.2, 0.5, 0.9
 	};
 
 	for (std::size_t tcase = 0; tcase < kerbal::container::size(ps); ++tcase) {
