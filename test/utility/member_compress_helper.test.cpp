@@ -31,8 +31,8 @@ KERBAL_TEST_CASE(test_reference_assign, "test reference assign")
 	{
 		int x = 3, y = 4;
 
-		kerbal::utility::member_compress_helper<int&> com1(kerbal::utility::in_place_t(), x);
-		kerbal::utility::member_compress_helper<int&, 1> com2(kerbal::utility::in_place_t(), y);
+		kerbal::utility::member_compress_helper<int &> com1(kerbal::utility::in_place_t(), x);
+		kerbal::utility::member_compress_helper<int &, 1> com2(kerbal::utility::in_place_t(), y);
 
 		com1 = com2;
 		KERBAL_TEST_CHECK_EQUAL(x, 4);
@@ -40,7 +40,7 @@ KERBAL_TEST_CASE(test_reference_assign, "test reference assign")
 	{
 		int x = 3, y = 4;
 
-		kerbal::utility::member_compress_helper<int&> com1(kerbal::utility::in_place_t(), x);
+		kerbal::utility::member_compress_helper<int &> com1(kerbal::utility::in_place_t(), x);
 		kerbal::utility::member_compress_helper<int, 1> com2(kerbal::utility::in_place_t(), y);
 
 		com1 = com2;
@@ -50,7 +50,7 @@ KERBAL_TEST_CASE(test_reference_assign, "test reference assign")
 		int x = 3;
 		double y = 4.1;
 
-		kerbal::utility::member_compress_helper<int&> com1(kerbal::utility::in_place_t(), x);
+		kerbal::utility::member_compress_helper<int &> com1(kerbal::utility::in_place_t(), x);
 		kerbal::utility::member_compress_helper<double> com2(kerbal::utility::in_place_t(), y);
 
 		com1 = com2;

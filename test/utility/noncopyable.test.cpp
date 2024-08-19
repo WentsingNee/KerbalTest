@@ -54,7 +54,8 @@ KERBAL_TEST_CASE(test_noncopyassignable_is_not_copy_assignable, "test noncopyass
 {
 	using namespace kerbal::type_traits;
 
-#define TRY_TEST_CHECK_WEAK_(Ans, Type) TRY_TEST_CHECK_WEAK(Ans, kerbal::type_traits::try_test_is_copy_assignable<Type>::value)
+#define TRY_TEST_CHECK_WEAK_(Ans, Type) \
+	TRY_TEST_CHECK_WEAK(Ans, kerbal::type_traits::try_test_is_copy_assignable<Type>::value)
 
 	TRY_TEST_CHECK_WEAK_(tribool_false, kerbal::utility::noncopyassignable);
 	TRY_TEST_CHECK_WEAK_(tribool_false, noncopyassignable_1);
@@ -69,7 +70,8 @@ KERBAL_TEST_CASE(test_noncopyconstructible_is_not_copy_constructible, "test nonc
 {
 	using namespace kerbal::type_traits;
 
-#define TRY_TEST_CHECK_WEAK_(Ans, Type) TRY_TEST_CHECK_WEAK(Ans, kerbal::type_traits::try_test_is_copy_constructible<Type>::value)
+#define TRY_TEST_CHECK_WEAK_(Ans, Type) \
+	TRY_TEST_CHECK_WEAK(Ans, kerbal::type_traits::try_test_is_copy_constructible<Type>::value)
 
 	TRY_TEST_CHECK_WEAK_(tribool_false, kerbal::utility::noncopyconstructible);
 	TRY_TEST_CHECK_WEAK_(tribool_false, noncopyconstructible_1);
@@ -84,7 +86,8 @@ KERBAL_TEST_CASE(test_noncopyable_is_not_copy_assignable, "test noncopyable is n
 {
 	using namespace kerbal::type_traits;
 
-#define TRY_TEST_CHECK_WEAK_(Ans, Type) TRY_TEST_CHECK_WEAK(Ans, kerbal::type_traits::try_test_is_copy_assignable<Type>::value)
+#define TRY_TEST_CHECK_WEAK_(Ans, Type) \
+	TRY_TEST_CHECK_WEAK(Ans, kerbal::type_traits::try_test_is_copy_assignable<Type>::value)
 
 	TRY_TEST_CHECK_WEAK_(tribool_false, kerbal::utility::noncopyable);
 	TRY_TEST_CHECK_WEAK_(tribool_false, noncopyable_1);
@@ -99,7 +102,8 @@ KERBAL_TEST_CASE(test_noncopyable_is_not_copy_constructible, "test noncopyable i
 {
 	using namespace kerbal::type_traits;
 
-#define TRY_TEST_CHECK_WEAK_(Ans, Type) TRY_TEST_CHECK_WEAK(Ans, kerbal::type_traits::try_test_is_copy_constructible<Type>::value)
+#define TRY_TEST_CHECK_WEAK_(Ans, Type) \
+	TRY_TEST_CHECK_WEAK(Ans, kerbal::type_traits::try_test_is_copy_constructible<Type>::value)
 
 	TRY_TEST_CHECK_WEAK_(tribool_false, kerbal::utility::noncopyable);
 	TRY_TEST_CHECK_WEAK_(tribool_false, noncopyable_1);

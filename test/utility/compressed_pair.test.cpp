@@ -90,7 +90,7 @@ struct type_name<const Tp>
 };
 
 template <typename Tp>
-struct type_name<Tp&>
+struct type_name<Tp &>
 {
 	std::string operator()() const
 	{
@@ -99,7 +99,7 @@ struct type_name<Tp&>
 };
 
 template <typename Tp>
-struct type_name<const Tp&>
+struct type_name<const Tp &>
 {
 	std::string operator()() const
 	{
@@ -114,17 +114,29 @@ struct type_size : kerbal::type_traits::integral_constant<size_t, sizeof(Tp)>
 };
 
 template <typename Tp>
-struct type_size<Tp&> : kerbal::type_traits::integral_constant<size_t, sizeof(void*)>
+struct type_size<Tp &> : kerbal::type_traits::integral_constant<size_t, sizeof(void *)>
 {
 };
 
 template <typename Tp, typename Up>
 void print_pair_info(const ku::compressed_pair<Tp, Up> & p)
 {
-	printf("sizeof(std::pair<%s, %s>): %zu + %zu -> %zu\n",
-		type_name<Tp>()().c_str(), type_name<Up>()().c_str(), type_size<Tp>::value, type_size<Up>::value, sizeof(std::pair<Tp, Up>));
-	printf("sizeof(compressed_pair<%s, %s>): %zu + %zu -> %zu\n",
-		type_name<Tp>()().c_str(), type_name<Up>()().c_str(), type_size<Tp>::value, type_size<Up>::value, sizeof(p));
+	printf(
+		"sizeof(std::pair<%s, %s>): %zu + %zu -> %zu\n",
+		type_name<Tp>()().c_str(),
+		type_name<Up>()().c_str(),
+		type_size<Tp>::value,
+		type_size<Up>::value,
+		sizeof(std::pair<Tp, Up>)
+	);
+	printf(
+		"sizeof(compressed_pair<%s, %s>): %zu + %zu -> %zu\n",
+		type_name<Tp>()().c_str(),
+		type_name<Up>()().c_str(),
+		type_size<Tp>::value,
+		type_size<Up>::value,
+		sizeof(p)
+	);
 	print_address_and_assert(p);
 	bool compressed(sizeof(p) < sizeof(std::pair<Tp, Up>));
 	printf(compressed ? "compressed\n" : "not compressed\n");
@@ -352,8 +364,8 @@ KERBAL_TEST_CASE(test_compressed_pair_structured_binding, "test compressed_pair 
 
 
 template <typename T, typename U, typename ... Args>
-struct test_nothrow_constructible:
-		kerbal::type_traits::try_test_is_nothrow_constructible<ku::compressed_pair<T, U>, Args...>
+struct test_nothrow_constructible :
+	kerbal::type_traits::try_test_is_nothrow_constructible<ku::compressed_pair<T, U>, Args...>
 {};
 
 
@@ -381,35 +393,35 @@ KERBAL_TEST_CASE(test_compressed_pair_is_nothrow, "test compressed_pair is nothr
 #endif
 
 template <typename T, typename U>
-struct test_trivially_copy_constructible:
-		kerbal::type_traits::try_test_is_trivially_copy_constructible<ku::compressed_pair<T, U> >
+struct test_trivially_copy_constructible :
+	kerbal::type_traits::try_test_is_trivially_copy_constructible<ku::compressed_pair<T, U> >
 {};
 
 template <typename T, typename U>
-struct test_trivially_copy_assignable:
-		kerbal::type_traits::try_test_is_trivially_copy_assignable<ku::compressed_pair<T, U> >
+struct test_trivially_copy_assignable :
+	kerbal::type_traits::try_test_is_trivially_copy_assignable<ku::compressed_pair<T, U> >
 {};
 
 template <typename T, typename U>
-struct test_trivially_destructible:
-		kerbal::type_traits::try_test_is_trivially_destructible<ku::compressed_pair<T, U> >
+struct test_trivially_destructible :
+	kerbal::type_traits::try_test_is_trivially_destructible<ku::compressed_pair<T, U> >
 {};
 
 template <typename T, typename U>
-struct test_trivially_copyable:
-		kerbal::type_traits::try_test_is_trivially_copyable<ku::compressed_pair<T, U> >
+struct test_trivially_copyable :
+	kerbal::type_traits::try_test_is_trivially_copyable<ku::compressed_pair<T, U> >
 {};
 
 #if __cplusplus >= 201103L
 
 template <typename T, typename U>
-struct test_trivially_move_constructible:
-		kerbal::type_traits::try_test_is_trivially_move_constructible<ku::compressed_pair<T, U> >
+struct test_trivially_move_constructible :
+	kerbal::type_traits::try_test_is_trivially_move_constructible<ku::compressed_pair<T, U> >
 {};
 
 template <typename T, typename U>
-struct test_trivially_move_assignable:
-		kerbal::type_traits::try_test_is_trivially_move_assignable<ku::compressed_pair<T, U> >
+struct test_trivially_move_assignable :
+	kerbal::type_traits::try_test_is_trivially_move_assignable<ku::compressed_pair<T, U> >
 {};
 
 #endif

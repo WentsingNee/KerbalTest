@@ -23,15 +23,15 @@ template <std::size_t N>
 struct Array
 {
 		int inner[N];
-		
+
 		template <std::size_t ... Ins>
 		Array(const int (&a) [N], kerbal::utility::integer_sequence<std::size_t, Ins...>) :
-				inner{a[Ins]...}
+			inner{a[Ins]...}
 		{
 		}
 
 		Array(const int (&a) [N]) :
-				Array(a, kerbal::utility::make_index_sequence<N>())
+			Array(a, kerbal::utility::make_index_sequence<N>())
 		{
 		}
 };
