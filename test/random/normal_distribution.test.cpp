@@ -17,7 +17,6 @@
 #include <kerbal/container/nonmember_container_access.hpp>
 #include <kerbal/random/linear_congruential_engine.hpp>
 #include <kerbal/random/mersenne_twister_engine.hpp>
-#include <kerbal/utility/compressed_pair.hpp>
 
 #if __cplusplus >= 201103L
 #	include <random>
