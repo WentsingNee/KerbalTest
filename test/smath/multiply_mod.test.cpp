@@ -75,6 +75,26 @@ KERBAL_TEST_CASE(test_multiply_mod, "test multiply_mod")
 		TEST3(T, (b), (a), (m), (Ans)); \
 	} while (false);
 
+//	{
+//		typedef kerbal::compatibility::int32_t T;
+//		typedef kerbal::numeric::numeric_limits<T>::MAX MAX;
+//		std::cout << "int32" << std::endl;
+//		TEST(T, 313513, 7, MAX::value - 2, 2194591);
+//		TEST(T, MAX::value / 3, 7779, MAX::value / 9, 0);
+//		TEST(T, MAX::value / 7, 3, MAX::value, 920350134);
+//		TEST(T, MAX::value - 7, MAX::value - 7, MAX::value - 1, 36);
+//		TEST(T, MAX::value / 7, MAX::value - 7, MAX::value - 13, 1840700268)
+//		TEST(T, MAX::value - 3, MAX::value - 7, MAX::value - 1, 12);
+//		TEST(T, MAX::value - 13, MAX::value / 17, MAX::value - 1, 631612842);
+//		TEST(T, MAX::value - 13, MAX::value / 17, MAX::value - 12, 2021161068);
+//		TEST(T, MAX::value - 13, MAX::value / 41, MAX::value - 17, 209510596);
+//		TEST(T, MAX::value / 143 + 7, MAX::value / 441, MAX::value / 13 - 2, 4494992);
+//
+////		TEST(T, -313513, 7, MAX::value - 2, 2145289054);
+//		TEST(T, -1, 1, MAX::value - 2, -1);
+//		TEST(T, -313513, -7, MAX::value - 2, 2194591);
+//	}
+
 	{
 		typedef kerbal::compatibility::uint32_t T;
 		typedef kerbal::numeric::numeric_limits<T>::MAX MAX;
@@ -90,6 +110,23 @@ KERBAL_TEST_CASE(test_multiply_mod, "test multiply_mod")
 		TEST(T, MAX::value - 13, MAX::value / 41, MAX::value - 17, 419021196u);
 		TEST(T, MAX::value / 143 + 7, MAX::value / 441, MAX::value / 13 - 2, 277531853u);
 	}
+
+//	{
+//		typedef kerbal::compatibility::int64_t T;
+//		typedef kerbal::numeric::numeric_limits<T>::MAX MAX;
+//		std::cout << "int64" << std::endl;
+//		TEST(T, 313513, 7, MAX::value - 2, 2194591);
+//		TEST(T, MAX::value / 3, 7779, MAX::value / 9, 15558);
+//		TEST(T, MAX::value / 7, 3, MAX::value, 3952873730080618203);
+//		TEST(T, MAX::value - 7, MAX::value - 7, MAX::value - 1, 36);
+//		TEST(T, MAX::value / 7, MAX::value - 7, MAX::value - 13, 7905747460161236406);
+//		TEST(T, MAX::value - 3, MAX::value - 7, MAX::value - 1, 12);
+//		TEST(T, MAX::value - 13, MAX::value / 17, MAX::value - 1, 2712756481427875242);
+//		TEST(T, MAX::value - 13, MAX::value / 17, MAX::value - 12, 8680820740569200748);
+//		TEST(T, MAX::value - 13, MAX::value / 41, MAX::value - 17, 899841174327295200);
+//		TEST(T, MAX::value / 143 + 7, MAX::value / 441, MAX::value / 13 - 2, 21207188769071283);
+//
+//	}
 
 	{
 		typedef kerbal::compatibility::uint64_t T;
