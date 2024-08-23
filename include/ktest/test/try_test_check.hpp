@@ -18,7 +18,7 @@
 #define TRY_TEST_CHECK_STRONG(Ans, Res) \
 do { \
 	KERBAL_TEST_CHECK_STATIC(Ans::value == (Res)); \
-} while(0);
+} while(false);
 
 #define TRY_TEST_CHECK_WEAK(Ans, Res) \
 do { \
@@ -29,6 +29,6 @@ do { \
 	if ((Res) == kerbal::type_traits::tribool_unspecified::value) { \
 		std::cout << __FILE__ << ":" << __LINE__ << " Check is weak: TRY_TEST_CHECK_WEAK(" #Ans ", " #Res ")" << std::endl; \
 	} \
-} while(0);
+} while(false);
 
 #endif // KTEST_TEST_TRY_TEST_CHECK_HPP

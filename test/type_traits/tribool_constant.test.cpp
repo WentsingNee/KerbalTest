@@ -24,7 +24,7 @@ typedef kerbal::type_traits::tribool_false       F;
 do { \
 	typedef logical_exp Exp; \
 	KERBAL_TEST_CHECK_STATIC((kerbal::type_traits::is_same<Exp, expect>::value)); \
-} while(0) \
+} while(false) \
 
 
 KERBAL_TEST_CASE(test_tribool_negation, "test tribool_negation")

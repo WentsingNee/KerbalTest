@@ -63,7 +63,7 @@ KERBAL_TEST_CASE(test_is_constructible, "test is_constructible")
 do { \
 	typedef kerbal::type_traits::is_constructible<__VA_ARGS__> TRAITS; \
 	KERBAL_TEST_CHECK_EQUAL_STATIC(TRAITS::value, Ans); \
-} while(0)
+} while(false)
 
 	TEST_CHECK(false, void);
 	TEST_CHECK(true, int);

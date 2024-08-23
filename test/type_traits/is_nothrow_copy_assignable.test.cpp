@@ -70,7 +70,7 @@ KERBAL_TEST_CASE(test_is_nothrow_copy_assignable, "test is_nothrow_copy_assignab
 #define TEST_CHECK(Ans, Type) \
 do { \
 	KERBAL_TEST_CHECK_EQUAL_STATIC(kerbal::type_traits::is_nothrow_copy_assignable<Type>::value, Ans); \
-} while(0)
+} while(false)
 
 	TEST_CHECK(false, void);
 	TEST_CHECK(true, int);

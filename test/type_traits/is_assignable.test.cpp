@@ -57,7 +57,7 @@ KERBAL_TEST_CASE(test_is_assignable, "test is_assignable")
 #define TEST_CHECK(Ans, Left, Right) \
 do { \
 	KERBAL_TEST_CHECK_EQUAL_STATIC((kerbal::type_traits::is_assignable<Left, Right>::value), Ans); \
-} while(0)
+} while(false)
 
 	TEST_CHECK(false, void, void);
 	TEST_CHECK(false, int, int);

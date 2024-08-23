@@ -62,7 +62,7 @@ KERBAL_TEST_CASE(test_is_trivially_default_constructible, "test is_trivially_def
 #define TEST_CHECK(Ans, Type) \
 do { \
 	KERBAL_TEST_CHECK_EQUAL_STATIC(kerbal::type_traits::is_trivially_default_constructible<Type>::value, Ans); \
-} while(0)
+} while(false)
 
 	TEST_CHECK(false, void);
 	TEST_CHECK(true, int);
