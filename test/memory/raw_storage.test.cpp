@@ -35,8 +35,6 @@ namespace
 }
 
 
-#if __cplusplus >= 201103L
-
 KERBAL_TEST_CASE(test_raw_storage_non_copy_assignable, "test rawst non copy_assignable")
 {
 	using namespace kerbal::type_traits;
@@ -86,8 +84,6 @@ KERBAL_TEST_CASE(test_raw_storage_trivially_destructible, "test rawst trivially_
 #undef TRY_TEST_CHECK_WEAK_
 
 }
-
-#endif // if __cplusplus >= 201103L
 
 
 int main(int argc, char * argv[])
