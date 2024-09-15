@@ -95,6 +95,36 @@ KERBAL_TEST_CASE(test_generator_swap, "test generator swap")
 }
 
 
+inline
+kerbal::coroutine::generator<int>
+recursive_gen(int l, int r)
+{
+	int n = r - l;
+	if (n == 0) {
+		co_return;
+	}
+	int mid = l + n / 2;
+
+	for (auto e : recursive_gen(l, mid)) {
+		co_yield e;
+	}
+	co_yield mid;
+	for (auto e : recursive_gen(mid + 1, r)) {
+		co_yield e;
+	}
+}
+
+KERBAL_TEST_CASE(test_recursion, "test recursion")
+{
+	int n = 10;
+	auto gen = recursive_gen(0, n);
+	for (int i = 0; i < n; ++i) {
+		KERBAL_TEST_CHECK(!gen.done());
+		KERBAL_TEST_CHECK_EQUAL(gen(), i);
+	}
+}
+
+
 int main(int argc, char * argv[])
 {
 	kerbal::test::run_all_test_case(argc, argv);
