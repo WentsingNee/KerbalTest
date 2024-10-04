@@ -14,6 +14,7 @@
 #include <kerbal/test/test.hpp>
 #include <kerbal/compare/sequence_compare.hpp>
 #include <kerbal/container/nonmember_container_access.hpp>
+#include <kerbal/utility/use_args.hpp>
 
 
 inline
@@ -121,6 +122,26 @@ KERBAL_TEST_CASE(test_recursion, "test recursion")
 	for (int i = 0; i < n; ++i) {
 		KERBAL_TEST_CHECK(!gen.done());
 		KERBAL_TEST_CHECK_EQUAL(gen(), i);
+	}
+}
+
+
+inline
+kerbal::coroutine::generator<std::string>
+use_args_yield_gen(int n)
+{
+	for (int i = 0; i < n; ++i) {
+		co_yield kerbal::utility::use_args(i + 1, 'a');
+	}
+}
+
+KERBAL_TEST_CASE(test_use_args_yield, "test use_args_yield")
+{
+	int n = 10;
+	auto gen = use_args_yield_gen(n);
+	for (int i = 0; i < n; ++i) {
+		KERBAL_TEST_CHECK(!gen.done());
+		KERBAL_TEST_CHECK_EQUAL(gen(), std::string(i + 1, 'a'));
 	}
 }
 
