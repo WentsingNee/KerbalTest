@@ -110,13 +110,6 @@ function(ktest_basic_configuration target)
         target_compile_definitions(${target} PUBLIC _CRT_SECURE_NO_WARNINGS) # Disable warning C4996: 'scanf': This function or variable may be unsafe.
     endif ()
 
-    target_compile_definitions(
-            ${target} PUBLIC
-            LITTLE_ENDIAN=0
-            BIG_ENDIAN=1
-            BYTE_ORDER=LITTLE_ENDIAN
-    )
-
     target_compile_definitions(${target} PUBLIC KERBAL_TYPE_TRAITS_DEBUG_WARNING=1)
 
     target_link_libraries(${target} PUBLIC Kerbal::kerbal)
