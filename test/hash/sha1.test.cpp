@@ -47,21 +47,56 @@ KERBAL_TEMPLATE_TEST_CASE(test_sha1, "test sha1")
 	};
 
 	for (int i = 0; i < 1; ++i) {
-		unsigned char* first = kerbal::container::begin(buf[i]);
-		unsigned char* last = kerbal::container::end(buf[i]);
-		{
+		unsigned char * first = kerbal::container::begin(buf[i]);
+		unsigned char * last = kerbal::container::end(buf[i]); {
 			SHA1_context<Policy> ctx;
 			for (int j = 0; j < 1000; j++) {
 				ctx.update(first, last);
 			}
 			typename SHA1_context<Policy>::result sha1 = ctx.digest();
-			KERBAL_TEST_CHECK((std::string)(sha1) == result[i]);
+			KERBAL_TEST_CHECK_EQUAL(
+				static_cast<std::string>(sha1),
+				result[i]
+			);
 		}
 	}
 }
 
 KERBAL_TEMPLATE_TEST_CASE_INST(test_sha1, "test sha1<fast>", kerbal::hash::SHA1_policy::fast);
 KERBAL_TEMPLATE_TEST_CASE_INST(test_sha1, "test sha1<size>", kerbal::hash::SHA1_policy::size);
+
+
+
+template <typename Policy>
+KERBAL_TEMPLATE_TEST_CASE(test_sha1_literal, "test sha1 literal")
+{
+	std::string cases[][2] = {
+		{"da39a3ee5e6b4b0d3255bfef95601890afd80709", ""},
+		{"830293f353e4be65c8f423a86a2dfa9f28d632c9", "jklmn"},
+		{"2fd4e1c67a2d28fced849ee1bb76e7391b93eb12", "The quick brown fox jumps over the lazy dog"},
+		{"408d94384216f890ff7a0c3528e8bed1e0b01621", "The quick brown fox jumps over the lazy dog."},
+		{"c1c8bbdc22796e28c0e15163d20899b65621d65a", std::string(55, 'a')},
+		{"c2db330f6083854c99d4b5bfb6e8f29f201be699", std::string(56, 'a')},
+		{"f08f24908d682555111be7ff6f004e78283d989a", std::string(57, 'a')},
+		{"5ee0f8895f4e1aae6a6661de5c432e34188a5a2d", std::string(58, 'a')},
+		{"8eca554631df9ead14510e1a70ae48c70f9b9384", std::string(1024, 'a')},
+		{"03c698b114caada7938c1d6aed159d1b7a748931", std::string(325123, 'a')},
+	};
+
+	for (std::size_t tcase = 0; tcase < kerbal::container::size(cases); ++tcase) {
+		kerbal::hash::SHA1_context<Policy> context;
+		std::string const & input = cases[tcase][1];
+		kerbal::compatibility::uint8_t const * data = reinterpret_cast<kerbal::compatibility::uint8_t const *>(input.data());
+		context.update(data, data + input.size());
+		KERBAL_TEST_CHECK_EQUAL(
+			std::string(context.digest()),
+			cases[tcase][0]
+		);
+	}
+}
+
+KERBAL_TEMPLATE_TEST_CASE_INST(test_sha1_literal, "test sha1 literal", kerbal::hash::SHA1_policy::fast);
+KERBAL_TEMPLATE_TEST_CASE_INST(test_sha1_literal, "test sha1 literal", kerbal::hash::SHA1_policy::size);
 
 
 
