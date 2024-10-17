@@ -39,7 +39,7 @@ KERBAL_TEST_CASE(test_decay, "test decay")
 {
 	using namespace kerbal::type_traits;
 
-#define AFTER_DECAY_IS(T, U) CHECK_EQUAL((is_same<typename decay<T>::type, U>::value), true);
+#define AFTER_DECAY_IS(T, U) CHECK_EQUAL((is_same<decay<T>::type, U>::value), true);
 
 
 	AFTER_DECAY_IS(void,               void);
