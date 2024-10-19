@@ -214,3 +214,50 @@ add_custom_target(
         ktest
         DEPENDS inst utest
 )
+
+
+file(WRITE "main.cpp"
+        "int main() {"
+        "    return 0;"
+        "}"
+)
+
+foreach (
+        sublib IN ITEMS
+        kerbal
+        kerbal-omp
+        kerbal-parallel
+)
+    if (NOT TARGET Kerbal::${sublib})
+        message(WARNING "Inline checking of ${sublib} is skipped")
+        continue()
+    endif ()
+
+    set(content "")
+
+    set(public_headers_var Kerbal_PUBLIC_HEADERS_RELATIVE_${sublib})
+    foreach (header IN LISTS ${public_headers_var})
+        string(APPEND content "#include <${header}>\n")
+    endforeach ()
+
+    set(filename "${CMAKE_CURRENT_BINARY_DIR}/ktest_inline_check-${sublib}.cpp")
+    file(WRITE "${filename}" "${content}")
+
+    set(inline_check_target_name "inline_check.${sublib}")
+    add_executable("${inline_check_target_name}" main.cpp)
+    target_link_libraries("${inline_check_target_name}" PUBLIC Kerbal::${sublib})
+    add_kerbal_parent_target("${inline_check_target_name}")
+
+    foreach (e IN ITEMS a b)
+        set(sub "ktest_inline_check-${e}-${sublib}")
+        add_library("${sub}" OBJECT "${filename}")
+        ktest_basic_configuration("${sub}")
+        target_link_libraries(
+                "${inline_check_target_name}"
+                PRIVATE
+                    "${sub}"
+        )
+    endforeach ()
+
+endforeach ()
+
