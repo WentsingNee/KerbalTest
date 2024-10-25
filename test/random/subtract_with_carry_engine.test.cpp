@@ -9,7 +9,7 @@
  *   all rights reserved
  */
 
-#include <kerbal/random/subtract_with_carry_engine.hpp>
+#include <kerbal/random/engine/subtract_with_carry_engine.hpp>
 
 #include <kerbal/test/test.hpp>
 #include <kerbal/container/nonmember_container_access.hpp>

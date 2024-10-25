@@ -9,7 +9,7 @@
  *   all rights reserved
  */
 
-#include <kerbal/random/mersenne_twister_engine.hpp>
+#include <kerbal/random/engine/mersenne_twister_engine.hpp>
 
 #include <kerbal/test/test.hpp>
 

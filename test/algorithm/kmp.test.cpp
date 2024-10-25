@@ -21,9 +21,9 @@
 #include <kerbal/utility/costream.hpp>
 
 
-#include <kerbal/random/bernoulli_distribution.hpp>
-#include <kerbal/random/mersenne_twister_engine.hpp>
-#include <kerbal/random/uniform_real_distribution.hpp>
+#include <kerbal/random/distribution/bernoulli_distribution.hpp>
+#include <kerbal/random/distribution/uniform_real_distribution.hpp>
+#include <kerbal/random/engine/mersenne_twister_engine.hpp>
 
 #include <cstddef>
 

@@ -9,11 +9,11 @@
  *   all rights reserved
  */
 
-#include <kerbal/random/bernoulli_distribution.hpp>
+#include <kerbal/random/distribution/bernoulli_distribution.hpp>
 
 #include <kerbal/test/test.hpp>
 #include <kerbal/container/nonmember_container_access.hpp>
-#include <kerbal/random/mersenne_twister_engine.hpp>
+#include <kerbal/random/engine/mersenne_twister_engine.hpp>
 
 #include <cstdio>
 

@@ -18,8 +18,8 @@ using namespace std;
 #include <kerbal/utility/costream.hpp>
 
 
-#include <kerbal/random/bernoulli_distribution.hpp>
-#include <kerbal/random/mersenne_twister_engine.hpp>
+#include <kerbal/random/distribution/bernoulli_distribution.hpp>
+#include <kerbal/random/distribution/mersenne_twister_engine.hpp>
 
 kerbal::random::mt19937 eg;
 

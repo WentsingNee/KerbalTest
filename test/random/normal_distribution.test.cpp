@@ -11,12 +11,12 @@
 
 #include <ktest/random/print_bar.hpp>
 
-#include <kerbal/random/normal_distribution.hpp>
+#include <kerbal/random/distribution/normal_distribution.hpp>
 
 #include <kerbal/test/test.hpp>
 #include <kerbal/container/nonmember_container_access.hpp>
-#include <kerbal/random/linear_congruential_engine.hpp>
-#include <kerbal/random/mersenne_twister_engine.hpp>
+#include <kerbal/random/engine/linear_congruential_engine.hpp>
+#include <kerbal/random/engine/mersenne_twister_engine.hpp>
 
 #if __cplusplus >= 201103L
 #	include <random>

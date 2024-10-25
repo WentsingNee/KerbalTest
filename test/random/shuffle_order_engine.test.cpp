@@ -9,11 +9,11 @@
  *   all rights reserved
  */
 
-#include <kerbal/random/shuffle_order_engine.hpp>
+#include <kerbal/random/engine/shuffle_order_engine.hpp>
 
 #include <kerbal/test/test.hpp>
-#include <kerbal/random/linear_congruential_engine.hpp>
-#include <kerbal/random/mersenne_twister_engine.hpp>
+#include <kerbal/random/engine/linear_congruential_engine.hpp>
+#include <kerbal/random/engine/mersenne_twister_engine.hpp>
 #include <kerbal/utility/ignore_unused.hpp>
 
 #if __cplusplus >= 201103L

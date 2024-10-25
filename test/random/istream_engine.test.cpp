@@ -9,7 +9,7 @@
  *   all rights reserved
  */
 
-#include <kerbal/random/istream_engine.hpp>
+#include <kerbal/random/engine/istream_engine.hpp>
 
 #include <kerbal/test/test.hpp>
 

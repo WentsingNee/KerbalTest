@@ -15,7 +15,7 @@
 #include <kerbal/algorithm/modifier/iota.hpp>
 #include <kerbal/compatibility/constexpr.hpp>
 #include <kerbal/container/vector.hpp>
-#include <kerbal/random/mersenne_twister_engine.hpp>
+#include <kerbal/random/engine/mersenne_twister_engine.hpp>
 
 #include <cstddef>
 

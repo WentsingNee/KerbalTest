@@ -14,7 +14,7 @@
 #include <kerbal/test/test.hpp>
 #include <kerbal/algorithm/sort/intro_sort.hpp>
 #include <kerbal/container/vector.hpp>
-#include <kerbal/random/mersenne_twister_engine.hpp>
+#include <kerbal/random/engine/mersenne_twister_engine.hpp>
 #include <kerbal/test/runtime_timer.hpp>
 #include <kerbal/type_traits/integral_constant.hpp>
 

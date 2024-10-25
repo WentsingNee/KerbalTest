@@ -17,7 +17,7 @@
 #include <kerbal/container/list.hpp>
 #include <kerbal/container/vector.hpp>
 #include <kerbal/memory/allocator/default_allocator.hpp>
-#include <kerbal/random/mersenne_twister_engine.hpp>
+#include <kerbal/random/engine/mersenne_twister_engine.hpp>
 #include <kerbal/test/runtime_timer.hpp>
 #include <kerbal/type_traits/integral_constant.hpp>
 #include <kerbal/type_traits/is_same.hpp>

@@ -15,7 +15,7 @@
 #include <kerbal/algorithm/modifier/fill.hpp>
 #include <kerbal/algorithm/querier/count.hpp>
 #include <kerbal/compare/sequence_compare.hpp>
-#include <kerbal/random/mersenne_twister_engine.hpp>
+#include <kerbal/random/engine/mersenne_twister_engine.hpp>
 
 #include <iostream>
 

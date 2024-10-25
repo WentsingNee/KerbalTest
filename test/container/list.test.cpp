@@ -33,7 +33,7 @@
 #include <kerbal/memory/allocator/fixed_size_node_allocator.hpp>
 #include <kerbal/memory/allocator/monotonic_allocator.hpp>
 #include <kerbal/memory/allocator_traits.hpp>
-#include <kerbal/random/mersenne_twister_engine.hpp>
+#include <kerbal/random/engine/mersenne_twister_engine.hpp>
 #include <kerbal/test/object_count.hpp>
 #include <kerbal/type_traits/is_nothrow_assignable.hpp>
 #include <kerbal/type_traits/is_nothrow_constructible.hpp>

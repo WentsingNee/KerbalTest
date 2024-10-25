@@ -9,12 +9,12 @@
  *   all rights reserved
  */
 
-#include <kerbal/random/discard_block_engine.hpp>
+#include <kerbal/random/engine/discard_block_engine.hpp>
 
 #include <kerbal/test/test.hpp>
 #include <kerbal/container/nonmember_container_access.hpp>
-#include <kerbal/random/linear_congruential_engine.hpp>
-#include <kerbal/random/mersenne_twister_engine.hpp>
+#include <kerbal/random/engine/linear_congruential_engine.hpp>
+#include <kerbal/random/engine/mersenne_twister_engine.hpp>
 #include <kerbal/test/runtime_timer.hpp>
 #include <kerbal/utility/ignore_unused.hpp>
 

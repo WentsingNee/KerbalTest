@@ -21,7 +21,7 @@
 #include <kerbal/algorithm/modifier/iota.hpp>
 #include <kerbal/compare/sequence_compare.hpp>
 #include <kerbal/config/exceptions.hpp>
-#include <kerbal/random/mersenne_twister_engine.hpp>
+#include <kerbal/random/engine/mersenne_twister_engine.hpp>
 #include <kerbal/type_traits/integral_constant.hpp>
 #include <kerbal/type_traits/is_same.hpp>
 #include <kerbal/type_traits/is_nothrow_assignable.hpp>

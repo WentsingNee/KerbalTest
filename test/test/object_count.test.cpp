@@ -12,7 +12,7 @@
 #include <kerbal/test/object_count.hpp>
 
 #include <kerbal/test/test.hpp>
-#include <kerbal/random/mersenne_twister_engine.hpp>
+#include <kerbal/random/engine/mersenne_twister_engine.hpp>
 
 
 struct Foo: kerbal::test::object_count<Foo>

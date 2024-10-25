@@ -9,7 +9,7 @@
  *   all rights reserved
  */
 
-#include <kerbal/random/linear_congruential_engine.hpp>
+#include <kerbal/random/engine/linear_congruential_engine.hpp>
 
 #include <kerbal/test/test.hpp>
 #include <kerbal/compatibility/fixed_width_integer.hpp>

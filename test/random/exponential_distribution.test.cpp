@@ -11,10 +11,10 @@
 
 #include <ktest/random/print_bar.hpp>
 
-#include <kerbal/random/exponential_distribution.hpp>
+#include <kerbal/random/distribution/exponential_distribution.hpp>
 
 #include <kerbal/test/test.hpp>
-#include <kerbal/random/mersenne_twister_engine.hpp>
+#include <kerbal/random/engine/mersenne_twister_engine.hpp>
 
 #if __cplusplus >= 201103L
 #	include <random>
