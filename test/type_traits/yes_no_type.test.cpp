@@ -65,13 +65,11 @@ KERBAL_TEST_CASE(test_yes_no_type_could_use_typedef, "test yes_no_type could use
 	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_typedef<FooNoTypedef>::value, false);
 	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_typedef<FooHasTypedef>::value, true);
 
-#if KERBAL_COMPILER_ID == KERBAL_COMPILER_ID_GNU
-	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_typedef<FooPrivateTypedef>::value, false);
-#elif KERBAL_COMPILER_ID == KERBAL_COMPILER_ID_CLANG
+#if KERBAL_COMPILER_ID == KERBAL_COMPILER_ID_CLANG
 #	if __cplusplus >= 201103L
 	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_typedef<FooPrivateTypedef>::value, false);
 #	endif
-#elif KERBAL_COMPILER_ID == KERBAL_COMPILER_ID_MSVC
+#else
 	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_typedef<FooPrivateTypedef>::value, false);
 #endif
 
@@ -142,13 +140,11 @@ KERBAL_TEST_CASE(test_yes_no_type_could_use_field, "test yes_no_type could use f
 	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<FooNoField>::value, false);
 	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<FooHasField>::value, true);
 
-#if KERBAL_COMPILER_ID == KERBAL_COMPILER_ID_GNU
-	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<FooPrivateField>::value, false);
-#elif KERBAL_COMPILER_ID == KERBAL_COMPILER_ID_CLANG
+#if KERBAL_COMPILER_ID == KERBAL_COMPILER_ID_CLANG
 #	if __cplusplus >= 201103L
 	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<FooPrivateField>::value, false);
 #	endif
-#elif KERBAL_COMPILER_ID == KERBAL_COMPILER_ID_MSVC
+#else
 	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<FooPrivateField>::value, false);
 #endif
 
@@ -212,13 +208,11 @@ KERBAL_TEST_CASE(test_yes_no_type_could_use_method, "test yes_no_type could use 
 	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_method<FooNoMethod>::value, false);
 	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_method<FooHasMethod>::value, true);
 
-#if KERBAL_COMPILER_ID == KERBAL_COMPILER_ID_GNU
-	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_method<FooPrivateMethod>::value, false);
-#elif KERBAL_COMPILER_ID == KERBAL_COMPILER_ID_CLANG
+#if KERBAL_COMPILER_ID == KERBAL_COMPILER_ID_CLANG
 #	if __cplusplus >= 201103L
 	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_method<FooPrivateMethod>::value, false);
 #	endif
-#elif KERBAL_COMPILER_ID == KERBAL_COMPILER_ID_MSVC
+#else
 	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_method<FooPrivateMethod>::value, false);
 #endif
 

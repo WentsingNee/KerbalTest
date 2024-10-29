@@ -64,7 +64,7 @@ KERBAL_TEST_CASE(test_void_type_could_use_typedef, "test void_type could use typ
 #	if __cplusplus >= 201103L
 	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_typedef<FooPrivateTypedef>::value, false);
 #	endif
-#elif KERBAL_COMPILER_ID == KERBAL_COMPILER_ID_MSVC
+#else
 	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_typedef<FooPrivateTypedef>::value, false);
 #endif
 
@@ -132,7 +132,7 @@ KERBAL_TEST_CASE(test_void_type_could_use_field, "test void_type could use field
 #	if __cplusplus >= 201103L
 	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<FooPrivateField>::value, false);
 #	endif
-#elif KERBAL_COMPILER_ID == KERBAL_COMPILER_ID_MSVC
+#else
 	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<FooPrivateField>::value, false);
 #endif
 
@@ -193,7 +193,7 @@ KERBAL_TEST_CASE(test_void_type_could_use_method, "test void_type could use meth
 #	if __cplusplus >= 201103L
 	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_method<FooPrivateMethod>::value, false);
 #	endif
-#elif KERBAL_COMPILER_ID == KERBAL_COMPILER_ID_MSVC
+#else
 	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_method<FooPrivateMethod>::value, false);
 #endif
 
