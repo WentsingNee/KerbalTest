@@ -93,6 +93,14 @@ struct FooPrivateField
 		}
 };
 
+struct FooFieldNameMethod
+{
+	int data() const
+	{
+		return 0;
+	}
+};
+
 
 template <typename T, typename = kerbal::type_traits::void_type<>::type>
 struct could_use_field :
@@ -136,6 +144,7 @@ KERBAL_TEST_CASE(test_void_type_could_use_field, "test void_type could use field
 	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<FooPrivateField>::value, false);
 #endif
 
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<FooFieldNameMethod>::value, false);
 }
 
 

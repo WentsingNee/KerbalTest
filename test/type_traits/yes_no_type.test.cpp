@@ -98,6 +98,14 @@ struct FooPrivateField
 		}
 };
 
+struct FooFieldNameMethod
+{
+	int data() const
+	{
+		return 0;
+	}
+};
+
 
 template <typename T>
 class could_use_field_helper
@@ -148,6 +156,7 @@ KERBAL_TEST_CASE(test_yes_no_type_could_use_field, "test yes_no_type could use f
 	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<FooPrivateField>::value, false);
 #endif
 
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<FooFieldNameMethod>::value, false);
 }
 
 
