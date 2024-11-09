@@ -9,6 +9,8 @@
  *   all rights reserved
  */
 
+#include <ktest/type_traits/could_use_helper.hpp>
+
 #include <kerbal/test/test.hpp>
 
 #include <kerbal/type_traits/void_type.hpp>
@@ -22,22 +24,6 @@
 #include <cstddef>
 
 
-struct FooNoTypedef
-{
-};
-
-struct FooHasTypedef
-{
-		typedef int type;
-};
-
-struct FooPrivateTypedef
-{
-	private:
-		typedef int type;
-};
-
-
 template <typename T, typename = kerbal::type_traits::void_type<>::type>
 struct could_use_typedef :
 		kerbal::type_traits::false_type
@@ -46,52 +32,29 @@ struct could_use_typedef :
 
 template <typename T>
 struct could_use_typedef<T, typename kerbal::type_traits::void_type<
-		typename T::type
+		typename T::member
 >::type> : kerbal::type_traits::true_type
 {
 };
 
 KERBAL_TEST_CASE(test_void_type_could_use_typedef, "test void_type could use typedef")
 {
-	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_typedef<FooNoTypedef>::value, false);
-	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_typedef<FooHasTypedef>::value, true);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_typedef<ktest::type_traits::cu_empty>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_typedef<ktest::type_traits::cu_public_typedef>::value, true);
 
 #if KERBAL_COMPILER_ID == KERBAL_COMPILER_ID_GNU
 #	if KERBAL_GNU_VERSION_MEETS(5, 0, 0)
-	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_typedef<FooPrivateTypedef>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_typedef<ktest::type_traits::cu_private_typedef>::value, false);
 #	endif
 #elif KERBAL_COMPILER_ID == KERBAL_COMPILER_ID_CLANG
 #	if __cplusplus >= 201103L
-	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_typedef<FooPrivateTypedef>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_typedef<ktest::type_traits::cu_private_typedef>::value, false);
 #	endif
 #else
-	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_typedef<FooPrivateTypedef>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_typedef<ktest::type_traits::cu_private_typedef>::value, false);
 #endif
 
 }
-
-
-struct FooNoField
-{
-};
-
-struct FooHasField
-{
-		int data;
-};
-
-struct FooPrivateField
-{
-	private:
-		int data;
-
-	public:
-		// use private field to avoid warning
-		void f()
-		{
-			kerbal::utility::ignore_unused(data);
-		}
-};
 
 
 template <typename T, typename = kerbal::type_traits::void_type<>::type>
@@ -104,13 +67,13 @@ template <typename T>
 struct could_use_field<T, typename kerbal::type_traits::void_type<
 #	if __cplusplus >= 201103L // compatible with msvc
 		decltype(
-			kerbal::utility::declval<T&>().data
+			kerbal::utility::declval<T&>().member
 		)
 #	else // could not handle positive case under msvc
 		kerbal::type_traits::integral_constant<
 			std::size_t,
 			sizeof(
-				kerbal::utility::declval<T&>().data,
+				kerbal::utility::declval<T&>().member,
 				0
 			)
 		>
@@ -121,38 +84,22 @@ struct could_use_field<T, typename kerbal::type_traits::void_type<
 
 KERBAL_TEST_CASE(test_void_type_could_use_field, "test void_type could use field")
 {
-	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<FooNoField>::value, false);
-	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<FooHasField>::value, true);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<ktest::type_traits::cu_empty>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<ktest::type_traits::cu_public_field>::value, true);
 
 #if KERBAL_COMPILER_ID == KERBAL_COMPILER_ID_GNU
 #	if KERBAL_GNU_VERSION_MEETS(5, 0, 0)
-	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<FooPrivateField>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<ktest::type_traits::cu_private_field>::value, false);
 #	endif
 #elif KERBAL_COMPILER_ID == KERBAL_COMPILER_ID_CLANG
 #	if __cplusplus >= 201103L
-	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<FooPrivateField>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<ktest::type_traits::cu_private_field>::value, false);
 #	endif
 #else
-	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<FooPrivateField>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<ktest::type_traits::cu_private_field>::value, false);
 #endif
 
 }
-
-
-struct FooNoMethod
-{
-};
-
-struct FooHasMethod
-{
-		void f();
-};
-
-struct FooPrivateMethod
-{
-	private:
-		void f();
-};
 
 
 template <typename T, typename = kerbal::type_traits::void_type<>::type>
@@ -165,13 +112,13 @@ template <typename T>
 struct could_use_method<T, typename kerbal::type_traits::void_type<
 #	if __cplusplus >= 201103L // compatible with msvc
 		decltype(
-			kerbal::utility::declval<T&>().f()
+			kerbal::utility::declval<T&>().member()
 		)
 #	else // could not handle positive case under msvc
 		kerbal::type_traits::integral_constant<
 			std::size_t,
 			sizeof(
-				kerbal::utility::declval<T&>().f(),
+				kerbal::utility::declval<T&>().member(),
 				0
 			)
 		>
@@ -182,19 +129,19 @@ struct could_use_method<T, typename kerbal::type_traits::void_type<
 
 KERBAL_TEST_CASE(test_void_type_could_use_method, "test void_type could use method")
 {
-	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_method<FooNoMethod>::value, false);
-	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_method<FooHasMethod>::value, true);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_method<ktest::type_traits::cu_empty>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_method<ktest::type_traits::cu_public_method>::value, true);
 
 #if KERBAL_COMPILER_ID == KERBAL_COMPILER_ID_GNU
 #	if KERBAL_GNU_VERSION_MEETS(5, 0, 0)
-	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_method<FooPrivateMethod>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_method<ktest::type_traits::cu_private_method>::value, false);
 #	endif
 #elif KERBAL_COMPILER_ID == KERBAL_COMPILER_ID_CLANG
 #	if __cplusplus >= 201103L
-	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_method<FooPrivateMethod>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_method<ktest::type_traits::cu_private_method>::value, false);
 #	endif
 #else
-	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_method<FooPrivateMethod>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_method<ktest::type_traits::cu_private_method>::value, false);
 #endif
 
 }

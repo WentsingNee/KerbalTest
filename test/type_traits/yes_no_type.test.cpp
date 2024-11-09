@@ -9,6 +9,8 @@
  *   all rights reserved
  */
 
+#include <ktest/type_traits/could_use_helper.hpp>
+
 #include <kerbal/test/test.hpp>
 
 #include <kerbal/type_traits/yes_no_type.hpp>
@@ -20,22 +22,6 @@
 #include <cstddef>
 
 
-struct FooNoTypedef
-{
-};
-
-struct FooHasTypedef
-{
-		typedef int type;
-};
-
-struct FooPrivateTypedef
-{
-	private:
-		typedef int type;
-};
-
-
 template <typename T>
 class could_use_typedef_helper
 {
@@ -44,7 +30,7 @@ class could_use_typedef_helper
 
 		template <typename T2>
 		static kerbal::type_traits::yes_type test(char (*)[sizeof(
-				kerbal::utility::declval<typename T2::type>(),
+				kerbal::utility::declval<typename T2::member>(),
 				0
 		)]);
 
@@ -62,41 +48,18 @@ struct could_use_typedef :
 
 KERBAL_TEST_CASE(test_yes_no_type_could_use_typedef, "test yes_no_type could use typedef")
 {
-	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_typedef<FooNoTypedef>::value, false);
-	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_typedef<FooHasTypedef>::value, true);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_typedef<ktest::type_traits::cu_empty>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_typedef<ktest::type_traits::cu_public_typedef>::value, true);
 
 #if KERBAL_COMPILER_ID == KERBAL_COMPILER_ID_CLANG
 #	if __cplusplus >= 201103L
-	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_typedef<FooPrivateTypedef>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_typedef<ktest::type_traits::cu_private_typedef>::value, false);
 #	endif
 #else
-	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_typedef<FooPrivateTypedef>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_typedef<ktest::type_traits::cu_private_typedef>::value, false);
 #endif
 
 }
-
-
-struct FooNoField
-{
-};
-
-struct FooHasField
-{
-		int data;
-};
-
-struct FooPrivateField
-{
-	private:
-		int data;
-
-	public:
-		// use private field to avoid warning
-		void f()
-		{
-			kerbal::utility::ignore_unused(data);
-		}
-};
 
 
 template <typename T>
@@ -109,7 +72,7 @@ class could_use_field_helper
 
 		template <typename T2>
 		static kerbal::type_traits::yes_type test(char (*)[sizeof(
-				kerbal::utility::declval<T2&>().data,
+				kerbal::utility::declval<T2&>().member,
 				0
 		)]);
 
@@ -117,7 +80,7 @@ class could_use_field_helper
 
 		template <typename T2>
 		static kerbal::type_traits::yes_type test(char *, decltype(
-				kerbal::utility::declval<T2&>().data,
+				kerbal::utility::declval<T2&>().member,
 				0
 		) = 0);
 
@@ -137,34 +100,18 @@ struct could_use_field :
 
 KERBAL_TEST_CASE(test_yes_no_type_could_use_field, "test yes_no_type could use field")
 {
-	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<FooNoField>::value, false);
-	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<FooHasField>::value, true);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<ktest::type_traits::cu_empty>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<ktest::type_traits::cu_public_field>::value, true);
 
 #if KERBAL_COMPILER_ID == KERBAL_COMPILER_ID_CLANG
 #	if __cplusplus >= 201103L
-	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<FooPrivateField>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<ktest::type_traits::cu_private_field>::value, false);
 #	endif
 #else
-	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<FooPrivateField>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<ktest::type_traits::cu_private_field>::value, false);
 #endif
 
 }
-
-
-struct FooNoMethod
-{
-};
-
-struct FooHasMethod
-{
-		void f();
-};
-
-struct FooPrivateMethod
-{
-	private:
-		void f();
-};
 
 
 template <typename T>
@@ -177,7 +124,7 @@ class could_use_method_helper
 
 		template <typename T2>
 		static kerbal::type_traits::yes_type test(char (*)[sizeof(
-				kerbal::utility::declval<T2&>().f(),
+				kerbal::utility::declval<T2&>().member(),
 				0
 		)]);
 
@@ -185,7 +132,7 @@ class could_use_method_helper
 
 		template <typename T2>
 		static kerbal::type_traits::yes_type test(char *, decltype(
-				kerbal::utility::declval<T2&>().f(),
+				kerbal::utility::declval<T2&>().member(),
 				0
 		) = 0);
 
@@ -205,15 +152,15 @@ struct could_use_method :
 
 KERBAL_TEST_CASE(test_yes_no_type_could_use_method, "test yes_no_type could use method")
 {
-	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_method<FooNoMethod>::value, false);
-	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_method<FooHasMethod>::value, true);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_method<ktest::type_traits::cu_empty>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_method<ktest::type_traits::cu_public_method>::value, true);
 
 #if KERBAL_COMPILER_ID == KERBAL_COMPILER_ID_CLANG
 #	if __cplusplus >= 201103L
-	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_method<FooPrivateMethod>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_method<ktest::type_traits::cu_private_method>::value, false);
 #	endif
 #else
-	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_method<FooPrivateMethod>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_method<ktest::type_traits::cu_private_method>::value, false);
 #endif
 
 }
