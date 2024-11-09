@@ -35,6 +35,29 @@ struct FooPrivateTypedef
 		typedef int type;
 };
 
+struct FooTypedefNamedField
+{
+	int type;
+};
+
+struct FooTypedefNamedStaticField
+{
+	static int type;
+};
+
+struct FooTypedefNamedMethod
+{
+	void type()
+	{
+	}
+};
+
+struct FooTypedefNamedStaticMethod
+{
+	static void type()
+	{
+	}
+};
 
 template <typename T>
 class could_use_typedef_helper
@@ -73,6 +96,11 @@ KERBAL_TEST_CASE(test_yes_no_type_could_use_typedef, "test yes_no_type could use
 	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_typedef<FooPrivateTypedef>::value, false);
 #endif
 
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_typedef<FooTypedefNamedField>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_typedef<FooTypedefNamedStaticField>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_typedef<FooTypedefNamedMethod>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_typedef<FooTypedefNamedStaticMethod>::value, false);
+
 }
 
 
@@ -96,6 +124,11 @@ struct FooPrivateField
 		{
 			kerbal::utility::ignore_unused(data);
 		}
+};
+
+struct FooFieldNameTypedef
+{
+	typedef int data;
 };
 
 struct FooFieldNameMethod
@@ -156,6 +189,7 @@ KERBAL_TEST_CASE(test_yes_no_type_could_use_field, "test yes_no_type could use f
 	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<FooPrivateField>::value, false);
 #endif
 
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<FooFieldNameTypedef>::value, false);
 	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<FooFieldNameMethod>::value, false);
 }
 
@@ -173,6 +207,11 @@ struct FooPrivateMethod
 {
 	private:
 		void f();
+};
+
+struct FooMethodNameTypedef
+{
+	typedef int f;
 };
 
 struct FooMethodNameField
@@ -230,6 +269,7 @@ KERBAL_TEST_CASE(test_yes_no_type_could_use_method, "test yes_no_type could use 
 	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_method<FooPrivateMethod>::value, false);
 #endif
 
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_method<FooMethodNameTypedef>::value, false);
 	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_method<FooMethodNameField>::value, false);
 
 }
