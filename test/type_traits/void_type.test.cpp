@@ -106,7 +106,7 @@ struct could_use_field<T, typename kerbal::type_traits::void_type<
 		decltype(
 			kerbal::utility::declval<T&>().data
 		)
-#	else
+#	else // could not handle positive case under msvc
 		kerbal::type_traits::integral_constant<
 			std::size_t,
 			sizeof(
@@ -167,7 +167,7 @@ struct could_use_method<T, typename kerbal::type_traits::void_type<
 		decltype(
 			kerbal::utility::declval<T&>().f()
 		)
-#	else
+#	else // could not handle positive case under msvc
 		kerbal::type_traits::integral_constant<
 			std::size_t,
 			sizeof(
