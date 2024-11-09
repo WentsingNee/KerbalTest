@@ -136,6 +136,71 @@ KERBAL_TEST_CASE(test_yes_no_type_could_use_field, "test yes_no_type could use f
 
 
 template <typename T>
+class could_use_static_field_helper
+{
+		template <typename T2>
+		static kerbal::type_traits::no_type test(...);
+
+#if KERBAL_COMPILER_ID != KERBAL_COMPILER_ID_MSVC // could not handle private member under msvc
+
+		template <typename T2>
+		static kerbal::type_traits::yes_type test(char (*)[sizeof(
+				kerbal::utility::declval<T2&>().member,
+				T2::member,
+				0
+		)]);
+
+#else
+
+		template <typename T2>
+		static kerbal::type_traits::yes_type test(char *, decltype(
+				T2::member,
+				0
+		) = 0);
+
+#endif
+
+	public:
+		typedef kerbal::type_traits::bool_constant<
+				sizeof(test<T>(NULL)) == sizeof(kerbal::type_traits::yes_type)
+		> type;
+};
+
+template <typename T>
+struct could_use_static_field :
+		could_use_static_field_helper<T>::type
+{
+};
+
+KERBAL_TEST_CASE(test_yes_no_type_could_use_static_field, "test yes_no_type could use static_field")
+{
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_static_field<ktest::type_traits::cu_empty>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_static_field<ktest::type_traits::cu_public_field>::value, true);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_static_field<ktest::type_traits::cu_public_static_field>::value, true);
+
+#if KERBAL_COMPILER_ID == KERBAL_COMPILER_ID_CLANG
+#	if __cplusplus >= 201103L
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_static_field<ktest::type_traits::cu_private_field>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_static_field<ktest::type_traits::cu_private_static_field>::value, false);
+#	endif
+#else
+	// KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_static_field<ktest::type_traits::cu_private_field>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_static_field<ktest::type_traits::cu_private_static_field>::value, false);
+#endif
+
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_static_field<ktest::type_traits::cu_public_typedef>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_static_field<ktest::type_traits::cu_private_typedef>::value, false);
+#if KERBAL_COMPILER_ID != KERBAL_COMPILER_ID_MSVC
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_static_field<ktest::type_traits::cu_public_method>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_static_field<ktest::type_traits::cu_private_method>::value, false);
+	// KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_static_field<ktest::type_traits::cu_public_static_method>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_static_field<ktest::type_traits::cu_private_static_method>::value, false);
+#endif
+
+}
+
+
+template <typename T>
 class could_use_method_helper
 {
 		template <typename T2>
@@ -193,6 +258,73 @@ KERBAL_TEST_CASE(test_yes_no_type_could_use_method, "test yes_no_type could use 
 	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_method<ktest::type_traits::cu_private_field>::value, false);
 	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_method<ktest::type_traits::cu_public_static_field>::value, false);
 	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_method<ktest::type_traits::cu_private_static_field>::value, false);
+
+}
+
+
+template <typename T>
+class could_use_static_method_helper
+{
+		template <typename T2>
+		static kerbal::type_traits::no_type test(...);
+
+#if KERBAL_COMPILER_ID != KERBAL_COMPILER_ID_MSVC // could not handle private member under msvc
+
+		template <typename T2>
+		static kerbal::type_traits::yes_type test(char (*)[sizeof(
+				T2::member(),
+				0
+		)]);
+
+#else
+
+		template <typename T2>
+		static kerbal::type_traits::yes_type test(char *, decltype(
+				T2::member(),
+				0
+		) = 0);
+
+#endif
+
+	public:
+		typedef kerbal::type_traits::bool_constant<
+				sizeof(test<T>(NULL)) == sizeof(kerbal::type_traits::yes_type)
+		> type;
+};
+
+template <typename T>
+struct could_use_static_method :
+	kerbal::type_traits::conjunction<
+		typename could_use_static_method_helper<T>::type,
+		kerbal::type_traits::negation<
+			typename could_use_typedef_helper<T>::type
+		>
+	>
+{
+};
+
+KERBAL_TEST_CASE(test_yes_no_type_could_use_static_method, "test yes_no_type could use static_method")
+{
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_static_method<ktest::type_traits::cu_empty>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_static_method<ktest::type_traits::cu_public_method>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_static_method<ktest::type_traits::cu_public_static_method>::value, true);
+
+#if KERBAL_COMPILER_ID == KERBAL_COMPILER_ID_CLANG
+#	if __cplusplus >= 201103L
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_static_method<ktest::type_traits::cu_private_method>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_static_method<ktest::type_traits::cu_private_static_method>::value, false);
+#	endif
+#else
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_static_method<ktest::type_traits::cu_private_method>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_static_method<ktest::type_traits::cu_private_static_method>::value, false);
+#endif
+
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_static_method<ktest::type_traits::cu_public_typedef>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_static_method<ktest::type_traits::cu_private_typedef>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_static_method<ktest::type_traits::cu_public_field>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_static_method<ktest::type_traits::cu_private_field>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_static_method<ktest::type_traits::cu_public_static_field>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_static_method<ktest::type_traits::cu_private_static_field>::value, false);
 
 }
 
