@@ -54,6 +54,15 @@ KERBAL_TEST_CASE(test_void_type_could_use_typedef, "test void_type could use typ
 	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_typedef<ktest::type_traits::cu_private_typedef>::value, false);
 #endif
 
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_typedef<ktest::type_traits::cu_public_field>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_typedef<ktest::type_traits::cu_private_field>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_typedef<ktest::type_traits::cu_public_static_field>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_typedef<ktest::type_traits::cu_private_static_field>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_typedef<ktest::type_traits::cu_public_method>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_typedef<ktest::type_traits::cu_private_method>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_typedef<ktest::type_traits::cu_public_static_method>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_typedef<ktest::type_traits::cu_private_static_method>::value, false);
+
 }
 
 
@@ -86,18 +95,29 @@ KERBAL_TEST_CASE(test_void_type_could_use_field, "test void_type could use field
 {
 	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<ktest::type_traits::cu_empty>::value, false);
 	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<ktest::type_traits::cu_public_field>::value, true);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<ktest::type_traits::cu_public_static_field>::value, true);
 
 #if KERBAL_COMPILER_ID == KERBAL_COMPILER_ID_GNU
 #	if KERBAL_GNU_VERSION_MEETS(5, 0, 0)
 	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<ktest::type_traits::cu_private_field>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<ktest::type_traits::cu_private_static_field>::value, false);
 #	endif
 #elif KERBAL_COMPILER_ID == KERBAL_COMPILER_ID_CLANG
 #	if __cplusplus >= 201103L
 	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<ktest::type_traits::cu_private_field>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<ktest::type_traits::cu_private_static_field>::value, false);
 #	endif
 #else
 	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<ktest::type_traits::cu_private_field>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<ktest::type_traits::cu_private_static_field>::value, false);
 #endif
+
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<ktest::type_traits::cu_public_typedef>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<ktest::type_traits::cu_private_typedef>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<ktest::type_traits::cu_public_method>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<ktest::type_traits::cu_private_method>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<ktest::type_traits::cu_public_static_method>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<ktest::type_traits::cu_private_static_method>::value, false);
 
 }
 
@@ -131,18 +151,29 @@ KERBAL_TEST_CASE(test_void_type_could_use_method, "test void_type could use meth
 {
 	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_method<ktest::type_traits::cu_empty>::value, false);
 	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_method<ktest::type_traits::cu_public_method>::value, true);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_method<ktest::type_traits::cu_public_static_method>::value, true);
 
 #if KERBAL_COMPILER_ID == KERBAL_COMPILER_ID_GNU
 #	if KERBAL_GNU_VERSION_MEETS(5, 0, 0)
 	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_method<ktest::type_traits::cu_private_method>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_method<ktest::type_traits::cu_private_static_method>::value, false);
 #	endif
 #elif KERBAL_COMPILER_ID == KERBAL_COMPILER_ID_CLANG
 #	if __cplusplus >= 201103L
 	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_method<ktest::type_traits::cu_private_method>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_method<ktest::type_traits::cu_private_static_method>::value, false);
 #	endif
 #else
 	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_method<ktest::type_traits::cu_private_method>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_method<ktest::type_traits::cu_private_static_method>::value, false);
 #endif
+
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_method<ktest::type_traits::cu_public_typedef>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_method<ktest::type_traits::cu_private_typedef>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_method<ktest::type_traits::cu_public_field>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_method<ktest::type_traits::cu_private_field>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_method<ktest::type_traits::cu_public_static_field>::value, false);
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_method<ktest::type_traits::cu_private_static_field>::value, false);
 
 }
 

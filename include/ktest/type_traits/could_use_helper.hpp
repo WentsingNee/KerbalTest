@@ -54,6 +54,24 @@ namespace ktest
 				}
 		};
 
+		struct cu_public_static_field
+		{
+				static int member;
+		};
+
+		struct cu_private_static_field
+		{
+			private:
+				static int member;
+
+			public:
+				// use private field to avoid warning
+				void unused_helper()
+				{
+					kerbal::utility::ignore_unused(member);
+				}
+		};
+
 
 		struct cu_public_method
 		{
@@ -64,6 +82,17 @@ namespace ktest
 		{
 			private:
 				void member();
+		};
+
+		struct cu_public_static_method
+		{
+				static void member();
+		};
+
+		struct cu_private_static_method
+		{
+			private:
+				static void member();
 		};
 
 	} // namespace type_traits
