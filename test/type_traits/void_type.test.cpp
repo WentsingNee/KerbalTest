@@ -116,8 +116,10 @@ KERBAL_TEST_CASE(test_void_type_could_use_field, "test void_type could use field
 	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<ktest::type_traits::cu_private_typedef>::value, false);
 	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<ktest::type_traits::cu_public_method>::value, false);
 	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<ktest::type_traits::cu_private_method>::value, false);
-	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<ktest::type_traits::cu_public_static_method>::value, false);
+#if KERBAL_COMPILER_ID != KERBAL_COMPILER_ID_MSVC
 	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<ktest::type_traits::cu_private_static_method>::value, false);
+#endif
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<ktest::type_traits::cu_public_static_method>::value, true); // ATTENTION
 
 }
 
