@@ -175,6 +175,11 @@ struct FooPrivateMethod
 		void f();
 };
 
+struct FooMethodNameField
+{
+	int f;
+};
+
 
 template <typename T>
 class could_use_method_helper
@@ -224,6 +229,8 @@ KERBAL_TEST_CASE(test_yes_no_type_could_use_method, "test yes_no_type could use 
 #else
 	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_method<FooPrivateMethod>::value, false);
 #endif
+
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_method<FooMethodNameField>::value, false);
 
 }
 

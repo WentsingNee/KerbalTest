@@ -163,6 +163,11 @@ struct FooPrivateMethod
 		void f();
 };
 
+struct FooMethodNameField
+{
+	int f;
+};
+
 
 template <typename T, typename = kerbal::type_traits::void_type<>::type>
 struct could_use_method :
@@ -205,6 +210,8 @@ KERBAL_TEST_CASE(test_void_type_could_use_method, "test void_type could use meth
 #else
 	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_method<FooPrivateMethod>::value, false);
 #endif
+
+	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_method<FooMethodNameField>::value, false);
 
 }
 
