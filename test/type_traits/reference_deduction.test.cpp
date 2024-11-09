@@ -198,7 +198,12 @@ KERBAL_TEST_CASE(test_add_lvalue_reference, "test add_lvalue_reference")
 {
 	using namespace kerbal::type_traits;
 
+#if __cplusplus >= 201103L
+#define AFTER_ADD_LVALUE_REFERENCE_IS(Type, res) CHECK_EQUAL((is_same<typename add_lvalue_reference<Type>::type, res>::value), true)
+// `TRAIT<int(...)>::type without typename` causes compile error under msvc
+#else
 #define AFTER_ADD_LVALUE_REFERENCE_IS(Type, res) CHECK_EQUAL((is_same<add_lvalue_reference<Type>::type, res>::value), true)
+#endif
 
 	AFTER_ADD_LVALUE_REFERENCE_IS(void,                        void);
 	AFTER_ADD_LVALUE_REFERENCE_IS(int,                         int&);
@@ -297,7 +302,12 @@ KERBAL_TEST_CASE(test_add_rvalue_reference, "test add_rvalue_reference")
 {
 	using namespace kerbal::type_traits;
 
+#if __cplusplus >= 201103L
+#define AFTER_ADD_RVALUE_REFERENCE_IS(Type, res) CHECK_EQUAL((is_same<typename add_rvalue_reference<Type>::type, res>::value), true)
+// `TRAIT<int(...)>::type without typename` causes compile error under msvc
+#else
 #define AFTER_ADD_RVALUE_REFERENCE_IS(Type, res) CHECK_EQUAL((is_same<add_rvalue_reference<Type>::type, res>::value), true)
+#endif
 
 	AFTER_ADD_RVALUE_REFERENCE_IS(void,                        void);
 	AFTER_ADD_RVALUE_REFERENCE_IS(int,                         int&&);
@@ -382,7 +392,12 @@ KERBAL_TEST_CASE(test_add_const_lvalue_reference, "test add_const_lvalue_referen
 {
 	using namespace kerbal::type_traits;
 
+#if __cplusplus >= 201103L
+#define AFTER_ADD_CONST_LVALUE_REFERENCE_IS(Type, res) CHECK_EQUAL((is_same<typename add_const_lvalue_reference<Type>::type, res>::value), true)
+// `TRAIT<int(...)>::type without typename` causes compile error under msvc
+#else
 #define AFTER_ADD_CONST_LVALUE_REFERENCE_IS(Type, res) CHECK_EQUAL((is_same<add_const_lvalue_reference<Type>::type, res>::value), true)
+#endif
 
 	AFTER_ADD_CONST_LVALUE_REFERENCE_IS(void,                        void);
 	AFTER_ADD_CONST_LVALUE_REFERENCE_IS(int,                         const int&);
@@ -480,7 +495,12 @@ KERBAL_TEST_CASE(test_add_const_rvalue_reference, "test add_const_rvalue_referen
 {
 	using namespace kerbal::type_traits;
 
+#if __cplusplus >= 201103L
+#define AFTER_ADD_CONST_RVALUE_REFERENCE_IS(Type, res) CHECK_EQUAL((is_same<typename add_const_rvalue_reference<Type>::type, res>::value), true)
+// `TRAIT<int(...)>::type without typename` causes compile error under msvc
+#else
 #define AFTER_ADD_CONST_RVALUE_REFERENCE_IS(Type, res) CHECK_EQUAL((is_same<add_const_rvalue_reference<Type>::type, res>::value), true)
+#endif
 
 	AFTER_ADD_CONST_RVALUE_REFERENCE_IS(void,                        void);
 	AFTER_ADD_CONST_RVALUE_REFERENCE_IS(int,                         const int&&);

@@ -39,7 +39,12 @@ KERBAL_TEST_CASE(test_decay, "test decay")
 {
 	using namespace kerbal::type_traits;
 
+#if __cplusplus >= 201103L
+#define AFTER_DECAY_IS(T, U) CHECK_EQUAL((is_same<typename decay<T>::type, U>::value), true);
+// `TRAIT<int(...)>::type without typename` causes compile error under msvc
+#else
 #define AFTER_DECAY_IS(T, U) CHECK_EQUAL((is_same<decay<T>::type, U>::value), true);
+#endif
 
 
 	AFTER_DECAY_IS(void,               void);
