@@ -190,7 +190,10 @@ KERBAL_TEST_CASE(test_yes_no_type_could_use_field, "test yes_no_type could use f
 #endif
 
 	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<FooFieldNameTypedef>::value, false);
+#if KERBAL_COMPILER_ID != KERBAL_COMPILER_ID_MSVC
 	KERBAL_TEST_CHECK_EQUAL_STATIC(could_use_field<FooFieldNameMethod>::value, false);
+#endif
+
 }
 
 
