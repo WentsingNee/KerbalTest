@@ -17,11 +17,15 @@ namespace kc = kerbal::container;
 template <typename T>
 struct cmp_fnptr
 {
-		typedef bool(*type)(const T&, const T&);
+		typedef bool(* type)(const T &, const T &);
 };
 
-template class kc::flat_ordered<int, kc::identity_extractor<int>, cmp_fnptr<int>::type>;
-template kc::flat_ordered<int, kc::identity_extractor<int>, cmp_fnptr<int>::type>::flat_ordered(const_pointer, const_pointer, int);
+template class
+kc::flat_ordered<int, kc::identity_extractor<int>, cmp_fnptr<int>::type>;
+
+template
+kc::flat_ordered<int, kc::identity_extractor<int>, cmp_fnptr<int>::type>::
+flat_ordered(const_pointer, const_pointer, int);
 
 
 
@@ -47,7 +51,11 @@ kc::flat_ordered<Recursive>;
 
 namespace ku = kerbal::utility;
 
-void noncopyable_swap_inst_test(kc::flat_ordered<ku::noncopyable> & lhs, kc::flat_ordered<ku::noncopyable> & rhs)
+void
+noncopyable_swap_inst_test(
+	kc::flat_ordered<ku::noncopyable> & lhs,
+	kc::flat_ordered<ku::noncopyable> & rhs
+)
 {
 	lhs.swap(rhs);
 }

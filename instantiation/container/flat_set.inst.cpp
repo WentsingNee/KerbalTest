@@ -18,21 +18,40 @@ namespace kc = kerbal::container;
 template <typename T>
 struct cmp_fnptr
 {
-		typedef bool(*type)(const T&, const T&);
+		typedef bool(* type)(const T &, const T &);
 };
 
-template class kc::flat_set<int, cmp_fnptr<int>::type>;
-template class kc::flat_multiset<int, cmp_fnptr<int>::type>;
-template kc::flat_set<int, cmp_fnptr<int>::type>::flat_set(const_pointer, const_pointer, int);
-template kc::flat_multiset<int, cmp_fnptr<int>::type>::flat_multiset(const_pointer, const_pointer, int);
+
+template class
+kc::flat_set<int, cmp_fnptr<int>::type>;
+
+template class
+kc::flat_multiset<int, cmp_fnptr<int>::type>;
+
+template
+kc::flat_set<int, cmp_fnptr<int>::type>::
+flat_set(const_pointer, const_pointer, int);
+
+template
+kc::flat_multiset<int, cmp_fnptr<int>::type>::
+flat_multiset(const_pointer, const_pointer, int);
 
 
 #include <string>
 
-template class kc::flat_set<std::string, cmp_fnptr<std::string>::type>;
-template class kc::flat_multiset<std::string, cmp_fnptr<std::string>::type>;
-template kc::flat_set<std::string, cmp_fnptr<std::string>::type>::flat_set(const_pointer, const_pointer, int);
-template kc::flat_multiset<std::string, cmp_fnptr<std::string>::type>::flat_multiset(const_pointer, const_pointer, int);
+template class
+kc::flat_set<std::string, cmp_fnptr<std::string>::type>;
+
+template class
+kc::flat_multiset<std::string, cmp_fnptr<std::string>::type>;
+
+template
+kc::flat_set<std::string, cmp_fnptr<std::string>::type>::
+flat_set(const_pointer, const_pointer, int);
+
+template
+kc::flat_multiset<std::string, cmp_fnptr<std::string>::type>::
+flat_multiset(const_pointer, const_pointer, int);
 
 
 
@@ -58,12 +77,20 @@ kc::flat_set<Recursive>;
 
 namespace ku = kerbal::utility;
 
-void noncopyable_swap_inst_test(kc::flat_set<ku::noncopyable> & lhs, kc::flat_set<ku::noncopyable> & rhs)
+void
+noncopyable_swap_inst_test(
+	kc::flat_set<ku::noncopyable> & lhs,
+	kc::flat_set<ku::noncopyable> & rhs
+)
 {
 	lhs.swap(rhs);
 }
 
-void noncopyable_swap_inst_test(kc::flat_multiset<ku::noncopyable> & lhs, kc::flat_multiset<ku::noncopyable> & rhs)
+void
+noncopyable_swap_inst_test(
+	kc::flat_multiset<ku::noncopyable> & lhs,
+	kc::flat_multiset<ku::noncopyable> & rhs
+)
 {
 	lhs.swap(rhs);
 }
