@@ -16,7 +16,7 @@
 
 namespace kc = kerbal::container;
 
-template class kc::rb_set<int>;
+// template class kc::rb_set<int>;
 
 namespace
 {
@@ -55,9 +55,9 @@ namespace
 	}
 
 
-	char const * color_str(kerbal::container::detail::rb_color_t color)
+	char const * color_str(kc::detail::rb_node_base::rb_color_t color)
 	{
-		if (color == kerbal::container::detail::BLACK::value) {
+		if (color == kc::detail::rb_node_base::BLACK::value) {
 			return "BLACK";
 		} else {
 			return "RED";
@@ -70,7 +70,7 @@ namespace
 #include <ktest/random/random_vector.hpp>
 
 #include <kerbal/test/test_case.hpp>
-#include <kerbal/random/mersenne_twister_engine.hpp>
+#include <kerbal/random/engine/mersenne_twister_engine.hpp>
 #include <kerbal/container/nonmember_container_access.hpp>
 
 namespace kc = kerbal::container;
@@ -111,6 +111,7 @@ KERBAL_TEST_CASE(test_rb_emplace, "test rb::emplace")
 
 #include <iostream>
 #include <set>
+#include <unordered_set>
 #include <kerbal/container/avl_set.hpp>
 
 // void * operator new(std::size_t sz)
@@ -130,12 +131,36 @@ void g()
 {
 	kerbal::random::mt19937 eg;
 
-	std::size_t size = 4 * 1024 * 1024;
+	std::size_t size = 1024 * 1024;
 	// std::size_t size = 4;
 
-//	auto d = ktest::get_iota(size, 0);
-	auto d = ktest::get_random_vec_i_mod(size, eg, 178057);
-//	auto d = ktest::get_random_vec_i(size, eg);
+	// auto d = ktest::get_iota(size, 0);
+	// auto d = ktest::get_random_vec_i_mod(size, eg, 178057);
+	auto d = ktest::get_random_vec_i(size, eg);
+
+	{
+		std::set<int> s;
+		for (auto const & e : d) {
+			s.emplace(e);
+		}
+	}
+	{
+		kc::rb_set<int> s;
+		for (auto const & e : d) {
+			s.emplace(e);
+		}
+	}
+
+
+	{
+		kerbal::test::runtime_timer t;
+		kc::rb_set<int> s;
+		for (auto const & e : d) {
+			s.emplace(e);
+		}
+		std::cout << "kerbal::rb_set  " << t.count() << std::endl;
+		// std::cout << sizeof(s) << std::endl;
+	}
 
 	{
 		kerbal::test::runtime_timer t;
@@ -144,16 +169,6 @@ void g()
 			s.emplace(e);
 		}
 		std::cout << "std::set  " << t.count() << std::endl;
-		// std::cout << sizeof(s) << std::endl;
-	}
-
-	{
-		kerbal::test::runtime_timer t;
-		kc::rb_set<int> s;
-		for (auto const & e : d) {
-			s.emplace(e);
-		}
-		std::cout << "kerbal::rbtree  " << t.count() << std::endl;
 		// std::cout << sizeof(s) << std::endl;
 	}
 
@@ -187,13 +202,53 @@ void g()
 
 		using namespace boost::container;
 		typedef tree_assoc_options< tree_type<avl_tree> >::type AVLTree;
-		typedef boost::container::set<int, std::less<int>, new_allocator<int>, AVLTree> AvlSet;
+		typedef boost::container::set<int, std::less<int>, new_allocator<int>, AVLTree> AVLSet;
 
-		AvlSet s;
+		AVLSet s;
 		for (auto const & e : d) {
 			s.emplace(e);
 		}
 		std::cout << "boost::avl_set  " << t.count() << std::endl;
+		// std::cout << sizeof(s) << std::endl;
+	}
+
+	{
+		kerbal::test::runtime_timer t;
+
+		using namespace boost::container;
+		typedef tree_assoc_options< tree_type<scapegoat_tree> >::type scapegoatTree;
+		typedef boost::container::set<int, std::less<int>, new_allocator<int>, scapegoatTree> scapegoatSet;
+
+		scapegoatSet s;
+		for (auto const & e : d) {
+			s.emplace(e);
+		}
+		std::cout << "boost::scapegoat_tree  " << t.count() << std::endl;
+		// std::cout << sizeof(s) << std::endl;
+	}
+
+	{
+		kerbal::test::runtime_timer t;
+
+		using namespace boost::container;
+		typedef tree_assoc_options< tree_type<splay_tree> >::type SplayTree;
+		typedef boost::container::set<int, std::less<int>, new_allocator<int>, SplayTree> SplaySet;
+
+		SplaySet s;
+		for (auto const & e : d) {
+			s.emplace(e);
+		}
+		std::cout << "boost::splay_tree  " << t.count() << std::endl;
+		// std::cout << sizeof(s) << std::endl;
+	}
+
+	{
+		kerbal::test::runtime_timer t;
+		std::unordered_set<int> s;
+		for (auto const & e : d) {
+			s.emplace(e);
+		}
+		std::cout << "std::unordered_set  " << t.count() << std::endl;
 		// std::cout << sizeof(s) << std::endl;
 	}
 }
@@ -201,42 +256,72 @@ void g()
 
 KERBAL_TEST_CASE(test_rb_erase, "test rb::erase")
 {
-	kerbal::container::vector<int> d = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+	kerbal::random::mt19937 eg;
+	int N = 4 * 1024 * 1024;
+	kerbal::container::vector<int> data = ktest::get_random_vec_i_mod(N, eg, N);
+	// kc::rb_set<int> s(data.cbegin(), data.cend());
 	kc::rb_set<int> s;
 
-	for (std::size_t i = 0; i < d.size(); ++i) {
-		s.emplace(d[i]);
+	for (auto const & e : data) {
+		s.emplace(e);
 	}
-	s.inorder([](int member, auto color) {
-		std::cout << member << ", ";
-	});
-	std::cout << std::endl;
-	s.preorder([](int member, auto color) {
-		std::cout << member << ", " <<  color_str(color) << ", ";
-	});
-	std::cout << std::endl;
 
-	s.erase(s.find(7));
-	s.inorder([](int member, auto color) {
-		std::cout << member << ", ";
-	});
-	std::cout << std::endl;
-	s.preorder([](int member, auto color) {
-		std::cout << member << ", " <<  color_str(color) << ", ";
-	});
-	std::cout << std::endl;
+	auto it = s.begin();
+	while (it != s.end()) {
+		it = s.erase(it);
+		kc::detail::rb_type_only<int>::rb_normal_result_t normal_result = s.rb_normal();
+		KERBAL_TEST_CHECK(normal_result == kc::detail::RB_NORMAL_RESULT_CORRECT);
+		print_rb_normal_result_if_wrong(normal_result);
+	}
 
-	kc::detail::rb_type_only<int>::rb_normal_result_t normal_result = s.rb_normal();
-	KERBAL_TEST_CHECK(normal_result == kc::detail::RB_NORMAL_RESULT_CORRECT);
-	print_rb_normal_result_if_wrong(normal_result);
+}
 
+
+KERBAL_TEST_CASE(test_rb_erase_, "test rb::erase")
+{
+	for (int erase_target = 1; erase_target <= 9; ++erase_target) {
+		std::cout << "target: " << erase_target << std::endl;
+
+		// kerbal::container::vector<int> d = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+		kerbal::container::vector<int> d = {1, 2, 3, 4, 5, 6, 7};
+		kc::rb_set<int> s;
+
+		for (std::size_t i = 0; i < d.size(); ++i) {
+			s.emplace(d[i]);
+		}
+
+		s.inorder([](int member, auto color) {
+			std::cout << member << ", ";
+		});
+		std::cout << std::endl;
+		s.preorder([](int member, auto color) {
+			std::cout << member << ", " <<  color_str(color) << ", ";
+		});
+		std::cout << std::endl;
+
+		s.erase(s.find(erase_target));
+		s.inorder([](int member, auto color) {
+			std::cout << member << ", ";
+		});
+		std::cout << std::endl;
+		s.preorder([](int member, auto color) {
+			std::cout << member << ", " <<  color_str(color) << ", ";
+		});
+		std::cout << std::endl;
+
+		kc::detail::rb_type_only<int>::rb_normal_result_t normal_result = s.rb_normal();
+		KERBAL_TEST_CHECK(normal_result == kc::detail::RB_NORMAL_RESULT_CORRECT);
+		print_rb_normal_result_if_wrong(normal_result);
+
+		std::cout << std::endl << std::endl;
+	}
 }
 
 
 int main(int argc, char * argv[])
 {
-	 g();
+	g();
 	// e();
-//	 kerbal::test::run_all_test_case(argc, argv);
-//	kerbal::test::run_test_case(1, argc, argv);
+	// kerbal::test::run_all_test_case(argc, argv);
+	// kerbal::test::run_test_case(1, argc, argv);
 }
