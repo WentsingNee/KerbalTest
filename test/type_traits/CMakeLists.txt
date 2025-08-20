@@ -10,6 +10,7 @@
 #
 
 foreach (e IN ITEMS
+        is_base_of
         is_enum
 
         is_assignable
