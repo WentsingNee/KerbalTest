@@ -90,6 +90,20 @@ KERBAL_TEST_CASE(test_fixed_size_node_allocator_on_list, "test fixed_size_node_a
 		lfast.clear();
 		std::cout << "[fast  ] clear  " << t.count() << std::endl;
 	}
+	{
+		kerbal::test::runtime_timer t;
+		for (N::value_type i = 0; i < N::value; ++i) {
+			l.push_back(static_cast<int>(i));
+		}
+		std::cout << "[common] re-insert  " << t.count() << std::endl;
+	}
+	{
+		kerbal::test::runtime_timer t;
+		for (N::value_type i = 0; i < N::value; ++i) {
+			lfast.push_back(static_cast<int>(i));
+		}
+		std::cout << "[fast  ] re-insert  " << t.count() << std::endl;
+	}
 }
 
 
@@ -161,6 +175,16 @@ KERBAL_TEST_CASE(test_fixed_size_node_allocator_on_set, "test fixed_size_node_al
 		kerbal::test::runtime_timer t;
 		lfast.clear();
 		std::cout << "[fast  ] clear  " << t.count() << std::endl;
+	}
+	{
+		kerbal::test::runtime_timer t;
+		l.insert(test_data.cbegin(), test_data.cend());
+		std::cout << "[common] re-insert  " << t.count() << std::endl;
+	}
+	{
+		kerbal::test::runtime_timer t;
+		lfast.insert(test_data.cbegin(), test_data.cend());
+		std::cout << "[fast  ] re-insert  " << t.count() << std::endl;
 	}
 }
 
