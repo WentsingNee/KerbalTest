@@ -73,6 +73,29 @@ kc::flat_multiset<int, cmp_fnptr<int>::type>::
 flat_multiset(const_pointer, const_pointer, int);
 
 
+
+
+template
+kc::flat_set<int>::const_iterator
+kc::flat_set<int>::
+erase(double const &);
+
+template
+kc::flat_set<int>::const_iterator
+kc::flat_set<int>::
+erase_hint(const_iterator, double const &);
+
+template
+kc::flat_multiset<int>::size_type
+kc::flat_multiset<int>::
+erase(double const &);
+
+template
+kc::flat_multiset<int>::size_type
+kc::flat_multiset<int>::
+erase_hint(const_iterator, double const &);
+
+
 #include <string>
 
 

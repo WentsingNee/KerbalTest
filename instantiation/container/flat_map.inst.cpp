@@ -78,6 +78,29 @@ kc::flat_multimap<int, int, cmp_fnptr<int>::type>::
 flat_multimap(const_pointer, const_pointer, int);
 
 
+
+
+template
+kc::flat_map<int, int>::const_iterator
+kc::flat_map<int, int>::
+erase(double const &);
+
+template
+kc::flat_map<int, int>::const_iterator
+kc::flat_map<int, int>::
+erase_hint(const_iterator, double const &);
+
+template
+kc::flat_multimap<int, int>::size_type
+kc::flat_multimap<int, int>::
+erase(double const &);
+
+template
+kc::flat_multimap<int, int>::size_type
+kc::flat_multimap<int, int>::
+erase_hint(const_iterator, double const &);
+
+
 #include <string>
 
 
