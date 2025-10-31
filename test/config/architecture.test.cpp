@@ -45,7 +45,7 @@ static const char * architecture()
 }
 
 
-KERBAL_TEST_CASE(print_architecture, "print architecure")
+KERBAL_TEST_CASE(print_architecture, "print architecture")
 {
 	printf("%s\n", architecture());
 }
