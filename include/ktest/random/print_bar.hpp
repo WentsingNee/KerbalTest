@@ -89,7 +89,7 @@ namespace ktest
 	}
 
 	template <typename Map>
-	void print_bar2(int n, const Map & hist)
+	void print_bar2(int /*n*/, const Map & hist)
 	{
 		double mc = max_count2(hist);
 

@@ -17,13 +17,13 @@
 #include <kerbal/compatibility/move.hpp>
 
 KERBAL_CONSTEXPR
-char f(const int & x)
+char f(const int &)
 {
 	return 'l';
 }
 
 KERBAL_CONSTEXPR
-char f(int && x)
+char f(int &&)
 {
 	return 'r';
 }
