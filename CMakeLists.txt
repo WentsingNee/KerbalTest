@@ -107,7 +107,6 @@ function(ktest_basic_configuration target)
                 ${target} PUBLIC
                 -Wall
                 -Wextra
-                -Wno-unused-parameter
         )
     elseif (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
         target_compile_options(${target} PUBLIC /Zc:__cplusplus)
